@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
-using JetBrains.Annotations;
-using Pancake.Common;
 using UnityEngine;
 
 public class MoveObject : MonoBehaviour
@@ -101,7 +99,7 @@ public class MoveObject : MonoBehaviour
 
     private void ClearCircleList()
     {
-        if (circleListPoint.IsNullOrEmpty()) return;
+        if (circleListPoint.Count<=0) return;
         circleListPoint.ForEach(item=>DestroyImmediate(item));
         circleListPoint.Clear();
         circleListPoint = new List<GameObject>();
@@ -109,7 +107,7 @@ public class MoveObject : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!Path.IsNullOrEmpty())
+        if (Path.Count<=0)
         {
             try
             {

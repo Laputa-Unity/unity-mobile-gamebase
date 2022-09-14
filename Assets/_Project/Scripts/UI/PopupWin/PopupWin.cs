@@ -5,7 +5,7 @@ public class PopupWin : Popup
     protected override void BeforeShow()
     {
         base.BeforeShow();
-        SoundController.Instance.PlayFX(SoundType.Win);
+        SoundController.Instance.PlayFX(SoundType.PopupWinShow);
         PopupController.Instance.Show<PopupUI>();
     }
 

@@ -23,3 +23,7 @@ MonoBehaviour:
     Clip: {fileID: 0}
   - SoundType: 4
     Clip: {fileID: 0}
+  - SoundType: 5
+    Clip: {fileID: 0}
+  - SoundType: 6
+    Clip: {fileID: 0}

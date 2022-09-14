@@ -48,6 +48,8 @@ public enum SoundType
     BackgroundInGame,
     BackgroundHome,
     ButtonClick,
-    Win,
-    Lose,
+    LevelCompleted,
+    LevelFailed,
+    PopupWinShow,
+    PopupLoseShow,
 }

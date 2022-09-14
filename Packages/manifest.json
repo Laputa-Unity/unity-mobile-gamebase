@@ -1,14 +1,5 @@
 {
   "dependencies": {
-    "com.gamee.iap": "https://github.com/gamee-studio/iap.git?path=Assets/_Root#1.0.6",
-    "com.google.external-dependency-manager": "https://github.com/snorluxe/external-dependency-manager.git?path=Assets/_Root#1.2.169",
-    "com.google.firebase.analytics": "https://github.com/snorluxe/firebase-analytics.git?path=Assets/_Root#8.8.0",
-    "com.google.firebase.app": "https://github.com/snorluxe/firebase-app.git?path=Assets/_Root#8.8.0",
-    "com.google.firebase.remote-config": "https://github.com/snorluxe/firebase-remote-config.git?path=Assets/_Root#8.8.0",
-    "com.pancake.common": "https://github.com/pancake-llc/common.git?path=Assets/_Root#1.1.5",
-    "com.gamee.ads": "https://github.com/gamee-studio/ads.git?path=Assets/_Root#1.0.8",
-    "com.snorlax.simplejson": "https://github.com/snorluxe/SimpleJSON.git?path=Assets/_Root",
-    "com.snorlax.local-notification": "https://github.com/snorluxe/local-notification.git?path=Assets/_Root#2022.5.13",
     "com.sabresaurus.playerprefseditor": "https://github.com/sabresaurus/PlayerPrefsEditor.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.addressables": "1.19.19",

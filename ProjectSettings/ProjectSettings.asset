@@ -695,22 +695,22 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    Android: SNORLAX_LEVEL_EDITOR;PANCAKE_MAX_ENABLE
-    CloudRendering: PANCAKE_MAX_ENABLE
-    EmbeddedLinux: PANCAKE_MAX_ENABLE
-    GameCoreScarlett: PANCAKE_MAX_ENABLE
-    GameCoreXboxOne: PANCAKE_MAX_ENABLE
-    Lumin: PANCAKE_MAX_ENABLE
-    Nintendo Switch: PANCAKE_MAX_ENABLE
-    PS4: PANCAKE_MAX_ENABLE
-    PS5: PANCAKE_MAX_ENABLE
-    Stadia: PANCAKE_MAX_ENABLE
-    Standalone: SNORLAX_LEVEL_EDITOR;PANCAKE_MAX_ENABLE
-    WebGL: PANCAKE_MAX_ENABLE
-    Windows Store Apps: PANCAKE_MAX_ENABLE
-    XboxOne: PANCAKE_MAX_ENABLE
-    iPhone: PANCAKE_MAX_ENABLE
-    tvOS: PANCAKE_MAX_ENABLE
+    Android: SNORLAX_LEVEL_EDITOR
+    CloudRendering: 
+    EmbeddedLinux: 
+    GameCoreScarlett: 
+    GameCoreXboxOne: 
+    Lumin: 
+    Nintendo Switch: 
+    PS4: 
+    PS5: 
+    Stadia: 
+    Standalone: SNORLAX_LEVEL_EDITOR
+    WebGL: 
+    Windows Store Apps: 
+    XboxOne: 
+    iPhone: 
+    tvOS: 
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

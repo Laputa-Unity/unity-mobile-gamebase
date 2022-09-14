@@ -14,20 +14,12 @@ public class PopupInGame : Popup
    {
       base.BeforeShow();
       
-      if (!Data.IsTesting) AdsManager.ShowBanner();
       Setup();
-   }
-
-   protected override void BeforeHide()
-   {
-      base.BeforeHide();
-      AdsManager.HideBanner();
    }
 
    public void Setup()
    {
       LevelText.text = $"Level {Data.CurrentLevel}";
-      LevelTypeText.text = $"Level {(Data.UseLevelABTesting == 0 ? "A" : "B")}";
       if (Data.IsTesting)
       {
          DebugGameObjects.ForEach(item => item.gameObject.SetActive(true));
@@ -45,18 +37,7 @@ public class PopupInGame : Popup
 
    public void OnClickReplay()
    {
-      if (Data.IsTesting)
-      {
-         GameManager.Instance.ReplayGame();
-      }
-      else
-      {
-         AdsManager.ShowInterstitial(() =>
-         {
-            FirebaseManager.OnClickButtonReplay();
-            GameManager.Instance.ReplayGame();
-         });
-      }
+      GameManager.Instance.ReplayGame();
    }
 
    public void OnClickPrevious()
@@ -66,32 +47,9 @@ public class PopupInGame : Popup
 
    public void OnClickSkip()
    {
-      if (Data.IsTesting)
-      {
-         GameManager.Instance.NextLevel();
-      }
-      else
-      {
-         AdsManager.ShowRewardAds(() =>
-         {
-            FirebaseManager.OnClickButtonSkipLevel();
-            GameManager.Instance.NextLevel();
-         });
-      }
+      GameManager.Instance.NextLevel();
    }
-
-   public void OnClickLevelA()
-   {
-      Data.UseLevelABTesting = 0;
-      GameManager.Instance.ReplayGame();
-   }
-
-   public void OnClickLevelB()
-   {
-      Data.UseLevelABTesting = 1;
-      GameManager.Instance.ReplayGame();
-   }
-
+   
    public void OnClickLose()
    {
       GameManager.Instance.OnLoseGame(0f);

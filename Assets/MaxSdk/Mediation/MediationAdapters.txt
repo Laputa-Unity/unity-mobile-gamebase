@@ -1,2 +1,0 @@
-A placeholder file to make sure that the Mediation folder asset is exported with the base plugin.
-This ensures that the adapters are imported into this directory even when the plugin has been moved to a different folder.

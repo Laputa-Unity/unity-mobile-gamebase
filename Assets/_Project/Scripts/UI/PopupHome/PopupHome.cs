@@ -1,10 +1,5 @@
-using System;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
 public class PopupHome : Popup
 {
-
     protected override void BeforeShow()
     {
         base.BeforeShow();
@@ -30,24 +25,16 @@ public class PopupHome : Popup
 
     public void OnClickSetting()
     {
-        FirebaseManager.OnClickButtonSetting();
         PopupController.Instance.Show<PopupSetting>();
     }
 
     public void OnClickDailyReward()
     {
-        FirebaseManager.OnClickButtonDailyReward();
         PopupController.Instance.Show<PopupDailyReward>();
     }
 
     public void OnClickShop()
     {
-        FirebaseManager.OnClickButtonShop();
         PopupController.Instance.Show<PopupShop>();
-    }
-    
-    public void OnClickTestAds()
-    {
-        PopupController.Instance.Show<PopupAds>();
     }
 }

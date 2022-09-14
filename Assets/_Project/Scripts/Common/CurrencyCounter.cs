@@ -13,7 +13,7 @@ public class CurrencyCounter : MonoBehaviour
 
     private void Start()
     {
-        EventController.CurrentLevelChanged += SaveCurrency;
+        EventController.SaveCurrencyTotal += SaveCurrency;
         EventController.CurrencyTotalChanged += UpdateCurrencyAmountText;
         CurrencyAmountText.text = Data.CurrencyTotal.ToString();
     }
@@ -25,13 +25,13 @@ public class CurrencyCounter : MonoBehaviour
     
     private void UpdateCurrencyAmountText()
     {
-        if (currentCoin >= Data.CurrencyTotal)
+        if ( Data.CurrencyTotal > currentCoin)
         {
-            DecreaseCurrency();
+            IncreaseCurrency();
         }
         else
         {
-            IncreaseCurrency();
+            DecreaseCurrency();
         }
     }
 
