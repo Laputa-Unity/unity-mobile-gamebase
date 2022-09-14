@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39e644bf1e934bf0bdfebdd6ea0e96d0, type: 3}
+  m_Name: AdSettings
+  m_EditorClassIdentifier: 
+  runtimeAutoInitialize: 1
+  adSettings:
+    autoInit: 1
+    autoLoadingAd: 1
+    adCheckingInterval: 8
+    adLoadingInterval: 15
+    privacyPolicyUrl: 
+    enableGDPR: 0
+    enableMultipleDex: 0
+    currentNetwork: 2
+  admobSettings:
+    enable: 0
+    devicesTest: []
+    bannerAdUnit:
+      androidId: 
+      iOSId: 
+      position: 1
+      size: 0
+    interstitialAdUnit:
+      androidId: 
+      iOSId: 
+    rewardedAdUnit:
+      androidId: 
+      iOSId: 
+    rewardedInterstitialAdUnit:
+      androidId: 
+      iOSId: 
+    appOpenAdUnit:
+      androidId: 
+      iOSId: 
+      orientation: 1
+    enableTestMode: 0
+    useAdaptiveBanner: 0
+    importingMediationNetwork:
+      name: 
+      displayName: 
+      versions: []
+      path: 
+      dependenciesFilePath: 
+      pluginFilePath: []
+      lastVersion:
+        android: 
+        ios: 
+        unity: 
+    importingSdk:
+      name: GMA_SDK
+      displayName: Google Mobile Ads
+      versions:
+      - 7.0.0
+      - 6.1.2
+      path: https://github.com/googleads/googleads-mobile-unity/releases/download/v{0}/GoogleMobileAds-v{0}.unitypackage
+      dependenciesFilePath: GoogleMobileAds_version-
+      pluginFilePath:
+      - GoogleMobileAds
+      - Plugins/Android/googlemobileads-unity.aar
+      - Plugins/Android/GoogleMobileAdsPlugin.androidlib
+      - Plugins/iOS/GADUAdNetworkExtras.h
+      - Plugins/iOS/unity-plugin-library.a
+      lastVersion:
+        android: 7.0.0
+        ios: 7.0.0
+        unity: 7.0.0
+  maxSettings:
+    enable: 1
+    sdkKey: 3AEMln1zC3vSxippTCI82sy8IpkQzCZtV3utvdZHfRD0cqy2aTuUPsHQwZD4sH3pQNAgwsB_vTuDcbiNhbH14U
+    bannerAdUnit:
+      androidId: 5c8b9a2846fc400f
+      iOSId: 
+      position: 1
+      useAdaptiveBanner: 0
+    interstitialAdUnit:
+      androidId: 2a6a763ee82cae0f
+      iOSId: 
+    rewardedAdUnit:
+      androidId: 57b5ef39847bd3fb
+      iOSId: 
+    rewardedInterstitialAdUnit:
+      androidId: 
+      iOSId: 
+    enableAgeRestrictedUser: 0
+    enableRequestAdAfterHidden: 1
+    enableMaxAdReview: 0
+    importingMediationNetwork:
+      Name: 
+      DisplayName: 
+      DownloadUrl: 
+      DependenciesFilePath: 
+      PluginFilePaths: []
+      LatestVersions:
+        Unity: 
+        Android: 
+        Ios: 
+  ironSourceSettings:
+    enable: 0
+    appKey:
+      androidId: 
+      iOSId: 
+    useAdaptiveBanner: 0
+    bannerAdUnit:
+      size: 0
+      position: 1
+    importingSdk:
+      name: IRONSOURCE_SDK
+      displayName: IronSource
+      versions:
+      - 7.2.1.2
+      path: https://github.com/gamee-studio/ironsource-unity-sdk/releases/download/{0}/IronSource_IntegrationManager_v{0}.unitypackage
+      dependenciesFilePath: IronSource/Editor/IronSourceSDKDependencies.xml
+      pluginFilePath:
+      - IronSource
+      lastVersion:
+        android: 7.2.1.1
+        ios: 7.2.1.2
+        unity: 7.2.1.2

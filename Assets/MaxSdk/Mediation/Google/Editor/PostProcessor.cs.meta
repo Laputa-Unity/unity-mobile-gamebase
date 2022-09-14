@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 42aa959278164e1683addd3bd5ff03d2
+labels:
+- al_max
+- al_max_export_path-MaxSdk/Mediation/Google/Editor/PostProcessor.cs
+- al_max_export_path-MaxSdk\Mediation\Google\Editor\PostProcessor.cs
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

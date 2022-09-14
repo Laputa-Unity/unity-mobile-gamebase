@@ -1,0 +1,184 @@
+// Toony Colors Pro+Mobile 2
+// (c) 2014-2021 Jean Moreno
+
+// Shader Generator Module: Triplanar Sampling
+
+//================================================================
+
+#PROPERTIES_BLOCK
+/// IF TRIPLANAR_SAMPLING || TRIPLANAR_SAMPLING_VERTEX
+	[TCP2Vector4Floats(Contrast X,Contrast Y,Contrast Z,Smoothing,1,16,1,16,1,16,0.05,10)] _TriplanarSamplingStrength ("Triplanar Sampling Parameters", Vector) = (8,8,8,0.5)
+///
+#END
+
+//================================================================
+
+#KEYWORDS
+/// IF TRIPLANAR_SAMPLING_VERTEX
+	feature_on		USE_WORLD_POSITION_UV_VERTEX
+	feature_on		USE_WORLD_NORMAL_UV_VERTEX
+///
+/// IF TRIPLANAR_SAMPLING_GLOBAL
+	feature_on		USE_WORLD_POSITION_FRAGMENT
+	feature_on		USE_WORLD_NORMAL_FRAGMENT
+///
+/// IF TRIPLANAR_SAMPLING_LOCAL
+	feature_on		USE_OBJECT_POSITION_FRAGMENT
+	feature_on		USE_OBJECT_NORMAL_FRAGMENT
+///
+#END
+
+//================================================================
+
+#FUNCTIONS
+/// IF TRIPLANAR_SAMPLING
+
+		// Texture sampling with triplanar UVs
+		float4 tex2D_triplanar(sampler2D samp, float4 tiling_offset, float3 worldPos, float3 worldNormal)
+		{
+			half4 sample_y = ( tex2D(samp, worldPos.xz * tiling_offset.xy + tiling_offset.zw).rgba );
+			fixed4 sample_x = ( tex2D(samp, worldPos.zy * tiling_offset.xy + tiling_offset.zw).rgba );
+			fixed4 sample_z = ( tex2D(samp, worldPos.xy * tiling_offset.xy + tiling_offset.zw).rgba );
+			
+			// blending
+			half3 blendWeights = pow(abs(worldNormal), _TriplanarSamplingStrength.xyz / _TriplanarSamplingStrength.w);
+			blendWeights = blendWeights / (blendWeights.x + abs(blendWeights.y) + blendWeights.z);
+			half4 triplanar = sample_x * blendWeights.x + sample_y * blendWeights.y + sample_z * blendWeights.z;
+			
+			return triplanar;
+		}
+	
+	/// IF NOTILE_SAMPLING
+		half4 tex2D_triplanar_noTile(sampler2D samp, float4 tiling_offset, float3 worldPos, float3 worldNormal)
+		{
+			half4 sample_y = ( tex2D_noTile(samp, worldPos.xz * tiling_offset.xy + tiling_offset.zw).rgba );
+			fixed4 sample_x = ( tex2D_noTile(samp, worldPos.zy * tiling_offset.xy + tiling_offset.zw).rgba );
+			fixed4 sample_z = ( tex2D_noTile(samp, worldPos.xy * tiling_offset.xy + tiling_offset.zw).rgba );
+			
+			// blending
+			half3 blendWeights = pow(abs(worldNormal), _TriplanarSamplingStrength.xyz / _TriplanarSamplingStrength.w);
+			blendWeights = blendWeights / (blendWeights.x + abs(blendWeights.y) + blendWeights.z);
+			half4 triplanar = sample_x * blendWeights.x + sample_y * blendWeights.y + sample_z * blendWeights.z;
+			
+			return triplanar;
+		}
+
+	///
+
+	/// IF URP && UNITY_2019_4
+		// Version with separate texture and sampler
+		#define TCP2_TEX2D_SAMPLE_TRIPLANAR(tex, samplertex, tiling, positionWS, normalWS) tex2D_triplanar(tex, sampler##samplertex, tiling, positionWS, normalWS)
+		float4 tex2D_triplanar(Texture2D tex, SamplerState samp, float4 tiling_offset, float3 worldPos, float3 worldNormal)
+		{
+			half4 sample_y = ( tex.Sample(samp, worldPos.xz * tiling_offset.xy + tiling_offset.zw).rgba );
+			fixed4 sample_x = ( tex.Sample(samp, worldPos.zy * tiling_offset.xy + tiling_offset.zw).rgba );
+			fixed4 sample_z = ( tex.Sample(samp, worldPos.xy * tiling_offset.xy + tiling_offset.zw).rgba );
+			
+			// blending
+			half3 blendWeights = pow(abs(worldNormal), _TriplanarSamplingStrength.xyz / _TriplanarSamplingStrength.w);
+			blendWeights = blendWeights / (blendWeights.x + abs(blendWeights.y) + blendWeights.z);
+			half4 triplanar = sample_x * blendWeights.x + sample_y * blendWeights.y + sample_z * blendWeights.z;
+			
+			return triplanar;
+		}
+		/// IF NOTILE_SAMPLING
+
+		#define TCP2_TEX2D_SAMPLE_TRIPLANAR_NOTILE(tex, samplertex, tiling, positionWS, normalWS) tex2D_triplanar_noTile(tex, sampler##samplertex, tiling, positionWS, normalWS)
+		half4 tex2D_triplanar_noTile(Texture2D tex, SamplerState samp, float4 tiling_offset, float3 worldPos, float3 worldNormal)
+		{
+			half4 sample_y = ( tex2D_noTile(tex, samp, worldPos.xz * tiling_offset.xy + tiling_offset.zw).rgba );
+			fixed4 sample_x = ( tex2D_noTile(tex, samp, worldPos.zy * tiling_offset.xy + tiling_offset.zw).rgba );
+			fixed4 sample_z = ( tex2D_noTile(tex, samp, worldPos.xy * tiling_offset.xy + tiling_offset.zw).rgba );
+			
+			// blending
+			half3 blendWeights = pow(abs(worldNormal), _TriplanarSamplingStrength.xyz / _TriplanarSamplingStrength.w);
+			blendWeights = blendWeights / (blendWeights.x + abs(blendWeights.y) + blendWeights.z);
+			half4 triplanar = sample_x * blendWeights.x + sample_y * blendWeights.y + sample_z * blendWeights.z;
+			
+			return triplanar;
+		}
+		///
+	///
+
+///
+/// IF TRIPLANAR_SAMPLING_VERTEX
+
+		// Texture sampling with triplanar UVs
+		float4 tex2Dlod_triplanar(sampler2D samp, float4 tiling_offset, float lod, float3 worldPos, float3 worldNormal)
+		{
+			half4 sample_y = ( tex2Dlod(samp, float4(worldPos.xz * tiling_offset.xy + tiling_offset.zw, 0, lod)).rgba );
+			fixed4 sample_x = ( tex2Dlod(samp, float4(worldPos.zy * tiling_offset.xy + tiling_offset.zw, 0, lod)).rgba );
+			fixed4 sample_z = ( tex2Dlod(samp, float4(worldPos.xy * tiling_offset.xy + tiling_offset.zw, 0, lod)).rgba );
+			
+			//blending
+			half3 blendWeights = pow(abs(worldNormal), _TriplanarSamplingStrength.xyz / _TriplanarSamplingStrength.w);
+			blendWeights = blendWeights / (blendWeights.x + abs(blendWeights.y) + blendWeights.z);
+			half4 triplanar = sample_x * blendWeights.x + sample_y * blendWeights.y + sample_z * blendWeights.z;
+			
+			return triplanar;
+		}
+	
+	/// IF NOTILE_SAMPLING
+		half4 tex2Dlod_triplanar_noTile(sampler2D samp, float4 tiling_offset, float lod, float3 worldPos, float3 worldNormal)
+		{
+			half4 sample_y = ( tex2Dlod_noTile(samp, worldPos.xz * tiling_offset.xy + tiling_offset.zw).rgba );
+			fixed4 sample_x = ( tex2Dlod_noTile(samp, worldPos.zy * tiling_offset.xy + tiling_offset.zw).rgba );
+			fixed4 sample_z = ( tex2Dlod_noTile(samp, worldPos.xy * tiling_offset.xy + tiling_offset.zw).rgba );
+			
+			//blending
+			half3 blendWeights = pow(abs(worldNormal), _TriplanarSamplingStrength.xyz / _TriplanarSamplingStrength.w);
+			blendWeights = blendWeights / (blendWeights.x + abs(blendWeights.y) + blendWeights.z);
+			half4 triplanar = sample_x * blendWeights.x + sample_y * blendWeights.y + sample_z * blendWeights.z;
+			
+			return triplanar;
+		}
+
+	///
+
+	/// IF URP && UNITY_2019_4
+		// Version with separate texture and sampler
+		#define TCP2_TEX2D_SAMPLE_LOD_TRIPLANAR(tex, samplertex, tiling, lod, positionWS, normalWS) tex2Dlod_triplanar(tex, sampler##samplertex, tiling, lod, positionWS, normalWS)
+		float4 tex2Dlod_triplanar(Texture2D tex, SamplerState samp, float4 tiling_offset, float lod, float3 worldPos, float3 worldNormal)
+		{
+			half4 sample_y = ( tex.SampleLevel(samp, worldPos.xz * tiling_offset.xy + tiling_offset.zw, lod).rgba );
+			fixed4 sample_x = ( tex.SampleLevel(samp, worldPos.zy * tiling_offset.xy + tiling_offset.zw, lod).rgba );
+			fixed4 sample_z = ( tex.SampleLevel(samp, worldPos.xy * tiling_offset.xy + tiling_offset.zw, lod).rgba );
+			
+			// blending
+			half3 blendWeights = pow(abs(worldNormal), _TriplanarSamplingStrength.xyz / _TriplanarSamplingStrength.w);
+			blendWeights = blendWeights / (blendWeights.x + abs(blendWeights.y) + blendWeights.z);
+			half4 triplanar = sample_x * blendWeights.x + sample_y * blendWeights.y + sample_z * blendWeights.z;
+			
+			return triplanar;
+		}
+		/// IF NOTILE_SAMPLING
+
+		#define TCP2_TEX2D_SAMPLE_LOD_TRIPLANAR_NOTILE(tex, samplertex, coord) tex2Dlod_triplanar_noTile(tex, sampler##samplertex, coord)
+		half4 tex2Dlod_triplanar_noTile(Texture2D tex, SamplerState samp, float4 tiling_offset, float3 worldPos, float3 worldNormal)
+		{
+			half4 sample_y = ( tex2Dlod_noTile(tex, samp, float4(worldPos.xz * tiling_offset.xy + tiling_offset.zw, 0, lod)).rgba );
+			fixed4 sample_x = ( tex2Dlod_noTile(tex, samp, float4(worldPos.zy * tiling_offset.xy + tiling_offset.zw, 0, lod)).rgba );
+			fixed4 sample_z = ( tex2Dlod_noTile(tex, samp, float4(worldPos.xy * tiling_offset.xy + tiling_offset.zw, 0, lod)).rgba );
+			
+			// blending
+			half3 blendWeights = pow(abs(worldNormal), _TriplanarSamplingStrength.xyz / _TriplanarSamplingStrength.w);
+			blendWeights = blendWeights / (blendWeights.x + abs(blendWeights.y) + blendWeights.z);
+			half4 triplanar = sample_x * blendWeights.x + sample_y * blendWeights.y + sample_z * blendWeights.z;
+			
+			return triplanar;
+		}
+		///
+	///
+
+///
+#END
+
+//================================================================
+
+#VARIABLES
+/// IF TRIPLANAR_SAMPLING || TRIPLANAR_SAMPLING_VERTEX
+	float4 _TriplanarSamplingStrength;
+///
+#END
+
+//================================================================

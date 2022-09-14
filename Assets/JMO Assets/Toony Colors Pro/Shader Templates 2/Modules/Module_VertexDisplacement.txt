@@ -1,0 +1,97 @@
+// Toony Colors Pro+Mobile 2
+// (c) 2014-2021 Jean Moreno
+
+// Shader Generator Module: Vertex Displacement
+
+#FEATURES
+mult	lbl="Vertex Displacement"	kw=Disabled|,Object Space|VERTEX_DISPLACEMENT,World Space|VERTEX_DISPLACEMENT_WORLD		help="featuresreference/surface/vertexdisplacement"		tt="Enable Vertex Displacement (see in the Shader Properties tab to change the default texture-based behavior)"
+sngl	lbl="Make Optional"			kw=VERTEX_DISP_SHADER_FEATURE			needsOr=VERTEX_DISPLACEMENT,VERTEX_DISPLACEMENT_WORLD	indent	tt="Will make the vertex displacement optional in the material inspector, using a shader keyword"
+#END
+
+//================================================================
+
+#PROPERTIES_NEW
+/// IF VERTEX_DISPLACEMENT || VERTEX_DISPLACEMENT_WORLD
+		header		Vertex Displacement
+	/// IF VERTEX_DISPLACEMENT
+		float3		Vertex Displacement			vertex, imp(vertex_normal), imp(texture, label = "Displacement Texture", variable = "_DisplacementTex", default = black, tiling_offset = true), imp(range, label = "Displacement Strength", variable = "_DisplacementStrength", default = 0.01, min = -1.0, max = 1.0)
+	///
+	/// IF VERTEX_DISPLACEMENT_WORLD
+		float3		Vertex Displacement World	vertex, imp(texture, label = "World Displacement Texture", variable = "_WorldDisplacementTex", default = black, tiling_offset = true), imp(range, label = "Displacement Strength", variable = "_DisplacementStrength", default = 0.01, min = -1.0, max = 1.0)
+	///
+///
+#END
+
+//================================================================
+
+#KEYWORDS
+/// IF VERTEX_DISPLACEMENT_WORLD
+	feature_on		USE_WORLD_POSITION_VERTEX
+	feature_on		APPLY_WORLD_POSITION
+///
+#END
+
+//================================================================
+
+#SHADER_FEATURES_BLOCK
+/// IF VERTEX_DISP_SHADER_FEATURE
+	#pragma shader_feature_local_vertex TCP2_VERTEX_DISPLACEMENT
+///
+#END
+
+//================================================================
+
+#PROPERTIES_BLOCK
+/// IF VERTEX_DISPLACEMENT || VERTEX_DISPLACEMENT_WORLD
+
+		[TCP2HeaderHelp(Vertex Displacement)]
+	/// IF VERTEX_DISP_SHADER_FEATURE
+		[Toggle(TCP2_VERTEX_DISPLACEMENT)] _UseVertexDisplacement ("Enable Vertex Displacement", Float) = 0
+	///
+	/// IF VERTEX_DISPLACEMENT
+		[[PROP:Vertex Displacement]]
+	///
+	/// IF VERTEX_DISPLACEMENT_WORLD
+		[[PROP:Vertex Displacement World]]
+	///
+		[TCP2Separator]
+///
+#END
+
+//================================================================
+
+#VARIABLES
+#END
+
+//================================================================
+
+#INPUT
+#END
+
+//================================================================
+
+#VERTEX(float4 vertex)
+/// IF VERTEX_DISPLACEMENT
+	/// IF VERTEX_DISP_SHADER_FEATURE
+		#if defined(TCP2_VERTEX_DISPLACEMENT)
+	///
+		vertex.xyz += [[VALUE:Vertex Displacement]];
+	/// IF VERTEX_DISP_SHADER_FEATURE
+		#endif
+	///
+///
+#END
+
+#VERTEX:WORLD(float3 worldVertex)
+/// IF VERTEX_DISPLACEMENT_WORLD
+	/// IF VERTEX_DISP_SHADER_FEATURE
+		#if defined(TCP2_VERTEX_DISPLACEMENT)
+	///
+		worldVertex.xyz += [[VALUE:Vertex Displacement World]];
+	/// IF VERTEX_DISP_SHADER_FEATURE
+		#endif
+	///
+///
+#END
+
+//================================================================

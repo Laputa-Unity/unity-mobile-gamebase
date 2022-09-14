@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 19262406303f04f05b14b31b3c734d35
+labels:
+- al_max
+- al_max_export_path-MaxSdk/Mediation/IronSource/Editor/Dependencies.xml
+- al_max_export_path-MaxSdk\Mediation\IronSource\Editor\Dependencies.xml
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

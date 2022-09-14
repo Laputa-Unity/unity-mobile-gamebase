@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 0d8ad3a6ddc4f44fab2efe607fe14f26
+labels:
+- al_max
+- al_max_export_path-MaxSdk/Mediation/Vungle/Editor/Dependencies.xml
+- al_max_export_path-MaxSdk\Mediation\Vungle\Editor\Dependencies.xml
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

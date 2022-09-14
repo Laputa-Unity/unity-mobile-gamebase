@@ -1,0 +1,127 @@
+// Toony Colors Pro+Mobile 2
+// (c) 2014-2021 Jean Moreno
+
+// Shader Generator Module: Vertical Fog
+
+#FEATURES
+sngl	lbl="Vertical Fog"					kw=VERTICAL_FOG			help="featuresreference/specialeffects/verticalfog"			tt="Vertical Fog support based on the world position"
+sngl	lbl="Use Alpha for Transparency"	kw=VERTICAL_FOG_ALPHA							needs=VERTICAL_FOG		indent		tt="Use the fog color alpha to set the fog transparency"
+sngl	lbl="Use Lighting Settings Color"	kw=VERTICAL_FOG_COLOR							needs=VERTICAL_FOG		indent		tt="Use the global fog color from the Lighting Settings window"
+mult	lbl="Color Interpolation"			kw=Linear|,Smooth|VERTICAL_FOG_SMOOTHSTEP		needs=VERTICAL_FOG		indent		tt="How to interpolate between colors according to the threshold/smoothness values (i.e. using smoothstep or lerp)"
+mult	lbl="Space"							kw=World Space|,Object Space|VERTICAL_FOG_LOCAL,Camera Space|VERTICAL_FOG_CAM		needs=VERTICAL_FOG		indent		tt="In which space should the threshold be calculated"
+sngl	lbl="World Position Offset"			kw=VERTICAL_FOG_POS_OFFSET						needs=VERTICAL_FOG		indent		tt="Use the object's world position as an offset for the threshold value.  This allows to keep the fog vertical in world space, but relative to the object's origin."
+sngl	lbl="Make Optional"					kw=VERTICAL_FOG_SHADER_FEATURE					needs=VERTICAL_FOG		indent		tt="Will make vertical fog optional in the material inspector, using a shader keyword"
+#END
+
+//================================================================
+
+#PROPERTIES_NEW
+/// IF VERTICAL_FOG
+		header			Vertical Fog
+		float			Vertical Fog Threshold		lighting, imp(float, label = "Y Threshold", default = 0.0)
+		float			Vertical Fog Smoothness		lighting, imp(float, label = "Smoothness", default = 0.5)
+	/// IF !VERTICAL_FOG_COLOR
+		color_rgba		Vertical Fog Color			lighting, imp(color, label = "Fog Color", default = (0.5, 0.5, 0.5, 1))
+	///
+///
+#END
+
+//================================================================
+
+#KEYWORDS
+/// IF VERTICAL_FOG
+	/// IF VERTICAL_FOG_LOCAL
+		feature_on		USE_OBJECT_POSITION_FRAGMENT
+	/// ELSE
+		feature_on		USE_WORLD_POSITION_FRAGMENT
+	///
+///
+#END
+
+//================================================================
+
+#SHADER_FEATURES_BLOCK
+/// IF VERTICAL_FOG && VERTICAL_FOG_SHADER_FEATURE
+	#pragma shader_feature_local_fragment TCP2_VERTICAL_FOG
+///
+#END
+
+//================================================================
+
+#PROPERTIES_BLOCK
+/// IF VERTICAL_FOG
+
+		[TCP2HeaderHelp(Vertical Fog)]
+	/// IF VERTICAL_FOG_SHADER_FEATURE
+		[Toggle(TCP2_VERTICAL_FOG)] _UseVerticalFog ("Enable Vertical Fog", Float) = 0
+	///
+		[[PROP:Vertical Fog Threshold]]
+		[[PROP:Vertical Fog Smoothness]]
+	/// IF !VERTICAL_FOG_COLOR
+		[[PROP:Vertical Fog Color]]
+	///
+		[TCP2Separator]
+///
+#END
+
+//================================================================
+
+#VARIABLES
+#END
+
+//================================================================
+
+#INPUT
+#END
+
+//================================================================
+
+#VERTEX
+#END
+
+//================================================================
+
+#LIGHTING(float3 color, float3 worldPos, float3 objPos)
+/// IF VERTICAL_FOG
+
+		// Vertical Fog
+	/// IF VERTICAL_FOG_SHADER_FEATURE
+		#if defined(TCP2_VERTICAL_FOG)
+	///
+	/// IF VERTICAL_FOG_LOCAL
+		half vertFogThreshold = objPos.y;
+	/// ELSE
+		half vertFogThreshold = worldPos.y;
+	///
+	/// IF VERTICAL_FOG_CAM
+		vertFogThreshold -= _WorldSpaceCameraPos.y;
+	///
+	/// IF VERTICAL_FOG_POS_OFFSET
+		vertFogThreshold -= unity_ObjectToWorld._m13;
+	///
+		half verticalFogThreshold = [[VALUE:Vertical Fog Threshold]];
+		half verticalFogSmooothness = [[VALUE:Vertical Fog Smoothness]];
+		half verticalFogMin = verticalFogThreshold - verticalFogSmooothness;
+		half verticalFogMax = verticalFogThreshold + verticalFogSmooothness;
+	/// IF VERTICAL_FOG_COLOR
+		half4 fogColor = unity_FogColor;
+	/// ELSE
+		half4 fogColor = [[VALUE:Vertical Fog Color]];
+	///
+		#if defined(UNITY_PASS_FORWARDADD)
+			fogColor.rgb = half3(0, 0, 0);
+		#endif
+	/// IF VERTICAL_FOG_SMOOTHSTEP
+		half vertFogFactor = 1 - smoothstep(verticalFogMin, verticalFogMax, vertFogThreshold);
+	/// ELSE
+		half vertFogFactor = 1 - saturate((vertFogThreshold - verticalFogMin) / (verticalFogMax - verticalFogMin));
+	///
+	/// IF VERTICAL_FOG_ALPHA
+		vertFogFactor *= fogColor.a;
+	///
+		color = lerp(color, fogColor.rgb, vertFogFactor);
+	/// IF VERTICAL_FOG_SHADER_FEATURE
+		#endif
+	///
+///
+#END

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6de4e4d420b14431a7d169724e23361e
+labels:
+- al_max
+- al_max_export_path-MaxSdk/Mediation/Google/Editor/MaxMediationGoogleUtils.cs
+- al_max_export_path-MaxSdk\Mediation\Google\Editor\MaxMediationGoogleUtils.cs
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

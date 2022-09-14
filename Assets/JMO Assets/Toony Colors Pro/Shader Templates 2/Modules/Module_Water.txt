@@ -1,0 +1,315 @@
+// Toony Colors Pro+Mobile 2
+// (c) 2014-2021 Jean Moreno
+
+// Shader Generator Module: Water Effects
+
+#FEATURES
+
+subh	lbl="Water Effects"											help="featuresreference/specialeffects/watereffects"
+sngl	lbl="Vertex Waves"				kw=VERTEX_SIN_WAVES			help="featuresreference/specialeffects/watereffects/vertexwaves"	tt="Basic vertex motion using a sine displacement function"
+mult	lbl="Sine Functions Count"		kw=1|,2|VSW_2,4|VSW_4,8|VSW_8			indent	needs=VERTEX_SIN_WAVES							tt="Number of sine functions to add together (more randomness but also more shader instructions)"
+sngl	lbl="World-based Position"		kw=VSW_WORLDPOS							indent	needs=VERTEX_SIN_WAVES							tt="Calculates the sine function according to the vertices' world position (useful when using multiple meshes as tiles, so that they can connect seamlessly)"
+mult	lbl="Displacement Axis"			kw=Y|,Z|VSW_AXIS_Z,X|VSW_AXIS_X		indent		needs=VERTEX_SIN_WAVES	excl=VSW_FOLLOWNORM		tt="Defines along which local axis to move the vertices"
+sngl	lbl="Follow Mesh Normals"		kw=VSW_FOLLOWNORM					indent=2	needs=VERTEX_SIN_WAVES		tt="Moves the vertices along their base normal, rather than along their up axis (useful for non-planar meshes)"
+sngl	lbl="Calculate Normals"			kw=VERTEX_SIN_NORMALS				indent		needs=VERTEX_SIN_WAVES		tt="Recalculate the normals based on the sine waves (assuming a planar mesh)"
+warning	msgType=warning		needs=VSW_FOLLOWNORM,VERTEX_SIN_NORMALS			indent									lbl="Normals calculation is only intended to be used with planar meshes!  Results may be inconsistent."
+space	space=2
+#sngl	lbl="Depth/Planar Reflections"	kw=NORMAL_MAP_DEPTH		indent	needs=NORMAL_MAP	needsOr=DEPTH_BUFFER_COLOR,DEPTH_BUFFER_FOAM,DEPTH_BUFFER_ALPHA,PLANAR_REFLECTION		tt="Makes the normal map affect depth buffer sampling (for pseudo-refraction effects)"
+space	space=4
+sngl	lbl="Depth-based Color"			kw=DEPTH_BUFFER_COLOR	help="featuresreference/specialeffects/watereffects/depth-basedeffects"		tt="Colors the water based on depth buffer, so that immersed objects alter the water color"
+space	space=2
+sngl	lbl="Depth-based Foam"			kw=DEPTH_BUFFER_FOAM	help="featuresreference/specialeffects/watereffects/depth-basedeffects"		tt="Adds foam at intersection with other objects, based on the depth buffer"
+sngl	lbl="Foam Texture Animation"	kw=FOAM_ANIM			indent	needs=DEPTH_BUFFER_FOAM		tt="Automatically handle the foam texture animation in the shader. It will sample the foam texture twice with different scrolling speeds to simulate a procedural foam effect, based on a grayscale noise texture. Disable this if you want to add your own procedural logic to the foam texture."
+sngl	lbl="Foam Smoothness"			kw=SMOOTH_FOAM			indent	needs=DEPTH_BUFFER_FOAM		tt="Adds a control for the foam smoothness"
+sngl	lbl="Hide on Backfaces"			kw=NO_FOAM_BACKFACE		indent	needs=DEPTH_BUFFER_FOAM		tt="Prevent foam effect to appear on backfaces"
+space	space=2
+sngl	lbl="Depth-based Transparency"	kw=DEPTH_BUFFER_ALPHA	help="featuresreference/specialeffects/watereffects/depth-basedeffects"		tt="Change the water transparency based on depth buffer (requires Alpha transparency)"
+space	space=2
+sngl	lbl="Depth View Correction"		kw=DEPTH_VIEW_CORRECTION		needsOr=DEPTH_BUFFER_COLOR,DEPTH_BUFFER_FOAM,DEPTH_BUFFER_ALPHA		tt="Applies view-based depth sampling correction"
+warning	msgType=info					needs=DEPTH_VIEW_CORRECTION		lbl="Depth View Correction may cause artifacts when not using a planar mesh, or with vertex animation enabled"
+space	space=4
+
+#END
+
+//================================================================
+
+#PROPERTIES_NEW
+/// IF VERTEX_SIN_WAVES || USE_DEPTH_BUFFER
+		header		Water
+///
+/// IF VERTEX_SIN_WAVES
+		float		Waves Speed					vertex, imp(float, label = "Speed", default = 2.0)
+		float		Waves Height				vertex, imp(float, label = "Height", default = 0.1)
+		float		Waves Frequency				vertex, imp(range, label = "Frequency", default = 1.0, min = 0, max = 10)
+
+	/// IF VSW_2 || VSW_4 || VSW_8
+		float4		Waves Sin Offsets 1			vertex, imp(constant, default = (1.0, 2.2, 0.6, 1.3))
+		float4		Waves Phase Offsets 1		vertex, imp(constant, default = (1.0, 1.3, 2.2, 0.4))
+	///
+	/// IF VSW_4 || VSW_8
+		float4		Waves Sin Offsets 2			vertex, imp(constant, default = (0.6, 1.3, 3.1, 2.4))
+		float4		Waves Phase Offsets 2		vertex, imp(constant, default = (2.2, 0.4, 3.3, 2.9))
+	///
+	/// IF VSW_8
+		float4		Waves Sin Offsets 3			vertex, imp(constant, default = (1.4, 1.8, 4.2, 3.6))
+		float4		Waves Phase Offsets 3		vertex, imp(constant, default = (0.2, 2.6, 0.7, 3.1))
+		float4		Waves Sin Offsets 4			vertex, imp(constant, default = (1.1, 2.8, 1.7, 4.3))
+		float4		Waves Phase Offsets 4		vertex, imp(constant, default = (0.5, 4.8, 3.1, 2.3))
+	///
+///
+/// IF DEPTH_BUFFER_COLOR
+		color	Depth Color					fragment, imp(color, default = (0,0,1))
+		float	Depth Color Distance		fragment, imp(range, default = 0.5, min = 0.01, max = 3.0, drawer="[PowerSlider(5.0)]")
+///
+/// IF DEPTH_BUFFER_ALPHA
+		float	Depth Alpha Distance		fragment, imp(range, default = 0.5, min = 0.01, max = 10.0, drawer="[PowerSlider(5.0)]")
+		float	Depth Alpha Min				fragment, imp(range, default = 0.5, min = 0.0, max = 1.0)
+///
+/// IF DEPTH_BUFFER_FOAM
+		float	Foam Spread					fragment, imp(range, default = 2.0, min = 0.0, max = 5.0)
+		float	Foam Strength				fragment, imp(range, default = 0.8, min = 0.0, max = 1.0)
+		float	Foam Mask					fragment, imp(constant, default = 0.0), tt="Optional mask for the foam, if you want to manually define some areas to always have foam (e.g. at the edges of your water mesh using vertex colors)"
+		color_rgba	Foam Color				fragment, imp(color, label = "Foam Color (RGB) Opacity (A)", default = (0.9,0.9,0.9,1.0))
+	/// IF FOAM_ANIM
+		color	Foam Texture			fragment, imp(texture, variable = "_FoamTex", default = black, tiling_offset = true, locked_uv = true)
+		float2	Foam Texture Base UV		fragment, imp(vertex_texcoord)
+		float4	Foam Speed					fragment, imp(vector, default = (2,2,2,2))
+	/// ELSE
+		color	Foam Texture Custom			fragment, imp(texture, variable = "_FoamTex", default = black, tiling_offset = true)
+	///
+	/// IF SMOOTH_FOAM
+		float	Foam Smoothness				fragment, imp(range, default = 0.02, min = 0.0, max = 0.5)
+	///
+///
+#END
+
+//================================================================
+
+#KEYWORDS
+/// IF VERTEX_SIN_WAVES && VSW_WORLDPOS
+	feature_on	USE_WORLD_POSITION_VERTEX
+///
+/// IF DEPTH_BUFFER_COLOR || DEPTH_BUFFER_FOAM || DEPTH_BUFFER_ALPHA
+		feature_on	USE_DEPTH_BUFFER
+	/// IF DEPTH_VIEW_CORRECTION
+		feature_on	USE_NDV_FRAGMENT
+	///
+///
+#END
+
+//================================================================
+
+#PROPERTIES_BLOCK
+	#if_not_empty
+
+		[TCP2HeaderHelp(Vertex Waves Animation)]
+	#start_not_empty_block
+/// IF VERTEX_SIN_WAVES
+		[[PROP:Waves Speed]]
+		[[PROP:Waves Height]]
+		[[PROP:Waves Frequency]]
+
+	/// IF VSW_2 || VSW_4 || VSW_8
+		[[PROP:Waves Sin Offsets 1]]
+		[[PROP:Waves Phase Offsets 1]]
+	///
+	/// IF VSW_4 || VSW_8
+		[[PROP:Waves Sin Offsets 2]]
+		[[PROP:Waves Phase Offsets 2]]
+	///
+	/// IF VSW_8
+		[[PROP:Waves Sin Offsets 3]]
+		[[PROP:Waves Phase Offsets 3]]
+		[[PROP:Waves Sin Offsets 4]]
+		[[PROP:Waves Phase Offsets 4]]
+	///
+///
+	#end_not_empty_block
+	#end_not_empty
+	#if_not_empty
+
+		[TCP2HeaderHelp(Depth Based Effects)]
+	#start_not_empty_block
+/// IF DEPTH_BUFFER_COLOR
+		[[PROP:Depth Color]]
+		[[PROP:Depth Color Distance]]
+///
+/// IF DEPTH_BUFFER_ALPHA
+		[[PROP:Depth Alpha Distance]]
+		[[PROP:Depth Alpha Min]]
+///
+/// IF DEPTH_BUFFER_FOAM
+		[[PROP:Foam Spread]]
+		[[PROP:Foam Strength]]
+		[[PROP:Foam Mask]]
+		[[PROP:Foam Color]]
+	/// IF FOAM_ANIM
+		[[PROP:Foam Texture]]
+		[[PROP:Foam Texture Base UV]]
+		[[PROP:Foam Speed]]
+	/// ELSE
+		[[PROP:Foam Texture Custom]]
+	///
+	/// IF SMOOTH_FOAM
+		[[PROP:Foam Smoothness]]
+	///
+///
+	#end_not_empty_block
+	#end_not_empty
+/// IF VERTEX_SIN_WAVES
+	/// IF VSW_8
+		[HideInInspector] _SineCount8 ("8 Sine Functions", Float) = 8
+	/// ELIF VSW_4
+		[HideInInspector] _SineCount4 ("4 Sine Functions", Float) = 4
+	/// ELIF VSW_2
+		[HideInInspector] _SineCount2 ("2 Sine Functions", Float) = 2
+	///
+///
+#END
+
+//================================================================
+
+#VARIABLES
+#END
+
+//================================================================
+
+#FUNCTIONS
+#END
+
+//================================================================
+
+#INPUT
+#END
+
+//================================================================
+
+#VERTEX(float3 vertexPos, float3 worldPosition, float3 vertexNormal)
+/// IF VERTEX_SIN_WAVES
+
+			// Vertex water waves
+			float _waveFrequency = [[VALUE:Waves Frequency]];
+			float _waveHeight = [[VALUE:Waves Height]];
+	/// IF VSW_WORLDPOS
+			float3 _vertexWavePos = worldPosition.xyz * _waveFrequency;
+	/// ELSE
+			float3 _vertexWavePos = vertexPos.xyz * _waveFrequency;
+	///
+			float _phase = _Time.y * [[VALUE:Waves Speed]];
+	/// IF VSW_2 || VSW_4 || VSW_8
+			half4 vsw_offsets_x = [[VALUE:Waves Sin Offsets 1]];
+			half4 vsw_ph_offsets_x = [[VALUE:Waves Phase Offsets 1]];
+	///
+	/// IF VSW_4 || VSW_8
+			half4 vsw_offsets_z = [[VALUE:Waves Sin Offsets 2]];
+			half4 vsw_ph_offsets_z = [[VALUE:Waves Phase Offsets 2]];
+	///
+	/// IF VSW_8
+			half4 vsw_offsets_x2 = [[VALUE:Waves Sin Offsets 3]];
+			half4 vsw_ph_offsets_x2 = [[VALUE:Waves Phase Offsets 3]];
+			half4 vsw_offsets_z2 = [[VALUE:Waves Sin Offsets 4]];
+			half4 vsw_ph_offsets_z2 = [[VALUE:Waves Phase Offsets 4]];
+	///
+	/// IF VSW_2
+			half4 waveXZ = sin((_vertexWavePos.xxzz * vsw_offsets_x) + (_phase.xxxx * vsw_ph_offsets_x));
+			float waveFactorX = dot(waveXZ.xy, 1) * _waveHeight / 2;
+			float waveFactorZ = dot(waveXZ.zw, 1) * _waveHeight / 2;
+	/// ELIF VSW_4
+			half4 waveX = sin((_vertexWavePos.xxxx * vsw_offsets_x) + (_phase.xxxx * vsw_ph_offsets_x));
+			half4 waveZ = sin((_vertexWavePos.zzzz * vsw_offsets_z) + (_phase.xxxx * vsw_ph_offsets_z));
+			float waveFactorX = dot(waveX.xyzw, 1) * _waveHeight / 4;
+			float waveFactorZ = dot(waveZ.xyzw, 1) * _waveHeight / 4;
+	/// ELIF VSW_8
+			half4 waveX = sin((_vertexWavePos.xxxx * vsw_offsets_x) + (_phase.xxxx * vsw_ph_offsets_x));
+			half4 waveZ = sin((_vertexWavePos.zzzz * vsw_offsets_z) + (_phase.xxxx * vsw_ph_offsets_z));
+			half4 waveX2 = sin((_vertexWavePos.xxxx * vsw_offsets_x2) + (_phase.xxxx * vsw_ph_offsets_x2));
+			half4 waveZ2 = sin((_vertexWavePos.zzzz * vsw_offsets_z2) + (_phase.xxxx * vsw_ph_offsets_z2));
+
+			float waveFactorX = (dot(waveX.xyzw, 1) + dot(waveX2.xyzw, 1)) * _waveHeight / 8;
+			float waveFactorZ = (dot(waveZ.xyzw, 1) + dot(waveZ2.xyzw, 1)) * _waveHeight / 8;
+	/// ELSE
+			float waveFactorX = sin(_vertexWavePos.x + _phase) * _waveHeight;
+			float waveFactorZ = sin(_vertexWavePos.z + _phase) * _waveHeight;
+	///
+	/// IF VSW_FOLLOWNORM
+			vertexPos.xyz += vertexNormal.xyz * (waveFactorX + waveFactorZ);
+	/// ELIF VSW_AXIS_Z
+			vertexPos.z += (waveFactorX + waveFactorZ);
+	/// ELIF VSW_AXIS_X
+			vertexPos.x += (waveFactorX + waveFactorZ);
+	/// ELSE
+			vertexPos.y += (waveFactorX + waveFactorZ);
+	///
+	/// IF VERTEX_SIN_NORMALS
+		/// IF VSW_2
+			half4 waveXZn = cos((_vertexWavePos.xxzz * vsw_offsets_x) + (_phase.xxxx * vsw_ph_offsets_x)) * (vsw_offsets_x / 2);
+			float xn = -_waveHeight * (waveXZn.x + waveXZn.y);
+			float zn = -_waveHeight * (waveXZn.z + waveXZn.w);
+		/// ELIF VSW_4
+			half4 waveXn = cos((_vertexWavePos.xxxx * vsw_offsets_x) + (_phase.xxxx * vsw_ph_offsets_x)) * vsw_offsets_x;
+			half4 waveZn = cos((_vertexWavePos.zzzz * vsw_offsets_z) + (_phase.xxxx * vsw_ph_offsets_z)) * vsw_offsets_z;
+			float xn = -_waveHeight * (waveXn.x + waveXn.y + waveXn.z + waveXn.w) / 4;
+			float zn = -_waveHeight * (waveZn.x + waveZn.y + waveZn.z + waveZn.w) / 4;
+		/// ELIF VSW_8
+			half4 waveXn = cos((_vertexWavePos.xxxx * vsw_offsets_x) + (_phase.xxxx * vsw_ph_offsets_x)) * vsw_offsets_x;
+			half4 waveZn = cos((_vertexWavePos.zzzz * vsw_offsets_z) + (_phase.xxxx * vsw_ph_offsets_z)) * vsw_offsets_z;
+			half4 waveX2n = cos((_vertexWavePos.xxxx * vsw_offsets_x2) + (_phase.xxxx * vsw_ph_offsets_x2)) * vsw_offsets_x2;
+			half4 waveZ2n = cos((_vertexWavePos.zzzz * vsw_offsets_z2) + (_phase.xxxx * vsw_ph_offsets_z2)) * vsw_offsets_z2;
+			float xn = -_waveHeight * (waveXn.x + waveXn.y + waveXn.z + waveXn.w + waveX2n.x + waveX2n.y + waveX2n.z + waveX2n.w) / 8;
+			float zn = -_waveHeight * (waveZn.x + waveZn.y + waveZn.z + waveZn.w + waveZ2n.x + waveZ2n.y + waveZ2n.z + waveZ2n.w) / 8;
+		/// ELSE
+			float xn = -_waveHeight * cos(_vertexWavePos.x + _phase);
+			float zn = -_waveHeight * cos(_vertexWavePos.z + _phase);
+		///
+			vertexNormal = normalize(float3(xn, 1, zn));
+	///
+///
+#END
+
+//================================================================
+
+#FRAGMENT(float3 albedo, float alpha)
+/// IF DEPTH_BUFFER_COLOR
+
+			// Depth-based color
+			half3 depthColor = [[VALUE:Depth Color]];
+			half3 depthColorDist = [[VALUE:Depth Color Distance]];
+			albedo.rgb = lerp(depthColor, albedo.rgb, saturate(depthColorDist * depthDiff));
+///
+/// IF DEPTH_BUFFER_FOAM
+
+			// Depth-based water foam
+			half foamSpread = [[VALUE:Foam Spread]];
+			half foamStrength = [[VALUE:Foam Strength]];
+			half4 foamColor = [[VALUE:Foam Color]];
+
+/// IF FOAM_ANIM
+			half4 foamSpeed = [[VALUE:Foam Speed]];
+			float2 foamUV = [[VALUE:Foam Texture Base UV]];
+
+			float2 foamUV1 = foamUV.xy + _Time.yy * foamSpeed.xy * 0.05;
+			half3 foam = [[SAMPLE_VALUE_SHADER_PROPERTY:Foam Texture(uv:foamUV1)]];
+
+			foamUV.xy += _Time.yy * foamSpeed.zw * 0.05;
+			half3 foam2 = [[SAMPLE_VALUE_SHADER_PROPERTY:Foam Texture(uv:foamUV)]];
+
+			foam = (foam + foam2) / 2.0;
+/// ELSE
+			half3 foam = [[VALUE:Foam Texture Custom]];
+///
+			float foamDepth = saturate(foamSpread * depthDiff) * (1.0 - [[VALUE:Foam Mask]]);
+	/// IF SMOOTH_FOAM
+			half foamSmooth = [[VALUE:Foam Smoothness]];
+			half foamTerm = (smoothstep(foam.r - foamSmooth, foam.r + foamSmooth, saturate(foamStrength - foamDepth)) * saturate(1 - foamDepth)) * foamColor.a;
+	/// ELSE
+			half foamTerm = (step(foam.rgb, saturate(foamStrength - foamDepth)) * saturate(foamStrength - foamDepth)) * foamColor.a;
+	///
+			albedo.rgb = lerp(albedo.rgb, foamColor.rgb, foamTerm);
+			alpha = lerp(alpha, foamColor.a, foamTerm);
+///
+/// IF DEPTH_BUFFER_ALPHA
+
+			// Depth-based alpha
+			alpha *= saturate(([[VALUE:Depth Alpha Distance]] * depthDiff) + [[VALUE:Depth Alpha Min]]);
+///
+#END

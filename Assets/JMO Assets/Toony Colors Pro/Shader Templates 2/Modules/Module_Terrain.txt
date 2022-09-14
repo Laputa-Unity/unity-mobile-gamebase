@@ -1,0 +1,1559 @@
+// Toony Colors Pro+Mobile 2
+// (c) 2014-2021 Jean Moreno
+
+// Shader Generator Module: Terrain
+
+//================================================================
+
+#FEATURES
+sngl	lbl="Terrain Shader"					kw=TERRAIN_SHADER		help="featuresreference/terrain"			tt="Defines this shader as a terrain shader, that will work with Unity's terrain system"
+subh	lbl="OPTIONS"
+sngl	lbl="5-8 Layers Max - Single Pass"		kw=TERRAIN_SHADER_8_LAYERS				needs=TERRAIN_SHADER			tt="Use up to 8 layers in a single pass for better performances, but prevents adding more layers"
+mult	lbl="Layers Transition Smoothness"		kw=Default|,Custom|TERRAIN_TRANSITIONS_CONTROL,Crisp|TERRAIN_TRANSITIONS_CRISP	needs=TERRAIN_SHADER			tt="Adds a property to control the terrain's transition smoothness, or use another algorithm for crisp transitions  WARNING: this is a bit experimental and may not work well for terrains with more than 4 layers!"
+sngl	lbl="Height-based Blending"				kw=TERRAIN_HEIGHT_BLENDING				needs=TERRAIN_SHADER			tt="Use height-based blending between the layers.  You can change the height source in the 'Shader Properties' tab (by default it uses the Mask Map's blue channel)"
+warning		needsOr=TERRAIN_TRANSITIONS_CONTROL,TERRAIN_TRANSITIONS_CRISP	lbl="<b>Layers Transition Smoothness</b> is <b>experimental</b> and likely won't work as expected with terrains that have <b>more than 4 layers</b>."
+subh	lbl="TERRAIN LAYER CUSTOM UI"
+warning	msgType=info	lbl="The Unity terrain system has specific variables embedded in each terrain layer that are meant to work with Unity's default shaders (e.g. smoothness, metallic, specular color, etc.).  TCP2 allows you to <b>reuse those variables</b> for other purposes in your custom shader, for example you could use the <b>layer specular color</b> as the <b>shadow color</b> (this is done in the <b>Shader Properties</b> tab), that way each terrain layer can have its own shadow color.  For readability, the original names of the variables are replaced with generic 'Slot' names."
+subh	lbl="Slot A (Float)"
+mult	lbl="UI Type"							kw=Float Input|,Min Max Slider|TERRAIN_LAYER_RANGE__SMOOTHNESS						needs=TERRAIN_SHADER
+float	lbl="Min"					indent		kw=TERRAIN_LAYER_RANGE__SMOOTHNESS_MIN					needs=TERRAIN_SHADER,TERRAIN_LAYER_RANGE__SMOOTHNESS	default=0
+float	lbl="Max"					indent		kw=TERRAIN_LAYER_RANGE__SMOOTHNESS_MAX					needs=TERRAIN_SHADER,TERRAIN_LAYER_RANGE__SMOOTHNESS	default=1
+nsngl	lbl="Auto Label"						kw=TERRAIN_LAYER_LABEL__SMOOTHNESS_MANUAL		needs=TERRAIN_SHADER	tt="Automatically selects the label based on the first Shader Property that uses the 'Terrain/Layer/Slot A' implementation"
+keyword_str	lbl="Label"				indent		kw=TERRAIN_LAYER_LABEL__SMOOTHNESS		default="Slot A"	forceKeyword=true	needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__SMOOTHNESS_MANUAL
+
+subh	lbl="Slot B (Float)"
+mult	lbl="UI Type"							kw=Float Input|,Min Max Slider|TERRAIN_LAYER_RANGE__METALLIC						needs=TERRAIN_SHADER
+float	lbl="Min"					indent		kw=TERRAIN_LAYER_RANGE__METALLIC_MIN					needs=TERRAIN_SHADER,TERRAIN_LAYER_RANGE__METALLIC		default=0
+float	lbl="Max"					indent		kw=TERRAIN_LAYER_RANGE__METALLIC_MAX					needs=TERRAIN_SHADER,TERRAIN_LAYER_RANGE__METALLIC		default=1
+nsngl	lbl="Auto Label"						kw=TERRAIN_LAYER_LABEL__METALLIC_MANUAL		needs=TERRAIN_SHADER	tt="Automatically selects the label based on the first Shader Property that uses the 'Terrain/Layer/Slot B' implementation"
+keyword_str	lbl="Label"				indent		kw=TERRAIN_LAYER_LABEL__METALLIC		default="Slot B"	forceKeyword=true		needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__METALLIC_MANUAL
+
+
+subh	lbl="Slot C (Color)"
+nsngl	lbl="Auto Label"						kw=TERRAIN_LAYER_LABEL__SPECULAR_MANUAL		needs=TERRAIN_SHADER	tt="Automatically selects the label based on the first Shader Property that uses the 'Terrain/Layer/Slot C' implementation"
+keyword_str	lbl="Label"				indent		kw=TERRAIN_LAYER_LABEL__SPECULAR		default="Slot C"	forceKeyword=true		needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__SPECULAR_MANUAL
+
+
+subh	lbl="Slot D (Float4 or Color)"
+mult	lbl="UI Type"							kw=Vector4|,4 Individual Floats|TERRAIN_LAYER_4FLOATS__DIFFUSEREMAPMIN,Color RGBA|TERRAIN_LAYER_RGBA__DIFFUSEREMAPMIN, Color RGB + Float|TERRAIN_LAYER_RGBFloat__DIFFUSEREMAPMIN	needs=TERRAIN_SHADER
+nsngl	lbl="Auto Label"						kw=TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_MANUAL		needs=TERRAIN_SHADER	tt="Automatically selects the label based on the first Shader Property that uses the 'Terrain/Layer/Slot D' implementation"
+keyword_str	lbl="Label"				indent		kw=TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN			default="Slot D"		forceKeyword=true	needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_MANUAL	excl=TERRAIN_LAYER_RGBFloat__DIFFUSEREMAPMIN
+keyword_str	lbl="Label RGB"			indent		kw=TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_RGB		default="Slot D RGB"	forceKeyword=false	needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_MANUAL,TERRAIN_LAYER_RGBFloat__DIFFUSEREMAPMIN
+keyword_str	lbl="Label Red"			indent		kw=TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_R		default="Slot D Red"	forceKeyword=false	needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_MANUAL,TERRAIN_LAYER_4FLOATS__DIFFUSEREMAPMIN
+keyword_str	lbl="Label Green"		indent		kw=TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_G		default="Slot D Green"	forceKeyword=false	needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_MANUAL,TERRAIN_LAYER_4FLOATS__DIFFUSEREMAPMIN
+keyword_str	lbl="Label Blue"		indent		kw=TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_B		default="Slot D Blue"	forceKeyword=false	needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_MANUAL,TERRAIN_LAYER_4FLOATS__DIFFUSEREMAPMIN
+keyword_str	lbl="Label Alpha"		indent		kw=TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_A		default="Slot D Alpha"	forceKeyword=false	needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_MANUAL	needsOr=TERRAIN_LAYER_RGBFloat__DIFFUSEREMAPMIN,TERRAIN_LAYER_4FLOATS__DIFFUSEREMAPMIN
+
+subh	lbl="Slot E (Float4 or Color)"
+mult	lbl="UI Type"							kw=Vector4|,4 Individual Floats|TERRAIN_LAYER_4FLOATS__MASKMAPREMAPMIN,Color RGBA|TERRAIN_LAYER_RGBA__MASKMAPREMAPMIN, Color RGB + Float|TERRAIN_LAYER_RGBFloat__MASKMAPREMAPMIN	needs=TERRAIN_SHADER
+nsngl	lbl="Auto Label"						kw=TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_MANUAL		needs=TERRAIN_SHADER	tt="Automatically selects the label based on the first Shader Property that uses the 'Terrain/Layer/Slot E' implementation"
+keyword_str	lbl="Label"				indent		kw=TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN			default="Slot E"		forceKeyword=true	needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_MANUAL	excl=TERRAIN_LAYER_RGBFloat__MASKMAPREMAPMIN
+keyword_str	lbl="Label RGB"			indent		kw=TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_RGB		default="Slot E RGB"	forceKeyword=false	needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_MANUAL,TERRAIN_LAYER_RGBFloat__MASKMAPREMAPMIN
+keyword_str	lbl="Label Red"			indent		kw=TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_R		default="Slot E Red"	forceKeyword=false	needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_MANUAL,TERRAIN_LAYER_4FLOATS__MASKMAPREMAPMIN
+keyword_str	lbl="Label Green"		indent		kw=TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_G		default="Slot E Green"	forceKeyword=false	needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_MANUAL,TERRAIN_LAYER_4FLOATS__MASKMAPREMAPMIN
+keyword_str	lbl="Label Blue"		indent		kw=TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_B		default="Slot E Blue"	forceKeyword=false	needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_MANUAL,TERRAIN_LAYER_4FLOATS__MASKMAPREMAPMIN
+keyword_str	lbl="Label Alpha"		indent		kw=TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_A		default="Slot E Alpha"	forceKeyword=false	needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_MANUAL	needsOr=TERRAIN_LAYER_RGBFloat__MASKMAPREMAPMIN,TERRAIN_LAYER_4FLOATS__MASKMAPREMAPMIN
+
+subh	lbl="Mask Map Slot (Texture)"
+nsngl	lbl="Auto Label"						kw=TERRAIN_LAYER_LABEL__MASKMAP_MANUAL		needs=TERRAIN_SHADER	tt="Automatically selects the label based on the first Shader Property that uses the 'Terrain/Layer/Mask Map' implementation"
+keyword_str	lbl="Label"				indent		kw=TERRAIN_LAYER_LABEL__MASKMAP		default="Mask Map"	forceKeyword=true		needs=TERRAIN_SHADER,TERRAIN_LAYER_LABEL__MASKMAP_MANUAL
+
+
+subh	lbl="BASE MAP CONFIGURATION"
+warning	msgType=info	lbl="<b>Base Maps</b> correspond to baked textures that are used instead of the regular layer blending when terrain are viewed from a long distance ('Base Map Distance' setting in the terrain), to save performances.  Those options allow you to downscale each base map to optimize memory usage for those baked textures (factors are compared against the 'Base Texture Resolution' setting of the terrain)"
+sngl	lbl="Use main shader for Base Gen"	kw=TERRAIN_BASEGEN_SAME_SHADER		tt="Use the same code for the BaseGen shader to get a higher fidelity from the source textures (e.g. changes made in the 'Shader Properties' tab like triplanar UVs)"
+keyword	lbl="Albedo BaseMap Size"			kw=BASEGEN_ALBEDO_DOWNSCALE			needs=TERRAIN_SHADER		forceKeyword=true	values=1|1,1∕2|1/2,1∕4|1/4,1∕8|1/8		default=0		tt="Defines the size of the combined Albedo texture for the Terrain's Base Shader relative to the 'Base Texture Resolution' setting (when the terrain is viewed from a long distance, to avoid the cost of texture splatting)"
+keyword	lbl="Mask Map BaseMap Size"						kw=BASEGEN_MASKTEX_DOWNSCALE		needs=TERRAIN_SHADER		forceKeyword=true	values=1|1,1∕2|1/2,1∕4|1/4,1∕8|1/8		default=1		tt="Defines the size of the baked texture for the Terrain's Base Shader relative to the 'Base Texture Resolution' setting (when the terrain is viewed from a long distance, to avoid the cost of texture splatting)"
+keyword	lbl="Slot B BaseMap Size"						kw=BASEGEN_METALLIC_DOWNSCALE		needs=TERRAIN_SHADER		forceKeyword=true	values=1|1,1∕2|1/2,1∕4|1/4,1∕8|1/8		default=2		tt="Defines the size factor of the baked texture for the Terrain's Base Shader relative to the 'Base Texture Resolution' setting (when the terrain is viewed from a long distance, to avoid the cost of texture splatting)    NOTE:This map is only baked when 'Slot A' is also used."
+keyword	lbl="Slot C BaseMap Size"						kw=BASEGEN_SPECULAR_DOWNSCALE				needs=TERRAIN_SHADER		forceKeyword=true	values=1|1,1∕2|1/2,1∕4|1/4,1∕8|1/8		default=2		tt="Defines the size factor of the baked texture for the Terrain's Base Shader relative to the 'Base Texture Resolution' setting (when the terrain is viewed from a long distance, to avoid the cost of texture splatting)"
+keyword	lbl="Slod D BaseMap Size"						kw=BASEGEN_DIFFUSEREMAPMIN_DOWNSCALE				needs=TERRAIN_SHADER		forceKeyword=true	values=1|1,1∕2|1/2,1∕4|1/4,1∕8|1/8		default=2		tt="Defines the size factor of the baked texture for the Terrain's Base Shader relative to the 'Base Texture Resolution' setting (when the terrain is viewed from a long distance, to avoid the cost of texture splatting)"
+keyword	lbl="Slot E BaseMap Size"						kw=BASEGEN_MASKMAPREMAPMIN_DOWNSCALE				needs=TERRAIN_SHADER		forceKeyword=true	values=1|1,1∕2|1/2,1∕4|1/4,1∕8|1/8		default=2		tt="Defines the size factor of the baked texture for the Terrain's Base Shader relative to the 'Base Texture Resolution' setting (when the terrain is viewed from a long distance, to avoid the cost of texture splatting)"
+#END
+
+//================================================================
+
+#PROPERTIES_NEW
+/// IF TERRAIN_SHADER
+		header			Terrain
+	/// IF TERRAIN_TRANSITIONS_CONTROL
+			float	Control Texture Smoothness		fragment, imp(range, label = "Layers Smoothness", default = 0.25, min = 0, max = 0.5)
+		/// IF TERRAIN_SHADER_8_LAYERS
+			float	Control Texture Smoothness 1	fragment, imp(range, label = "Layers Smoothness (layers 5-8)", default = 0.25, min = 0, max = 0.5)
+		///
+	///
+		color_rgba		Layer 0 Albedo				fragment, imp(texture, variable = "_Splat0", variable_locked = true, tiling_offset = true, triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 1st texture slot in the Terrain Layers settings"
+		color_rgba		Layer 1 Albedo				fragment, imp(texture, variable = "_Splat1", sampler = "_Splat0", variable_locked = true, tiling_offset = true, triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 2nd texture slot in the Terrain Layers settings"
+		color_rgba		Layer 2 Albedo				fragment, imp(texture, variable = "_Splat2", sampler = "_Splat0", variable_locked = true, tiling_offset = true, triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 3rd texture slot in the Terrain Layers settings"
+		color_rgba		Layer 3 Albedo				fragment, imp(texture, variable = "_Splat3", sampler = "_Splat0", variable_locked = true, tiling_offset = true, triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 4th texture slot in the Terrain Layers settings"
+	/// IF TERRAIN_SHADER_8_LAYERS
+		color_rgba		Layer 4 Albedo		fragment, imp(texture, variable = "_Splat4", variable_locked = true, tiling_offset = true, triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 5th texture slot in the Terrain Layers settings"
+		color_rgba		Layer 5 Albedo		fragment, imp(texture, variable = "_Splat5", sampler = "_Splat4", variable_locked = true, tiling_offset = true, triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 6th texture slot in the Terrain Layers settings"
+		color_rgba		Layer 6 Albedo		fragment, imp(texture, variable = "_Splat6", sampler = "_Splat4", variable_locked = true, tiling_offset = true, triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 7th texture slot in the Terrain Layers settings"
+		color_rgba		Layer 7 Albedo		fragment, imp(texture, variable = "_Splat7", sampler = "_Splat4", variable_locked = true, tiling_offset = true, triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 8th texture slot in the Terrain Layers settings"
+	/// ELSE
+		color_rgba		Layer 0 Albedo AddPass		fragment, imp(texture, variable = "_Splat0", variable_locked = true, tiling_offset = true, triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 5th texture slot in the Terrain Layers settings, but also every four ones after the 5th (e.g. the 9th, 13th, etc.) if the terrain contains that many textures"
+		color_rgba		Layer 1 Albedo AddPass		fragment, imp(texture, variable = "_Splat1", sampler = "_Splat0", variable_locked = true, tiling_offset = true, triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 6th texture slot in the Terrain Layers settings, but also every four ones after the 6th (e.g. the 10th, 14th, etc.) if the terrain contains that many textures"
+		color_rgba		Layer 2 Albedo AddPass		fragment, imp(texture, variable = "_Splat2", sampler = "_Splat0", variable_locked = true, tiling_offset = true, triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 7th texture slot in the Terrain Layers settings, but also every four ones after the 7th (e.g. the 11th, 15th, etc.) if the terrain contains that many textures"
+		color_rgba		Layer 3 Albedo AddPass		fragment, imp(texture, variable = "_Splat3", sampler = "_Splat0", variable_locked = true, tiling_offset = true, triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 8th texture slot in the Terrain Layers settings, but also every four ones after the 8th (e.g. the 12th, 16th, etc.) if the terrain contains that many textures"
+	///
+		color_rgba		Layer 0 Mask				fragment, imp(texture, variable = "_Mask0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat0_ST", triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 1st Mask Map in the Terrain Layers settings"
+		color_rgba		Layer 1 Mask				fragment, imp(texture, variable = "_Mask1", sampler = "_Mask0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat1_ST", triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 2nd Mask Map in the Terrain Layers settings"
+		color_rgba		Layer 2 Mask				fragment, imp(texture, variable = "_Mask2", sampler = "_Mask0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat2_ST", triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 3rd Mask Map in the Terrain Layers settings"
+		color_rgba		Layer 3 Mask				fragment, imp(texture, variable = "_Mask3", sampler = "_Mask0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat3_ST", triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 4th Mask Map in the Terrain Layers settings"
+	/// IF TERRAIN_SHADER_8_LAYERS
+		color_rgba		Layer 4 Mask				fragment, imp(texture, variable = "_Mask4", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat4_ST", triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 5th Mask Map in the Terrain Layers settings"
+		color_rgba		Layer 5 Mask				fragment, imp(texture, variable = "_Mask5", sampler = "_Mask4", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat5_ST", triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 6th Mask Map in the Terrain Layers settings"
+		color_rgba		Layer 6 Mask				fragment, imp(texture, variable = "_Mask6", sampler = "_Mask4", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat6_ST", triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 7th Mask Map in the Terrain Layers settings"
+		color_rgba		Layer 7 Mask				fragment, imp(texture, variable = "_Mask7", sampler = "_Mask4", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat7_ST", triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 8th Mask Map in the Terrain Layers settings"
+	/// ELSE
+		color_rgba		Layer 0 Mask AddPass		fragment, imp(texture, variable = "_Mask0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat0_ST", triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 5th Mask Map in the Terrain Layers settings, but also every four ones after the 5th (e.g. the 9th, 13th, etc.) if the terrain contains that many textures"
+		color_rgba		Layer 1 Mask AddPass		fragment, imp(texture, variable = "_Mask1", sampler = "_Mask0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat1_ST", triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 6th Mask Map in the Terrain Layers settings, but also every four ones after the 6th (e.g. the 10th, 14th, etc.) if the terrain contains that many textures"
+		color_rgba		Layer 2 Mask AddPass		fragment, imp(texture, variable = "_Mask2", sampler = "_Mask0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat2_ST", triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 7th Mask Map in the Terrain Layers settings, but also every four ones after the 7th (e.g. the 11th, 15th, etc.) if the terrain contains that many textures"
+		color_rgba		Layer 3 Mask AddPass		fragment, imp(texture, variable = "_Mask3", sampler = "_Mask0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat3_ST", triplanar_scale = 0.01, default = gray, drawer = "[HideInInspector]"), help = "The 8th Mask Map in the Terrain Layers settings, but also every four ones after the 8th (e.g. the 12th, 16th, etc.) if the terrain contains that many textures"
+	///
+	/// IF BUMP
+		color_rgba		Layer 0 Normal Map			fragment, imp(texture, variable = "_Normal0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat0_ST", triplanar_scale = 0.01, default = bump, drawer = "[HideInInspector]"), help = "The 1st Normal Map in the Terrain Layers settings"
+		color_rgba		Layer 1 Normal Map			fragment, imp(texture, variable = "_Normal1", sampler = "_Normal0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat1_ST", triplanar_scale = 0.01, default = bump, drawer = "[HideInInspector]"), help = "The 2nd Normal Map in the Terrain Layers settings"
+		color_rgba		Layer 2 Normal Map			fragment, imp(texture, variable = "_Normal2", sampler = "_Normal0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat2_ST", triplanar_scale = 0.01, default = bump, drawer = "[HideInInspector]"), help = "The 3rd Normal Map in the Terrain Layers settings"
+		color_rgba		Layer 3 Normal Map			fragment, imp(texture, variable = "_Normal3", sampler = "_Normal0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat3_ST", triplanar_scale = 0.01, default = bump, drawer = "[HideInInspector]"), help = "The 4th Normal Map in the Terrain Layers settings"
+		/// IF TERRAIN_SHADER_8_LAYERS
+		color_rgba		Layer 4 Normal Map			fragment, imp(texture, variable = "_Normal4", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat4_ST", triplanar_scale = 0.01, default = bump, drawer = "[HideInInspector]"), help = "The 5th Normal Map in the Terrain Layers settings"
+		color_rgba		Layer 5 Normal Map			fragment, imp(texture, variable = "_Normal5", sampler = "_Normal4", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat5_ST", triplanar_scale = 0.01, default = bump, drawer = "[HideInInspector]"), help = "The 6th Normal Map in the Terrain Layers settings"
+		color_rgba		Layer 6 Normal Map			fragment, imp(texture, variable = "_Normal6", sampler = "_Normal4", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat6_ST", triplanar_scale = 0.01, default = bump, drawer = "[HideInInspector]"), help = "The 7th Normal Map in the Terrain Layers settings"
+		color_rgba		Layer 7 Normal Map			fragment, imp(texture, variable = "_Normal7", sampler = "_Normal4", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat7_ST", triplanar_scale = 0.01, default = bump, drawer = "[HideInInspector]"), help = "The 8th Normal Map in the Terrain Layers settings"
+		/// ELSE
+		color_rgba		Layer 0 Normal Map AddPass	fragment, imp(texture, variable = "_Normal0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat0_ST", triplanar_scale = 0.01, default = bump, drawer = "[HideInInspector]"), help = "The 5th Normal Map in the Terrain Layers settings, but also every four ones after the 5th (e.g. the 9th, 13th, etc.) if the terrain contains that many textures"
+		color_rgba		Layer 1 Normal Map AddPass	fragment, imp(texture, variable = "_Normal1", sampler = "_Normal0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat1_ST", triplanar_scale = 0.01, default = bump, drawer = "[HideInInspector]"), help = "The 6th Normal Map in the Terrain Layers settings, but also every four ones after the 6th (e.g. the 10th, 14th, etc.) if the terrain contains that many textures"
+		color_rgba		Layer 2 Normal Map AddPass	fragment, imp(texture, variable = "_Normal2", sampler = "_Normal0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat2_ST", triplanar_scale = 0.01, default = bump, drawer = "[HideInInspector]"), help = "The 7th Normal Map in the Terrain Layers settings, but also every four ones after the 7th (e.g. the 11th, 15th, etc.) if the terrain contains that many textures"
+		color_rgba		Layer 3 Normal Map AddPass	fragment, imp(texture, variable = "_Normal3", sampler = "_Normal0", variable_locked = true, tiling_offset = true, tiling_offset_var = "_Splat3_ST", triplanar_scale = 0.01, default = bump, drawer = "[HideInInspector]"), help = "The 8th Normal Map in the Terrain Layers settings, but also every four ones after the 8th (e.g. the 12th, 16th, etc.) if the terrain contains that many textures"
+		///
+	///
+	/// IF TERRAIN_HEIGHT_BLENDING
+		float	Layer 0 Height Source				fragment, imp(shader_property_ref, reference = "Layer 0 Mask", swizzle = "B")
+		float	Layer 1 Height Source				fragment, imp(shader_property_ref, reference = "Layer 1 Mask", swizzle = "B")
+		float	Layer 2 Height Source				fragment, imp(shader_property_ref, reference = "Layer 2 Mask", swizzle = "B")
+		float	Layer 3 Height Source				fragment, imp(shader_property_ref, reference = "Layer 3 Mask", swizzle = "B")
+		/// IF TERRAIN_SHADER_8_LAYERS
+		float	Layer 4 Height Source				fragment, imp(shader_property_ref, reference = "Layer 4 Mask", swizzle = "B")
+		float	Layer 5 Height Source				fragment, imp(shader_property_ref, reference = "Layer 5 Mask", swizzle = "B")
+		float	Layer 6 Height Source				fragment, imp(shader_property_ref, reference = "Layer 6 Mask", swizzle = "B")
+		float	Layer 7 Height Source				fragment, imp(shader_property_ref, reference = "Layer 7 Mask", swizzle = "B")
+		///
+		float	Layer 0 Height Offset				fragment, imp(range, default = 0.0, min = -1.0, max = 1.0)
+		float	Layer 1 Height Offset				fragment, imp(range, default = 0.0, min = -1.0, max = 1.0)
+		float	Layer 2 Height Offset				fragment, imp(range, default = 0.0, min = -1.0, max = 1.0)
+		float	Layer 3 Height Offset				fragment, imp(range, default = 0.0, min = -1.0, max = 1.0)
+		/// IF TERRAIN_SHADER_8_LAYERS
+		float	Layer 4 Height Offset				fragment, imp(range, default = 0.0, min = -1.0, max = 1.0)
+		float	Layer 5 Height Offset				fragment, imp(range, default = 0.0, min = -1.0, max = 1.0)
+		float	Layer 6 Height Offset				fragment, imp(range, default = 0.0, min = -1.0, max = 1.0)
+		float	Layer 7 Height Offset				fragment, imp(range, default = 0.0, min = -1.0, max = 1.0)
+		///
+	///
+///
+#END
+
+//================================================================
+
+#SHADER_FEATURES_BLOCK
+/// IF TERRAIN_SHADER
+	#pragma shader_feature_local _TERRAIN_INSTANCED_PERPIXEL_NORMAL
+///
+#END
+
+//================================================================
+
+#PROPERTIES_BLOCK
+/// IF TERRAIN_SHADER
+			[TCP2HeaderHelp(Terrain)]
+	/// IF TERRAIN_HEIGHT_BLENDING
+			_HeightTransition ("Height Smoothing", Range(0, 1.0)) = 0.0
+	///
+	/// IF TERRAIN_TRANSITIONS_CONTROL
+			[[PROP:Control Texture Smoothness]]
+		/// IF TERRAIN_SHADER_8_LAYERS
+			[[PROP:Control Texture Smoothness 1]]
+		///
+	///
+	/// IF TERRAIN_HEIGHT_BLENDING
+			[[PROP:Layer 0 Height Source]]
+			[[PROP:Layer 1 Height Source]]
+			[[PROP:Layer 2 Height Source]]
+			[[PROP:Layer 3 Height Source]]
+		/// IF TERRAIN_SHADER_8_LAYERS
+			[[PROP:Layer 4 Height Source]]
+			[[PROP:Layer 5 Height Source]]
+			[[PROP:Layer 6 Height Source]]
+			[[PROP:Layer 7 Height Source]]
+		///
+			[[PROP:Layer 0 Height Offset]]
+			[[PROP:Layer 1 Height Offset]]
+			[[PROP:Layer 2 Height Offset]]
+			[[PROP:Layer 3 Height Offset]]
+		/// IF TERRAIN_SHADER_8_LAYERS
+			[[PROP:Layer 4 Height Offset]]
+			[[PROP:Layer 5 Height Offset]]
+			[[PROP:Layer 6 Height Offset]]
+			[[PROP:Layer 7 Height Offset]]
+		///
+	///
+			[HideInInspector] TerrainMeta_maskMapTexture ("@%TERRAIN_LAYER_LABEL__MASKMAP%@", 2D) = "white" {}
+	/// IF BUMP
+			[HideInInspector] TerrainMeta_normalMapTexture ("Normal Map", 2D) = "bump" {}
+			[HideInInspector] TerrainMeta_normalScale ("Normal Scale", Float) = 1
+	///
+	/// IF USE_TERRAIN_SMOOTHNESS
+		/// IF TERRAIN_LAYER_RANGE__SMOOTHNESS
+			[HideInInspector] TerrainMeta_smoothness ("@%TERRAIN_LAYER_LABEL__SMOOTHNESS%@", Range(@%TERRAIN_LAYER_RANGE__SMOOTHNESS_MIN%@, @%TERRAIN_LAYER_RANGE__SMOOTHNESS_MAX%@)) = 0
+		/// ELSE
+			[HideInInspector] TerrainMeta_smoothness ("@%TERRAIN_LAYER_LABEL__SMOOTHNESS%@", Float) = 0
+		///
+	///
+	/// IF USE_TERRAIN_METALLIC
+		/// IF TERRAIN_LAYER_RANGE__METALLIC
+			[HideInInspector] TerrainMeta_metallic ("@%TERRAIN_LAYER_LABEL__METALLIC%@", Range(@%TERRAIN_LAYER_RANGE__METALLIC_MIN%@, @%TERRAIN_LAYER_RANGE__METALLIC_MAX%@)) = 0
+		/// ELSE
+			[HideInInspector] TerrainMeta_metallic ("@%TERRAIN_LAYER_LABEL__METALLIC%@", Float) = 0
+		///
+	///
+	/// IF USE_TERRAIN_SPECULAR
+			[HideInInspector] [HDR] TerrainMeta_specular ("@%TERRAIN_LAYER_LABEL__SPECULAR%@", Color) = (0,0,0,0)
+	///
+	/// IF USE_TERRAIN_DIFFUSEREMAPMIN
+		/// IF TERRAIN_LAYER_RGBA__DIFFUSEREMAPMIN
+			[HideInInspector] [HDR] TerrainMeta_diffuseRemapMin ("@%TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN%@", Color) = (0,0,0,0)
+		/// ELIF TERRAIN_LAYER_4FLOATS__DIFFUSEREMAPMIN
+			[HideInInspector] TerrainMeta_diffuseRemapMin ("@%TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_R%@,@%TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_G%@,@%TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_B%@,@%TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_A%@", Float) = 0
+		/// ELIF TERRAIN_LAYER_RGBFloat__DIFFUSEREMAPMIN
+			[HideInInspector] TerrainMeta_diffuseRemapMin ("@%TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_RGB%@,@%TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN_A%@", Range(0,1)) = 0
+		/// ELSE
+			[HideInInspector] TerrainMeta_diffuseRemapMin ("@%TERRAIN_LAYER_LABEL__DIFFUSEREMAPMIN%@", Vector) = (0,0,0,0)
+		///
+	///
+	/// IF USE_TERRAIN_MASKMAPREMAPMIN
+		/// IF TERRAIN_LAYER_RGBA__MASKMAPREMAPMIN
+			[HideInInspector] [HDR] TerrainMeta_maskMapRemapMin ("@%TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN%@", Color) = (0,0,0,0)
+		/// ELIF TERRAIN_LAYER_4FLOATS__MASKMAPREMAPMIN
+			[HideInInspector] TerrainMeta_maskMapRemapMin ("@%TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_R%@,@%TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_G%@,@%TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_B%@,@%TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_A%@", Float) = 0
+		/// ELIF TERRAIN_LAYER_RGBFloat__MASKMAPREMAPMIN
+			[HideInInspector] TerrainMeta_maskMapRemapMin ("@%TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_RGB%@,@%TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN_A%@", Range(0,1)) = 0
+		/// ELSE
+			[HideInInspector] TerrainMeta_maskMapRemapMin ("@%TERRAIN_LAYER_LABEL__MASKMAPREMAPMIN%@", Vector) = (0,0,0,0)
+		///
+	///
+			[Toggle(_TERRAIN_INSTANCED_PERPIXEL_NORMAL)] _EnableInstancedPerPixelNormal("Enable Instanced per-pixel normal", Float) = 1.0
+			[TCP2Separator]
+///
+#END
+
+//================================================================
+
+#FUNCTIONS:EXPLICIT
+/// IF TERRAIN_SHADER
+
+			//================================================================
+			// Terrain Shader specific
+
+	/// IF !URP && USE_TERRAIN_DATA_LIGHTING
+			//----------------------------------------------------------------
+			// Terrain data to pass to the lighting function
+			struct TerrainData
+			{
+				half4 splatControl;
+				half3 mixedDiffuse;
+		/// IF USE_TERRAIN_SPECULAR
+				half4 specularColor;
+		///
+		/// IF USE_TERRAIN_SMOOTHNESS
+				half smoothness;
+		///
+		/// IF USE_TERRAIN_METALLIC
+				half metallic;
+		///
+		/// IF USE_TERRAIN_DIFFUSEREMAPMIN
+				half4 diffuseRemapMin;
+		///
+		/// IF USE_TERRAIN_MASKMAPREMAPMIN
+				half4 maskMapRemapMin;
+		///
+		/// IF USE_TERRAIN_MASKMAP
+				half4 mask;
+		///
+			};
+	///
+
+			//----------------------------------------------------------------
+			// Per-layer variables
+
+			CBUFFER_START(_Terrain)
+				float4 _Control_ST;
+				float4 _Control_TexelSize;
+	/// IF TERRAIN_HEIGHT_BLENDING
+				half _HeightTransition;
+	///
+				half _DiffuseHasAlpha0, _DiffuseHasAlpha1, _DiffuseHasAlpha2, _DiffuseHasAlpha3;
+				half _LayerHasMask0, _LayerHasMask1, _LayerHasMask2, _LayerHasMask3;
+				// half4 _Splat0_ST, _Splat1_ST, _Splat2_ST, _Splat3_ST;
+	/// IF BUMP
+				half _NormalScale0, _NormalScale1, _NormalScale2, _NormalScale3;
+	///
+	/// IF USE_TERRAIN_METALLIC
+				half _Metallic0, _Metallic1, _Metallic2, _Metallic3;
+	///
+	/// IF USE_TERRAIN_SMOOTHNESS
+				half _Smoothness0, _Smoothness1, _Smoothness2, _Smoothness3;
+	///
+	/// IF USE_TERRAIN_SPECULAR
+				half4 _Specular0, _Specular1, _Specular2, _Specular3;
+	///
+	/// IF USE_TERRAIN_DIFFUSEREMAPMIN
+				half4 _DiffuseRemapScale0, _DiffuseRemapScale1, _DiffuseRemapScale2, _DiffuseRemapScale3;
+	///
+	/// IF USE_TERRAIN_MASKMAPREMAPMIN
+				half4 _MaskMapRemapScale0, _MaskMapRemapScale1, _MaskMapRemapScale2, _MaskMapRemapScale3;
+	///
+#	/// IF USE_TERRAIN_MASKMAP
+#				half4 _MaskMapRemapOffset0, _MaskMapRemapOffset1, _MaskMapRemapOffset2, _MaskMapRemapOffset3;
+#	///
+
+/// IF TERRAIN_SHADER_8_LAYERS
+				float4 _Control1_ST;
+				float4 _Control1_TexelSize;
+				half _DiffuseHasAlpha4, _DiffuseHasAlpha5, _DiffuseHasAlpha6, _DiffuseHasAlpha7;
+				half _LayerHasMask4, _LayerHasMask5, _LayerHasMask6, _LayerHasMask7;
+				// half4 _Splat4_ST, _Splat5_ST, _Splat6_ST, _Splat7_ST;
+	/// IF BUMP
+				half _NormalScale4, _NormalScale5, _NormalScale6, _NormalScale7;
+	///
+	/// IF USE_TERRAIN_METALLIC
+				half _Metallic4, _Metallic5, _Metallic6, _Metallic7;
+	///
+	/// IF USE_TERRAIN_SMOOTHNESS
+				half _Smoothness4, _Smoothness5, _Smoothness6, _Smoothness7;
+	///
+	/// IF USE_TERRAIN_SPECULAR
+				half4 _Specular4, _Specular5, _Specular6, _Specular7;
+	///
+	/// IF USE_TERRAIN_DIFFUSEREMAPMIN
+				half4 _DiffuseRemapScale4, _DiffuseRemapScale5, _DiffuseRemapScale6, _DiffuseRemapScale7;
+	///
+	/// IF USE_TERRAIN_MASKMAPREMAPMIN
+				half4 _MaskMapRemapScale4, _MaskMapRemapScale5, _MaskMapRemapScale6, _MaskMapRemapScale7;
+	///
+#	/// IF USE_TERRAIN_MASKMAP
+#				half4 _MaskMapRemapOffset4, _MaskMapRemapOffset5, _MaskMapRemapOffset6, _MaskMapRemapOffset7;
+#	///
+///
+
+				#ifdef UNITY_INSTANCING_ENABLED
+					float4 _TerrainHeightmapRecipSize;   // float4(1.0f/width, 1.0f/height, 1.0f/(width-1), 1.0f/(height-1))
+					float4 _TerrainHeightmapScale;       // float4(hmScale.x, hmScale.y / (float)(kMaxHeight), hmScale.z, 0.0f)
+				#endif
+				#ifdef SCENESELECTIONPASS
+					int _ObjectId;
+					int _PassValue;
+				#endif
+			CBUFFER_END
+
+			//----------------------------------------------------------------
+			// Terrain textures
+
+			TCP2_TEX2D_WITH_SAMPLER(_Control);
+/// IF TERRAIN_SHADER_8_LAYERS
+			TCP2_TEX2D_WITH_SAMPLER(_Control1);
+///
+
+			#if defined(TERRAIN_BASE_PASS)
+				TCP2_TEX2D_WITH_SAMPLER(_MainTex);
+/// IF USE_TERRAIN_SPECULAR
+				TCP2_TEX2D_WITH_SAMPLER(_SpecularTex);
+///
+/// IF USE_TERRAIN_METALLIC && USE_TERRAIN_SMOOTHNESS
+				TCP2_TEX2D_WITH_SAMPLER(_MetallicTex);
+///
+/// IF USE_TERRAIN_DIFFUSEREMAPMIN
+				TCP2_TEX2D_WITH_SAMPLER(_DiffuseRemapMinTex);
+///
+/// IF USE_TERRAIN_MASKMAPREMAPMIN
+				TCP2_TEX2D_WITH_SAMPLER(_MaskMapRemapMinTex);
+///
+/// IF USE_TERRAIN_MASKMAP
+				TCP2_TEX2D_WITH_SAMPLER(_MasksTex);
+///
+/// IF BUMP
+				TCP2_TEX2D_WITH_SAMPLER(_NormalMap);
+///
+			#endif
+
+			//----------------------------------------------------------------
+			// Terrain Instancing
+
+			#if defined(UNITY_INSTANCING_ENABLED) && defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL)
+				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
+			#endif
+
+			#ifdef UNITY_INSTANCING_ENABLED
+				TCP2_TEX2D_NO_SAMPLER(_TerrainHeightmapTexture);
+				TCP2_TEX2D_WITH_SAMPLER(_TerrainNormalmapTexture);
+			#endif
+
+			UNITY_INSTANCING_BUFFER_START(Terrain)
+				UNITY_DEFINE_INSTANCED_PROP(float4, _TerrainPatchInstanceData)  // float4(xBase, yBase, skipScale, ~)
+			UNITY_INSTANCING_BUFFER_END(Terrain)
+
+			void TerrainInstancing(inout float4 positionOS, inout float3 normal, inout float2 uv)
+			{
+			#ifdef UNITY_INSTANCING_ENABLED
+				float2 patchVertex = positionOS.xy;
+				float4 instanceData = UNITY_ACCESS_INSTANCED_PROP(Terrain, _TerrainPatchInstanceData);
+
+				float2 sampleCoords = (patchVertex.xy + instanceData.xy) * instanceData.z; // (xy + float2(xBase,yBase)) * skipScale
+				float height = UnpackHeightmap(_TerrainHeightmapTexture.Load(int3(sampleCoords, 0)));
+
+				positionOS.xz = sampleCoords * _TerrainHeightmapScale.xz;
+				positionOS.y = height * _TerrainHeightmapScale.y;
+
+				#ifdef ENABLE_TERRAIN_PERPIXEL_NORMAL
+					normal = float3(0, 1, 0);
+				#else
+					normal = _TerrainNormalmapTexture.Load(int3(sampleCoords, 0)).rgb * 2 - 1;
+				#endif
+				uv = sampleCoords * _TerrainHeightmapRecipSize.zw;
+			#endif
+			}
+
+			void TerrainInstancing(inout float4 positionOS, inout float3 normal)
+			{
+				float2 uv = { 0, 0 };
+				TerrainInstancing(positionOS, normal, uv);
+			}
+
+			//----------------------------------------------------------------
+			// Terrain Holes
+
+			#if defined(_ALPHATEST_ON)
+				TCP2_TEX2D_WITH_SAMPLER(_TerrainHolesTexture);
+
+				void ClipHoles(float2 uv)
+				{
+					float hole = TEX2D_SAMPLE(_TerrainHolesTexture, sampler_TerrainHolesTexture, uv).r;
+					clip(hole == 0.0f ? -1 : 1);
+				}
+			#endif
+
+	/// IF TERRAIN_HEIGHT_BLENDING
+			//----------------------------------------------------------------
+			// Height-based blending
+
+		/// IF TERRAIN_SHADER_8_LAYERS
+			void HeightBasedSplatModify_8_Layers(inout half4 splatControl, inout half4 splatControl1, in half4 splatHeight, in half4 splatHeight1)
+			{
+				// We multiply by the splat Control weights to get combined height
+				splatHeight *= splatControl.rgba;
+				splatHeight1 *= splatControl1.rgba;
+					
+				half maxHeight = max(splatHeight.r, max(splatHeight.g, max(splatHeight.b, splatHeight.a)));
+				half maxHeight1 = max(splatHeight1.r, max(splatHeight1.g, max(splatHeight1.b, splatHeight1.a)));
+				maxHeight = max(maxHeight, maxHeight1);
+			
+				// Ensure that the transition height is not zero.
+				half transition = max(_HeightTransition, 1e-5);
+			
+				// This sets the highest splat to "transition", and everything else to a lower value relative to that
+				// Then we clamp this to zero and normalize everything
+				half4 weightedHeights = splatHeight + transition - maxHeight.xxxx;
+				weightedHeights = max(0, weightedHeights);
+				half4 weightedHeights1 = splatHeight1 + transition - maxHeight.xxxx;
+				weightedHeights1 = max(0, weightedHeights1);
+
+				// We need to add an epsilon here for active layers (hence the blendMask again)
+				// so that at least a layer shows up if everything's too low.
+				weightedHeights = (weightedHeights + 1e-6) * splatControl;
+				weightedHeights1 = (weightedHeights1 + 1e-6) * splatControl1;
+			
+				// Normalize (and clamp to epsilon to keep from dividing by zero)
+				half sumHeight = max(dot(weightedHeights, half4(1, 1, 1, 1)), 1e-6);
+				half sumHeight1 = max(dot(weightedHeights1, half4(1, 1, 1, 1)), 1e-6);
+				sumHeight = max(sumHeight, sumHeight1);
+				splatControl = weightedHeights / sumHeight.xxxx;
+				splatControl1 = weightedHeights1 / sumHeight.xxxx;
+			}
+		/// ELSE
+			void HeightBasedSplatModify(inout half4 splatControl, in half4 splatHeight)
+			{
+#				// heights are in mask blue channel, we multiply by the splat Control weights to get combined height
+#				half4 splatHeight = half4(masks[0].b, masks[1].b, masks[2].b, masks[3].b) * splatControl.rgba;
+				// We multiply by the splat Control weights to get combined height
+				splatHeight *= splatControl.rgba;
+				half maxHeight = max(splatHeight.r, max(splatHeight.g, max(splatHeight.b, splatHeight.a)));
+
+				// Ensure that the transition height is not zero.
+				half transition = max(_HeightTransition, 1e-5);
+
+				// This sets the highest splat to "transition", and everything else to a lower value relative to that
+				// Then we clamp this to zero and normalize everything
+				half4 weightedHeights = splatHeight + transition - maxHeight.xxxx;
+				weightedHeights = max(0, weightedHeights);
+
+				// We need to add an epsilon here for active layers (hence the blendMask again)
+				// so that at least a layer shows up if everything's too low.
+				weightedHeights = (weightedHeights + 1e-6) * splatControl;
+
+				// Normalize (and clamp to epsilon to keep from dividing by zero)
+				half sumHeight = max(dot(weightedHeights, half4(1, 1, 1, 1)), 1e-6);
+				splatControl = weightedHeights / sumHeight.xxxx;
+			}
+		///
+
+	///
+///
+#END
+
+//================================================================
+
+#VERTEX(float4 positionOS, float3 normalOS, float2 texcoord, float4 tangentOS)
+/// IF TERRAIN_SHADER
+	TerrainInstancing(positionOS, normalOS, texcoord.xy);
+	/// IF !URP
+		tangentOS.xyz = cross(normalOS, float3(0,0,1));
+		tangentOS.w = -1;
+	///
+///
+#END
+
+//================================================================
+
+#FRAGMENT:PREPASS_AND_NORMAL(float3 outputNormal, struct output)
+/// IF TERRAIN_SHADER
+		// Terrain
+
+	/// IF URP
+		float2 terrainTexcoord0 = input.[[INPUT_VALUE:texcoord0]].xy;
+	/// ELSE
+		float2 terrainTexcoord0 = input.texcoord0.xy;
+	///
+
+		#if defined(_ALPHATEST_ON)
+			ClipHoles(terrainTexcoord0.xy);
+		#endif
+
+		#if defined(TERRAIN_BASE_PASS)
+
+			half4 terrain_mixedDiffuse = TCP2_TEX2D_SAMPLE(_MainTex, _MainTex, terrainTexcoord0.xy).rgba;
+	/// IF USE_TERRAIN_SMOOTHNESS
+			half terrain_smoothness = terrain_mixedDiffuse.a;
+	///
+	/// IF USE_TERRAIN_METALLIC
+		/// IF USE_TERRAIN_SMOOTHNESS
+			half terrain_metallic = TCP2_TEX2D_SAMPLE(_MetallicTex, _MetallicTex, terrainTexcoord0.xy).r;
+		/// ELSE
+			half terrain_metallic = terrain_mixedDiffuse.a;
+		///
+	///
+	/// IF USE_TERRAIN_SPECULAR
+			half4 terrain_specularColor = TCP2_TEX2D_SAMPLE(_SpecularTex, _SpecularTex, terrainTexcoord0.xy).rgba;
+	///
+	/// IF USE_TERRAIN_DIFFUSEREMAPMIN
+			half4 terrain_diffuseRemapMin = TCP2_TEX2D_SAMPLE(_DiffuseRemapMinTex, _DiffuseRemapMinTex, terrainTexcoord0.xy).rgba;
+	///
+	/// IF USE_TERRAIN_MASKMAPREMAPMIN
+			half4 terrain_maskMapRemapMin = TCP2_TEX2D_SAMPLE(_MaskMapRemapMinTex, _MaskMapRemapMinTex, terrainTexcoord0.xy).rgba;
+	///
+	/// IF USE_TERRAIN_MASKMAP
+			half4 terrain_mask = TCP2_TEX2D_SAMPLE(_MasksTex, _MasksTex, terrainTexcoord0.xy).rgba;
+	///
+			half3 normalTS = half3(0.0h, 0.0h, 1.0h);
+
+		#else
+
+			// Sample the splat control texture generated by the terrain
+			// adjust splat UVs so the edges of the terrain tile lie on pixel centers
+			float2 terrainSplatUV = (terrainTexcoord0.xy * (_Control_TexelSize.zw - 1.0f) + 0.5f) * _Control_TexelSize.xy;
+			half4 terrain_splat_control_0 = TCP2_TEX2D_SAMPLE(_Control, _Control, terrainSplatUV);
+	/// IF HOOK_SPLAT_CONTROL
+			terrain_splat_control_0.rgba = [[SAMPLE_VALUE_SHADER_PROPERTY:Terrain Splat Control]];
+	///
+	/// IF TERRAIN_SHADER_8_LAYERS
+			terrainSplatUV = (terrainTexcoord0.xy * (_Control1_TexelSize.zw - 1.0f) + 0.5f) * _Control1_TexelSize.xy;
+			half4 terrain_splat_control_1 = TCP2_TEX2D_SAMPLE(_Control1, _Control1, terrainSplatUV);
+		/// IF HOOK_SPLAT_CONTROL_1
+			terrain_splat_control_1.rgba = [[SAMPLE_VALUE_SHADER_PROPERTY:Terrain Splat Control 1]];
+		///
+	///
+	/// IF TERRAIN_HEIGHT_BLENDING
+			half height0 = [[VALUE:Layer 0 Height Source]] + [[VALUE:Layer 0 Height Offset]];
+			half height1 = [[VALUE:Layer 1 Height Source]] + [[VALUE:Layer 1 Height Offset]];
+			half height2 = [[VALUE:Layer 2 Height Source]] + [[VALUE:Layer 2 Height Offset]];
+			half height3 = [[VALUE:Layer 3 Height Source]] + [[VALUE:Layer 3 Height Offset]];
+		/// IF TERRAIN_SHADER_8_LAYERS
+			half height4 = [[VALUE:Layer 4 Height Source]] + [[VALUE:Layer 4 Height Offset]];
+			half height5 = [[VALUE:Layer 5 Height Source]] + [[VALUE:Layer 5 Height Offset]];
+			half height6 = [[VALUE:Layer 6 Height Source]] + [[VALUE:Layer 6 Height Offset]];
+			half height7 = [[VALUE:Layer 7 Height Source]] + [[VALUE:Layer 7 Height Offset]];
+			HeightBasedSplatModify_8_Layers(terrain_splat_control_0, terrain_splat_control_1, half4(height0, height1, height2, height3), half4(height4, height5, height6, height7));
+		/// ELSE
+			HeightBasedSplatModify(terrain_splat_control_0, half4(height0, height1, height2, height3));
+		///
+	///
+	/// IF TERRAIN_TRANSITIONS_CRISP
+			// Apply crisp transition on the splat texture
+			terrain_splat_control_0.r = step(1e-5f, terrain_splat_control_0.r - terrain_splat_control_0.g - terrain_splat_control_0.b - terrain_splat_control_0.a);
+			terrain_splat_control_0.g = step(1e-5f, terrain_splat_control_0.g - terrain_splat_control_0.r - terrain_splat_control_0.b - terrain_splat_control_0.a);
+			terrain_splat_control_0.b = step(1e-5f, terrain_splat_control_0.b - terrain_splat_control_0.g - terrain_splat_control_0.r - terrain_splat_control_0.a);
+			terrain_splat_control_0.a = step(1e-5f, terrain_splat_control_0.a - terrain_splat_control_0.g - terrain_splat_control_0.b - terrain_splat_control_0.r);
+		/// IF TERRAIN_SHADER_8_LAYERS
+			terrain_splat_control_1.r = step(1e-5f, terrain_splat_control_1.r - terrain_splat_control_1.g - terrain_splat_control_1.b - terrain_splat_control_1.a);
+			terrain_splat_control_1.g = step(1e-5f, terrain_splat_control_1.g - terrain_splat_control_1.r - terrain_splat_control_1.b - terrain_splat_control_1.a);
+			terrain_splat_control_1.b = step(1e-5f, terrain_splat_control_1.b - terrain_splat_control_1.g - terrain_splat_control_1.r - terrain_splat_control_1.a);
+			terrain_splat_control_1.a = step(1e-5f, terrain_splat_control_1.a - terrain_splat_control_1.g - terrain_splat_control_1.b - terrain_splat_control_1.r);
+		///
+	/// ELIF TERRAIN_TRANSITIONS_CONTROL
+			// Apply custom transition smoothness on the splat texture
+			half terrain_splat_control_smoothness = [[VALUE:Control Texture Smoothness]];
+			terrain_splat_control_0 = smoothstep(0.5 - terrain_splat_control_smoothness, 0.5 + terrain_splat_control_smoothness, terrain_splat_control_0);
+		/// IF TERRAIN_SHADER_8_LAYERS
+			half terrain_splat_control1_smoothness = [[VALUE:Control Texture Smoothness 1]];
+			terrain_splat_control_1 = smoothstep(0.5 - terrain_splat_control1_smoothness, 0.5 + terrain_splat_control1_smoothness, terrain_splat_control_1);
+		///
+		/// IF TERRAIN_SHADER_8_LAYERS
+			// Fill out black holes for each splat texture with their first layers
+			half splat_gba = dot(terrain_splat_control_0.gba, float3(1,1,1));
+			half splat1_gba = dot(terrain_splat_control_1.gba, float3(1,1,1));
+			half splat_rgba = saturate(splat_gba + terrain_splat_control_0.r);
+			half splat1_rgba = saturate(splat1_gba + terrain_splat_control_1.r);
+			terrain_splat_control_0 = lerp(float4(1,0,0,0), terrain_splat_control_0, saturate(splat_gba + splat1_rgba));
+			terrain_splat_control_1 = lerp(float4(1,0,0,0), terrain_splat_control_1, saturate(splat1_gba + splat_rgba));
+		/// ELSE
+			// Fill out black holes for splat0 with first layer
+			terrain_splat_control_0 = lerp(float4(1,0,0,0), terrain_splat_control_0, dot(terrain_splat_control_0.gba, float3(1,1,1)));
+		///
+	///
+
+			// Calculate weights and perform the texture blending
+			half terrain_weight = dot(terrain_splat_control_0, half4(1,1,1,1));
+	/// IF TERRAIN_SHADER_8_LAYERS
+			half terrain_weight_1 = dot(terrain_splat_control_1, half4(1,1,1,1));
+	///
+
+			#if !defined(SHADER_API_MOBILE) && defined(TERRAIN_SPLAT_ADDPASS)
+				clip(terrain_weight == 0.0f ? -1 : 1);
+	/// IF TERRAIN_SHADER_8_LAYERS
+				clip(terrain_weight_1 == 0.0f ? -1 : 1);
+	///
+			#endif
+
+			// Normalize weights before lighting and restore afterwards so that the overall lighting result can be correctly weighted
+	/// IF TERRAIN_SHADER_8_LAYERS
+			terrain_splat_control_0 /= (terrain_weight + terrain_weight_1 + 1e-3f);
+			terrain_splat_control_1 /= (terrain_weight + terrain_weight_1 + 1e-3f);
+	/// ELSE
+			terrain_splat_control_0 /= (terrain_weight + 1e-3f);
+	///
+
+	/// IF BUMP
+			// Sample terrain normal maps
+		/// IF BUMP_SHADER_FEATURE
+			#if defined(_NORMALMAP)
+		///
+		/// IF TERRAIN_ADDPASS
+			half4 normal0 = [[VALUE:Layer 0 Normal Map AddPass]];
+			half4 normal1 = [[VALUE:Layer 1 Normal Map AddPass]];
+			half4 normal2 = [[VALUE:Layer 2 Normal Map AddPass]];
+			half4 normal3 = [[VALUE:Layer 3 Normal Map AddPass]];
+		/// ELSE
+			half4 normal0 = [[VALUE:Layer 0 Normal Map]];
+			half4 normal1 = [[VALUE:Layer 1 Normal Map]];
+			half4 normal2 = [[VALUE:Layer 2 Normal Map]];
+			half4 normal3 = [[VALUE:Layer 3 Normal Map]];
+			/// IF TERRAIN_SHADER_8_LAYERS
+			half4 normal4 = [[VALUE:Layer 4 Normal Map]];
+			half4 normal5 = [[VALUE:Layer 5 Normal Map]];
+			half4 normal6 = [[VALUE:Layer 6 Normal Map]];
+			half4 normal7 = [[VALUE:Layer 7 Normal Map]];
+			///
+		///
+		/// IF URP
+			#define UnpackFunction UnpackNormalScale
+		/// ELSE
+			#define UnpackFunction UnpackNormalWithScale
+		///
+			half3 normalTS = UnpackFunction(normal0, _NormalScale0) * terrain_splat_control_0.r;
+			normalTS += UnpackFunction(normal1, _NormalScale1) * terrain_splat_control_0.g;
+			normalTS += UnpackFunction(normal2, _NormalScale2) * terrain_splat_control_0.b;
+			normalTS += UnpackFunction(normal3, _NormalScale3) * terrain_splat_control_0.a;
+		/// IF TERRAIN_SHADER_8_LAYERS
+			normalTS += UnpackFunction(normal4, _NormalScale4) * terrain_splat_control_1.r;
+			normalTS += UnpackFunction(normal5, _NormalScale5) * terrain_splat_control_1.g;
+			normalTS += UnpackFunction(normal6, _NormalScale6) * terrain_splat_control_1.b;
+			normalTS += UnpackFunction(normal7, _NormalScale7) * terrain_splat_control_1.a;
+		///
+			normalTS.z += 1e-3f; // to avoid nan after normalizing
+
+		/// IF !URP
+			outputNormal = normalTS;
+		///
+
+		/// IF BUMP_SHADER_FEATURE
+			#endif
+		///
+	///
+		#endif // TERRAIN_BASE_PASS
+
+	/// IF !URP
+		#if defined(INSTANCING_ON) && defined(SHADER_TARGET_SURFACE_ANALYSIS) && defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
+			outputNormal = float3(0, 0, 1); // make sure that surface shader compiler realizes we write to normal, as UNITY_INSTANCING_ENABLED is not defined for SHADER_TARGET_SURFACE_ANALYSIS.
+		#endif
+			
+		// Terrain normal, if using instancing and per-pixel normal map
+		#if defined(UNITY_INSTANCING_ENABLED) && !defined(SHADER_API_D3D11_9X) && defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
+			float2 terrainNormalCoords = (terrainTexcoord0.xy / _TerrainHeightmapRecipSize.zw + 0.5f) * _TerrainHeightmapRecipSize.xy;
+			float3 geomNormal = normalize(TCP2_TEX2D_SAMPLE(_TerrainNormalmapTexture, _TerrainNormalmapTexture, terrainNormalCoords.xy).xyz * 2 - 1);
+
+		/// IF BUMP
+			/// IF BUMP_SHADER_FEATURE
+			#if defined(_NORMALMAP)
+			///
+			float3 geomTangent = normalize(cross(geomNormal, float3(0, 0, 1)));
+			float3 geomBitangent = normalize(cross(geomTangent, geomNormal));
+			outputNormal = outputNormal.x * geomTangent
+						  + outputNormal.y * geomBitangent
+						  + outputNormal.z * geomNormal;
+			outputNormal = outputNormal.xzy;
+		///
+		/// IF !BUMP || (BUMP && BUMP_SHADER_FEATURE)
+			/// IF BUMP_SHADER_FEATURE
+			#else
+			///
+			outputNormal = geomNormal;
+			/// IF BUMP_SHADER_FEATURE
+			#endif
+			///
+		///
+		#endif
+	///
+
+	/// IF URP
+		// Terrain normal, if using instancing and per-pixel normal map
+		#if defined(UNITY_INSTANCING_ENABLED) && !defined(SHADER_API_D3D11_9X) && defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
+			float2 terrainNormalCoords = (terrainTexcoord0.xy / _TerrainHeightmapRecipSize.zw + 0.5f) * _TerrainHeightmapRecipSize.xy;
+			normalWS = normalize(TCP2_TEX2D_SAMPLE(_TerrainNormalmapTexture, _TerrainNormalmapTexture, terrainNormalCoords.xy).rgb * 2 - 1);
+			normalWS = mul(float4(normalWS, 0), unity_ObjectToWorld).xyz;
+		/// IF BUMP
+
+			// take terrain normal into account when converting normal maps to world space:
+			tangentWS = cross(UNITY_MATRIX_M._13_23_33, normalWS);
+			tangentToWorldMatrix = half3x3(-tangentWS, cross(normalWS, tangentWS), normalWS);
+		///
+		#endif
+	///
+///
+#END
+
+#FRAGMENT(float3 albedo, float alpha, float3 outputNormal, struct output)
+/// IF TERRAIN_SHADER
+		#if !defined(TERRAIN_BASE_PASS)
+			// Sample textures that will be blended based on the terrain splat map
+	/// IF TERRAIN_ADDPASS
+			half4 splat0 = [[VALUE:Layer 0 Albedo AddPass]];
+			half4 splat1 = [[VALUE:Layer 1 Albedo AddPass]];
+			half4 splat2 = [[VALUE:Layer 2 Albedo AddPass]];
+			half4 splat3 = [[VALUE:Layer 3 Albedo AddPass]];
+	/// ELSE
+			half4 splat0 = [[VALUE:Layer 0 Albedo]];
+			half4 splat1 = [[VALUE:Layer 1 Albedo]];
+			half4 splat2 = [[VALUE:Layer 2 Albedo]];
+			half4 splat3 = [[VALUE:Layer 3 Albedo]];
+		/// IF TERRAIN_SHADER_8_LAYERS
+			half4 splat4 = [[VALUE:Layer 4 Albedo]];
+			half4 splat5 = [[VALUE:Layer 5 Albedo]];
+			half4 splat6 = [[VALUE:Layer 6 Albedo]];
+			half4 splat7 = [[VALUE:Layer 7 Albedo]];
+		///
+	///
+
+	/// IF USE_TERRAIN_MASKMAP
+		/// IF TERRAIN_ADDPASS
+			half4 mask0 = [[VALUE:Layer 0 Mask AddPass]];
+			half4 mask1 = [[VALUE:Layer 1 Mask AddPass]];
+			half4 mask2 = [[VALUE:Layer 2 Mask AddPass]];
+			half4 mask3 = [[VALUE:Layer 3 Mask AddPass]];
+		/// ELSE
+			half4 mask0 = [[VALUE:Layer 0 Mask]];
+			half4 mask1 = [[VALUE:Layer 1 Mask]];
+			half4 mask2 = [[VALUE:Layer 2 Mask]];
+			half4 mask3 = [[VALUE:Layer 3 Mask]];
+			/// IF TERRAIN_SHADER_8_LAYERS
+			half4 mask4 = [[VALUE:Layer 4 Mask]];
+			half4 mask5 = [[VALUE:Layer 5 Mask]];
+			half4 mask6 = [[VALUE:Layer 6 Mask]];
+			half4 mask7 = [[VALUE:Layer 7 Mask]];
+			///
+		///
+	///
+
+	/// IF TERRAIN_TRANSITIONS_CONTROL
+			terrain_weight = 1.0;
+		/// IF TERRAIN_SHADER_8_LAYERS
+			terrain_weight_1 = 1.0;
+		///
+	///
+
+			#define BLEND_TERRAIN_HALF4(outVariable, sourceVariable) \
+				half4 outVariable = terrain_splat_control_0.r * sourceVariable##0; \
+				outVariable += terrain_splat_control_0.g * sourceVariable##1; \
+				outVariable += terrain_splat_control_0.b * sourceVariable##2; \
+	/// IF TERRAIN_SHADER_8_LAYERS
+				outVariable += terrain_splat_control_0.a * sourceVariable##3; \
+				outVariable += terrain_splat_control_1.r * sourceVariable##4; \
+				outVariable += terrain_splat_control_1.g * sourceVariable##5; \
+				outVariable += terrain_splat_control_1.b * sourceVariable##6; \
+				outVariable += terrain_splat_control_1.a * sourceVariable##7;
+	/// ELSE
+				outVariable += terrain_splat_control_0.a * sourceVariable##3;
+	///
+			#define BLEND_TERRAIN_HALF(outVariable, sourceVariable) \
+	/// IF TERRAIN_SHADER_8_LAYERS
+				half4 outVariable = dot(terrain_splat_control_0, half4(sourceVariable##0, sourceVariable##1, sourceVariable##2, sourceVariable##3)); \
+				outVariable += dot(terrain_splat_control_1, half4(sourceVariable##4, sourceVariable##5, sourceVariable##6, sourceVariable##7));
+	/// ELSE
+				half4 outVariable = dot(terrain_splat_control_0, half4(sourceVariable##0, sourceVariable##1, sourceVariable##2, sourceVariable##3));
+	///
+
+			BLEND_TERRAIN_HALF4(terrain_mixedDiffuse, splat)
+	/// IF USE_TERRAIN_SPECULAR
+			BLEND_TERRAIN_HALF4(terrain_specularColor, _Specular)
+	///
+	/// IF USE_TERRAIN_SMOOTHNESS
+			BLEND_TERRAIN_HALF(terrain_smoothness, _Smoothness)
+	///
+	/// IF USE_TERRAIN_METALLIC
+			BLEND_TERRAIN_HALF(terrain_metallic, _Metallic)
+	///
+	/// IF USE_TERRAIN_MASKMAP
+			BLEND_TERRAIN_HALF4(terrain_mask, mask)
+	///
+	/// IF USE_TERRAIN_DIFFUSEREMAPMIN
+			BLEND_TERRAIN_HALF4(terrain_diffuseRemapMin, _DiffuseRemapScale)
+	///
+	/// IF USE_TERRAIN_MASKMAPREMAPMIN
+			BLEND_TERRAIN_HALF4(terrain_maskMapRemapMin, _MaskMapRemapScale)
+	///
+
+	/// IF TERRAIN_BASEGEN && TERRAIN_BASEGEN_SAME_SHADER
+			// Return the relevant data for the BaseGen passes
+
+			#if defined(BASEGEN_MAIN_TEX)
+			/// IF USE_TERRAIN_METALLIC && !USE_TERRAIN_SMOOTHNESS
+				terrain_mixedDiffuse.a = terrain_metallic;
+			/// ELIF USE_TERRAIN_SMOOTHNESS
+				terrain_mixedDiffuse.a = terrain_smoothness;
+			///
+				return terrain_mixedDiffuse;
+			#endif
+		/// IF USE_TERRAIN_MASKMAP
+			#if defined(BASEGEN_MASKS_TEX)
+				return terrain_mask;
+			#endif
+		///
+		/// IF USE_TERRAIN_METALLIC && USE_TERRAIN_SMOOTHNESS
+			#if defined(BASEGEN_METALLIC_TEX)
+				return terrain_metallic;
+			#endif
+		///
+		/// IF USE_TERRAIN_DIFFUSEREMAPMIN
+			#if defined(BASEGEN_DIFFUSEREMAPMIN_TEX)
+				return terrain_diffuseRemapMin;
+			#endif
+		///
+		/// IF USE_TERRAIN_MASKMAPREMAPMIN
+			#if defined(BASEGEN_MASKMAPREMAPMIN_TEX)
+				return terrain_maskMapRemapMin;
+			#endif
+		///
+		/// IF USE_TERRAIN_SPECULAR
+			#if defined(BASEGEN_SPECULAR_TEX)
+				return terrain_specularColor;
+			#endif
+		///
+	///
+
+		#endif // !TERRAIN_BASE_PASS
+
+	/// IF !URP
+		/// IF USE_TERRAIN_DATA_LIGHTING
+			TerrainData terrainData = (TerrainData)0;
+			terrainData.mixedDiffuse = terrain_mixedDiffuse.rgb;
+			/// IF USE_TERRAIN_SPECULAR
+			terrainData.specularColor = terrain_specularColor;
+			///
+			/// IF USE_TERRAIN_SMOOTHNESS
+			terrainData.smoothness = terrain_smoothness;
+			///
+			/// IF USE_TERRAIN_METALLIC
+			terrainData.metallic = terrain_metallic;
+			///
+			/// IF USE_TERRAIN_DIFFUSEREMAPMIN
+			terrainData.diffuseRemapMin = terrain_diffuseRemapMin;
+			///
+			/// IF USE_TERRAIN_MASKMAPREMAPMIN
+			terrainData.maskMapRemapMin = terrain_maskMapRemapMin;
+			///
+			/// IF USE_TERRAIN_MASKMAP
+			terrainData.mask = terrain_mask;
+			///
+		#if !defined(TERRAIN_BASE_PASS)
+			terrainData.splatControl = terrain_splat_control_0;
+		#endif
+			output.terrainData = terrainData;
+		///
+
+		#if !defined(TERRAIN_BASE_PASS)
+			output.terrainWeight = terrain_weight;
+		/// IF TERRAIN_SHADER_8_LAYERS
+			output.terrainWeight1 = terrain_weight_1;
+		///
+		#endif
+	///
+
+		albedo = terrain_mixedDiffuse.rgb;
+		alpha = terrain_mixedDiffuse.a;
+
+# !!! NOTE: Keywords starting with "USE_TERRAIN" are treated specially in the code so that they persist for the BaseGen pass
+#ENABLE_IMPL: color_rgba terrain_splat_control_0, lbl = "Terrain/Splat Control Texture", help = "The internal terrain texture that defines the masking for each layer"
+#ENABLE_IMPL: float terrain_smoothness, lbl = "Terrain/Layer/Slot A (float)", help = "A per-layer Float value (originally used for Smoothness in the original terrain system)", warning = "NOTE: it will always return 1.0 if the layer's main texture has an alpha channel, instead of the value defined with the slider. This is because in the terrain system the smoothness value can be fetched from the alpha channel, so the internal system will ignore the actual value in that case.", toggles = "USE_TERRAIN_SMOOTHNESS"
+#ENABLE_IMPL: float terrain_metallic, lbl = "Terrain/Layer/Slot B (float)", help = "A per-layer Float value (originally used for Metallic in the original terrain system)", toggles = "USE_TERRAIN_METALLIC"
+#ENABLE_IMPL: color_rgba terrain_specularColor, lbl = "Terrain/Layer/Slot C (color)", help = "A per-layer Color value (originally used for Specular Color in the original terrain system)", toggles = "USE_TERRAIN_SPECULAR"
+#ENABLE_IMPL: float4 terrain_diffuseRemapMin, lbl = "Terrain/Layer/Slot D (float4)", help = "A per-layer Vector4 or Color value (originally used for Diffuse remapping in the original terrain system)", toggles = "USE_TERRAIN_DIFFUSEREMAPMIN"
+#ENABLE_IMPL: float4 terrain_maskMapRemapMin, lbl = "Terrain/Layer/Slot E (float4)", help = "A per-layer Vector4 or Color value (originally used for Diffuse remapping in the original terrain system)", toggles = "USE_TERRAIN_MASKMAPREMAPMIN"
+#ENABLE_IMPL: color_rgba terrain_mask, lbl = "Terrain/Layer/Mask Map (texture)", help = "A per-layer texture ('Mask Map' in the terrain system)", toggles = "USE_TERRAIN_MASKMAP"
+///
+#END
+
+#FRAGMENT:SPECIAL
+/// IF TERRAIN_SHADER && !URP
+#ENABLE_IMPL: color_rgba surface.terrainData.splatControl, lbl = "Terrain/Splat Control Texture", help = "The internal terrain texture that defines the masking for each layer", toggles = "USE_TERRAIN_DATA_LIGHTING"
+#ENABLE_IMPL: color surface.terrainData.mixedDiffuse, lbl = "Terrain/Layer Albedo Color", help = "The Specular Color from the terrain layer", toggles = "USE_TERRAIN_DATA_LIGHTING"
+#ENABLE_IMPL: float surface.terrainData.smoothness, lbl = "Terrain/Layer/Slot A (float)", help = "A per-layer Float value (originally used for Smoothness in the original terrain system)", warning = "<b>NOTE:</b> it will always return 1.0 if the layer's main texture has an alpha channel, instead of the value defined with the slider. This is because in the terrain system the smoothness value can be fetched from the alpha channel, so the internal system will ignore the actual value in that case.", toggles = "USE_TERRAIN_DATA_LIGHTING,USE_TERRAIN_SMOOTHNESS"
+#ENABLE_IMPL: float surface.terrainData.metallic, lbl = "Terrain/Layer/Slot B (float)", help = "A per-layer Float value (originally used for Metallic in the original terrain system)", toggles = "USE_TERRAIN_DATA_LIGHTING,USE_TERRAIN_METALLIC"
+#ENABLE_IMPL: color_rgba surface.terrainData.specularColor, lbl = "Terrain/Layer/Slot C (color)", help = "A per-layer Color value (originally used for Specular Color in the original terrain system)", toggles = "USE_TERRAIN_DATA_LIGHTING,USE_TERRAIN_SPECULAR"
+#ENABLE_IMPL: float4 surface.terrainData.diffuseRemapMin, lbl = "Terrain/Layer/Slot D (float4)", help = "A per-layer Vector4 or Color value (originally used for Diffuse remapping in the original terrain system)", toggles = "USE_TERRAIN_DATA_LIGHTING,USE_TERRAIN_DIFFUSEREMAPMIN"
+#ENABLE_IMPL: float4 surface.terrainData.maskMapRemapMin, lbl = "Terrain/Layer/Slot E (float4)", help = "A per-layer Vector4 or Color value (originally used for Diffuse remapping in the original terrain system)", toggles = "USE_TERRAIN_DATA_LIGHTING,USE_TERRAIN_MASKMAPREMAPMIN"
+#ENABLE_IMPL: color_rgba surface.terrainData.mask, lbl = "Terrain/Layer/Mask Map (texture)", help = "A per-layer texture ('Mask Map' in the terrain system)", toggles = "USE_TERRAIN_DATA_LIGHTING,USE_TERRAIN_MASKMAP"
+
+///
+#END
+
+#FRAGMENT:FINAL_COLOR(float terrainWeight, float terrainWeight1, float4 color)
+/// IF TERRAIN_SHADER
+	#if !defined(TERRAIN_BASE_PASS)
+	/// IF TERRAIN_SHADER_8_LAYERS
+		color.rgb *= saturate(terrainWeight + terrainWeight1);
+	/// ELSE
+		color.rgb *= terrainWeight;
+	///
+	#endif
+///
+#END
+
+//================================================================
+
+#TERRAIN_BASEGEN_SHADER
+	Properties
+	{
+		[HideInInspector] _DstBlend("DstBlend", Float) = 0.0
+	}
+	SubShader
+	{
+/// IF TERRAIN_SHADER_8_LAYERS
+		Tags { "SplatCount" = "8" }
+///
+		CGINCLUDE
+
+		#include "UnityCG.cginc"
+		sampler2D _Control;
+		float4 _Control_ST;
+		float4 _Control_TexelSize;
+/// IF TERRAIN_SHADER_8_LAYERS
+		sampler2D _Control1;
+		float4 _Control1_ST;
+		float4 _Control1_TexelSize;
+///
+
+		float4 _Splat0_ST;
+		float4 _Splat1_ST;
+		float4 _Splat2_ST;
+		float4 _Splat3_ST;
+/// IF TERRAIN_SHADER_8_LAYERS
+		float4 _Splat4_ST;
+		float4 _Splat5_ST;
+		float4 _Splat6_ST;
+		float4 _Splat7_ST;
+///
+
+		struct Attributes
+		{
+			float4 vertex : POSITION;
+			float2 texcoord : TEXCOORD0;
+		};
+
+		struct Varyings_Textures
+		{
+			float4 vertex : SV_POSITION;
+			float2 texcoord0 : TEXCOORD0;
+/// IF TERRAIN_SHADER_8_LAYERS
+			float4 texcoord1 : TEXCOORD1;
+			float4 texcoord2 : TEXCOORD2;
+			float4 texcoord3 : TEXCOORD3;
+			float4 texcoord4 : TEXCOORD4;
+/// ELSE
+			float2 texcoord1 : TEXCOORD1;
+			float2 texcoord2 : TEXCOORD2;
+			float2 texcoord3 : TEXCOORD3;
+			float2 texcoord4 : TEXCOORD4;
+///
+		};
+
+		float2 ComputeControlUV(float2 uv, float4 texelSize)
+		{
+			// adjust splatUVs so the edges of the terrain tile lie on pixel centers
+			return (uv * (texelSize.zw - 1.0f) + 0.5f) * texelSize.xy;
+		}
+
+		Varyings_Textures vert_textures(Attributes input)
+		{
+			Varyings_Textures output = (Varyings_Textures)0;
+			output.vertex = UnityObjectToClipPos(input.vertex);
+			float2 uv = TRANSFORM_TEX(input.texcoord, _Control);
+			output.texcoord0.xy = ComputeControlUV(uv, _Control_TexelSize);
+			output.texcoord1.xy = TRANSFORM_TEX(uv, _Splat0);
+			output.texcoord2.xy = TRANSFORM_TEX(uv, _Splat1);
+			output.texcoord3.xy = TRANSFORM_TEX(uv, _Splat2);
+			output.texcoord4.xy = TRANSFORM_TEX(uv, _Splat3);
+/// IF TERRAIN_SHADER_8_LAYERS
+			output.texcoord1.zw = TRANSFORM_TEX(uv, _Splat4);
+			output.texcoord2.zw = TRANSFORM_TEX(uv, _Splat5);
+			output.texcoord3.zw = TRANSFORM_TEX(uv, _Splat6);
+			output.texcoord4.zw = TRANSFORM_TEX(uv, _Splat7);
+///
+			return output;
+		}
+
+		struct Varyings_Simple
+		{
+			float4 vertex : SV_POSITION;
+			float2 texcoord0 : TEXCOORD0;
+		};
+
+		Varyings_Simple vert_simple(Attributes input)
+		{
+			Varyings_Simple output = (Varyings_Simple)0;
+			output.vertex = UnityObjectToClipPos(input.vertex);
+			output.texcoord0 = ComputeControlUV(TRANSFORM_TEX(input.texcoord, _Control), _Control_TexelSize);
+			return output;
+		}
+
+		ENDCG
+
+		Pass
+		{
+			Tags
+			{
+				"Name" = "_MainTex"
+				"Format" = "RGBA32"
+				"Size" = "@%BASEGEN_ALBEDO_DOWNSCALE%@"
+			}
+
+			ZTest Always
+			ZWrite Off
+			Cull Off
+			Blend One [_DstBlend]
+
+			CGPROGRAM
+
+			#pragma vertex vert_textures
+			#pragma fragment frag
+
+			sampler2D _Splat0, _Splat1, _Splat2, _Splat3;
+/// IF TERRAIN_SHADER_8_LAYERS
+			sampler2D _Splat4, _Splat5, _Splat6, _Splat7;
+///
+/// IF USE_TERRAIN_SMOOTHNESS
+			float _Smoothness0, _Smoothness1, _Smoothness2, _Smoothness3;
+	/// IF TERRAIN_SHADER_8_LAYERS
+			float _Smoothness4, _Smoothness5, _Smoothness6, _Smoothness7;
+	///
+/// ELIF USE_TERRAIN_METALLIC
+			float _Metallic0, _Metallic1, _Metallic2, _Metallic3;
+	/// IF TERRAIN_SHADER_8_LAYERS
+			float _Metallic4, _Metallic5, _Metallic6, _Metallic7;
+	///
+///
+
+			float4 frag(Varyings_Textures input) : SV_Target
+			{
+				float4 alpha = tex2D(_Control, input.texcoord0.xy);
+/// IF TERRAIN_SHADER_8_LAYERS
+				float4 alpha1 = tex2D(_Control1, input.texcoord0.xy);
+///
+
+				float4 splat0 = tex2D(_Splat0, input.texcoord1.xy);
+				float4 splat1 = tex2D(_Splat1, input.texcoord2.xy);
+				float4 splat2 = tex2D(_Splat2, input.texcoord3.xy);
+				float4 splat3 = tex2D(_Splat3, input.texcoord4.xy);
+/// IF TERRAIN_SHADER_8_LAYERS
+				float4 splat4 = tex2D(_Splat4, input.texcoord1.zw);
+				float4 splat5 = tex2D(_Splat5, input.texcoord2.zw);
+				float4 splat6 = tex2D(_Splat6, input.texcoord3.zw);
+				float4 splat7 = tex2D(_Splat7, input.texcoord4.zw);
+///
+
+/// IF USE_TERRAIN_SMOOTHNESS
+				splat0.a = _Smoothness0;
+				splat1.a = _Smoothness1;
+				splat2.a = _Smoothness2;
+				splat3.a = _Smoothness3;
+	/// IF TERRAIN_SHADER_8_LAYERS
+				splat4.a = _Smoothness4;
+				splat5.a = _Smoothness5;
+				splat6.a = _Smoothness6;
+				splat7.a = _Smoothness7;
+	///
+/// ELIF USE_TERRAIN_METALLIC
+				splat0.a = _Metallic0;
+				splat1.a = _Metallic1;
+				splat2.a = _Metallic2;
+				splat3.a = _Metallic3;
+	/// IF TERRAIN_SHADER_8_LAYERS
+				splat4.a = _Metallic4;
+				splat5.a = _Metallic5;
+				splat6.a = _Metallic6;
+				splat7.a = _Metallic7;
+	///
+///
+
+				float4 albedoSmoothness = splat0 * alpha.x;
+				albedoSmoothness += splat1 * alpha.y;
+				albedoSmoothness += splat2 * alpha.z;
+				albedoSmoothness += splat3 * alpha.w;
+/// IF TERRAIN_SHADER_8_LAYERS
+				albedoSmoothness += splat4 * alpha1.x;
+				albedoSmoothness += splat5 * alpha1.y;
+				albedoSmoothness += splat6 * alpha1.z;
+				albedoSmoothness += splat7 * alpha1.w;
+///
+
+				return albedoSmoothness;
+			}
+
+			ENDCG
+		}
+
+/// IF USE_TERRAIN_MASKMAP
+		Pass
+		{
+			Tags
+			{
+				"Name" = "_MasksTex"
+				"Format" = "RGBA32"
+				"Size" = "@%BASEGEN_MASKTEX_DOWNSCALE%@"
+			}
+
+			ZWrite Off
+			ZTest Always
+			Cull Off
+			Blend One [_DstBlend]
+
+			CGPROGRAM
+
+			#pragma vertex vert_textures
+			#pragma fragment frag
+
+			sampler2D _Mask0, _Mask1, _Mask2, _Mask3;
+	/// IF TERRAIN_SHADER_8_LAYERS
+			sampler2D _Mask4, _Mask5, _Mask6, _Mask7;
+	///
+
+			float4 frag(Varyings_Textures input) : SV_Target
+			{
+				float4 alpha = tex2D(_Control, input.texcoord0.xy);
+	/// IF TERRAIN_SHADER_8_LAYERS
+				float4 alpha1 = tex2D(_Control1, input.texcoord0.xy);
+	///
+
+				float4 masks = tex2D(_Mask0, input.texcoord1.xy) * alpha.x;
+				masks += tex2D(_Mask1, input.texcoord2.xy) * alpha.y;
+				masks += tex2D(_Mask2, input.texcoord3.xy) * alpha.z;
+				masks += tex2D(_Mask3, input.texcoord4.xy) * alpha.w;
+	/// IF TERRAIN_SHADER_8_LAYERS
+				masks = tex2D(_Mask4, input.texcoord1.zw) * alpha1.x;
+				masks = tex2D(_Mask5, input.texcoord2.zw) * alpha1.y;
+				masks = tex2D(_Mask6, input.texcoord3.zw) * alpha1.z;
+				masks = tex2D(_Mask7, input.texcoord4.zw) * alpha1.w;
+	///
+				return masks;
+			}
+
+			ENDCG
+		}
+///
+
+/// IF USE_TERRAIN_METALLIC && USE_TERRAIN_SMOOTHNESS
+		Pass
+		{
+			Tags
+			{
+				"Name" = "_MetallicTex"
+				"Format" = "R8"
+				"Size" = "@%BASEGEN_METALLIC_DOWNSCALE%@"
+			}
+
+			ZWrite Off
+			ZTest Always
+			Cull Off
+			Blend One [_DstBlend]
+
+			CGPROGRAM
+
+			#pragma vertex vert_simple
+			#pragma fragment frag
+
+			float _Metallic0, _Metallic1, _Metallic2, _Metallic3;
+	/// IF TERRAIN_SHADER_8_LAYERS
+			float _Metallic4, _Metallic5, _Metallic6, _Metallic7;
+	///
+
+			float4 frag(Varyings_Simple input) : SV_Target
+			{
+				float4 alpha = tex2D(_Control, input.texcoord0.xy);
+	/// IF TERRAIN_SHADER_8_LAYERS
+				float4 alpha1 = tex2D(_Control1, input.texcoord0.xy);
+	///
+
+				float4 metallic = { _Metallic0 * alpha.x, 0, 0, 0 };
+				metallic.r += _Metallic1 * alpha.y;
+				metallic.r += _Metallic2 * alpha.z;
+				metallic.r += _Metallic3 * alpha.w;
+	/// IF TERRAIN_SHADER_8_LAYERS
+				metallic.r += _Metallic4 * alpha1.x;
+				metallic.r += _Metallic5 * alpha1.y;
+				metallic.r += _Metallic6 * alpha1.z;
+				metallic.r += _Metallic7 * alpha1.w;
+	///
+				return metallic;
+			}
+
+			ENDCG
+		}
+///
+
+/// IF USE_TERRAIN_DIFFUSEREMAPMIN
+		Pass
+		{
+			Tags
+			{
+				"Name" = "_DiffuseRemapMinTex"
+				"Format" = "RGBA32"
+				"Size" = "@%BASEGEN_DIFFUSEREMAPMIN_DOWNSCALE%@"
+			}
+
+			ZWrite Off
+			ZTest Always
+			Cull Off
+			Blend One [_DstBlend]
+
+			CGPROGRAM
+
+			#pragma vertex vert_simple
+			#pragma fragment frag
+
+			float4 _DiffuseRemapScale0, _DiffuseRemapScale1, _DiffuseRemapScale2, _DiffuseRemapScale3;
+	/// IF TERRAIN_SHADER_8_LAYERS
+			float4 _DiffuseRemapScale4, _DiffuseRemapScale5, _DiffuseRemapScale6, _DiffuseRemapScale7;
+	///
+
+			float4 frag(Varyings_Simple input) : SV_Target
+			{
+				float4 alpha = tex2D(_Control, input.texcoord0.xy);
+	/// IF TERRAIN_SHADER_8_LAYERS
+				float4 alpha1 = tex2D(_Control1, input.texcoord0.xy);
+	///
+
+				float4 diffuseRemapMin = _DiffuseRemapScale0 * alpha.x;
+				diffuseRemapMin += _DiffuseRemapScale1 * alpha.y;
+				diffuseRemapMin += _DiffuseRemapScale2 * alpha.z;
+				diffuseRemapMin += _DiffuseRemapScale3 * alpha.w;
+	/// IF TERRAIN_SHADER_8_LAYERS
+				diffuseRemapMin += _DiffuseRemapScale4 * alpha1.x;
+				diffuseRemapMin += _DiffuseRemapScale5 * alpha1.y;
+				diffuseRemapMin += _DiffuseRemapScale6 * alpha1.z;
+				diffuseRemapMin += _DiffuseRemapScale7 * alpha1.w;
+	///
+				return diffuseRemapMin;
+			}
+
+			ENDCG
+		}
+///
+
+/// IF USE_TERRAIN_MASKMAPREMAPMIN
+		Pass
+		{
+			Tags
+			{
+				"Name" = "_MaskMapRemapMinTex"
+				"Format" = "RGBA32"
+				"Size" = "@%BASEGEN_MASKMAPREMAPMIN_DOWNSCALE%@"
+			}
+
+			ZWrite Off
+			ZTest Always
+			Cull Off
+			Blend One [_DstBlend]
+
+			CGPROGRAM
+
+			#pragma vertex vert_simple
+			#pragma fragment frag
+
+			float4 _MaskMapRemapScale0, _MaskMapRemapScale1, _MaskMapRemapScale2, _MaskMapRemapScale3;
+	/// IF TERRAIN_SHADER_8_LAYERS
+			float4 _MaskMapRemapScale4, _MaskMapRemapScale5, _MaskMapRemapScale6, _MaskMapRemapScale7;
+	///
+
+			float4 frag(Varyings_Simple input) : SV_Target
+			{
+				float4 alpha = tex2D(_Control, input.texcoord0.xy);
+	/// IF TERRAIN_SHADER_8_LAYERS
+				float4 alpha1 = tex2D(_Control1, input.texcoord0.xy);
+	///
+
+				float4 maskMapRemapMin = _MaskMapRemapScale0 * alpha.x;
+				maskMapRemapMin += _MaskMapRemapScale1 * alpha.y;
+				maskMapRemapMin += _MaskMapRemapScale2 * alpha.z;
+				maskMapRemapMin += _MaskMapRemapScale3 * alpha.w;
+	/// IF TERRAIN_SHADER_8_LAYERS
+				maskMapRemapMin += _MaskMapRemapScale4 * alpha1.x;
+				maskMapRemapMin += _MaskMapRemapScale5 * alpha1.y;
+				maskMapRemapMin += _MaskMapRemapScale6 * alpha1.z;
+				maskMapRemapMin += _MaskMapRemapScale7 * alpha1.w;
+	///
+				return maskMapRemapMin;
+			}
+
+			ENDCG
+		}
+///
+
+/// IF USE_TERRAIN_SPECULAR
+		Pass
+		{
+			Tags
+			{
+				"Name" = "_SpecularTex"
+				"Format" = "RGBA32"
+				"Size" = "@%BASEGEN_SPECULAR_DOWNSCALE%@"
+			}
+
+			ZWrite Off
+			ZTest Always
+			Cull Off
+			Blend One [_DstBlend]
+
+			CGPROGRAM
+
+			#pragma vertex vert_simple
+			#pragma fragment frag
+
+			half4 _Specular0, _Specular1, _Specular2, _Specular3;
+	/// IF TERRAIN_SHADER_8_LAYERS
+			half4 _Specular4, _Specular5, _Specular6, _Specular7;
+	///
+
+			float4 frag(Varyings_Simple input) : SV_Target
+			{
+				float4 alpha = tex2D(_Control, input.texcoord0.xy);
+	/// IF TERRAIN_SHADER_8_LAYERS
+				float4 alpha1 = tex2D(_Control1, input.texcoord0.xy);
+	///
+
+				float4 specular = _Specular0 * alpha.x;
+				specular.rgba += _Specular1 * alpha.y;
+				specular.rgba += _Specular2 * alpha.z;
+				specular.rgba += _Specular3 * alpha.w;
+	/// IF TERRAIN_SHADER_8_LAYERS
+				specular.rgba += _Specular4 * alpha1.x;
+				specular.rgba += _Specular5 * alpha1.y;
+				specular.rgba += _Specular6 * alpha1.z;
+				specular.rgba += _Specular7 * alpha1.w;
+	///
+				return specular;
+			}
+
+			ENDCG
+		}
+///
+	}
+	Fallback Off
+
+#END
+
+//================================================================
+
+#TERRAIN_BASEGEN_SHADER_URP
+
+		// Terrain BaseGen passes to bake the used maps when terrain is viewed from a distance
+
+		Pass
+		{
+			Tags
+			{
+				"Name" = "_MainTex"
+				"Format" = "RGBA32"
+				"Size" = "@%BASEGEN_ALBEDO_DOWNSCALE%@"
+			}
+
+			ZTest Always
+			ZWrite Off
+			Cull Off
+			Blend One [_DstBlend]
+
+			HLSLPROGRAM
+
+			#pragma multi_compile_local BASEGEN_MAIN_TEX
+
+			#pragma vertex Vertex
+			#pragma fragment Fragment
+
+			ENDHLSL
+		}
+
+/// IF USE_TERRAIN_MASKMAP
+		Pass
+		{
+			Tags
+			{
+				"Name" = "_MasksTex"
+				"Format" = "RGBA32"
+				"Size" = "@%BASEGEN_MASKTEX_DOWNSCALE%@"
+			}
+
+			ZWrite Off
+			ZTest Always
+			Cull Off
+			Blend One [_DstBlend]
+
+			HLSLPROGRAM
+
+			#pragma multi_compile_local BASEGEN_MASKS_TEX
+
+			#pragma vertex Vertex
+			#pragma fragment Fragment
+
+			ENDHLSL
+		}
+///
+
+/// IF USE_TERRAIN_METALLIC && USE_TERRAIN_SMOOTHNESS
+		Pass
+		{
+			Tags
+			{
+				"Name" = "_MetallicTex"
+				"Format" = "R8"
+				"Size" = "@%BASEGEN_METALLIC_DOWNSCALE%@"
+			}
+
+			ZWrite Off
+			ZTest Always
+			Cull Off
+			Blend One [_DstBlend]
+
+			HLSLPROGRAM
+
+			#pragma multi_compile_local BASEGEN_METALLIC_TEX
+
+			#pragma vertex Vertex
+			#pragma fragment Fragment
+
+			ENDHLSL
+		}
+///
+
+/// IF USE_TERRAIN_DIFFUSEREMAPMIN
+		Pass
+		{
+			Tags
+			{
+				"Name" = "_DiffuseRemapMinTex"
+				"Format" = "RGBA32"
+				"Size" = "@%BASEGEN_DIFFUSEREMAPMIN_DOWNSCALE%@"
+			}
+
+			ZWrite Off
+			ZTest Always
+			Cull Off
+			Blend One [_DstBlend]
+
+			HLSLPROGRAM
+
+			#pragma multi_compile_local BASEGEN_DIFFUSEREMAPMIN_TEX
+
+			#pragma vertex Vertex
+			#pragma fragment Fragment
+
+			ENDHLSL
+		}
+///
+
+/// IF USE_TERRAIN_MASKMAPREMAPMIN
+		Pass
+		{
+			Tags
+			{
+				"Name" = "_MaskMapRemapMinTex"
+				"Format" = "RGBA32"
+				"Size" = "@%BASEGEN_MASKMAPREMAPMIN_DOWNSCALE%@"
+			}
+
+			ZWrite Off
+			ZTest Always
+			Cull Off
+			Blend One [_DstBlend]
+
+			HLSLPROGRAM
+
+			#pragma multi_compile_local BASEGEN_MASKMAPREMAPMIN_TEX
+
+			#pragma vertex Vertex
+			#pragma fragment Fragment
+
+			ENDHLSL
+		}
+///
+
+/// IF USE_TERRAIN_SPECULAR
+		Pass
+		{
+			Tags
+			{
+				"Name" = "_SpecularTex"
+				"Format" = "RGBA32"
+				"Size" = "@%BASEGEN_SPECULAR_DOWNSCALE%@"
+			}
+
+			ZWrite Off
+			ZTest Always
+			Cull Off
+			Blend One [_DstBlend]
+
+			HLSLPROGRAM
+
+			#pragma multi_compile_local BASEGEN_SPECULAR_TEX
+
+			#pragma vertex Vertex
+			#pragma fragment Fragment
+
+			ENDHLSL
+		}
+///
+#END

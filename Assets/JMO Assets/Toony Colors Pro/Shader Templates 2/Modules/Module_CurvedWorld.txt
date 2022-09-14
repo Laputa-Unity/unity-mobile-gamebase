@@ -1,0 +1,90 @@
+// Toony Colors Pro+Mobile 2
+// (c) 2014-2021 Jean Moreno
+
+// Shader Generator Module: Curved World Support
+
+#FEATURES
+sngl			lbl="Curved World 2020 Support"		kw=CURVED_WORLD_2020																				tt="Adds support for Curved World 2020"
+#mult_flags		lbl="Included Bend Types"			kw=CURVED_WORLD_2020_TYPES	indent	needs=CURVED_WORLD_2020	tt="Defines the type of Curved World effect that this shader will support out of the box.  You can always add more through the Curved World 2020 interface afterwards, but you will have to do so each time you udpate the shader with the Shader Generator."	values=Classic Runner X+|CURVEDWORLD_BEND_TYPE_CLASSICRUNNER_X_POSITIVE,Classic Runner X-|CURVEDWORLD_BEND_TYPE_CLASSICRUNNER_X_NEGATIVE,Classic Runner Z+|CURVEDWORLD_BEND_TYPE_CLASSICRUNNER_Z_POSITIVE,Classic Runner Z-|CURVEDWORLD_BEND_TYPE_CLASSICRUNNER_Z_NEGATIVE,Little Planet X|CURVEDWORLD_BEND_TYPE_LITTLEPLANET_X,Little Planet Y|CURVEDWORLD_BEND_TYPE_LITTLEPLANET_Y,Little Planet Z|CURVEDWORLD_BEND_TYPE_LITTLEPLANET_Z,Cylindrical Tower X|CURVEDWORLD_BEND_TYPE_CYLINDRICALTOWER_X,Cylindrical Tower Z|CURVEDWORLD_BEND_TYPE_CYLINDRICALTOWER_Z,Cylindrical Rolloff X|CURVEDWORLD_BEND_TYPE_CYLINDRICALROLLOFF_X,Cylindrical Rolloff Z|CURVEDWORLD_BEND_TYPE_CYLINDRICALROLLOFF_Z,Spiral Horizontal X+|CURVEDWORLD_BEND_TYPE_SPIRALHORIZONTAL_X_POSITIVE,Spiral Horizontal X-|CURVEDWORLD_BEND_TYPE_SPIRALHORIZONTAL_X_NEGATIVE,Spiral Horizontal Z+|CURVEDWORLD_BEND_TYPE_SPIRALHORIZONTAL_Z_POSITIVE,Spiral Horizontal Z-|CURVEDWORLD_BEND_TYPE_SPIRALHORIZONTAL_Z_NEGATIVE,Spiral Horizontal Double X|CURVEDWORLD_BEND_TYPE_SPIRALHORIZONTALDOUBLE_X,Spiral Horizontal Double Z|CURVEDWORLD_BEND_TYPE_SPIRALHORIZONTALDOUBLE_Z,Spiral Horizontal Rolloff X|CURVEDWORLD_BEND_TYPE_SPIRALHORIZONTALROLLOFF_X,Spiral Horizontal Rolloff Z|CURVEDWORLD_BEND_TYPE_SPIRALHORIZONTALROLLOFF_Z,Spiral Vertical X+|CURVEDWORLD_BEND_TYPE_SPIRALVERTICAL_X_POSITIVE,Spiral Vertical X-|CURVEDWORLD_BEND_TYPE_SPIRALVERTICAL_X_NEGATIVE,Spiral Vertical Z+|CURVEDWORLD_BEND_TYPE_SPIRALVERTICAL_Z_POSITIVE,Spiral Vertical Z-|CURVEDWORLD_BEND_TYPE_SPIRALVERTICAL_Z_NEGATIVE,Spiral Vertical Double X|CURVEDWORLD_BEND_TYPE_SPIRALVERTICALDOUBLE_X,Spiral Vertical Double Z|CURVEDWORLD_BEND_TYPE_SPIRALVERTICALDOUBLE_Z,Spiral Vertical Rolloff X|CURVEDWORLD_BEND_TYPE_SPIRALVERTICALROLLOFF_X,Spiral Vertical Rolloff Z|CURVEDWORLD_BEND_TYPE_SPIRALVERTICALROLLOFF_Z,Twisted Spiral X+|CURVEDWORLD_BEND_TYPE_TWISTEDSPIRAL_X_POSITIVE,Twisted Spiral X-|CURVEDWORLD_BEND_TYPE_TWISTEDSPIRAL_X_NEGATIVE,Twisted Spiral Z+|CURVEDWORLD_BEND_TYPE_TWISTEDSPIRAL_Z_POSITIVE,Twisted Spiral Z-|CURVEDWORLD_BEND_TYPE_TWISTEDSPIRAL_Z_NEGATIVE
+keyword_str		lbl="Include Folder"				kw=CURVED_WORLD_2020_INCLUDE	indent		needs=CURVED_WORLD_2020		forceKeyword=true	default="Assets/Amazing Assets/Curved World/Shaders/Core"
+---
+mult			lbl="Curved World Support"			kw=Off|,Position|CURVED_WORLD_SIMPLE,Position+Normal|CURVED_WORLD_NORMAL	toggles=CURVED_WORLD	tt="Adds support for Curved World (old version)"
+keyword_str		lbl="Include File"					kw=CURVED_WORLD_INCLUDE		indent		needs=CURVED_WORLD		forceKeyword=true	default="Assets/VacuumShaders/Curved World/Shaders/cginc/CurvedWorld_Base.cginc"
+#END
+
+//================================================================
+
+#PROPERTIES_NEW
+#END
+
+//================================================================
+
+#KEYWORDS
+/// IF CURVED_WORLD_NORMAL || CURVED_WORLD_2020
+	feature_on		USE_TANGENT_VERT
+///
+#END
+
+//================================================================
+
+#PROPERTIES_BLOCK
+/// IF CURVED_WORLD_2020
+	[TCP2HeaderHelp(Curved World 2020)]
+	[CurvedWorldBendSettings] _CurvedWorldBendSettings("0|1|1", Vector) = (0, 0, 0, 0)
+///
+#END
+
+//================================================================
+
+#FUNCTIONS
+/// IF CURVED_WORLD
+	/// IF LWRP
+		#define UNITY_MATRIX_I_M   unity_WorldToObject // needed for Curved World
+	///
+		#include "@%CURVED_WORLD_INCLUDE%@"
+///
+#END
+
+//================================================================
+
+#SHADER_FEATURES_BLOCK
+/// IF CURVED_WORLD_2020
+#	/// IF_KEYWORD CURVED_WORLD_2020_TYPES
+#		#pragma shader_feature_local @%CURVED_WORLD_2020_TYPES%@
+#	/// ELSE
+#		#define CURVEDWORLD_BEND_TYPE_CLASSICRUNNER_X_POSITIVE
+#	///
+		#define CURVEDWORLD_BEND_TYPE_CLASSICRUNNER_X_POSITIVE
+		#define CURVEDWORLD_BEND_ID_1
+		#pragma shader_feature_local CURVEDWORLD_DISABLED_ON
+		#pragma shader_feature_local CURVEDWORLD_NORMAL_TRANSFORMATION_ON
+		#include "@%CURVED_WORLD_2020_INCLUDE%@/CurvedWorldTransform.cginc"
+///
+#END
+
+//================================================================
+
+#VERTEX(float4 vertex, float3 normal, float4 tangent)
+/// IF CURVED_WORLD_2020
+	#if defined(CURVEDWORLD_IS_INSTALLED) && !defined(CURVEDWORLD_DISABLED_ON)
+		#ifdef CURVEDWORLD_NORMAL_TRANSFORMATION_ON
+			CURVEDWORLD_TRANSFORM_VERTEX_AND_NORMAL(vertex, normal, tangent)
+		#else
+			CURVEDWORLD_TRANSFORM_VERTEX(vertex)
+		#endif
+	#endif
+///
+/// IF CURVED_WORLD
+		// Curved World
+	/// IF CURVED_WORLD_NORMAL
+		CURVED_WORLD_TRANSFORM_POINT_AND_NORMAL(vertex, normal, tangent);
+	/// ELSE
+		CURVED_WORLD_TRANSFORM_POINT(vertex);
+	///
+///
+#END
+
+//================================================================
+
+#FRAGMENT
+#END

@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 93b0a4618bd884871af0981a7867bb2f
+labels:
+- al_max
+- al_max_export_path-MaxSdk/Mediation/Chartboost/Editor/Dependencies.xml
+- al_max_export_path-MaxSdk\Mediation\Chartboost\Editor\Dependencies.xml
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

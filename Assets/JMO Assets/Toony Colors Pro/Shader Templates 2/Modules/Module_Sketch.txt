@@ -1,0 +1,161 @@
+// Toony Colors Pro+Mobile 2
+// (c) 2014-2021 Jean Moreno
+
+// Shader Generator Module: Sketch Effects
+
+// TODO cubemap-based sketch effect?
+
+#FEATURES
+mult	lbl="Sketch"					kw=Off|,Sketch Overlay|SKETCH,Sketch Threshold|SKETCH_GRADIENT,Progressive Sketch|SKETCH_PROGRESSIVE			tt="Sketch texture overlay on the shadowed areas\nOverlay: regular texture overlay\nThreshold: used for halftone-like effects\nProgressive Sketch: use special textures that will simulate adding strokes as the material receive less light"	help="featuresreference/stylization/sketch"
+sngl	lbl="Smooth transitions"		kw=SKETCH_PROGRESSIVE_SMOOTH	needs=SKETCH_PROGRESSIVE							indent	tt="Smooth transitions between each texture phase"
+sngl	lbl="Affect ambient"			kw=SKETCH_AMBIENT			needsOr=SKETCH,SKETCH_GRADIENT,SKETCH_PROGRESSIVE		indent	tt="Apply the sketch effect to the ambient/global illumination colors"
+sngl	lbl="Make Optional"				kw=SKETCH_SHADER_FEATURE	needsOr=SKETCH,SKETCH_GRADIENT,SKETCH_PROGRESSIVE		indent	tt="Will make the sketch effect optional in the material inspector, using a shader keyword"
+#END
+
+//================================================================
+
+#PROPERTIES_NEW
+/// IF SKETCH || SKETCH_GRADIENT || SKETCH_PROGRESSIVE
+		header		Sketch Effects
+	/// IF SKETCH || SKETCH_GRADIENT
+		color		Sketch Texture				lighting, imp(texture, label = "Sketch Texture", default = black, channels = aaa, tiling_offset = true, uv_screenspace = true, random_offset = true)
+	/// ELIF SKETCH_PROGRESSIVE
+		color_rgba	Progressive Sketch Texture	lighting, imp(texture, label = "Progressive Texture", default = black, tiling_offset = true, uv_screenspace = true)
+	///
+		color		Sketch Color				lighting, imp(constant, label = "Sketch Color", default = (0,0,0))
+		float		Sketch Threshold Scale		lighting, imp(constant, label = "Sketch Threshold Scale", default = 1)
+///
+/// IF SKETCH_GRADIENT
+		float		Sketch Min					lighting, imp(range, label = "Sketch Min", default = 0.0, min = 0, max = 1)
+		float		Sketch Max					lighting, imp(range, label = "Sketch Max", default = 1.0, min = 0, max = 1)
+		float		Sketch Antialiasing			lighting, imp(constant, label = "Sketch Antialiasing", default = 20)
+///
+/// IF SKETCH_PROGRESSIVE_SMOOTH
+		float		Progressive Sketch Smoothness	lighting, imp(range, label = "Progressive Smoothness", default = 0.1, min = 0.005, max = 0.5)
+///
+#END
+
+//================================================================
+
+#KEYWORDS
+#END
+
+//================================================================
+
+#SHADER_FEATURES_BLOCK
+/// IF (SKETCH || SKETCH_GRADIENT || SKETCH_PROGRESSIVE) && SKETCH_SHADER_FEATURE
+	#pragma shader_feature_local_fragment TCP2_SKETCH
+///
+#END
+
+//================================================================
+
+#PROPERTIES_BLOCK
+
+		[TCP2HeaderHelp(Sketch)]
+/// IF SKETCH || SKETCH_GRADIENT || SKETCH_PROGRESSIVE
+	/// IF SKETCH_SHADER_FEATURE
+		[Toggle(TCP2_SKETCH)] _UseSketch ("Enable Sketch Effect", Float) = 0
+	///
+	/// IF SKETCH || SKETCH_GRADIENT
+		[[PROP:Sketch Texture]]
+	/// ELIF SKETCH_PROGRESSIVE
+		[[PROP:Progressive Sketch Texture]]
+		/// IF SKETCH_PROGRESSIVE_SMOOTH
+		[[PROP:Progressive Sketch Smoothness]]
+		///
+	///
+		[[PROP:Sketch Color]]
+		[[PROP:Sketch Threshold Scale]]
+///
+/// IF SKETCH_GRADIENT
+		[[PROP:Sketch Min]]
+		[[PROP:Sketch Max]]
+		[[PROP:Sketch Antialiasing]]
+///
+		[TCP2Separator]
+#END
+
+//================================================================
+
+#VARIABLES
+#END
+
+//================================================================
+
+#INPUT
+#END
+
+//================================================================
+
+#VERTEX
+#END
+
+//================================================================
+
+#LIGHTING(float3 ramp)
+/// IF (SKETCH || SKETCH_GRADIENT || SKETCH_PROGRESSIVE) && SKETCH_SHADER_FEATURE
+
+		// Sketch
+		#if defined(TCP2_SKETCH)
+///
+/// IF SKETCH
+		half3 sketchColor = lerp([[VALUE:Sketch Color]], half3(1,1,1), [[VALUE:Sketch Texture]]);
+		half3 sketch = lerp(sketchColor, half3(1,1,1), saturate(ramp * [[VALUE:Sketch Threshold Scale]]));
+/// ELIF SKETCH_GRADIENT
+		half3 sketch = [[VALUE:Sketch Texture]];
+		half sketchThresholdWidth = [[VALUE:Sketch Antialiasing]] * fwidth(ndl);
+		sketch = smoothstep(sketch - sketchThresholdWidth, sketch, clamp(saturate(ramp * [[VALUE:Sketch Threshold Scale]]), [[VALUE:Sketch Min]], [[VALUE:Sketch Max]]));
+/// ELIF SKETCH_PROGRESSIVE
+		half4 sketch = [[VALUE:Progressive Sketch Texture]];
+		half4 sketchWeights = half4(0,0,0,0);
+		half sketchStep = 1.0 / 5.0;
+	/// IF SKETCH_PROGRESSIVE_SMOOTH
+		half sketchSmooth = [[VALUE:Progressive Sketch Smoothness]];
+		sketchWeights.a = smoothstep(sketchStep + sketchSmooth, sketchStep - sketchSmooth, ramp);
+		sketchWeights.b = smoothstep(sketchStep*2 + sketchSmooth, sketchStep*2 - sketchSmooth, ramp) - sketchWeights.a;
+		sketchWeights.g = smoothstep(sketchStep*3 + sketchSmooth, sketchStep*3 - sketchSmooth, ramp) - sketchWeights.a - sketchWeights.b;
+		sketchWeights.r = smoothstep(sketchStep*4 + sketchSmooth, sketchStep*4 - sketchSmooth, ramp) - sketchWeights.a - sketchWeights.b - sketchWeights.g;
+	/// ELSE
+		sketchWeights.a = step(ramp, sketchStep);
+		sketchWeights.b = step(ramp, sketchStep*2) - sketchWeights.a;
+		sketchWeights.g = step(ramp, sketchStep*3) - sketchWeights.a - sketchWeights.b;
+		sketchWeights.r = step(ramp, sketchStep*4) - sketchWeights.a - sketchWeights.b - sketchWeights.g;
+	///
+		half combinedSketch = 1.0 - dot(sketch, sketchWeights);
+
+///
+/// IF (SKETCH || SKETCH_GRADIENT || SKETCH_PROGRESSIVE) && SKETCH_SHADER_FEATURE
+		#endif
+///
+#END
+
+#LIGHTING:APPLY(float3 color)
+/// IF (SKETCH || SKETCH_GRADIENT || SKETCH_PROGRESSIVE) && SKETCH_SHADER_FEATURE
+	#if defined(TCP2_SKETCH)
+///
+/// IF SKETCH
+	color *= sketch.rgb;
+/// ELIF SKETCH_GRADIENT
+	color *= lerp([[VALUE:Sketch Color]], half3(1,1,1), sketch.rgb);
+/// ELIF SKETCH_PROGRESSIVE
+	color *= combinedSketch;
+///
+/// IF (SKETCH || SKETCH_GRADIENT || SKETCH_PROGRESSIVE) && SKETCH_SHADER_FEATURE
+	#endif
+///
+#END
+
+#LIGHTING:APPLY_AMBIENT(float3 ambient)
+/// IF (SKETCH || SKETCH_GRADIENT || SKETCH_PROGRESSIVE) && SKETCH_SHADER_FEATURE
+	#if defined(TCP2_SKETCH)
+///
+/// IF (SKETCH || SKETCH_GRADIENT) && SKETCH_AMBIENT
+	ambient *= sketch.rgb;
+/// ELIF SKETCH_PROGRESSIVE && SKETCH_AMBIENT
+	ambient *= combinedSketch;
+///
+/// IF (SKETCH || SKETCH_GRADIENT || SKETCH_PROGRESSIVE) && SKETCH_SHADER_FEATURE
+	#endif
+///
+#END

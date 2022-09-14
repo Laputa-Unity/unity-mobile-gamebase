@@ -1,0 +1,636 @@
+V 2.4.3.5
+[Bug Fix]	  : Fixed bug which was causing null ref exceptions when removing prefab 
+			    associations with tile connections;
+[Bug Fix]	  : Fixed null ref exception thrown in DecorPaintObjectPlacementBrush.RemoveAndDestroyAllElements;
+
+V 2.4.3.4
+[New feature] : Prefab filtering based on tags now supports 3 modes: None, Any and All;
+
+[Improvement] : Prefab Tags scroll view now expands vertically to fill unused space;
+
+V 2.4.3.3
+[Bug fix]	  : Prefab previews and UI icons no longer appear washed out when using Linear color space;
+
+V 2.4.3.2
+[New feature] : Implemented 'Show hints' toggle in the prefab manager window which can be used
+				to show/hide hint messages;
+
+[Improvement] : Prefab manager hint messages moved to the top;
+
+[Bug Fix]	  : Fixed bug which was throwing exception when using the brush placement tool;
+[Bug Fix]	  : Fixed bug which was misplacing the Brush element prefab toggle button;
+[Bug Fix]	  : Fixed bug which was ignoring the object-to-objetc snap 'Can hover objects'
+			    field in the ObjectSelection mode UI;
+
+V 2.4.3.1
+[Bug Fix]	  : fixed ALT + D command messing with other hotkeys;
+
+V 2.4.3
+[Bug Fix]	  : fixed SHIFT key switching focus from editor windows or Inspector
+				when using text fields;
+
+V 2.4.2
+[Bug Fix]	  : fixed playmode bug which was causing the selection mode to behave
+				as if placement mode was active (i.e. the active prefab would get
+				stuck and there was no way to get rid of it);
+
+V 2.4.1
+[Improvement] : made prefab tag window buttons smaller and more compact;
+
+[Bug Fix]	  : fixed exceptions being thrown when scaling objects with the scale gizmo;
+[Bug Fix]	  : fixed incorrect rotation for scale gizmo;
+
+V 2.4
+[Improvement] : word wrapping is now used for the prefab name labels in the prefab manager window;
+
+[Bug Fix]	  : fixed null ref exceptions when deleting objects assigned to masks;
+[Bug Fix]	  : fixed ALT + D and ALT + R not working;
+[Bug Fix]	  : fixed CTRL + D and CTRL + S not working;
+[Bug Fix]	  : fixed null object refs exceptions when deleting objects via the Unity interface;
+[Bug Fix]	  : fixed Unity warnings ("Setting the parent of a transform which resides in a Prefab instance is not possible")
+			    when mirroring object hierarchies;
+[Bug Fix]	  : fixed exceptions being thrown when deleting object hierarchies in object selection mode. In newer
+			    versions of Unity it is no longer possible to remove parts of a hierarchy or move children from
+				one parent to another;
+
+[Removed]	  : it is no longer possible to erase individual objects in a hierarchy (see above) using the erase tool. 
+			    The associated hotkey (SPACE) has been removed. Entire hierarchies will always be deleted.
+
+V 2.3.1.1
+[Improvement] : object 2 object snapping no longer snaps to invisible meshes/sprites. 
+				NOTE: make sure you use the 'Refresh scene' button in the Inspector when
+				making changes to enabling disabling mesh/sprite renderers.
+
+[Bug Fix]	  : fixed prefab type identification bug introduced in previous update.
+
+V 2.3.1
+[Improvement] : fixed warnings which were thrown by Unity because of deprecated API usage;
+
+[Bug Fix]	: fixed bug in SphereTree class which was preventing correct
+			  interaction with the objects in the scene;
+
+V 2.3
+[Improvement] : removed performance drop caused by mesh dictionary serialization in the 'Octave3DMeshDatabase' class;
+[Improvement] : removed minor performance drop caused by prefab category list sorting and refreshing on every GUI redraw;
+[Improvement] : removed minor performance drop caused by needless searches for null prefab tags;
+
+[Bug Fix]	: fixed Octave3D preventing switch to fullscreen mode and back;
+[Bug Fix]	: fixed incorrect rendering and functionality when running on iMac monitor 4K or higher;
+[Bug Fix]	: fixed vertex snapping not working correctly while transform gizmo is active;
+
+V 2.2.3.1.6
+[Removed]	: removed wireframe toggle button. Also, object highlight is no longer hidden when
+			  objects are created in the scene;
+[Bug Fix]	: fixed Undo/Redo not working on MAC OS;
+
+V 2.2.3.1.5
+[Bug Fix]	: fixed bug which was causing object groups to be named incorrectly upon creation;
+
+V 2.2.3.1.4
+[Bug Fix]	: fixed bug which was preventing Undo/Redo from working correctly in Unity 2018.3;
+
+V 2.2.3.1.3
+[Bug Fix]	: fixed bug which was causing prefab previews to show a blank texture. This was due to
+			  the prefab triangles facing away from the camera.
+[Bug Fix]	: fixed Look and Feel button in prefab management window having text clipped;
+
+V 2.2.3.1.2
+[Bug Fix]	: fixed null ref exception being thrown when using Octave3D in multiple scenes;
+
+V 2.2.3.1.1
+[Bug Fix]	: fixed bug which was caused by scripting API changes in Unity 2018.2;
+
+V 2.2.3.1
+[New Feature]: it is now possible to select a layer in which objects get spawned;
+[New Feature]: it is now possible to replace the game object associated with an object group;
+
+[Improvement]: it is now possible to toggle decor paint axis alignment via SHIFT + W;
+[Improvement]: removed huge delay when switching to play mode and back;
+[Improvement]: added SHIFT + R hotkey which allows to pick prefabs from the scene while also
+			   inheriting the world scale of the picked object. NOTE: This may cause unexpected
+			   results when clicking on children of other objects in which case, the scale of
+			   the picked child will be used to adjust the scale of the root. Therefore, this
+			   functionality works best when dealing with single objects or hierarchies in which
+			   the children have a scale of 1. You can also aleviate this problem by makign sure 
+			   you click on the parent of the hierarchy.
+
+// V 2.2.3
+-NEW FEATURE: it is now possible to project a Block onto mesh and terrain objects;
+-NEW FEATURE: it is now possible to  perform vertex snapping in selection mode just as you can do
+			  in placement mode;
+-NEW FEATURE: it is now possible to snap the grid using the T key in object selection mode;
+-NEW FEATURE: select active object group;
+
+-IMPROVEMENT: object 2 object snapping is now faster when snapping hierarchies;
+-IMPROVEMENT: it is now possible to specify the maximum size of a Block;
+-IMPROVEMENT: it is now possible to assign selected objects to object groups;
+-IMPROVEMENT: the placement guide will now initially start off with the rotation of the prefab
+			  from which it was spawned. This happens only the first time a prefab is activated;
+-IMPROVEMENT: implemented "Remove" button to remove an object group without destroying
+			  the associated game object from the scene;
+-IMPROVEMENT: improved object picking for overlapped thin objects (floors and ceilings for example);
+
+-CHANGE: turning gizmos on/off is now done using the Toggle Gizmos check box;
+-CHANGE: the extrude gizmo is now activated using the Q key;
+-CHANGE: replace selection with prefab on preview click is now done with SHIFT instead of SPACE;
+
+-BUG FIX: object to object snapping was ignoring the object snap mask. This has now been fixed;
+-BUG FIX: fixed bug which was blocking prefab replacement to occur when using prefab previews. This
+		  requierd a hotkey change from SPACE + click on preview to SHIFT + click on preview;
+-BUG FIX: fixed null reff exception which was thrown when interacting with mesh objects that
+          didn't have a renderer component attached to them;
+-BUG FIX: fixed prefab replace operation was not taking object groups into account;
+
+// V 2.2.2.1
+-NEW FEATURE: added 'Use original pivot' toggle for the Single Decor Paint placement mode;
+
+-BUG FIX: fixed lag after loading prefab configs for scenes with large number of objects;
+-BUG FIX: fixed rotation randomization for block placement mode not rotating around center;
+
+// V 2.2.2
+-NEW FEATURE: implemented object selection extrude gizmo which allows you to extrude selected objects by 
+			  draging the gizmo axes handles;
+-NEW FEATURE: it is now possible to perform selection object to object snap (toggle with U);
+-NEW FEATURE: it is now possible to rotate selected objects via the X, Y an Z keys. The rotation step
+			  can be modified from the object selection Inspector for each individual axis;
+-NEW FEATURE: it is now possible to rotate and scale objects during a selection grab session;
+-NEW FEATURE: it is now possible to set the rotation of selected objects to identity (zero rotation).
+			  This is done by pressing the I key on the keyboard;
+
+-IMPROVEMENT: it is now possible to specify an object group for objects that are created via selection
+			  operation (e.g. gizmo drag duplicate, CTRL + D duplicate, mirroring);
+-IMPROVEMENT: object 2 object snapping can now be toggled on/off via the U hotkey;
+-IMPROVEMENT: added info labels inside the scene view for 2 snap related states;
+-IMPROVEMENT: improved object to object snapping. This snap mode can now handle modular pieces of
+			  different sizes a lot better than before by using mesh data for better volume/box approximation;
+-IMPROVEMENT: when starting a selection grab session the object(s) no longer do an instant snap when 
+		      the mouse is moved for the first time;
+
+-BUG FIX: fixed bug which was causing selected objects to be mirrored more than once when part of a multi-level hierarchy;
+-BUG FIX: fixed bug which was causing object groups to be mirrored together with their children;
+-BUG FIX: fixed floating static meshes due to invisible geometry;
+-BUG FIX: fixed null ref exception when generating prefab previews after lights were deleted from the scene;
+-BUG FIX: fixed duplicated (CTRL + D) objects could not be interacted with;
+-BUG FIX: fixed prefab previews too bright on script recompile;
+-BUG FIX: fixed selection replace no working if clicked objects is not prefab instance;
+-BUG FIX: fixed bug which was causing weird behaviour for Path Placement mode with 'Rotate objects to folow path' option checked;
+-BUG FIX: fixed prefab previews not taking prefab scale into account;
+
+// V 2.2.1.3
+-BUG FIX: fixed floating skinned meshes;
+-BUG FIX: fixed prefab preview too small;
+
+// V 2.2.1.2
+-NEW FEATURE: it is now possible to tell the tool that an object is no longer a group by right-clicking on the object inside the hierarchy 
+			  and then clicking on the 'Octave3D->Is not group' menu item;
+
+-IMPROVEMENT: when picking prefabs in the scene, a prefab is automatically created and added to the active category if
+			  this prefab doesn't already exist. Previously, nothing happened if the prefab didn't exist inside a category;
+-IMPROVEMENT: it is now possible to specify an offset from surface for decor paint brush elements;
+-IMPROVEMENT: when saving a prefab config, the prefab scroll view look and feel settings are also saved;
+-IMPROVEMENT: added dialogs to display useful info when performing mesh combine operations;
+-IMPROVEMENT: added option to disable the parent of the source mesh objects after performing mesh combine operations;
+-IMPROVEMENT: performance improvement. The Unity Editor used to lag while moving the camera, spawning objects, selecting objects etc. 
+			  This was caused by Octave3D trying to serialize a binary tree data structure which contained information
+			  about all the objects in the scene. For larger scenes (e.g. 20K+), this was slowing down the Editor;
+-IMPROVEMENT: prefab preview generation could cause lags when loading multiple prefabs at once (e.g. from folders) into a
+			  prefab category. This has now been fixed. Note: Preview may look different than before because now a custom
+			  preview generation function is used instead of the one supplied by the Unity API;
+-IMPROVEMENT: when spawning objects, the tool will ignore surfaces derived from objects with a disabled mesh renderer. This
+			  is necessary to handle situations in which invisible objects have been placed in the scene by the artist to act
+			  as collision surfaces;
+
+-REMOVED: 'Embed in surface' toggle for decor paint brush elements;
+
+-BUG FIX: fixed bug which was causing the tool to interact with inactive objects;
+
+// V 2.2.1.1
+-BUG FIX: fixed exceptions being thrown when entering play mode;
+-BUG FIX: fixed 'SnapToCursorHitPoint' not saved correctly in Octave3D config file;
+-BUG FIX: fixed prefab tag associations not loaded properly from prefab config file;
+-BUG FIX: fixed prefab tag associations lost during script recompile (serialization issue);
+
+// V 2.2.1
+-NEW FEATURE: it is now possible to add objects to an erase mask to prevent certain objects in the scene from being
+			  erased. This is done from the object selection GUI (last 2 eraser buttons);
+
+-IMPROVEMENT: category remove and clear operations are now done via a context menu (right click on prefab management
+			  window to activate);
+-IMPROVEMENT: the 'Create category' button was moved somehwere towards the top of the prefab management window (near the
+			  'Prefab drop settings... button);
+-IMPROVEMENT: the 'Move ### prefab(s)' buttons from the prefab management window were removed and replaced with a single
+			  button and 2 popup controls which allow you to perform the same operations as before;
+-IMPROVEMENT: when using CTRL + D to duplicate selected objects, the duplicate objects maintain their links to the prefab
+			  from which the original objects were created;
+-IMPROVEMENT: the 'Miss chance' property for brush elements has been modified to 'Spawn chance' and the generation algorithm
+			  has been improved to better pick the most probable element based on the specified spawn chance;
+-IMPROVEMENT: renamed 'Set as Object Group' menu item to 'Make group';
+
+-BUG FIX: fixed bug which was ignoring the scene grid X and Z offsets to be saved in the Octave3D config file;
+-BUG FIX: fixed bug which was preventing Undo/Redo to work after clearing all categories;
+-BUG FIX: fixed null ref excpetion being thrown when performing an Undo for prefab category remove ops when those categories 
+		  had prefabs stored inside the active brush. Possibly introduced in the previous update;
+-BUG FIX: fixed bug which was causing the first object inside a brush to be generated in the center of the brush instead of
+		  being placed in a random position.
+
+// V 2.2
+-NEW FEATURE: it is now possible to specify a pivot point for the combined meshes;
+-NEW FEATURE: it is now possible to specify a parent object when combining meshes. The tool will combine all the
+			  child objects attached to that parent;
+-NEW FEATURE: it is now possible to combine selected objects;
+-NEW FEATURE: context menu item is now available when right clicking an object in the hierarchy view. This item is
+			  called Octave3D->Set as Object Group and it allows you to create object groups from objects that already
+			  exist in the scene;
+
+-IMPROVEMENT: it is now possible to perform prefab replacement for selected objects by clicking on prefabs in the
+			  active category (see hotkeys document);
+-IMPROVEMENT: better customization regarding colliders when combining meshes;
+-IMPROVEMENT: it is now possible to choose whether lightmapping UVs must be generated for combined meshes;
+-IMPROVEMENT: the tool no longer forces you to attach objects as children to the Octave3D object. All objects in
+			  the scene can now be interacted with. Note: When creating objects manually, you still need to press
+			  the 'Refresh scene' button to be able to interact with those objects;
+-IMPROVEMENT: the look and feel settings for the prefab category scroll view area now reside in a separate window. This
+			  window can be activated using the "Look and feel..." button;
+-IMPROVEMENT: it is now possible to modify the color of the prefab name labels inside the prefab category view;
+
+-BUG FIX: there is new window available in Tools->Octave3D->Fix... which allows you to fix a bug that was causing stray
+	      objects to be left behind after Resetting the Octave3D script component. These were objects used internally
+		  by Octave3D to store different types of data. Pressing the Fix button in this window will cleanup the scene
+		  of any such stray objects. This fix also needs to be performed when upgrading from an earlier version to 2.2
+		  or above;
+-BUG FIX: fixed scene grid rendering bug introduced in V 2.1 when grid shader rendering support was introduced. This bug
+		  was preventing the grid from rendering correctly for different rotation values.
+
+// V 2.1
+-NEW FEATURE: it is now possible to project selected objects on a projection surface (such as terrain or mesh);
+-NEW FEATURE: it is now possible to snap selected objects to the grid. This works in a similar manner to vertex
+			  snapping in object placement mode. The hotkey is 'B' when working in selection mode;
+-NEW FEATURE: it is now possible to load all the prefabs from the active category inside the active decor paint brush;
+-NEW FEATURE: a new feature is now available called Selection Grab. With it, you can 'grab' the selected objects and
+			  snap them to terrain or mesh surfaces. Axis alignment can be toggled on/off as needed. The hotkey for this
+			  is the 'C' key when working in selection mode;
+-NEW FEATURE: Embed in surface toggle for Single Decor Paint mode which ensures objects are nicely embedded inside the
+			  surface when no axis alignment is performed. This eliminates the floating object problem;
+-NEW FEATURE: Embed in surface toggle for Brush Decor Paint mode which ensures objects are nicely embedded inside the
+			  surface when no axis alignment is performed. This eliminates the floating object problem;
+
+-IMPROVEMENT: the scene XZ grid is now rendered using a shader and uses anti-aliasing for smooth line rendering;
+-IMPROVEMENT: the 'Hide wireframe' button below the main toolbar has been changed to 'Toggle wireframe' so that
+			  the wireframe/highlight of objects in the scene can be toggled on/off as needed;
+-IMPROVEMENT: it is now possible to right click on a prefab in the active category and add it to the active brush.
+			  This only works when working in Decor Paint Brush mode and there is an active brush available;
+-IMPROVEMENT: all brush elements are now rendered nicely inside a scroll view area (much like the prefab manager)
+			  and you can now choose (left click) a prefab inside the brush to modify its properties. This frees up
+			  a lot of space and is a lot easier to use than the previous arrangement in which all elements had their
+			  properties displayed at the same time and you had to scroll up/down until you found what you were looking
+			  for.
+	
+-REMOVED: removed 'Align all to stroke' and 'Unalign all to stroke' buttons inside the active brush view to free up
+	      space;
+
+-BUG FIX: fixed bug which was causing Octave3D to eat a HUGE amount of CPU power when switching to playmode; 
+
+// V 2.0.9.7
+-IMPROVEMENT: it is now possible to have multiple Octave3D instances in the same scene;
+-IMPROVEMENT: rotation randomization for paint brush elements has been made more flexible. Instead of a toggle
+			  button, a popup is now used which allows you to specify if and how rotation should be randomized.
+
+-BUG FIX: fixed null reference exception error which was thrown when switching scenes.
+
+// V 2.0.9.6
+-IMPROVEMENT: when dropping prefab folders there is now an additional progress bar which shows the progress
+			  of loading the prefab assets;
+-IMPROVEMENT: a progress bar is now shown when clicking on the 'Remove all categories' button inside the prefab
+			  management window.
+
+-BUG FIX: fixed bug which was preventing the object group selection popup from being rendered for the
+	      active prefab category. This was happening when an object groups was manually deleted from
+		  the hierarchy view instead of using the Octave3D interface.
+
+// V 2.0.9.5
+-IMPROVEMENT: added confirmation message dialogs which appear after a prefab or any other config type is
+		      saved/loaded successfully.
+
+-BUG FIX: fixed bug which was creating duplicate object groups when loading prefab configurations after 
+		  switching to a different scene. This bug should have been fixed in 2.0.9.2, but that solution
+		  only worked as long as no new scenes were being created.
+
+// V 2.0.9.4
+-IMPROVEMENT: it is now possible to press F to focus the camera on the selected objects. Note: when doing
+			  this, you will see hot the selection in the hierarchy changes temporarily until the focus
+			  effect is finished. This was necessary to be able to focus the camera correctly.
+
+-BUG FIX: sometimes, when loading a prefab config, incorrect prefabs were being loaded in the
+		  categories. This was happening especially when switching to a new scene or after saving
+		  the current scene. This has now been fixed;
+-BUG FIX: fixed bug which was ignoring any prefab folder names associated with a prefab category
+		  when saving/loading a prefab config.
+
+// V 2.0.9.3
+-NEW FEATURE: implemented selection alignment along X/Y/Z. The alignment buttons can be found
+			  inside the object selection GUI.
+
+// V 2.0.9.2
+-IMPROVEMENT: prefab categories are now sorted alphabetically;
+-IMPROVEMENT: prefabs which are created from folder drops, can now have the folder names displayed
+			  inside the category selection popup. You can use the 'Show folder names' toggle inside
+			  the prefab management window to control this behaviour. From there, the maximum number
+			  of shown folders can also be controlled;
+-IMPROVEMENT: when object to object snapping is enabled, the tool will always snap to cursor hit point
+			  and snap pivot points are ignored. This behaviour is desirable when object to object snapping
+			  is turned on.
+
+-BUG FIX: fixed bug which was preventing the scene camera to orbit;
+-BUG FIX: fixed bug which was preventing the tool from correctly selecting objects which were overlapped
+		  by inactive objects;
+-BUG FIX: fixed bug which was creating duplicate object groups when loading prefab configurations.
+
+// V 2.0.9.1
+-IMPROVEMENT: it is now possible to control the snap grid's X and Z offsets inside the snap settings GUI;
+
+-BUG FIX: fixed null ref exception when loading prefab configs after package reimport;
+-BUG FIX: fixed bug which was causing a save file dialog to open when trying to load settings configs;
+
+// V 2.0.9
+-NEW FEATURE: it is now possible to save/load prefab configurations. A prefab configuration is composed of all prefab categories
+			  (together with their prefabs) and all prefab tags. The 2 buttons can be found in the prefab management window;
+-NEW FEATURE: it is now possible to save/load snap, selection, erasing and look an feel settings selectively;
+
+-IMPROVEMENT: for snapping, it is now possible to use the object's pivot (as was defined in the modelling package). This can
+			  be done by checking the 'Use original pivot' toggle in the Snap Settings GUI. When this toggle is checked, the
+			  'Snap center to center' toggles (both of them) will become hidden. Snapping cente to center is still possible
+			  using the SPACE key;
+-IMPROVEMENT: it is now possible to associate an object group with a prefab category. In the object placement GUI you have the 
+			  option of specifying if objects must be attached to the active group or to the group associated with the currently
+			  active prefab category;
+-IMPROVEMENT: when creating prefabs from selected objects, it is now possible to select a predefined pivot point for the 
+			  resulting prefab. Previously the root of the prefab hierarchy was placed at the origin which means that the
+			  pivot of the entire hierarchy was way off. Specifying a pivot is now necessary since the addition of the 
+			  'Use original pivot' toggle in the snap settings GUI;
+-IMPROVEMENT: the name of the object placement guide has been changed to: name_of_prefab (Active Prefab) to make it more easy to see 
+			  what the active preab is;
+-IMPROVEMENT: the name of the active prefab is now shown in green in the top right corner of the scene view;
+-IMPROVEMENT: the Octave3D grid is now aligned with the Unity grid by default. Note: The 2 grids can still become desynchronized
+			  when chaning the grid cell size;
+-IMPROVEMENT: there is a new button in the object placement settings GUI. It's label is "Inherit rotation on prefab scroll" and if
+			  checked, it will allow you to inherit the rotation of the previously active prefab when cycling through different prefabs
+			  in the active category which the mouse scroll wheel;
+
+-FEATURE REMOVAL: removed static/dynamic flag for prefabs in the active prefab view. The reason for this is because it wasn't
+				  very flexible since it was affecting the entire hierarchy. Most of the times it is most desirable for users
+				  to walk though the entire prefab hierarchy and set the static and dynamic flags accordingly;
+-FEATURE REMOVAL: removed object layer selection in the active prefab view. Same reason as above;
+-FEATURE REMOVAL: removed rectangle draw mode for object selection;
+
+-BUG FIX: fixed null ref exception when Undo prefab folder drop when 'Create categories from dropped folders' was unchecked;
+-BUG FIX: the 'Next' and 'Previous' buttons in the active prefab only worked in object placement mode. This has now been fixed
+		  so the buttons work regardless of the currently active GUI;
+-BUG FIX: fixed bug which was causing the double click same prefab selection to work incorrectly with object hierarchies. Only
+		  one object in the hierarchy was being selected. This has now been fixed and all hierarchy objects get selected accordingly.
+-BUG FIX: fixed mouse input block problem when 2 mouse buttons were pressed at the same time. This issue should have been fixed
+		  in previous updates...
+
+// V 2.0.8
+-NEW FEATURE: the system can now handle 2D sprites which means that it is now possible to use the tool to build 2D game levels;
+-NEW FEATURE: a new button is now available ("Refresh scene") right below the main toolbar which allows you to refresh the
+			  internal scene data. One case in which this is useful is when changing sprite pivot points. In that case the
+			  sprite positions will be modified without the tool knowing about it which means that you will no longer be able
+			  to interact with those sprites properly. This button is also useful in case the scene data somehow becomes corrupt.
+
+-IMPROVEMENT: when attempting to change the extension plane while using tile connections, the tool now shows a warning to inform
+			  the user that the extension plane can not be changed as long as tile connections are used;
+-IMPROVEMENT: when using the Path or Block placement modes, the tool no longer raises/lowers these structures when the size of
+			  the object is 0 along the grow axis;
+-IMPROVEMENT: there is a new button available when working with tile connection configurations which allows you to load
+			  the active configuration. This is useful when you have only one configuration available and you would like to
+			  restore the configuration after you made some changes (without saving the config). Previously, the only way to
+			  do this was to Undo or create a dummy config, activate it and then activate the desired config again. The button
+			  is labeled "Load active configuration";
+-IMPROVEMENT: assigning/removing objects to/from paint/snap masks can no longer be undone/redone. The reason behind this is these
+			  operations can not be immediately verified visually which can create confusion. Users may want to undo/redo other
+			  types of operations but in doing so may accidentaly add or remove objects from masks which is not desirable;
+
+-BUG FIX: fixed objects not erased on left mouse button click (this bug was introduced in the previous update);
+-BUG FIX: when pressing 'K' to adjust the grid size, the orientation of the grid was not taken into account
+		  properly and this could lead to wrong grid sizes being calculated;
+-BUG FIX: fixed null ref exception when one of the 'Remove prefab association' buttons was pressed in conjunction with
+		  tile connections;
+
+// V 2.0.7
+-NEW FEATURE: it is now possible to adjust the XZ grid Y position using shortcut keys. The step value can be adjusted
+			  from the Snap Settings GUI;
+
+-IMPROVEMENT: it is now possible to use negative values for the 'Distance between objects' property when using the Decor
+			  Paint Brush placement mode. This is useful when you need to force objects to sit right next to each other
+			  and it might come in handy when placing foliage as in that case it might look better if objects sit really
+			  close or even intersect with each other;
+
+-BUG FIX: fixed bug which was causing the Octave3D mono object to become deselected when placing objects;
+-BUG FIX: fixed bug which was throwing a null ref exception when working with meshes that contained degenerate triangles;
+
+// V 2.0.6
+-NEW FEATURE: implemented object to object snapping which allows the easy snapping of the object placement guide to nearby
+			  objects based on a specified epsilon value. This mode can be activated from the snap settings GUI;
+-NEW FEATURE: added new button in the Object Selection GUI which can be used to invert selection (i.e. deselect all object which 
+			  are currently selected and select the other ones);
+-NEW FEATURE: added a toggle button which when checked, it will allow you to snap the active pivot point to the intersection
+			  point between the mouse cursor and the hovered surface. This toggle button resides in the snap settings GUI;
+-NEW FEATURE: it is now possible to change the rotation of the XZ grid. This can be useful when working with a 2D camera view;
+-NEW FEATURE: it is now possible to specify an offset from placement surface for each prefab (offset from grid and offset from object surfaces).
+			  This is useful when working with a 2D camera view as it allows you to specify different offsets for background and
+			  foreground objects;
+-NEW FEATURE: implemented selection duplication functionality. The selection can be duplicated when working in object selection
+			  mode by pressing CTRL + D. Note: This functionality does not preserve prefab links and it works only in Unity 5.0 or above;
+
+-IMPROVEMENT: added a new snap center to center toggle so that now it is possible to snap center to center selectively depending
+			  on the type of hovered snap surface (grid cell or object surface);
+-IMPROVEMENT: when using tile connections, the path extension plane will always reside at the bottom of the object placement guide.
+			  This is necessary to ensure that all tile connection prefabs have valid X and Z size components;
+
+-BUG FIX: fixed bug which was causing Unity to throw an exception when constructing a path or block when the object size was 0 
+		  along one of the path's/block's extension axes;
+-BUG FIX: fixed bug which was causing the size of the path/block stacks to be calculated incorrectly for arbitrary object placement
+	      guide rotations;
+
+// V 2.0.4
+-IMPROVEMENT: it is now possible to double-click on objects in conjunction with the T hotkey in order to snap the grid
+			  to the top or bottom of the object depending on which one is closer to the mouse cursor click point.
+
+// V 2.0.3
+-NEW FEATURE: in selection mode, it is now possible to select all objects that share the same prefab by double clicking
+			  on an object;
+-NEW FEATURE: it is now possible to randomize the prefabs in the active category for the Decor Paint (Single mode) and 
+			  Point and Click placement modes;
+-NEW FEATURE: it is now possible to randomize the objects that get placed inside a path or block. The object prefabs are
+			  chosen randomly from the active prefab category;
+
+-BUG FIX: when selecting objects with similar prefabs using the 'G' key, the gizmo position is now updated properly;
+-BUG FIX: fixed bug which was causing the Octave3D object to be deleted from the scene when the 'Delete' key was pressed;
+-BUG FIX: when activating/deactivating mirrors, the result was not immediately visible in the scene view. This has
+		  been fixed. As soon as a mirror is activated/deactivated, the scene view is repainted accordingly;
+-BUG FIX: when modifying the rotation of a mirror via the Inspector GUI, the results were not immediately visible
+		  in the scene view. This has now been fixed by repainting the scene view accordingly;
+-BUG FIX: fixed bug which was causing the 'Allow intersection for mirrored objects' property to be ignored when dealing
+		  with objects that contain negative scale;
+
+// V 2.0.2
+-IMPROVEMENT: when building a block with the 'Block' placement mode, the tool now shows the block dimensions in the top left
+		      corner of the scene view;
+-IMPROVEMENT: added toggle button for snap center to center. When this is checked, the tool will always snap the center pivot
+			  point to the center of the snap surface. It has the same effect as when holding down the 'Space' key, the only
+			  exception being that it is permanent as long as the toggle button is checked;
+-IMPROVEMENT: folders can now be dropped onto the destination folder name field inside the prefab creation settings view;
+
+-BUG FIX: fixed bug which was preventing GUI textures from loading properly on OSX;
+
+// V 2.0.1
+-IMPROVEMENT: implemented toggle button which allows you to specify if objects can be painted on the grid. This applies to
+			  both 'Single' and 'Brush' decor paint modes;
+-IMPROVEMENT: changed the hotkey for placing a path with the 'Path' placement mode from SPACE to LSHIFT. This was necessary
+			  because the SPACE key was conflicting with the snap center to center hotkey;
+
+-BUG FIX: fixed bug which was causing mouse and keyboard input to become blocked when more than 2 mouse buttons were pressed;
+-BUG FIX: scene navigation is now possible using the arrow keys;
+
+// V 2.0
+-NEW FEATURE: implemented a new placement mode called 'Decor Paint'. This mode works in 2 ways: 'Single' and 'Brush' and it replaces
+			  what was previosuly known as 'Precise snapping'. It is ideal for placing objects on a terrain or on the mesh surfaces of
+			  other objects. The brush mode allows you to perform multi-prefab placement;
+-NEW FEATURE: it is now possible to specify if the objects which are placed in the scene should be attached as children of the hovered object;
+-NEW FEATURE: prefab tags.  Users can now associate a prefab with a series of tags which can act as filters for the active prefab category.
+			  Using tags the user can easily hide/show only the prefabs that they are interested in, making prefab searching much easier. Now,
+			  when dragging a folder onto the active category, the user can specify if they wish to automatically create tags based on the 
+			  folder names. Subfolders are also taken into account;
+-NEW FEATURE: search prefabs by name;
+-NEW FEATURE: the object placement guide can now be rotated using the mouse. The rotation can happen around the X, Y and Z axes or around 
+			  the normal of the surface on which the object resides. Users can control the mouse sensitivity;
+-NEW FEATURE: the object placement guide can now be uniform-scaled using the mouse. Users can control the mouse sensitivity;
+-NEW FEATURE: the snapping system has been redesigned making it much more intuitive and easier to use;
+-NEW FEATURE: 2 new erase tools -> 2D and 3D mass erase (useful for quickly erasing large collections of objects). The 3D erase brush is especially
+			  useful when erasing objects which reside on a terrain;
+-NEW FEATURE: rotation and scale randomization settings for the placement guide when working in Decor Paint or Point and Click placement modes;
+-NEW FEATURE: placement guide surface alignment for all placement modes;
+-NEW FEATURE: it is now possible to specify an 'Autofill' tile when using tile connections. This can be used to fill up closed areas inside a path
+			  when using the 'Path' placement mode with tile connections turned on;
+-NEW FEATURE: each tile connection now has an associated Y offset;
+-NEW FEATURE: each tile connection can now be extruded upwards and/or downwards. The extrusion amount can be specified in the Inspector;
+-NEW FEATURE: when using the 'Block' placement mode, the block can now be adjusted using a 1:1 ratio;
+-NEW FEATURE: implemented 'Automatic Random' height adjustment mode for the 'Block' placement mode;
+-NEW FEATURE: implemented subdivision settings for the 'Block' placement mode (allows you to subdivide a block into smaller blocks);
+-NEW FEATURE: implemented decor paint masks in addition to snap masks;
+-NEW FEATURE: shortcut key for selecting all objects which share the same prefab;
+-NEW FEATURE: snapping when scaling or rotating the guide using the mouse;
+-NEW FEATURE: object groups for better scene management;
+-NEW FEATURE: the placement guide can now be offset from the placement surface using a collection of hotkeys and mouse movement;
+-NEW FEATURE: the user can now replace prefabs in the scene using the object selection mechanism;
+-NEW FEATURE: vertex position welding when combining meshes with similar materials
+-NEW FEATURE: when operating in placement mode, it is now possible to snap object vertices to other object vertices or to grid cell points almost similar to 
+			  the way in which vertex snapping works with the Unity Editor move gizmo;
+-NEW FEATURE: ability to activate a prefab by picking it from the scene;
+
+-IMPROVEMENT: much more easier to interact with mirrors. They can now be manipulated using the mouse and the keyboard;
+-IMPROVEMENT: floating windows are used for managing prefabs, prefab tags and object layers. These windows can be nested as needed;
+-IMPROVEMENT: ability to select/deselect the tool object using the ALT + R/D shortuct keys;
+-IMPROVEMENT: shortcut key for snapping the center pivot point of an object to the center of the snap surface;
+-IMPROVEMENT: in the previou version, when an object was hovered with the cursor, the tool activated a snap grid along the hovered object volume face.
+			  This is still available in this version, but the grid now takes the rotation of the object into account;
+-IMPROVEMENT: now, when erasing objects, by default the entire object hierarchy is erased. It is possible to use hotkeys to switch to another mode in 
+			  which only the objects which were hovered by the cursor or which lie inside the erase brush get erased;
+-IMPROVEMENT: implemented 'Allow Partial Overlap' toggle for object erasing and object selection. If not checked, objects will be erased/selected only 
+			  if they lie completely inside the selection/erase shape;
+-IMPROVEMENT: when working in 'Path' placement mode, the path can now be constructed along any direction (in the previous version only the global X, Y 
+			  and Z axes were used);
+-IMPROVEMENT: when working in 'Block' placement mode, the block can now be constructed along any direction (in the previous version only the global X, Y 
+			  and Z axes were used);
+-IMPROVEMENT: it is now possible to use negative padding values for the 'Path' placement mode;
+-IMPROVEMENT: it is now possible to use negative padding values for the 'Block' placement mode;
+-IMPROVEMENT: it is now possible to control a path's offset along its grow direction when working in 'Path' placement mode;
+-IMPROVEMENT: it is now possible to control a block's offset along its grow direction when working in 'Block' placement mode;
+-IMPROVEMENT: 2 selection update modes are now available: 'SingleObject' and 'EntireHierarchy'. When 'SingleObject' is active, only the object which is 
+			  clicked or falls within the area of the selection shape gets selected/deselected. When 'EntireHierarchy' is active, the entire hierarchy 
+			  to which the object belongs gets selected/deselected;
+
+-FEATURE REMOVAL: object layers. The tool now uses Unity layers for layer management;
+-FEATURE REMOVAL: prefab category filters;
+-FEATURE REMOVAL: object selection view (together with selection filters);
+-FEATURE REMOVAL: snap configurations - no longer needed with the new snapping system in place;
+-FEATURE REMOVAL: dynamic mirroring - not very useful and sometimes confusing;
+-FEATURE REMOVAL: ability to place triggers using the 'ogTrigger' script;
+-FEATURE REMOVAL: tile connection pose rotation - confusing and not useful. Virtually 100% of the time it is desirable to use the prefab's pose;
+
+-BUG FIX: fixed bug which was causing GUI textures to become dark when the color space was set to 'Linear' in the project settings;
+
+// V 1.1
+-NEW FEATURE: added possibility to place objects on a terrain using precise snapping. The terrain does not necessarily have to 
+			  be child of the grid object;
+-NEW FEATURE: the tool now maintains the link between the objects places in the scene and the prefabs from which they were
+			  instantiated;
+-NEW FEATURE: added 'Prepare for level edit', 'Prepare for play test' and 'Prepare for final build' buttons which allow you to 
+			  ensure that the scene is always up to date with all the data/information required for level editing or play/final build.
+			  Please see doc chapter 3.1;
+
+-IMPROVEMENT: automatic snapping improved by making cell size smaller and the number of cell size now depends on the size of the 
+			  snap surface.
+-IMPROVEMENT: it is no longer needed to manually change the user interaction mode. It changes automatically when the active GUI
+			  is changed;
+-IMPROVEMENT: you can now choose the collider type for ogTrigger objects. Please see doc chapter 3.1;
+-IMPROVEMENT: the tool no longer attaches colliders to game objects. The game objects are no longer touched in any way by the tool;
+-IMPROVEMENT: the GUI icon paths have been made relative to the ObjectGrid3D folder. The ObjectGrid3D folder can now be moved anywhere
+			  as long as you make sure that no other ObjectGrid3D folder exists in the project;
+-IMPROVEMENT: object names are now set to the name of the prefab from which they are instantiated;
+-IMPROVEMENT: the name of the object placement guide has also been ammended to ObjectPlacementGuide (NameofPrefab);
+-IMPROVEMENT: when pressing the 'Get All Prefabs In Project' button, the tool will now ask for a confirmation before continuing. This
+			  is more desirable in order to avoid accidental clicks of this button which can cause a stall in Unity when too many
+			  prefabs are present in the project.
+
+-FEATURE REMOVAL: removed Remove###Collider toggles from the Optimization GUI because they are no longer needed. The tool does not
+			      add any colliders to the game objects any more;
+-FEATURE REMOVAL: removed Box Collider Size For Non-Mesh Objects property; the collider size is now configurable for light, particle 
+				  system and trigger components using the settings which sit right underneath the main toolbar (please see doc chapter 3.1);
+-FEATURE REMOVAL: it is no longer possible to snap long the collider surfaces of light and particle system objects. This feature was
+				  removed because it is not really useful. It can actually get in the way.
+
+-BUG FIX: the scene view is now repainted when mirrors are activated or deativated so changes can now be seen instantly;
+-BUG FIX: scene navigation using the WASD and QE keys is now fixed;
+-BUG FIX: the project could not be built because a file 'ogBlockRotationRandomizationSettings.cs' file did not have the 
+		  #if UNITY_EDITOR and #endif directives included. This has now been fixed;
+-BUG FIX: for plane surfaces, objects were sometimes snapped below the surface. This has been fixed.
+
+// V 1.1
+-NEW FEATURE: eliminated the 90 degree rotation limitation when rotating the object placement guide using the X, Y and Z
+			  shortuct keys. You can now choose the rotation increment that must be applied when one of these key is pressed. 
+			  The rotation increment is configurable for each axis individually. Please see documentation chapters 2.2.3.1 
+			  and 3.4.1.2.1;
+-NEW FEATURE: added the possibility to drag and drop prefab folders into the category view. Please see documentation chapters
+			  2.2.1.2 and 3.4.1.1;
+-NEW FEATURE: added more random rotation settings for the 'Block' object placement method. You can now control randomization
+		      settings for each axis individually. You can specify whether or not rotation can be randomized for a certain 
+			  axis, whether or not negative rotation values can be generated and you can also control the randomization type
+			  (Entire Range, Step). For 'Step', you can choose the random step value. Please see documentation chapter 3.4.1.2.3;
+-NEW FEATURE: added possibility to reset the object placement guide's rotation to 0 on each axis individually. This can be done
+			  by holding the SHIFT key down and then pressing the X, Y or Z button, depending on the axis which must have its
+			  rotation reset. Please see documentation chapter 4.2;
+-NEW FEATURE: added possibility to choose the pose rotation for tile connections. Please see documentation chapters 2.2.5.2.8.1
+			  and 3.4.1.2.2.1;
+-NEW FEATURE: the selected objects can now be moved, rotated and scaled using transform gizmos. You can also choose the transform
+			  space in which these transformations occur. Please see documentation chapters 2.5.5, 3.4.3 and 4.2;
+-NEW FEATURE: added ellipse selection tool. Please see documentation chapters 2.5.2 and 3.4.3;
+-NEW FEATURE: you can now choose a fill color for the object selection primitives (rectangle or ellipse). Please see documentation
+			  chapter 3.4.3;
+-NEW FEATURE: there are now 2 selection modes available:  Standard - the one that has been available so far and Paint. In Paint
+			  mode you can 'paint' your object selections. Please see documentation chapters 2.5.2 and 3.4.3;
+-NEW FEATURE: holding down the CTRL/COMMAND key, you can now adjust the selection area size (rectangle or ellipse) proportionally
+			  (width same as height) while dragging the mouse cursor. This feature applies only to the 'Standard' selection mode.
+			  Please see documentation chapters 2.5.2 and 4.2;
+-NEW FEATURE: added button which allows you to remove all prefabs from the active prefab category.
+
+-FEATURE REMOVAL: removed the 'Save Current Snap Settings In Active Configuration' button in the 'Object Hierarchy Snapping Settings'
+				  GUI section. Settings are now automatically saved in the active configuration when you make a change.
+
+-BUG FIX: fixed bug which caused some tile connections to be positioned wrong for arbitrary grid orientations (e.g. X:45, Y:45, Z:0);
+-BUG FIX: fixed object selection bug. When using a perspective camera, for some camera angles, the objects were not being selected even 
+		  though they were clearly inside the object selection area;
+-BUG FIX: fixed object selection bug. For some perspective camera angles, objects which were not visible on the screen and were sitting 
+		  behind the camera, were still getting selected;
+-BUG FIX: object selection boxes are now drawn as oriented boxes. Previously they were being rendred as AABBs and that was not the 
+		  intended behaviour.

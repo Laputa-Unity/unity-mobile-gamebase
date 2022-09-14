@@ -1,0 +1,411 @@
+// Toony Colors Pro+Mobile 2
+// (c) 2014-2021 Jean Moreno
+
+// Shader Generator Module: Triplanar Mapping
+
+#FEATURES
+sngl	lbl="Triplanar Mapping"				kw=TRIPLANAR														help="featuresreference/surface/triplanarmapping"		tt="Enables triplanar mapping"
+mult	lbl="UV Space"						kw=World Space|,Object Space|TRIPLANAR_OBJECT_SPACE							needs=TRIPLANAR						indent		tt="How to generate the UVs"
+mult	lbl="Surface Texture"				kw=One Texture (ground)|,Two Textures (ground + ceiling)|TRIPLANAR_CEILING	needs=TRIPLANAR						indent		tt="Use different textures for the ground and ceiling"
+mult	lbl="Ceiling Mode"					kw=Y Normal Direction|,Min Max Threshold|TRIPLANAR_CEILING_MINMAX			needs=TRIPLANAR,TRIPLANAR_CEILING	indent=2	tt="How the ceiling texture should be applied\nBased on the surface normal, or according to the vertex Y position"
+mult	lbl="Walls Texture"					kw=One Texture|,Two Textures (X + Z)|TRIPLANAR_SIDES_XZ						needs=TRIPLANAR						indent		tt="Use different textures for the X and Z orientations"
+mult	lbl="Height Blending (Alpha)"		kw=Off (Linear)|,Walls Alpha|TRIPLANAR_HEIGHT_SIDES,Ground Alpha|TRIPLANAR_HEIGHT_GROUND	needs=TRIPLANAR		indent		tt="Modulate the transition between textures based on their alpha channel (height map)"
+sngl	lbl="Triplanar Normal Maps"			kw=TRIPLANAR_BUMP															needs=TRIPLANAR						indent		tt="Add one normal map per triplanar texture"
+sngl	lbl="Bump Scale"					kw=TRIPLANAR_BUMP_SCALE														needs=TRIPLANAR,TRIPLANAR_BUMP		indent=2	tt="Add a bump scale slider for normal maps"
+sngl	lbl="Object Position Offset"		kw=TRIPLANAR_OBJ_POS_OFFSET													needs=TRIPLANAR						indent		tt="Offset the world UV with the object's position, so that the mapping doesn't change when the object translates in the world"
+#END
+
+//================================================================
+
+#PROPERTIES_NEW
+/// IF TRIPLANAR
+		header		Triplanar Mapping
+	/// IF !TERRAIN_SHADER
+		color_rgba	Ground Texture		fragment, imp(texture, label = "Ground", variable = "_TriGround", default = white, locked = true, locked_uv = true)
+	///
+	/// IF TRIPLANAR_SIDES_XZ
+		color_rgba	Wall X Texture		fragment, imp(texture, label = "Wall X", variable = "_TriSideX", default = white, locked = true, locked_uv = true)
+		color_rgba	Wall Z Texture		fragment, imp(texture, label = "Wall Z", variable = "_TriSideZ", default = white, locked = true, locked_uv = true)
+	/// ELSE
+		color_rgba	Walls Texture		fragment, imp(texture, label = "Walls", variable = "_TriSide", default = white, locked = true, locked_uv = true)
+	///
+	/// IF TRIPLANAR_CEILING
+		color_rgba	Ceiling Texture		fragment, imp(texture, label = "Ceiling", variable = "_TriCeiling", default = white, locked = true, locked_uv = true)
+	///
+	float4		Triplanar Parameters	fragment, imp(vector, variable = "_TriplanarBlendStrength", default = (2,8,2,0.5), drawer = "[TCP2Vector4Floats(Contrast X,Contrast Y,Contrast Z,Smoothing,1,16,1,16,1,16,0.01,1)]"), help = "Parameters that adjust the triplanar UVs: XYZ adjust the contrast for each UV plane, W adjusts the blend smoothing"
+	float3		Triplanar Normal		fragment, imp(hook, label = "triplanarNormal.xyz", toggles = HOOK_TRIPLANAR_NORMAL), help = "Hook for the Triplanar Normal that are used to calculate the UV weights"
+///
+/// IF TRIPLANAR && TRIPLANAR_BUMP
+	/// IF !BUMP && !TERRAIN_SHADER
+		color_rgba	Ground Texture Normal Map		fragment, imp(texture, label = "Ground Normal Map", variable = "_TriGroundBump", default = bump, locked = true, locked_uv = true, tiling_offset_var = "_TriGround_ST")
+	///
+	/// IF TRIPLANAR_SIDES_XZ
+		color_rgba	Wall X Texture Normal Map		fragment, imp(texture, label = "Wall X Normal Map", variable = "_TriSideXBump", default = bump, locked = true, locked_uv = true, tiling_offset_var = "_TriSideX_ST")
+		color_rgba	Wall Z Texture Normal Map		fragment, imp(texture, label = "Wall Z Normal Map", variable = "_TriSideZBump", default = bump, locked = true, locked_uv = true, tiling_offset_var = "_TriSideZ_ST")
+	/// ELSE
+		color_rgba	Walls Texture Normal Map		fragment, imp(texture, label = "Walls Normal Map", variable = "_TriSideBump", default = bump, locked = true, locked_uv = true, tiling_offset_var = "_TriSide_ST")
+	///
+	/// IF TRIPLANAR_CEILING
+		color_rgba	Ceiling Texture Normal Map		fragment, imp(texture, label = "Ceiling Normal Map", variable = "_TriCeilingBump", default = bump, locked = true, locked_uv = true, tiling_offset_var = "_TriCeiling_ST")
+	///
+	/// IF TRIPLANAR_BUMP_SCALE
+		/// IF !BUMP
+			float		Bump Scale Ground				fragment, imp(range, label = "Scale", variable = "_TriGroundBumpScale", default = 1.0, min = -2, max = 2)
+		///
+		/// IF TRIPLANAR_SIDES_XZ
+			float		Bump Scale Wall X				fragment, imp(range, label = "Scale", variable = "_TriSideXBumpScale", default = 1.0, min = -2, max = 2)
+			float		Bump Scale Wall Z				fragment, imp(range, label = "Scale", variable = "_TriSideZBumpScale", default = 1.0, min = -2, max = 2)
+		/// ELSE
+			float		Bump Scale Walls				fragment, imp(range, label = "Scale", variable = "_TriSideBumpScale", default = 1.0, min = -2, max = 2)
+		///
+		/// IF TRIPLANAR_CEILING
+			float		Bump Scale Ceiling				fragment, imp(range, label = "Scale", variable = "_TriCeilingBumpScale", default = 1.0, min = -2, max = 2)
+		///
+	///
+///
+/// IF TRIPLANAR && ((TRIPLANAR_CEILING && TRIPLANAR_CEILING_MINMAX) || (TRIPLANAR_HEIGHT_SIDES || TRIPLANAR_HEIGHT_GROUND))
+	/// IF TRIPLANAR_CEILING && TRIPLANAR_CEILING_MINMAX
+		float		Ceiling Min			fragment, imp(float, label = "Ceiling Threshold Min", default = -1)
+		float		Ceiling Max			fragment, imp(float, label = "Ceiling Threshold Max", default = 1)
+		float		Ceiling Smoothness	fragment, imp(constant, label = "Ceiling Smoothness", default = 0.1)
+	///
+	/// IF TRIPLANAR_HEIGHT_SIDES || TRIPLANAR_HEIGHT_GROUND
+		float		Triplanar Alpha Offset		fragment, imp(range, label = "Alpha Blend Offset", variable = "_TriplanarHeightOffset", default = 0, min = -1, max = 1)
+		float		Triplanar Alpha Smoothing	fragment, imp(range, label = "Alpha Blend Smoothing", variable = "_TriplanarHeightSmooth", default = 0.1, min = 0.001, max = 1)
+	///
+///
+#END
+
+//================================================================
+
+#KEYWORDS
+/// IF TRIPLANAR
+			feature_on		CUSTOM_ALBEDO
+		/// IF TRIPLANAR_OBJECT_SPACE
+			feature_on		USE_OBJECT_POSITION_FRAGMENT
+			feature_on		USE_OBJECT_NORMAL_FRAGMENT
+		/// ELSE
+			feature_on		USE_WORLD_POSITION_FRAGMENT
+			feature_on		USE_WORLD_NORMAL_FRAGMENT_PER_VERTEX
+		///
+	/// IF TRIPLANAR_BUMP
+			feature_on		USE_SURFACE_CUSTOM_NORMAL
+	///
+///
+#END
+
+//================================================================
+
+#PROPERTIES_BLOCK
+/// IF TRIPLANAR
+
+		[TCP2HeaderHelp(Triplanar Mapping)]
+	/// IF !TERRAIN_SHADER
+		[[PROP:Ground Texture]]
+	///
+	/// IF TRIPLANAR_SIDES_XZ
+		[[PROP:Wall X Texture]]
+		[[PROP:Wall Z Texture]]
+	/// ELSE
+		[[PROP:Walls Texture]]
+	///
+	/// IF TRIPLANAR_CEILING
+		[[PROP:Ceiling Texture]]
+		/// IF TRIPLANAR_CEILING_MINMAX
+		[[PROP:Ceiling Min]]
+		[[PROP:Ceiling Max]]
+		[[PROP:Ceiling Smoothness]]
+		[Space]
+		///
+	///
+		[[PROP:Triplanar Parameters]]
+	/// IF TRIPLANAR_HEIGHT_SIDES || TRIPLANAR_HEIGHT_GROUND
+		[[PROP:Triplanar Alpha Offset]]
+		[[PROP:Triplanar Alpha Smoothing]]
+	///
+	/// IF TRIPLANAR_BUMP
+		[TCP2HeaderHelp(Triplanar Mapping Normal Maps)]
+		/// IF !BUMP && !TERRAIN_SHADER
+		[[PROP:Ground Texture Normal Map]]
+			/// IF TRIPLANAR_BUMP_SCALE
+		[[PROP:Bump Scale Ground]]
+			///
+		///
+		/// IF TRIPLANAR_SIDES_XZ
+		[[PROP:Wall X Texture Normal Map]]
+			/// IF TRIPLANAR_BUMP_SCALE
+		[[PROP:Bump Scale Wall X]]
+			///
+		[[PROP:Wall Z Texture Normal Map]]
+			/// IF TRIPLANAR_BUMP_SCALE
+		[[PROP:Bump Scale Wall Z]]
+			///
+		/// ELSE
+		[[PROP:Walls Texture Normal Map]]
+			/// IF TRIPLANAR_BUMP_SCALE
+		[[PROP:Bump Scale Walls]]
+			///
+		///
+		/// IF TRIPLANAR_CEILING
+		[[PROP:Ceiling Texture Normal Map]]
+			/// IF TRIPLANAR_BUMP_SCALE
+		[[PROP:Bump Scale Ceiling]]
+			///
+		///
+	///
+		[TCP2Separator]
+///
+#END
+
+//================================================================
+
+#VARIABLES
+#END
+
+//================================================================
+
+#INPUT
+#END
+
+//================================================================
+
+#VERTEX
+#END
+
+//================================================================
+
+#FRAGMENT:INPUT(float3 worldPos, float3 worldNormalVertex, float3 objPos, float3 objNormal)
+/// IF TRIPLANAR
+
+			// Triplanar Texture Blending
+	/// IF TRIPLANAR_OBJECT_SPACE
+		/// IF !TERRAIN_SHADER || TRIPLANAR_CEILING
+			half2 uv_ground = objPos.xz;
+		///
+			half2 uv_sideX = objPos.zy;
+			half2 uv_sideZ = objPos.xy;
+			float3 triplanarNormal = objNormal;
+	/// ELSE
+		/// IF !TERRAIN_SHADER || TRIPLANAR_CEILING
+			half2 uv_ground = worldPos.xz;
+		///
+			half2 uv_sideX = worldPos.zy;
+			half2 uv_sideZ = worldPos.xy;
+			float3 triplanarNormal = worldNormalVertex;
+	///
+	/// IF HOOK_TRIPLANAR_NORMAL
+			triplanarNormal.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Triplanar Normal]];
+	///
+///
+#END
+
+#FRAGMENT:SAMPLE_GROUND(float4 albedoAlpha, float3 objPos)
+/// IF TRIPLANAR
+
+	/// IF TRIPLANAR_OBJ_POS_OFFSET
+			half3 objPositionInWorld = unity_ObjectToWorld._m03_m13_m23;
+		/// IF !TERRAIN_SHADER || TRIPLANAR_CEILING
+			uv_ground.xy -= objPositionInWorld.xz;
+		///
+			uv_sideX.xy -= objPositionInWorld.zy;
+			uv_sideZ.xy -= objPositionInWorld.xy;
+
+	///
+	/// IF TERRAIN_SHADER
+			half4 triplanar = half4(0, 0, 0, 0);
+	/// ELSE
+			//ground
+			half4 triplanar = [[SAMPLE_VALUE_SHADER_PROPERTY:Ground Texture(uv:uv_ground)]];
+		/// IF TEXTURE_BLENDING
+			albedoAlpha.rgb *= triplanar.rgb;
+		///
+	///
+///
+#END
+
+#FRAGMENT(float4 albedoAlpha, float3 worldPos, float3 objPos)
+/// IF TRIPLANAR
+	/// IF TEXTURE_BLENDING
+			triplanar = albedoAlpha;
+			albedoAlpha.rgb = half3(1, 1, 1);
+	///
+	/// IF TRIPLANAR_CEILING
+
+			//ceiling
+			fixed4 tex_ceiling = [[SAMPLE_VALUE_SHADER_PROPERTY:Ceiling Texture(uv:uv_ground)]];
+	///
+
+			//walls
+	/// IF TRIPLANAR_SIDES_XZ
+			fixed4 tex_sideX = [[SAMPLE_VALUE_SHADER_PROPERTY:Wall X Texture(uv:uv_sideX)]];
+			fixed4 tex_sideZ = [[SAMPLE_VALUE_SHADER_PROPERTY:Wall Z Texture(uv:uv_sideZ)]];
+	/// ELSE
+			fixed4 tex_sideX = [[SAMPLE_VALUE_SHADER_PROPERTY:Walls Texture(uv:uv_sideX)]];
+			fixed4 tex_sideZ = [[SAMPLE_VALUE_SHADER_PROPERTY:Walls Texture(uv:uv_sideZ)]];
+	///
+
+			//blending
+			half3 blendWeights = pow(abs(triplanarNormal), [[VALUE:Triplanar Parameters]].xyz / [[VALUE:Triplanar Parameters]].w);
+			blendWeights = blendWeights / (blendWeights.x + abs(blendWeights.y) + blendWeights.z);
+
+	/// IF TRIPLANAR_HEIGHT_SIDES
+
+			//height-based blending
+			half heightOffset = [[VALUE:Triplanar Alpha Offset]];
+			half heightSmooth = [[VALUE:Triplanar Alpha Smoothing]];
+			float height = ((tex_sideX.a + tex_sideZ.a)/2) + heightOffset;
+			blendWeights.y = smoothstep(height - heightSmooth, height + heightSmooth, blendWeights.y) * blendWeights.y;
+			blendWeights = blendWeights / (blendWeights.x + abs(blendWeights.y) + blendWeights.z);
+
+	/// ELIF TRIPLANAR_HEIGHT_GROUND
+
+			//height-based blending
+			half heightOffset = [[VALUE:Triplanar Alpha Offset]];
+			half heightSmooth = [[VALUE:Triplanar Alpha Smoothing]];
+			float height = triplanar.a + heightOffset;
+			blendWeights.y = smoothstep(height - heightSmooth, height + heightSmooth, blendWeights.y) * blendWeights.y;
+			blendWeights = blendWeights / (blendWeights.x + abs(blendWeights.y) + blendWeights.z);
+
+	///
+	/// IF TRIPLANAR_CEILING
+		/// IF TRIPLANAR_CEILING_MINMAX
+			/// IF TRIPLANAR_OBJECT_SPACE
+			float triplanar_ceiling_lerp = smoothstep(objPos.y - [[VALUE:Ceiling Smoothness]], objPos.y, [[VALUE:Ceiling Max]]) - smoothstep(objPos.y, objPos.y + [[VALUE:Ceiling Smoothness]], [[VALUE:Ceiling Min]]);
+			/// ELSE
+			float triplanar_ceiling_lerp = smoothstep(worldPos.y - [[VALUE:Ceiling Smoothness]], worldPos.y, [[VALUE:Ceiling Max]]) - smoothstep(worldPos.y, worldPos.y + [[VALUE:Ceiling Smoothness]], [[VALUE:Ceiling Min]]);
+			///
+			triplanar = lerp(tex_ceiling, triplanar, triplanar_ceiling_lerp);
+		/// ELSE
+			float triplanar_ceiling_lerp = saturate(sign(triplanarNormal.y)+1);
+			triplanar = lerp(tex_ceiling, triplanar, triplanar_ceiling_lerp);
+		///
+			blendWeights.y = abs(blendWeights.y);
+	///
+			triplanar = tex_sideX * blendWeights.x + triplanar * blendWeights.y + tex_sideZ * blendWeights.z;
+	/// IF TERRAIN_SHADER
+# If terrain shader, we need to blend only the walls (and the ceiling), and leave the rest
+# Premultiplied blending:
+#				half triplanarLerp = 1.0 - blendWeights.y;
+#				albedoAlpha = triplanar + (albedoAlpha * (1.0 - triplanarLerp));
+#			simplified to:
+		/// IF TRIPLANAR_CEILING
+			albedoAlpha = triplanar + albedoAlpha * blendWeights.y * triplanar_ceiling_lerp;
+		/// ELSE
+			albedoAlpha = triplanar + albedoAlpha * blendWeights.y;
+		///
+	/// ELSE
+			albedoAlpha *= triplanar;
+	///
+///
+#END
+
+#FRAGMENT:BUMP(float3 outNormal, float3 worldNormalVertex)
+/// IF TRIPLANAR && TRIPLANAR_BUMP
+
+				//Triplanar Normal Map Blending
+	/// IF TERRAIN_SHADER
+				half3 normalMap = half3(0.5, 0.5, 1.0) * 2.0 - 1.0;
+	/// ELSE
+				//ground
+		/// IF BUMP
+				normalMap = half4(0, 0, 1, 0);
+		/// ELSE
+			/// IF TRIPLANAR_BUMP_SCALE
+				/// IF URP
+				half3 normalMap = UnpackNormalScale( [[SAMPLE_VALUE_SHADER_PROPERTY:Ground Texture Normal Map(uv:uv_ground)]], [[VALUE:Bump Scale Ground]] );
+				/// ELSE
+				half3 normalMap = UnpackScaleNormal( [[SAMPLE_VALUE_SHADER_PROPERTY:Ground Texture Normal Map(uv:uv_ground)]], [[VALUE:Bump Scale Ground]] );
+				///
+			/// ELSE
+				half3 normalMap = UnpackNormal( [[SAMPLE_VALUE_SHADER_PROPERTY:Ground Texture Normal Map(uv:uv_ground)]] );
+			///
+		///
+	///
+	/// IF TRIPLANAR_CEILING
+
+				//ceiling
+			/// IF TRIPLANAR_BUMP_SCALE
+				/// IF URP
+				half3 tex_ceiling_bump = UnpackNormalScale( [[SAMPLE_VALUE_SHADER_PROPERTY:Ceiling Texture Normal Map(uv:uv_ground)]], [[VALUE:Bump Scale Ceiling]] );
+				/// ELSE
+				half3 tex_ceiling_bump = UnpackScaleNormal( [[SAMPLE_VALUE_SHADER_PROPERTY:Ceiling Texture Normal Map(uv:uv_ground)]], [[VALUE:Bump Scale Ceiling]] );
+				///
+			/// ELSE
+				half3 tex_ceiling_bump = UnpackNormal( [[SAMPLE_VALUE_SHADER_PROPERTY:Ceiling Texture Normal Map(uv:uv_ground)]] );
+			///
+	///
+
+				//walls
+	/// IF TRIPLANAR_SIDES_XZ
+			/// IF TRIPLANAR_BUMP_SCALE
+				/// IF URP
+				half3 tex_sideX_bump = UnpackNormalScale( [[SAMPLE_VALUE_SHADER_PROPERTY:Wall X Texture Normal Map(uv:uv_sideX)]], [[VALUE:Bump Scale Wall X]] );
+				half3 tex_sideZ_bump = UnpackNormalScale( [[SAMPLE_VALUE_SHADER_PROPERTY:Wall Z Texture Normal Map(uv:uv_sideZ)]], [[VALUE:Bump Scale Wall Z]] );
+				/// ELSE
+				half3 tex_sideX_bump = UnpackScaleNormal( [[SAMPLE_VALUE_SHADER_PROPERTY:Wall X Texture Normal Map(uv:uv_sideX)]], [[VALUE:Bump Scale Wall X]] );
+				half3 tex_sideZ_bump = UnpackScaleNormal( [[SAMPLE_VALUE_SHADER_PROPERTY:Wall Z Texture Normal Map(uv:uv_sideZ)]], [[VALUE:Bump Scale Wall Z]] );
+				///
+			/// ELSE
+				half3 tex_sideX_bump = UnpackNormal( [[SAMPLE_VALUE_SHADER_PROPERTY:Wall X Texture Normal Map(uv:uv_sideX)]] );
+				half3 tex_sideZ_bump = UnpackNormal( [[SAMPLE_VALUE_SHADER_PROPERTY:Wall Z Texture Normal Map(uv:uv_sideZ)]] );
+			///
+	/// ELSE
+			/// IF TRIPLANAR_BUMP_SCALE
+				/// IF URP
+				half3 tex_sideX_bump = UnpackNormalScale( [[SAMPLE_VALUE_SHADER_PROPERTY:Walls Texture Normal Map(uv:uv_sideX)]], [[VALUE:Bump Scale Walls]] );
+				half3 tex_sideZ_bump = UnpackNormalScale( [[SAMPLE_VALUE_SHADER_PROPERTY:Walls Texture Normal Map(uv:uv_sideZ)]], [[VALUE:Bump Scale Walls]] );
+				/// ELSE
+				half3 tex_sideX_bump = UnpackScaleNormal( [[SAMPLE_VALUE_SHADER_PROPERTY:Walls Texture Normal Map(uv:uv_sideX)]], [[VALUE:Bump Scale Walls]] );
+				half3 tex_sideZ_bump = UnpackScaleNormal( [[SAMPLE_VALUE_SHADER_PROPERTY:Walls Texture Normal Map(uv:uv_sideZ)]], [[VALUE:Bump Scale Walls]] );
+				///
+			/// ELSE
+				half3 tex_sideX_bump = UnpackNormal( [[SAMPLE_VALUE_SHADER_PROPERTY:Walls Texture Normal Map(uv:uv_sideX)]] );
+				half3 tex_sideZ_bump = UnpackNormal( [[SAMPLE_VALUE_SHADER_PROPERTY:Walls Texture Normal Map(uv:uv_sideZ)]] );
+			///
+	///
+
+	/// IF TRIPLANAR_CEILING
+				normalMap.xyz = lerp(tex_ceiling_bump, normalMap.xyz, triplanar_ceiling_lerp);
+		/// IF TERRAIN_SHADER
+			/// IF LWRP
+				outNormal.xyz = lerp(worldNormalVertex, outNormal, triplanar_ceiling_lerp);
+			/// ELSE
+				output.Normal = lerp(float3(0,0,1), output.Normal, triplanar_ceiling_lerp);
+			///
+		///
+	///
+
+				//Whiteout blending
+				tex_sideX_bump = half3(tex_sideX_bump.xy + triplanarNormal.zy,abs(tex_sideX_bump.z) * triplanarNormal.x);
+				normalMap.xyz = half3(normalMap.xy + triplanarNormal.xz,abs(normalMap.z) * triplanarNormal.y);
+				tex_sideZ_bump = half3(tex_sideZ_bump.xy + triplanarNormal.xy,abs(tex_sideZ_bump.z) * triplanarNormal.z);
+
+	/// IF !LWRP
+		/// IF TRIPLANAR_CEILING
+				outNormal.w = blendWeights.y * triplanar_ceiling_lerp;
+		/// ELSE
+				outNormal.w = blendWeights.y;
+		///
+	///
+	/// IF LWRP && BUMP
+		/// IF TERRAIN_SHADER
+				outNormal.xyz = BlendNormalWorldspaceRNM(outNormal.xyz, normalize(tex_sideX_bump.zyx * blendWeights.x + normalMap.xzy * blendWeights.y + tex_sideZ_bump.xyz * blendWeights.z), worldNormalVertex);
+		/// ELSE
+				outNormal.xyz = lerp(normalize(tex_sideX_bump.zyx * blendWeights.x + normalMap.xzy * blendWeights.y + tex_sideZ_bump.xyz * blendWeights.z), outNormal.xyz, blendWeights.y);
+		///
+	/// ELSE
+		/// IF TERRAIN_SHADER
+				outNormal.xyz = normalize(tex_sideX_bump.zyx * blendWeights.x + normalMap.xzy * blendWeights.y + tex_sideZ_bump.xyz * blendWeights.z);
+		/// ELSE
+				outNormal.xyz = normalize(tex_sideX_bump.zyx * blendWeights.x + normalMap.xzy * blendWeights.y + tex_sideZ_bump.xyz * blendWeights.z);
+		///
+	///
+	/// IF TRIPLANAR_OBJECT_SPACE
+		/// IF LWRP
+				outNormal = TransformObjectToWorldNormal(outNormal);
+		/// ELSE
+				outNormal.xyz = UnityObjectToWorldNormal(outNormal);
+		///
+	///
+///
+#END

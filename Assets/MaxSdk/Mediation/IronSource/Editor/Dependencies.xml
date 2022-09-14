@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dependencies>
+    <androidPackages>
+        <androidPackage spec="com.applovin.mediation:ironsource-adapter:7.2.2.0.0">
+            <repositories>
+                <repository>https://android-sdk.is.com/</repository>
+            </repositories>
+        </androidPackage>
+    </androidPackages>
+    <iosPods>
+        <iosPod name="AppLovinMediationIronSourceAdapter" version="7.2.1.2.1" />
+    </iosPods>
+</dependencies>

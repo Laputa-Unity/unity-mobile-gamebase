@@ -1,0 +1,107 @@
+// Toony Colors Pro+Mobile 2
+// (c) 2014-2021 Jean Moreno
+
+// Shader Generator Module: Depth Texture effects
+
+//================================================================
+
+#PROPERTIES_NEW
+/// IF USE_DEPTH_BUFFER && DEPTH_VIEW_CORRECTION
+	float	Depth View Correction Bias		fragment, imp(constant, default = 2)
+///
+#END
+
+//================================================================
+
+#KEYWORDS
+/// IF USE_DEPTH_BUFFER
+	feature_on	USE_SCREEN_POSITION_VERTEX
+	feature_on	USE_SCREEN_POSITION_FRAGMENT
+///
+#END
+
+//================================================================
+
+#VARIABLES
+/// IF USE_DEPTH_BUFFER
+	/// IF URP
+		#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DeclareDepthTexture.hlsl"
+	/// ELSE
+		UNITY_DECLARE_DEPTH_TEXTURE(_CameraDepthTexture);
+	///
+///
+#END
+
+//================================================================
+
+#FUNCTIONS
+#END
+
+//================================================================
+
+#INPUT
+#END
+
+//================================================================
+
+#VERTEX(float4 screenPos, float4 clipPos)
+/// IF USE_DEPTH_BUFFER && !URP
+	COMPUTE_EYEDEPTH(screenPos.z);
+///
+/// IF GRAB_PASS
+	o.grabPos = ComputeGrabScreenPos(clipPos);
+///
+#END
+
+//================================================================
+
+#FRAGMENT(float4 screenPos, float positionNDC)
+/// IF USE_DEPTH_BUFFER
+
+		// Sample depth texture and calculate difference with local depth
+	/// IF URP
+		float sceneDepth = SampleSceneDepth(positionNDC.xy / positionNDC.w);
+		if (unity_OrthoParams.w > 0.0)
+		{
+			// Orthographic camera
+			#if UNITY_REVERSED_Z
+				sceneDepth = ((_ProjectionParams.z - _ProjectionParams.y) * (1.0 - sceneDepth) + _ProjectionParams.y);
+			#else
+				sceneDepth = ((_ProjectionParams.z - _ProjectionParams.y) * (sceneDepth) + _ProjectionParams.y);
+			#endif
+		}
+		else
+		{
+			// Perspective camera
+			sceneDepth = LinearEyeDepth(sceneDepth, _ZBufferParams);
+		}
+
+	/// ELSE
+		float sceneDepth = SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(screenPos));
+		if (unity_OrthoParams.w > 0.0)
+		{
+			// Orthographic camera
+			#if defined(UNITY_REVERSED_Z)
+				sceneDepth = 1.0 - sceneDepth;
+			#endif
+			sceneDepth = (sceneDepth * _ProjectionParams.z) + _ProjectionParams.y;
+		}
+		else
+		{
+			// Perspective camera
+			sceneDepth = LinearEyeDepth(sceneDepth);
+		}
+	///
+
+	/// IF URP
+		//float localDepth = LinearEyeDepth(worldPos, UNITY_MATRIX_V);
+		float localDepth = LinearEyeDepth(positionNDC.z / positionNDC.w, _ZBufferParams);
+	/// ELSE
+		float localDepth = screenPos.z;
+	///
+		float depthDiff = abs(sceneDepth - localDepth);
+	/// IF DEPTH_VIEW_CORRECTION
+		depthDiff *= ndvRaw * [[VALUE:Depth View Correction Bias]];
+	///
+///
+#END

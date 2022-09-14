@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dependencies>
+    <androidPackages>
+        <androidPackage spec="com.applovin:applovin-sdk:11.3.3" />
+        <androidPackage spec="com.google.android.exoplayer:exoplayer:2.13.3" />
+    </androidPackages>
+    <iosPods>
+        <iosPod name="AppLovinSDK" version="11.3.3" />
+    </iosPods>
+</dependencies>
