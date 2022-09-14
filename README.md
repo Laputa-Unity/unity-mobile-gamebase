@@ -1,4 +1,4 @@
-# Gamee base
+# Mobile Hyper Casual Game Base
 Description: Gamebase for mobile hyper casual, casual game 
 ## Table of contents
 - [Introduction](#Introduce)
