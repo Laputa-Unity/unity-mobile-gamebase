@@ -11,7 +11,7 @@ Description: Gamebase for mobile hyper casual, casual game
 - This is a basic casual game base for intern and junior
 - The project has simple data stream flow to help you to handle the game easier.
 
-## Install
+## Installation
 - Version: **Unity 2021.3.0f1**
 - Type select: **Android**
 
@@ -67,3 +67,6 @@ protected virtual void AfterHidden() { }
 </p>
 </details>
 
+## Used Plugins and Software
+1. [Rainbow Folders 2](https://assetstore.unity.com/packages/tools/utilities/rainbow-folders-2-143526)
+2. [DotWeen Pro](https://assetstore.unity.com/packages/tools/visual-scripting/dotween-pro-32416)
