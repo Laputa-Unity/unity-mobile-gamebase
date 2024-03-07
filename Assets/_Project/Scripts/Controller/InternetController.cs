@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
+using CustomInspector;
 using UnityEngine;
 
 public class InternetController : SingletonDontDestroy<InternetController>
 {
     [SerializeField] private float repeatRate = .5f;
-    public bool isConnected;
+    [ReadOnly] public bool isConnected;
 
     private const float TimeStart = 0f;
 

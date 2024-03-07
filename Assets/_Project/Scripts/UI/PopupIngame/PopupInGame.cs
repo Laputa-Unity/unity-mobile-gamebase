@@ -7,12 +7,8 @@ using UnityEngine;
 public class PopupInGame : Popup
 {
    public TextMeshProUGUI levelText;
-   public TextMeshProUGUI levelTypeText;
 
    private List<UIEffect> UIEffects => GetComponentsInChildren<UIEffect>().ToList();
-   
-   private const string InGameOnClickHome = "InGameOnClickHome";
-   private const string InGameOnClickReplay = "InGameOnClickReplay";
 
    public void Start()
    {
@@ -36,7 +32,6 @@ public class PopupInGame : Popup
    private void Setup()
    {
       levelText.text = $"Level {Data.CurrentLevel}";
-      levelTypeText.text = $"Level {(Data.UseLevelABTesting == 0 ? "A" : "B")}";
    }
 
    public void OnClickHome()
@@ -59,18 +54,6 @@ public class PopupInGame : Popup
    public void OnClickSkip()
    {
       GameManager.Instance.NextLevel();
-   }
-
-   public void OnClickLevelA()
-   {
-      Data.UseLevelABTesting = 0;
-      GameManager.Instance.ReplayGame();
-   }
-
-   public void OnClickLevelB()
-   {
-      Data.UseLevelABTesting = 1;
-      GameManager.Instance.ReplayGame();
    }
 
    public void OnClickLose()
