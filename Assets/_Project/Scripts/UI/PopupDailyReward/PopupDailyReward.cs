@@ -2,18 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Linq;
+using CustomInspector;
 
 public class PopupDailyReward : Popup
 {
     [SerializeField] private GameObject btnWatchVideo;
     [SerializeField] private GameObject btnClaim;
 
-    public DailyRewardItem currentItem;
+    [ReadOnly] public DailyRewardItem currentItem;
     public List<DailyRewardItem> DailyRewardItems => GetComponentsInChildren<DailyRewardItem>().ToList();
-
-    private const string DailyOnClickClaim = "DailyOnClickClaim";
-    private const string DailyOnClickClaimX5 = "DailyOnClickClaimX5";
-
+    
     protected override void BeforeShow()
     {
         base.BeforeShow();
@@ -34,8 +32,6 @@ public class PopupDailyReward : Popup
     protected override void AfterHidden()
     {
         base.AfterHidden();
-        //PopupController.Instance.HideAll();
-        //PopupController.Instance.Show<PopupHome>();
         if (!PopupController.Instance.Get<PopupHome>().isActiveAndEnabled)
         {
             GameManager.Instance.gameState = GameState.PlayingGame;

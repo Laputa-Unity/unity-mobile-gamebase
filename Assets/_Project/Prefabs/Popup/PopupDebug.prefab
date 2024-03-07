@@ -374,8 +374,7 @@ MonoBehaviour:
   m_text: "\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8d15ab71442963c47b22b47460111e35, type: 2}
-  m_sharedMaterial: {fileID: 3604630249188092411, guid: 8d15ab71442963c47b22b47460111e35,
-    type: 2}
+  m_sharedMaterial: {fileID: 3604630249188092411, guid: 8d15ab71442963c47b22b47460111e35, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -643,8 +642,7 @@ MonoBehaviour:
   m_text: "\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8d15ab71442963c47b22b47460111e35, type: 2}
-  m_sharedMaterial: {fileID: 3604630249188092411, guid: 8d15ab71442963c47b22b47460111e35,
-    type: 2}
+  m_sharedMaterial: {fileID: 3604630249188092411, guid: 8d15ab71442963c47b22b47460111e35, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -778,8 +776,7 @@ MonoBehaviour:
   m_text: Debug
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8d15ab71442963c47b22b47460111e35, type: 2}
-  m_sharedMaterial: {fileID: 3604630249188092411, guid: 8d15ab71442963c47b22b47460111e35,
-    type: 2}
+  m_sharedMaterial: {fileID: 3604630249188092411, guid: 8d15ab71442963c47b22b47460111e35, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -988,8 +985,7 @@ MonoBehaviour:
   m_text: Accepted
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8d15ab71442963c47b22b47460111e35, type: 2}
-  m_sharedMaterial: {fileID: 3604630249188092411, guid: 8d15ab71442963c47b22b47460111e35,
-    type: 2}
+  m_sharedMaterial: {fileID: 3604630249188092411, guid: 8d15ab71442963c47b22b47460111e35, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1500,47 +1496,15 @@ MonoBehaviour:
     motion: 2
     durationDown: 0.1
     durationUp: 0.1
-    interpolatorDown:
-      ease: 31
-      strength: 0
-      customCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    interpolatorUp:
-      ease: 31
-      strength: 0
-      customCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+    interpolatorDown: 0
+    interpolatorUp: 0
   motionDataUnableInteract:
     scale: {x: 1.15, y: 1.15}
     motion: 3
     durationDown: 0.1
     durationUp: 0.1
-    interpolatorDown:
-      ease: 0
-      strength: 0
-      customCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    interpolatorUp:
-      ease: 0
-      strength: 0
-      customCurve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+    interpolatorDown: 0
+    interpolatorUp: 0
 --- !u!1 &6816381346493960558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1609,8 +1573,7 @@ MonoBehaviour:
   m_text: Testing
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8d15ab71442963c47b22b47460111e35, type: 2}
-  m_sharedMaterial: {fileID: 3604630249188092411, guid: 8d15ab71442963c47b22b47460111e35,
-    type: 2}
+  m_sharedMaterial: {fileID: 3604630249188092411, guid: 8d15ab71442963c47b22b47460111e35, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1782,13 +1745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 297dc16c7d5c3bf4b8f3fe6f9b3db127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useAnimation: 0
-  background: {fileID: 0}
-  container: {fileID: 0}
-  useShowAnimation: 0
-  showAnimationType: 0
-  useHideAnimation: 0
-  hideAnimationType: 0
   setLevel: {fileID: 2288434987761459271}
   setCoin: {fileID: 7397408201461823702}
   toggleTesting: {fileID: 4894693133774114692}

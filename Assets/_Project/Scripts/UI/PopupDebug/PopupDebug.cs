@@ -9,8 +9,9 @@ public class PopupDebug : Popup
     [SerializeField] private TMP_InputField setCoin;
     [SerializeField] private Toggle toggleTesting;
 
-    public void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         toggleTesting.isOn = Data.IsTesting;
     }
 

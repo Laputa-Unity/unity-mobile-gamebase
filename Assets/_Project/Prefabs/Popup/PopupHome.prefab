@@ -272,10 +272,6 @@ MonoBehaviour:
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0.5, y: 0.5, z: 0.5}
-  strength: 3
-  fromPosition: {x: 0, y: 0, z: 0}
-  directionType: 0
-  offset: 0
 --- !u!1 &1991553265009018330
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,10 +366,6 @@ MonoBehaviour:
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0.5, y: 0.5, z: 0.5}
-  strength: 3
-  fromPosition: {x: 0, y: 0, z: 0}
-  directionType: 0
-  offset: 0
 --- !u!114 &140792204775366548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,7 +422,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  a: sdafad
   clickType: 0
   allowMultipleClick: 1
   timeDisableButton: 0.2
@@ -562,10 +553,6 @@ MonoBehaviour:
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0.5, y: 0.5, z: 0.5}
-  strength: 3
-  fromPosition: {x: 0, y: 0, z: 0}
-  directionType: 0
-  offset: 0
 --- !u!114 &5987824186110217978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -622,7 +609,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  a: sdafad
   clickType: 0
   allowMultipleClick: 1
   timeDisableButton: 0.2
@@ -754,10 +740,6 @@ MonoBehaviour:
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0.5, y: 0.5, z: 0.5}
-  strength: 3
-  fromPosition: {x: 0, y: 0, z: 0}
-  directionType: 0
-  offset: 0
 --- !u!114 &1064014270405598301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -814,7 +796,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  a: sdafad
   clickType: 0
   allowMultipleClick: 1
   timeDisableButton: 0.2
@@ -946,10 +927,6 @@ MonoBehaviour:
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0.5, y: 0.5, z: 0.5}
-  strength: 3
-  fromPosition: {x: 0, y: 0, z: 0}
-  directionType: 0
-  offset: 0
 --- !u!114 &643585362425639375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,7 +983,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  a: sdafad
   clickType: 0
   allowMultipleClick: 1
   timeDisableButton: 0.2
@@ -1214,7 +1190,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  a: sdafad
   clickType: 0
   allowMultipleClick: 1
   timeDisableButton: 0.2
@@ -1817,10 +1792,6 @@ MonoBehaviour:
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0.5, y: 0.5, z: 0.5}
-  strength: 3
-  fromPosition: {x: 0, y: 0, z: 0}
-  directionType: 0
-  offset: 0
 --- !u!114 &4901951094340627441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1877,7 +1848,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  a: sdafad
   clickType: 0
   allowMultipleClick: 1
   timeDisableButton: 0.2

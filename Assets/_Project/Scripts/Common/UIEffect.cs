@@ -1,3 +1,4 @@
+using CustomInspector;
 using CustomTween;
 using UnityEngine;
 
@@ -8,37 +9,34 @@ public class UIEffect : MonoBehaviour
     [SerializeField] private bool playOnAwake = true;
     [SerializeField] private float animTime = .5f;
     [SerializeField] private float delayAnimTime;
-    
-    [SerializeField] private Vector3 fromScale = Vector3.zero;
-    private Vector3 saveLocalScale; 
-    [Header("Shake Effect")]
-    [SerializeField] private float strength = 3f;
-    [Header("Move Effect")] 
-    private MoveType _moveType;
-    [SerializeField] private Vector3 fromPosition;
-    [SerializeField] private DirectionType directionType;
-    [SerializeField] private float offset;
-    private Vector3 _saveAnchorPosition;
 
+    [ShowIf("animType",AnimType.OutBack)] [SerializeField] private Vector3 fromScale = Vector3.zero;
+    
+    private Vector3 _saveLocalScale;
+    private Vector3 _saveAnchorPosition;
     private RectTransform _rectTransform;
     private Sequence _sequence;
-
-    private bool IsShowAttributeFromPosition => animType == AnimType.Move && _moveType == MoveType.Vector3;
-    private bool IsShowAttributesMoveDirection => animType == AnimType.Move && _moveType == MoveType.Direction;
+    private bool _isFirstInstantiate = true;
 
     public void Awake()
     {
-        //_rectTransform = GetComponent<RectTransform>();
-        //_saveAnchorPosition = _rectTransform.anchoredPosition;
-        //saveLocalScale = _rectTransform.localScale;
+        _rectTransform = GetComponent<RectTransform>();
+        _saveAnchorPosition = _rectTransform.anchoredPosition;
+        _saveLocalScale = _rectTransform.localScale;
     }
 
     public void OnEnable()
     {
-        Debug.Log("oke");
-        if (playOnAwake)
+        if (_isFirstInstantiate)
         {
-            PlayAnim();
+            _isFirstInstantiate = false;
+        }
+        else
+        {
+            if (playOnAwake)
+            {
+                PlayAnim();
+            }
         }
     }
 
@@ -48,45 +46,29 @@ public class UIEffect : MonoBehaviour
         {
             case AnimType.OutBack:
                 transform.localScale = fromScale;
-                _sequence = Sequence.Create().ChainDelay(delayAnimTime).Chain(Tween.Scale(transform, Vector3.one, animTime,Ease.OutBack));
+                _sequence = Sequence.Create().ChainDelay(delayAnimTime)
+                    .Chain(Tween.Scale(transform, Vector3.one, animTime, Ease.OutBack));
                 break;
         }
     }
 
     public void OnDisable()
     {
-        Debug.Log("ok1e");
         Reset();
         _sequence.Stop();
     }
-    
-    
+
+
     public void Reset()
     {
         if (!Application.isPlaying) return;
         _rectTransform = GetComponent<RectTransform>();
         _rectTransform.anchoredPosition = _saveAnchorPosition;
-        _rectTransform.localScale = saveLocalScale;
+        _rectTransform.localScale = _saveLocalScale;
     }
 }
 
 public enum AnimType
 {
     OutBack,
-    Shake,
-    Move,
-}
-
-public enum MoveType
-{
-    Vector3,
-    Direction,
-}
-
-public enum DirectionType
-{
-    Up,
-    Down,
-    Left,
-    Right,
 }

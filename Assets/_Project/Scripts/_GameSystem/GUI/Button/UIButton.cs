@@ -8,9 +8,8 @@ using UnityEngine.UI;
 
 
 [RequireComponent(typeof(Image))]
-public class UIButton : Button, IButton, IButtonAffect
+public class UIButton : Button, IButton
 {
-    public string a = "sdafad";
     private const float DOUBLE_CLICK_TIME_INTERVAL = 0.2f;
     private const float LONG_CLICK_TIME_INTERVAL = 0.5f;
 
@@ -111,9 +110,6 @@ public class UIButton : Button, IButton, IButtonAffect
     #region Implementation of IAffect
 
     public Vector3 DefaultScale { get; set; }
-    public bool IsAffectToSelf => isAffectToSelf;
-
-    public Transform AffectObject => IsAffectToSelf ? targetGraphic.rectTransform : affectObject;
 
     #endregion
 
@@ -122,7 +118,7 @@ public class UIButton : Button, IButton, IButtonAffect
     protected override void Awake()
     {
         base.Awake();
-        DefaultScale = AffectObject.localScale;
+        DefaultScale = transform.localScale;
     }
 
 #if UNITY_EDITOR
@@ -151,7 +147,7 @@ public class UIButton : Button, IButton, IButtonAffect
         _holdDone = false;
         _doubleClickTimer = 0;
         _longClickTimer = 0;
-        if (AffectObject != null) AffectObject.localScale = DefaultScale;
+        transform.localScale = DefaultScale;
     }
 
     #region Overrides of Button
@@ -488,11 +484,11 @@ public class UIButton : Button, IButton, IButtonAffect
         switch (data.motion)
         {
             case EButtonMotion.Immediate:
-                AffectObject.localScale = DefaultScale;
+                transform.localScale = DefaultScale;
                 break;
             case EButtonMotion.Normal:
                 _isCompletePhaseUp = false;
-                await Tween.Scale(AffectObject, DefaultScale, motionData.durationUp, motionData.interpolatorUp)
+                await Tween.Scale(transform, DefaultScale, motionData.durationUp, motionData.interpolatorUp)
                     .OnComplete(() => _isCompletePhaseUp = true);
                 break;
             case EButtonMotion.Uniform:
@@ -501,9 +497,9 @@ public class UIButton : Button, IButton, IButtonAffect
                 _isCompletePhaseUp = false;
                 _isCompletePhaseDown = false;
                 _endValue = new Vector3(DefaultScale.x * motionData.scale.x, DefaultScale.y * motionData.scale.y);
-                await Tween.Scale(AffectObject, _endValue, motionData.durationDown, motionData.interpolatorDown)
+                await Tween.Scale(transform, _endValue, motionData.durationDown, motionData.interpolatorDown)
                     .OnComplete(() => _isCompletePhaseDown = true);
-                await Tween.Scale(AffectObject, DefaultScale, motionData.durationUp, motionData.interpolatorUp)
+                await Tween.Scale(transform, DefaultScale, motionData.durationUp, motionData.interpolatorUp)
                     .OnComplete(() => _isCompletePhaseUp = true);
                 break;
         }
@@ -519,19 +515,19 @@ public class UIButton : Button, IButton, IButtonAffect
         switch (data.motion)
         {
             case EButtonMotion.Immediate:
-                AffectObject.localScale = _endValue;
+                transform.localScale = _endValue;
                 break;
             case EButtonMotion.Normal:
                 _isCompletePhaseDown = false;
-                await Tween.Scale(AffectObject, _endValue, motionData.durationDown, motionData.interpolatorDown)
+                await Tween.Scale(transform, _endValue, motionData.durationDown, motionData.interpolatorDown)
                     .OnComplete(() => _isCompletePhaseDown = true);
                 break;
             case EButtonMotion.Uniform:
                 _isCompletePhaseUp = false;
                 _isCompletePhaseDown = false;
-                await Tween.Scale(AffectObject, _endValue, motionData.durationDown, motionData.interpolatorDown)
+                await Tween.Scale(transform, _endValue, motionData.durationDown, motionData.interpolatorDown)
                     .OnComplete(() => _isCompletePhaseDown = true);
-                await Tween.Scale(AffectObject, DefaultScale, motionData.durationUp, motionData.interpolatorUp)
+                await Tween.Scale(transform, DefaultScale, motionData.durationUp, motionData.interpolatorUp)
                     .OnComplete(() => _isCompletePhaseUp = true);
                 break;
             case EButtonMotion.Late:

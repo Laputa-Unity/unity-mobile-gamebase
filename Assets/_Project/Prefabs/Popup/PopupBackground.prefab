@@ -179,10 +179,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a448997f1be50794bb7654622de5954d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useAnimation: 0
-  background: {fileID: 0}
-  container: {fileID: 0}
-  useShowAnimation: 0
-  showAnimationType: 0
-  useHideAnimation: 0
-  hideAnimationType: 0
