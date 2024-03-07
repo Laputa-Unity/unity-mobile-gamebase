@@ -1,0 +1,158 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9eba1ecab4c43c41869985e270bbe09, type: 3}
+  m_Name: CustomSettingsObjectAsset
+  m_EditorClassIdentifier: 
+  settingStringNames:
+  - CustomTools.CustomHierarchy_Light_TreeMapColor
+  - CustomTools.CustomHierarchy_MonoBehaviourIconColor
+  - CustomTools.CustomHierarchy_Light_SeparatorColor
+  - CustomTools.CustomHierarchy_Light_SeparatorEvenRowShadingColor
+  - CustomTools.CustomHierarchy_Light_SeparatorOddRowShadingColor
+  - CustomTools.CustomHierarchy_ErrorIgnoreString
+  - CustomTools.CustomHierarchy_Light_TagAndLayerTagLabelColor
+  - CustomTools.CustomHierarchy_Light_TagAndLayerLayerLabelColor
+  - CustomTools.CustomHierarchy_TagIconList
+  - CustomTools.CustomHierarchy_LayerIconList
+  - CustomTools.CustomHierarchy_Light_ChildrenCountLabelColor
+  - CustomTools.CustomHierarchy_Light_VerticesAndTrianglesVerticesLabelColor
+  - CustomTools.CustomHierarchy_Light_VerticesAndTrianglesTrianglesLabelColor
+  - CustomTools.CustomHierarchy_ComponentsIgnore
+  - CustomTools.CustomHierarchy_ComponentsOrder
+  - CustomTools.CustomHierarchy_Light_AdditionalBackgroundColor
+  - CustomTools.CustomHierarchy_Light_AdditionalActiveColor
+  - CustomTools.CustomHierarchy_Light_AdditionalInactiveColor
+  - CustomTools.CustomHierarchy_Light_AdditionalSpecialColor
+  - CustomTools.CustomHierarchy_Dark_TreeMapColor
+  - CustomTools.CustomHierarchy_Dark_SeparatorColor
+  - CustomTools.CustomHierarchy_Dark_SeparatorEvenRowShadingColor
+  - CustomTools.CustomHierarchy_Dark_SeparatorOddRowShadingColor
+  - CustomTools.CustomHierarchy_Dark_TagAndLayerTagLabelColor
+  - CustomTools.CustomHierarchy_Dark_TagAndLayerLayerLabelColor
+  - CustomTools.CustomHierarchy_Dark_ChildrenCountLabelColor
+  - CustomTools.CustomHierarchy_Dark_VerticesAndTrianglesVerticesLabelColor
+  - CustomTools.CustomHierarchy_Dark_VerticesAndTrianglesTrianglesLabelColor
+  - CustomTools.CustomHierarchy_Dark_AdditionalBackgroundColor
+  - CustomTools.CustomHierarchy_Dark_AdditionalActiveColor
+  - CustomTools.CustomHierarchy_Dark_AdditionalInactiveColor
+  - CustomTools.CustomHierarchy_Dark_AdditionalSpecialColor
+  settingStringValues:
+  - 905D5D5D
+  - A01B6DBB
+  - 48666666
+  - 08000000
+  - 00FFFFFF
+  - 
+  - FF333333
+  - FF333333
+  - 
+  - 
+  - FF333333
+  - FF333333
+  - FF333333
+  - 
+  - 0;1;2;3;4;5;6;7;8;9;10;11;12
+  - 00C2C2C2
+  - CF363636
+  - 1E000000
+  - FF1D78D5
+  - 39FFFFFF
+  - FF303030
+  - 13000000
+  - 00000000
+  - FFCCCCCC
+  - FFCCCCCC
+  - FFCCCCCC
+  - FFCCCCCC
+  - FFCCCCCC
+  - 00383838
+  - FFFFFF80
+  - FF4F4F4F
+  - FF2CA8CA
+  settingFloatNames:
+  - CustomTools.CustomHierarchy_TagAndLayerSizeValuePercent
+  - CustomTools.CustomHierarchy_TagAndLayerLabelAlpha
+  settingFloatValues:
+  - 0.25
+  - 0.35
+  settingIntNames:
+  - CustomTools.CustomHierarchy_TagAndLayerSizeShowType
+  - CustomTools.CustomHierarchy_TagAndLayerType
+  - CustomTools.CustomHierarchy_TagAndLayerAligment
+  - CustomTools.CustomHierarchy_TagAndLayerSizeValueType
+  - CustomTools.CustomHierarchy_TagAndLayerSizeValuePixel
+  - CustomTools.CustomHierarchy_TagAndLayerLabelSize
+  - CustomTools.CustomHierarchy_GameObjectIconSize
+  - CustomTools.CustomHierarchy_TagIconSize
+  - CustomTools.CustomHierarchy_LayerIconSize
+  - CustomTools.CustomHierarchy_ChildrenCountLabelSize
+  - CustomTools.CustomHierarchy_VerticesAndTrianglesLabelSize
+  - CustomTools.CustomHierarchy_ComponentsIconSize
+  - CustomTools.CustomHierarchy_AdditionalIdentation
+  settingIntValues: 000000000100000000000000000000003d0000000000000000000000000000000000000000000000000000000000000000000000
+  settingBoolNames:
+  - CustomTools.CustomHierarchy_TreeMapShow
+  - CustomTools.CustomHierarchy_TreeMapEnhanced
+  - CustomTools.CustomHierarchy_TreeMapTransparentBackground
+  - CustomTools.CustomHierarchy_MonoBehaviourIconShow
+  - CustomTools.CustomHierarchy_MonoBehaviourIconShowDuringPlayMode
+  - CustomTools.CustomHierarchy_MonoBehaviourIconIgnoreUnityMonobehaviour
+  - CustomTools.CustomHierarchy_SeparatorShow
+  - CustomTools.CustomHierarchy_SeparatorShowRowShading
+  - CustomTools.CustomHierarchy_VisibilityShow
+  - CustomTools.CustomHierarchy_VisibilityShowDuringPlayMode
+  - CustomTools.CustomHierarchy_LockShow
+  - CustomTools.CustomHierarchy_LockShowDuringPlayMode
+  - CustomTools.CustomHierarchy_LockPreventSelectionOfLockedObjects
+  - CustomTools.CustomHierarchy_StaticShow
+  - CustomTools.CustomHierarchy_StaticShowDuringPlayMode
+  - CustomTools.CustomHierarchy_ErrorShow
+  - CustomTools.CustomHierarchy_ErrorShowDuringPlayMode
+  - CustomTools.CustomHierarchy_ErrorShowIconOnParent
+  - CustomTools.CustomHierarchy_ErrorShowScriptIsMissing
+  - CustomTools.CustomHierarchy_ErrorShowReferenceIsNull
+  - CustomTools.CustomHierarchy_ErrorShowReferenceIsMissing
+  - CustomTools.CustomHierarchy_ErrorShowStringIsEmpty
+  - CustomTools.CustomHierarchy_ErrorShowMissingEventMethod
+  - CustomTools.CustomHierarchy_ErrorShowWhenTagOrLayerIsUndefined
+  - CustomTools.CustomHierarchy_ErrorShowForDisabledComponents
+  - CustomTools.CustomHierarchy_ErrorShowForDisabledGameObjects
+  - CustomTools.CustomHierarchy_RendererShow
+  - CustomTools.CustomHierarchy_RendererShowDuringPlayMode
+  - CustomTools.CustomHierarchy_PrefabShow
+  - CustomTools.CustomHierarchy_PrefabShowBreakedPrefabsOnly
+  - CustomTools.CustomHierarchy_TagAndLayerShow
+  - CustomTools.CustomHierarchy_TagAndLayerShowDuringPlayMode
+  - CustomTools.CustomHierarchy_ColorShow
+  - CustomTools.CustomHierarchy_ColorShowDuringPlayMode
+  - CustomTools.CustomHierarchy_GameObjectIconShow
+  - CustomTools.CustomHierarchy_GameObjectIconShowDuringPlayMode
+  - CustomTools.CustomHierarchy_TagIconShow
+  - CustomTools.CustomHierarchy_TagIconShowDuringPlayMode
+  - CustomTools.CustomHierarchy_TagIconListFoldout
+  - CustomTools.CustomHierarchy_LayerIconShow
+  - CustomTools.CustomHierarchy_LayerIconShowDuringPlayMode
+  - CustomTools.CustomHierarchy_LayerIconListFoldout
+  - CustomTools.CustomHierarchy_ChildrenCountShow
+  - CustomTools.CustomHierarchy_ChildrenCountShowDuringPlayMode
+  - CustomTools.CustomHierarchy_VerticesAndTrianglesShow
+  - CustomTools.CustomHierarchy_VerticesAndTrianglesShowDuringPlayMode
+  - CustomTools.CustomHierarchy_VerticesAndTrianglesCalculateTotalCount
+  - CustomTools.CustomHierarchy_VerticesAndTrianglesShowTriangles
+  - CustomTools.CustomHierarchy_VerticesAndTrianglesShowVertices
+  - CustomTools.CustomHierarchy_ComponentsShow
+  - CustomTools.CustomHierarchy_ComponentsShowDuringPlayMode
+  - CustomTools.CustomHierarchy_AdditionalShowObjectListContent
+  - CustomTools.CustomHierarchy_AdditionalShowHiddenQHierarchyObjectList
+  - CustomTools.CustomHierarchy_AdditionalHideIconsIfNotFit
+  - CustomTools.CustomHierarchy_AdditionalShowModifierWarning
+  settingBoolValues: 01010100010101010101010000000000000101010101010101010000000000010001000100010000010000010000010101010000010101
