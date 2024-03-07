@@ -1,70 +1,81 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundController : Singleton<SoundController>
+public class SoundController : SingletonDontDestroy<SoundController>
 {
-    public AudioSource BackgroundAudio;
-    public AudioSource FxAudio;
-    public List<AudioClip> AudioClips = new List<AudioClip>();
+    public AudioSource backgroundAudio;
+    public AudioSource fxAudio;
+    private SoundConfig SoundConfig => ConfigController.Sound;
 
-    private void Start()
+    public void Start()
     {
-        DontDestroyOnLoad(this);
-        Init();
+        Setup();
+
+        Observer.MusicChanged += OnMusicChanged;
+        Observer.SoundChanged += OnSoundChanged;
     }
 
-    private void Init()
+    private void OnMusicChanged()
     {
-        BackgroundAudio.loop = true;
+        backgroundAudio.mute = !Data.BgSoundState;
+    }
+    
+    private void OnSoundChanged()
+    {
+        fxAudio.mute = !Data.FxSoundState;
+    }
 
-        for (int i = 0; i < Enum.GetNames(typeof(SoundType)).Length; i++)
+    private void Setup()
+    {
+        OnMusicChanged();
+        OnSoundChanged();
+    }
+
+    public void PlayFX(SoundName soundName)
+    {
+        SoundData soundData = SoundConfig.GetSoundDataByType(soundName);
+
+        if (soundData != null)
         {
-            SoundData soundData = ConfigController.Sound.SoundDatas.Find(item => item.SoundType == (SoundType) i);
-            AudioClips.Add(soundData.Clip);
+            var soundClip = soundData.GetRandomAudioClip();
+            if (soundClip)
+            {
+                fxAudio.PlayOneShot(soundClip);
+            }
+            else
+            {
+                Debug.LogWarning($"<color=Red>Missing {soundName} clip</color>");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"<color=Red>Missing {soundName}</color>");
         }
     }
 
-    public void PlayFX(SoundType soundType)
+    public void PlayBackground(SoundName soundName)
     {
-        AudioClip clip = AudioClips[(int)soundType];
+        SoundData soundData = SoundConfig.GetSoundDataByType(soundName);
 
-        if (!clip || !Data.SoundState) return;
-
-        FxAudio.PlayOneShot(clip);
-    }
-
-    public void PlayBackground(SoundType soundType)
-    {
-        AudioClip clip = AudioClips[(int)soundType];
-
-        if (!clip || !Data.MusicState) return;
-        
-        BackgroundAudio.clip = clip;
-        BackgroundAudio.Play();
-    }
-
-    public void PauseBackground()
-    {
-        if (BackgroundAudio)
+        if (soundData != null)
         {
-            BackgroundAudio.Pause();
+            var clip = soundData.GetRandomAudioClip();
+
+            if (clip)
+            {
+                if (!backgroundAudio.clip == clip)
+                {
+                    backgroundAudio.clip = clip;
+                    backgroundAudio.Play();
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"<color=Red>Missing {soundName} clip</color>");
+            }
         }
-    }
-
-    public AudioSource PlayLoop(SoundType soundType)
-    {
-        AudioClip clip = AudioClips[(int)soundType];
-
-        if (!clip || !Data.SoundState) return null;
-
-        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.clip = clip;
-        audioSource.playOnAwake = true;
-        audioSource.loop = true;
-        audioSource.Play();
-
-        return audioSource;
+        else
+        {
+            Debug.LogWarning($"<color=Red>Missing {soundName}</color>");
+        }
     }
 }

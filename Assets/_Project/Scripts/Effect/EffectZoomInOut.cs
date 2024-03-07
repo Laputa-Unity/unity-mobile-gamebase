@@ -3,30 +3,30 @@ using UnityEngine;
 
 public class EffectZoomInOut : MonoBehaviour
 {
-    public Vector3 CurrentScale;
-    [Range(0,2f)]public float TimeDelay;
-    [Range(.1f,2f)]public float SizeScale = .1f;
-    [Range(0,2f)]public float TimeScale = .7f;
+    public Vector3 currentScale;
+    [Range(0,2f)]public float timeDelay;
+    [Range(.1f,2f)]public float sizeScale = .1f;
+    [Range(0,2f)]public float timeScale = .7f;
     public void Awake()
     {
-        CurrentScale = transform.localScale;
+        currentScale = transform.localScale;
     }
 
     public void OnEnable()
     {
-        transform.localScale = CurrentScale;
-        DoEffect(SizeScale,false);
+        transform.localScale = currentScale;
+        DoEffect(sizeScale,false);
     }
     
     public void DoEffect(float sizeScale, bool delay)
     {
         if (!gameObject.activeInHierarchy) return;
-        DOTween.Sequence().AppendInterval(TimeDelay*(delay ? 1 : 0)).AppendCallback(() =>
+        DOTween.Sequence().AppendInterval(timeDelay*(delay ? 1 : 0)).AppendCallback(() =>
         {
             transform.DOScale(
                 new Vector3(transform.localScale.x + sizeScale, transform.localScale.y + sizeScale,
                     transform.localScale.z),
-                TimeScale).SetEase(Ease.Linear).OnComplete(() =>
+                timeScale).SetEase(Ease.Linear).OnComplete(() =>
             {
                 DoEffect(-sizeScale,!delay);
             });

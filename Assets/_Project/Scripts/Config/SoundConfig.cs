@@ -1,37 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [CreateAssetMenu(fileName ="SoundConfig",menuName = "ScriptableObject/SoundConfig")]
 public class SoundConfig : ScriptableObject
 {
-    public List<SoundData> SoundDatas;
-
-    public void UpdateSoundDatas()
+    public List<SoundData> soundData;
+    
+    public SoundData GetSoundDataByType(SoundName soundName)
     {
-        for (int i = 0; i < Enum.GetNames(typeof(SoundType)).Length; i++)
-        {
-            SoundData soundData = new SoundData();
-            soundData.SoundType = (SoundType) i;
-            if (IsItemExistedBySoundType(soundData.SoundType)) continue;
-            SoundDatas.Add(soundData);
-        }
-
-        SoundDatas = SoundDatas.GroupBy(elem => elem.SoundType).Select(group => group.First()).ToList();
-    }
-
-    private bool IsItemExistedBySoundType(SoundType soundType)
-    {
-        foreach (SoundData item in SoundDatas)
-        {
-            if (item.SoundType == soundType)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return soundData.Find(item => item.name == soundName);
     }
     
 }
@@ -39,17 +18,26 @@ public class SoundConfig : ScriptableObject
 [Serializable]
 public class SoundData
 {
-    public SoundType SoundType;
-    public AudioClip Clip;
+    public SoundName name;
+    public List<AudioClip> clips;
+
+    public AudioClip GetRandomAudioClip()
+    {
+        if (clips.Count > 0)
+        {
+            return clips[Random.Range(0, clips.Count)];
+        }
+
+        return null;
+    }
 }
 
-public enum SoundType
+public enum SoundName
 {
-    BackgroundInGame,
-    BackgroundHome,
-    ButtonClick,
-    LevelCompleted,
-    LevelFailed,
-    PopupWinShow,
-    PopupLoseShow,
+    Background,
+    Music,
+    ClickButton,
+    PurchaseCompleted,
+    PurchaseFailed,
+    CoinMoving,
 }

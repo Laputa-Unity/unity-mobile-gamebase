@@ -1,5 +1,3 @@
-using System;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -8,31 +6,23 @@ using UnityEngine.UI;
 
 public class LoadingController : MonoBehaviour
 {
-    [Header("Components")]
-    public Image ProgressBar;
-    public TextMeshProUGUI LoadingText;
-
     [Header("Attributes")] 
-    [Range(0.1f, 10f)] public float TimeLoading = 5f;
+    [SerializeField] private float timeLoading = 5f;
+    
+    [Header("Components")]
+    [SerializeField] private Image progressBar;
+    [SerializeField] private TextMeshProUGUI loadingText;
+    private AsyncOperation _sceneOperation;
 
-    private bool flagDoneProgress;
-    private AsyncOperation _operation;
-    
-    
     void Start()
     {
-        _operation = SceneManager.LoadSceneAsync(Constant.GAMEPLAY_SCENE);
-        _operation.allowSceneActivation = false;
-
-        ProgressBar.fillAmount = 0;
-        ProgressBar.DOFillAmount(5, TimeLoading).OnUpdate(()=>LoadingText.text = $"Loading... {(int) (ProgressBar.fillAmount * 100)}%").OnComplete(()=> flagDoneProgress = true);
-        WaitProcess();
-    }
-    
-    private async void WaitProcess()
-    {
-        await UniTask.WaitUntil(() => flagDoneProgress);
-
-        _operation.allowSceneActivation = true;
+        _sceneOperation = SceneManager.LoadSceneAsync(Constant.GameplayScene);
+        _sceneOperation.allowSceneActivation = false;
+        
+        progressBar.fillAmount = 0;
+        progressBar.DOFillAmount(1, timeLoading).OnUpdate(()=>loadingText.text = $"Loading {(int) (progressBar.fillAmount * 100)}%").OnComplete(()=>
+        {
+            _sceneOperation.allowSceneActivation = true;
+        });
     }
 }

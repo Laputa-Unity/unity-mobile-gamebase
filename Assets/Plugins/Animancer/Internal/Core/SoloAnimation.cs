@@ -88,8 +88,8 @@ namespace Animancer
         /// </remarks>
         public bool StopOnDisable
         {
-            get => !_Animator.keepAnimatorControllerStateOnDisable;
-            set => _Animator.keepAnimatorControllerStateOnDisable = !value;
+            get => !_Animator.keepAnimatorStateOnDisable;
+            set => _Animator.keepAnimatorStateOnDisable = !value;
         }
 
         /************************************************************************************************************************/

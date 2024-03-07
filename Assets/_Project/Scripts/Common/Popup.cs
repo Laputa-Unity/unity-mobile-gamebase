@@ -3,37 +3,79 @@ using DG.Tweening;
 
 public class Popup : MonoBehaviour
 {
-    public CanvasGroup CanvasGroup { get; set; }
-    public Canvas Canvas { get; set; }
+    [SerializeField] private bool useAnimation;
+    public GameObject background;
+    public GameObject container;
+    [SerializeField] private bool useShowAnimation;
+    [SerializeField] private ShowAnimationType showAnimationType;
+    [SerializeField] private bool useHideAnimation;
+    [SerializeField] private HideAnimationType hideAnimationType;
+    
+    public CanvasGroup CanvasGroup => GetComponent<CanvasGroup>();
+    public Canvas Canvas => GetComponent<Canvas>();
 
-    private void Awake()
-    {
-        CanvasGroup = GetComponent<CanvasGroup>();
-        Canvas = GetComponent<Canvas>();
-    }
-
-    public void Show()
+    public virtual void Show()
     {
         BeforeShow();
         gameObject.SetActive(true);
-        CanvasGroup.DOFade(1, ConfigController.Game.DurationPopup).OnComplete(() =>
+        if (useShowAnimation)
         {
-            CanvasGroup.interactable = true;
+            switch (showAnimationType)
+            {
+                case ShowAnimationType.OutBack:
+                    DOTween.Sequence().OnStart(() => container.transform.localScale = Vector3.one*.9f)
+                        .Append(container.transform.DOScale(Vector3.one, ConfigController.Game.durationPopup).SetEase(Ease.OutBack));
+                    break;
+                case ShowAnimationType.Fade:
+                    CanvasGroup.DOFade(1, ConfigController.Game.durationPopup);
+                    break;
+            }
             AfterShown();
-        });
+        }
+        else
+        {
+            AfterShown();
+        }
     }
 
-    public void Hide()
+    public virtual void Hide()
     {
         BeforeHide();
-        CanvasGroup.interactable = false;
-        gameObject.SetActive(false);
-        AfterHidden();
+        if (useHideAnimation)
+        {
+            switch (hideAnimationType)
+            {
+                case HideAnimationType.Fade:
+                    CanvasGroup.DOFade(0, ConfigController.Game.durationPopup).OnComplete(() =>
+                    {
+                        CanvasGroup.alpha = 1;
+                        gameObject.SetActive(false);
+                    });
+                    break;
+            }
+            AfterHidden();
+        }
+        else
+        {
+            gameObject.SetActive(false);
+            AfterHidden();
+        }
     }
-
-    protected virtual void AfterInstantiate() { }
+    
     protected virtual void BeforeShow() { }
     protected virtual void AfterShown() { }
     protected virtual void BeforeHide() { }
     protected virtual void AfterHidden() { }
 }
+
+public enum ShowAnimationType
+{
+    OutBack,
+    Fade
+}
+
+public enum HideAnimationType
+{
+    Fade,
+}
+

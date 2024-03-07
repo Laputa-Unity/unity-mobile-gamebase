@@ -1,9 +1,10 @@
 using UnityEngine;
+using Debug = System.Diagnostics.Debug;
 
-public class LevelController : Singleton<LevelController>
+public class LevelController : SingletonDontDestroy<LevelController>
 {
-    public Level CurrentLevel;
-
+    public Level currentLevel;
+    private GameConfig Game => ConfigController.Game;
     public void PrepareLevel()
     {
         GenerateLevel(Data.CurrentLevel);
@@ -11,44 +12,37 @@ public class LevelController : Singleton<LevelController>
     
     public void GenerateLevel(int indexLevel)
     {
-        if (CurrentLevel != null)
+        if (currentLevel != null)
         {
-            Destroy(CurrentLevel.gameObject);
+            Destroy(currentLevel.gameObject);
         }
 
-        if (indexLevel > ConfigController.Game.MaxLevel)
+        if (indexLevel > ConfigController.Game.maxLevel)
         {
-            indexLevel = (indexLevel-ConfigController.Game.StartLoopLevel) % (ConfigController.Game.MaxLevel - ConfigController.Game.StartLoopLevel+1) + ConfigController.Game.StartLoopLevel;
+            indexLevel = (indexLevel-Game.startLoopLevel) % (Game.maxLevel - Game.startLoopLevel + 1) + Game.startLoopLevel;
         }
         else
         {
-            indexLevel = (indexLevel-1) % ConfigController.Game.MaxLevel + 1;
+            if (Game.levelLoopType == LevelLoopType.NormalLoop)
+            {
+                indexLevel = (indexLevel-1) % ConfigController.Game.maxLevel + 1;
+            }
+            else if (Game.levelLoopType == LevelLoopType.RandomLoop)
+            {
+                indexLevel = UnityEngine.Random.Range(Game.startLoopLevel, Game.maxLevel);
+            }
         }
 
         Level level = GetLevelByIndex(indexLevel);
-        CurrentLevel = Instantiate(level);
-        CurrentLevel.gameObject.SetActive(false);
+        currentLevel = Instantiate(level);
+        currentLevel.gameObject.SetActive(false);
     }
 
     public Level GetLevelByIndex(int indexLevel)
     {
-        GameObject levelGO;
-        levelGO = Resources.Load($"Levels/Level {indexLevel}") as GameObject;
-        return levelGO.GetComponent<Level>();
-    }
-    
-    public void OnLoseGame()
-    {
-        
-    }
-
-    public void OnWinGame()
-    {
-        
-    }
-        
-    public void OnReplay()
-    {
-        
+        var levelGo = Resources.Load($"Levels/Level {indexLevel}") as GameObject;
+        Debug.Assert(levelGo != null, nameof(levelGo) + " != null");
+        return levelGo.GetComponent<Level>();
     }
 }
+

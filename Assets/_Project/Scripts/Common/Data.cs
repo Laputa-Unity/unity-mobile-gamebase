@@ -7,57 +7,92 @@ public static partial class Data
     
     public static bool IsFirstOpenGame
     {
-        get => PlayerPrefs.GetInt(Constant.IS_FIRST_OPEN_GAME, 0) == 1;
-        set => PlayerPrefs.SetInt(Constant.IS_FIRST_OPEN_GAME, value ? 1 : 0);
+        get => PlayerPrefs.GetInt(Constant.IsFirstOpenGame, 0) == 1;
+        set => PlayerPrefs.SetInt(Constant.IsFirstOpenGame, value ? 1 : 0);
     }
     
     public static bool IsTesting
     {
-        get => PlayerPrefs.GetInt(Constant.IS_TESTING, 0) == 1;
-        set => PlayerPrefs.SetInt(Constant.IS_TESTING, value ? 1 : 0);
-    }
-    
-    public static int CurrentLevel
-    {
-        get { return GetInt(Constant.INDEX_LEVEL_CURRENT, 1); }
-
+        get => PlayerPrefs.GetInt(Constant.IsTesting, 0) == 1;
         set
         {
-            SetInt(Constant.INDEX_LEVEL_CURRENT, value>=1?value:1);
-            EventController.CurrentLevelChanged?.Invoke();
+            PlayerPrefs.SetInt(Constant.IsTesting, value ? 1 : 0);
+            Observer.DebugChanged?.Invoke();
         }
     }
 
-    public static int GetDailyRewardClaimed(DateTime dateTime)
+    public static int CurrentLevel
     {
-        return PlayerPrefs.GetInt($"Claimed_DailyReward_{dateTime.Day}/{dateTime.Month}/{dateTime.Year}", 0);
+        get => GetInt(Constant.IndexLevelCurrent, 1);
+
+        set
+        {
+            SetInt(Constant.IndexLevelCurrent, value>=1?value:1);
+            Observer.CurrentLevelChanged?.Invoke();
+        }
     }
 
-    public static void SetDailyClaimed(bool isOwned = true)
+    public static int MoneyTotal
     {
-        PlayerPrefs.SetInt($"Claimed_DailyReward_{DateTime.Today.Day}/{DateTime.Today.Month}/{DateTime.Today.Year}", isOwned ? 1 : 0);
+        get => GetInt(Constant.MoneyTotal, 0);
+        set
+        {
+            Observer.MoneyChanged?.Invoke(value - MoneyTotal);
+            SetInt(Constant.MoneyTotal, Mathf.Max(0,value));
+        }
+    }
+
+    public static int ProgressAmount
+    {
+        get => GetInt(Constant.ProgressAmount, 0);
+        set => SetInt(Constant.ProgressAmount, value);
     }
     
+    public static bool IsItemEquipped(string itemIdentity)
+    {
+        return GetBool($"{Constant.EquipItem}_{IdItemUnlocked}");
+    }
+
+    public static void SetItemEquipped(string itemIdentity, bool isEquipped = true)
+    {
+        SetBool($"{Constant.EquipItem}_{IdItemUnlocked}", isEquipped);
+    }
+
+    public static string IdItemUnlocked = "";
+
+    public static bool IsItemUnlocked
+    {
+        get => GetBool($"{Constant.UnlockItem}_{IdItemUnlocked}");
+        set => SetBool($"{Constant.UnlockItem}_{IdItemUnlocked}", value);
+    }
     #endregion
     
-    #region SOUND_DATA
+    #region SETTING_DATA
 
-    public static bool SoundState
+    public static bool BgSoundState
     {
-        get => GetBool(Constant.SOUND_STATE, true);
-        set => SetBool(Constant.SOUND_STATE, value);
+        get => GetBool(Constant.BackgroundSoundState, true);
+        set
+        {
+            SetBool(Constant.BackgroundSoundState, value);
+            Observer.MusicChanged?.Invoke();
+        }
     }
 
-    public static bool MusicState
+    public static bool FxSoundState
     {
-        get => GetBool(Constant.MUSIC_STATE, true);
-        set => SetBool(Constant.MUSIC_STATE, value);
+        get => GetBool(Constant.FXSoundState, true);
+        set
+        {
+            SetBool(Constant.FXSoundState, value);
+            Observer.SoundChanged?.Invoke();
+        }
     }
 
     public static bool VibrateState
     {
-        get => GetBool(Constant.VIBRATE_STATE, false);
-        set => SetBool(Constant.VIBRATE_STATE, value);
+        get => GetBool(Constant.VibrateState, true);
+        set => SetBool(Constant.VibrateState, value);
     }
 
     #endregion
@@ -71,14 +106,14 @@ public static partial class Data
     
     public static bool IsStartLoopingDailyReward
     {
-        get => PlayerPrefs.GetInt(Constant.IS_START_LOOPING_DAILY_REWARD, 0) == 1;
-        set => PlayerPrefs.SetInt(Constant.IS_START_LOOPING_DAILY_REWARD, value ? 1 : 0);
+        get => PlayerPrefs.GetInt(Constant.IsStartLoopingDailyReward, 0) == 1;
+        set => PlayerPrefs.SetInt(Constant.IsStartLoopingDailyReward, value ? 1 : 0);
     }
 
     public static string DateTimeStart
     {
-        get => GetString(Constant.DATE_TIME_START, DateTime.Now.ToString());
-        set => SetString(Constant.DATE_TIME_START, value);
+        get => GetString(Constant.DateTimeStart, DateTime.Now.ToString());
+        set => SetString(Constant.DateTimeStart, value);
     }
 
     public static int TotalPlayedDays =>
@@ -86,51 +121,102 @@ public static partial class Data
 
     public static int DailyRewardDayIndex
     {
-        get => GetInt(Constant.DAILY_REWARD_DAY_INDEX, 1);
-        set => SetInt(Constant.DAILY_REWARD_DAY_INDEX, value);
+        get => GetInt(Constant.DailyRewardDayIndex, 1);
+        set => SetInt(Constant.DailyRewardDayIndex, value);
     }
 
     public static string LastDailyRewardClaimed
     {
-        get => GetString(Constant.LAST_DAILY_REWARD_CLAIM, DateTime.Now.AddDays(-1).ToString());
-        set => SetString(Constant.LAST_DAILY_REWARD_CLAIM, value);
+        get => GetString(Constant.LastDailyRewardClaim, DateTime.Now.AddDays(-1).ToString());
+        set => SetString(Constant.LastDailyRewardClaim, value);
     }
     
     public static int TotalClaimDailyReward
     {
-        get => GetInt(Constant.TOTAL_CLAIM_DAILY_REWARD, 0);
-        set => SetInt(Constant.TOTAL_CLAIM_DAILY_REWARD, value);
+        get => GetInt(Constant.TotalClaimDailyReward, 0);
+        set => SetInt(Constant.TotalClaimDailyReward, value);
     }
 
     #endregion
 
-    #region PLAYER_DATA
+    #region PLAYFAB_DATA
     
-    public static int CurrencyTotal
+    public static string PlayfabLoginId
     {
-        get => GetInt(Constant.CURRENCY_TOTAL, 0);
-        set
-        {
-            EventController.SaveCurrencyTotal?.Invoke();
-            SetInt(Constant.CURRENCY_TOTAL, value);
-            EventController.CurrencyTotalChanged?.Invoke();
-        }
+        get => GetString(Constant.PlayfabLoginID, null);
+        set => SetString(Constant.PlayfabLoginID, value);
+    }
+    
+    public static string PlayerName
+    {
+        get => GetString(Constant.PlayerName, null);
+        set => SetString(Constant.PlayerName, value);
+        
     }
 
-    public static int ProgressAmount
+    public static string PlayerId
     {
-        get => GetInt(Constant.PROGRESS_AMOUNT, 0);
-        set => SetInt(Constant.PROGRESS_AMOUNT, value);
+        get => GetString(Constant.PlayerID, null);
+        set => SetString(Constant.PlayerID, value);
+        
+    }
+    
+    public static string PlayerCountryCode
+    {
+        get => GetString(Constant.PlayerCountryCode, null);
+        set => SetString(Constant.PlayerCountryCode, value);
+    }
+    #endregion
+
+    #region FIREBASE
+
+    // TOGGLE LEVEL AB TESTING? 0:NO, 1:YES
+    public static int DEFAULT_USE_LEVEL_AB_TESTING = 0;
+    public static int UseLevelABTesting
+    {
+        get => PlayerPrefs.GetInt(Constant.UseLevelAbTesting, DEFAULT_USE_LEVEL_AB_TESTING);
+        set => PlayerPrefs.SetInt(Constant.UseLevelAbTesting, value);
     }
 
-    public static int CurrentEquippedSkin
+    // SET LEVEL TO ENABLE INTERSTITIAL
+    public static int DEFAULT_LEVEL_TURN_ON_INTERSTITIAL = 5;
+    public static int LevelTurnOnInterstitial
     {
-        get => GetInt(Constant.CURRENT_EQUIPED_SKIN, 0);
-
-        set
-        {
-            SetInt(Constant.CURRENT_EQUIPED_SKIN, value);
-        }
+        get => PlayerPrefs.GetInt(Constant.LevelTurnONInterstitial,
+            DEFAULT_LEVEL_TURN_ON_INTERSTITIAL);
+        set => PlayerPrefs.SetInt(Constant.LevelTurnONInterstitial, value);
+    }
+    
+    // SET COUNTER VARIABLE
+    public static int DEFAULT_COUNTER_NUMBER_BETWEEN_TWO_INTERSTITIAL = 2;
+    public static int CounterNumbBetweenTwoInterstitial
+    {
+        get => PlayerPrefs.GetInt(Constant.CounterNumberBetweenTwoInterstitial, DEFAULT_COUNTER_NUMBER_BETWEEN_TWO_INTERSTITIAL);
+        set => PlayerPrefs.SetInt(Constant.CounterNumberBetweenTwoInterstitial, value);
+    }
+    
+    // SET TIME TO ENABLE BETWEEN 2 INTERSTITIAL (ON WIN,LOSE,REPLAY GAME)
+    public static int DEFAULT_SPACE_TIME_WIN_BETWEEN_TWO_INTERSTITIAL = 30;
+    public static int TimeWinBetweenTwoInterstitial
+    {
+        get => PlayerPrefs.GetInt(Constant.SpaceTimeWinBetweenTwoInterstitial, DEFAULT_SPACE_TIME_WIN_BETWEEN_TWO_INTERSTITIAL);
+        set => PlayerPrefs.SetInt(Constant.SpaceTimeWinBetweenTwoInterstitial, value);
+    }
+    
+    // TOGGLE SHOW INTERSTITIAL ON LOSE GAME ? 0:NO, 1:YES
+    public static int DEFAULT_SHOW_INTERSTITIAL_ON_LOSE_GAME = 0;
+    public static int UseShowInterstitialOnLoseGame
+    {
+        get => PlayerPrefs.GetInt(Constant.ShowInterstitialONLoseGame, DEFAULT_SHOW_INTERSTITIAL_ON_LOSE_GAME);
+        set => PlayerPrefs.SetInt(Constant.ShowInterstitialONLoseGame, value);
+    }
+    
+    // SET TIME TO ENABLE BETWEEN 2 INTERSTITIAL (ON LOSE GAME)
+    public static int DEFAULT_SPACE_TIME_LOSE_BETWEEN_TWO_INTERSTITIAL = 45;
+    public static int TimeLoseBetweenTwoInterstitial
+    {
+        get => PlayerPrefs.GetInt(Constant.SpaceTimeLoseBetweenTwoInterstitial, DEFAULT_SPACE_TIME_LOSE_BETWEEN_TWO_INTERSTITIAL);
+        set => PlayerPrefs.SetInt(Constant.SpaceTimeLoseBetweenTwoInterstitial, value);
     }
 
     #endregion

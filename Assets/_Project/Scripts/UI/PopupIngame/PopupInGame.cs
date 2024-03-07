@@ -1,42 +1,53 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using TMPro;
 using UnityEngine;
 
 public class PopupInGame : Popup
 {
-   [Header("Components")]
-   public TextMeshProUGUI LevelText;
-   public TextMeshProUGUI LevelTypeText;
-   [Header("Debug UI")]
-   public List<GameObject> DebugGameObjects;
+   public TextMeshProUGUI levelText;
+   public TextMeshProUGUI levelTypeText;
+
+   private List<UIEffect> UIEffects => GetComponentsInChildren<UIEffect>().ToList();
+   
+   private const string InGameOnClickHome = "InGameOnClickHome";
+   private const string InGameOnClickReplay = "InGameOnClickReplay";
+
+   public void Start()
+   {
+      Observer.WinLevel += HideUI;
+      Observer.LoseLevel += HideUI;
+   }
+
+   public void OnDestroy()
+   {
+      Observer.WinLevel -= HideUI;
+      Observer.LoseLevel -= HideUI;
+   }
 
    protected override void BeforeShow()
    {
       base.BeforeShow();
-      
+
       Setup();
    }
-
-   public void Setup()
+   
+   private void Setup()
    {
-      LevelText.text = $"Level {Data.CurrentLevel}";
-      if (Data.IsTesting)
-      {
-         DebugGameObjects.ForEach(item => item.gameObject.SetActive(true));
-      }
-      else
-      {
-         DebugGameObjects.ForEach(item=> item.gameObject.SetActive(false));
-      }
+      levelText.text = $"Level {Data.CurrentLevel}";
+      levelTypeText.text = $"Level {(Data.UseLevelABTesting == 0 ? "A" : "B")}";
    }
 
    public void OnClickHome()
    {
+      SoundController.Instance.PlayFX(SoundName.ClickButton);
       GameManager.Instance.ReturnHome();
    }
 
    public void OnClickReplay()
    {
+      SoundController.Instance.PlayFX(SoundName.ClickButton);
       GameManager.Instance.ReplayGame();
    }
 
@@ -49,14 +60,34 @@ public class PopupInGame : Popup
    {
       GameManager.Instance.NextLevel();
    }
-   
+
+   public void OnClickLevelA()
+   {
+      Data.UseLevelABTesting = 0;
+      GameManager.Instance.ReplayGame();
+   }
+
+   public void OnClickLevelB()
+   {
+      Data.UseLevelABTesting = 1;
+      GameManager.Instance.ReplayGame();
+   }
+
    public void OnClickLose()
    {
-      GameManager.Instance.OnLoseGame(0f);
+      GameManager.Instance.OnLoseGame(1f);
    }
 
    public void OnClickWin()
    {
-      GameManager.Instance.OnWinGame(0f);
+      GameManager.Instance.OnWinGame(1f);
+   }
+
+   private void HideUI(Level level = null)
+   {
+      foreach (UIEffect item in UIEffects)
+      {
+         item.PlayAnim();
+      }
    }
 }

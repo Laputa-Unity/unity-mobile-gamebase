@@ -10,21 +10,37 @@ public class GameBase : EditorWindow
         GUILayout.EndHorizontal();
     }
     
-    [MenuItem("GameBase/OPEN SCENE/Loading Scene %F1")]
-    public static void PlayFromLoadingScene(){
-        EditorSceneManager.OpenScene($"Assets/_Project/Scenes/{Constant.LOADING_SCENE}.unity");
+    [MenuItem("GameBase/Switch Debug %`")]
+    public static void SwitchDebug()
+    {
+        Data.IsTesting = !Data.IsTesting;
+        Debug.Log($"<color=Green>Data.IsTesting = {Data.IsTesting}</color>");
+    }
+    
+    [MenuItem("GameBase/Open Scene/Loading Scene %F1")]
+    public static void OpenLoadingScene(){
+        EditorSceneManager.OpenScene($"Assets/_Project/Scenes/{Constant.LoadingScene}.unity");
+        Debug.Log($"<color=Green>Change scene succeed</color>");
     }
 
-    [MenuItem("GameBase/OPEN SCENE/Gameplay Scene %F2")]
-    public static void PlayFromGamePlayScene(){
-        EditorSceneManager.OpenScene($"Assets/_Project/Scenes/{Constant.GAMEPLAY_SCENE}.unity");
+    [MenuItem("GameBase/Open Scene/Gameplay Scene %F2")]
+    public static void OpenGamePlayScene(){
+        EditorSceneManager.OpenScene($"Assets/_Project/Scenes/{Constant.GameplayScene}.unity");
+        Debug.Log($"<color=Green>Change scene succeed</color>");
     } 
-
     
-    [MenuItem("GameBase/CLEAR DATA/CLEAR ALL %F3")]
+    [MenuItem("GameBase/Data/Clear Data %F3")]
     public static void ClearAll()
     {
         PlayerPrefs.DeleteAll();
+        Debug.Log($"<color=Green>Clear data succeed</color>");
+    }
+    
+    [MenuItem("GameBase/Data/Add 100k Money")]
+    public static void Add100kMoney()
+    {
+        Data.MoneyTotal += 100000;
+        Debug.Log($"<color=Green>Add 100k coin succeed</color>");
     }
 }
 #endif

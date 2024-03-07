@@ -1,0 +1,20 @@
+{
+    "name": "CustomInspector.Editor.Extras",
+    "rootNamespace": "",
+    "references": [
+        "CustomInspector",
+        "CustomInspector.Editor",
+        "Unity.InternalAPIEditorBridge.013"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

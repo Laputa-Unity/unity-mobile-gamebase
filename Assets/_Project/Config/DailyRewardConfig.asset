@@ -12,229 +12,145 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8da4c63ef678a854a9c947cddebd867d, type: 3}
   m_Name: DailyRewardConfig
   m_EditorClassIdentifier: 
-  DailyRewardDatas:
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: c1ac744855981a643a2838dd4e8f45bb, type: 3}
-    SkinID: 
-    Value: 1000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 806f9b9f30c233d4b80177f0003955a3, type: 3}
-    SkinID: 
-    Value: 1500
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 072d72429e9e5b14fab7790064cd5754, type: 3}
-    SkinID: 
-    Value: 2000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 44d90520e2921994880db5f3372b863d, type: 3}
-    SkinID: 
-    Value: 3000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3decd367474c3e04da6825b83304371c, type: 3}
-    SkinID: 
-    Value: 4000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 5000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  DailyRewardDatasLoop:
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: c1ac744855981a643a2838dd4e8f45bb, type: 3}
-    SkinID: 
-    Value: 1000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 806f9b9f30c233d4b80177f0003955a3, type: 3}
-    SkinID: 
-    Value: 1500
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 072d72429e9e5b14fab7790064cd5754, type: 3}
-    SkinID: 
-    Value: 2000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 44d90520e2921994880db5f3372b863d, type: 3}
-    SkinID: 
-    Value: 3000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3decd367474c3e04da6825b83304371c, type: 3}
-    SkinID: 
-    Value: 4000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 5000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
-  - DailyRewardType: 0
-    Icon: {fileID: 21300000, guid: 3976f152b45507943aa4d122697c1b3b, type: 3}
-    SkinID: 
-    Value: 10000
+  dailyRewardData:
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 1c15215d6b9dfa74c9f4a9bad949cf29, type: 3}
+    skinID: 
+    value: 500
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 7662c24f1fd209640b2b39ef028997c6, type: 3}
+    skinID: 
+    value: 1000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: a41407cb7a17bb2409f7883f99f00e84, type: 3}
+    skinID: 
+    value: 1500
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 37323aba01ee5db4888769a01331fdfd, type: 3}
+    skinID: 
+    value: 2000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: d647d13d7533267458a89816729b0f27, type: 3}
+    skinID: 
+    value: 3000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 4000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: b0994cc14c29ee74fbea55b28b6d33df, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  dailyRewardDataLoop:
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000
+  - dailyRewardType: 0
+    icon: {fileID: 21300000, guid: 56292cd5a8b7e3f4ba22ef25803da634, type: 3}
+    skinID: 
+    value: 5000

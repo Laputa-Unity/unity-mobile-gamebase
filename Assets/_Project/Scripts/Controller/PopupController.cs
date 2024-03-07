@@ -2,41 +2,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using Debug = System.Diagnostics.Debug;
 
-public class PopupController : Singleton<PopupController>
+public class PopupController : SingletonDontDestroy<PopupController>
 {
-    public Transform CanvasTransform;
-    public CanvasScaler CanvasScaler;
-    public List<Popup> Popups;
+    public Transform canvasTransform;
+    public CanvasScaler canvasScaler;
+    public List<Popup> popups;
 
-    private Dictionary<Type, Popup> dictionary = new Dictionary<Type, Popup>();
+    private readonly Dictionary<Type, Popup> _dictionary = new Dictionary<Type, Popup>();
 
-    protected override void Awake()
+    protected void Start()
     {
-        base.Awake();
-
-        DontDestroyOnLoad(gameObject);
         Initialize();
-        CanvasScaler.matchWidthOrHeight = Camera.main.aspect > .7f ? 1 : 0;
+        Debug.Assert(Camera.main != null, "Camera.main != null");
+        canvasScaler.matchWidthOrHeight = Camera.main.aspect > .7f ? 1 : 0;
     }
 
     public void Initialize()
     {
         int index = 0;
-        Popups.ForEach(popup =>
+        popups.ForEach(popup =>
         {
-            Popup popupInstance = Instantiate(popup, CanvasTransform);
+            Popup popupInstance = Instantiate(popup, canvasTransform);
             popupInstance.gameObject.SetActive(false);
             popupInstance.Canvas.sortingOrder = index++;
-            popupInstance.CanvasGroup.alpha = 0;
-            popupInstance.CanvasGroup.interactable = false;
-            dictionary.Add(popupInstance.GetType(), popupInstance);
+            _dictionary.Add(popupInstance.GetType(), popupInstance);
         });
     }
 
     public void Show<T>()
     {
-        if (dictionary.TryGetValue(typeof(T), out Popup popup))
+        if (_dictionary.TryGetValue(typeof(T), out Popup popup))
         {
             if (!popup.isActiveAndEnabled)
             {
@@ -47,7 +44,7 @@ public class PopupController : Singleton<PopupController>
 
     public void Hide<T>()
     {
-        if (dictionary.TryGetValue(typeof(T), out Popup popup))
+        if (_dictionary.TryGetValue(typeof(T), out Popup popup))
         {
             if (popup.isActiveAndEnabled)
             {
@@ -58,7 +55,7 @@ public class PopupController : Singleton<PopupController>
 
     public void HideAll()
     {
-        foreach (Popup item in dictionary.Values)
+        foreach (Popup item in _dictionary.Values)
         {
             if (item.isActiveAndEnabled)
             {
@@ -69,7 +66,7 @@ public class PopupController : Singleton<PopupController>
 
     public Popup Get<T>()
     {
-        if (dictionary.TryGetValue(typeof(T), out Popup popup))
+        if (_dictionary.TryGetValue(typeof(T), out Popup popup))
         {
             return popup;
         }

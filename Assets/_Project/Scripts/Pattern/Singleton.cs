@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    static T instance;
+    static T _instance;
 
-    public static T Instance => instance ??= FindObjectOfType<T>();
+    public static T Instance => _instance ??= FindObjectOfType<T>();
 
     protected virtual void Awake()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = this as T;
+            _instance = this as T;
         }
         else
         {
@@ -20,6 +20,6 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        if (instance == this) instance = null;
+        if (_instance == this) _instance = null;
     }
 }
