@@ -42,7 +42,7 @@ namespace customtools.customhierarchy
         static void update()
         {
             if (hierarchy == null) init();
-            CustomObjectListManager.getInstance().update();
+            CustomObjectListManager.getInstance().Update();
         }
 
         static void hierarchyWindowItemOnGUIHandler(int instanceId, Rect selectionRect)

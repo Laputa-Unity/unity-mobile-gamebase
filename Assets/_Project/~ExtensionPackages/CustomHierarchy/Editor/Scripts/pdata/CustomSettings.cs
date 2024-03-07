@@ -110,7 +110,7 @@ namespace customtools.customhierarchy.pdata
 		ComponentsOrder                             = 38,
 
         AdditionalIdentation                        = 39,
-        AdditionalShowHiddenQHierarchyObjectList    = 42,
+        AdditionalShowHiddenCustomHierarchyObjectList    = 42,
         AdditionalShowModifierWarning               = 43,
         AdditionalShowObjectListContent             = 49,
         AdditionalHideIconsIfNotFit                 = 52,  
@@ -276,12 +276,12 @@ namespace customtools.customhierarchy.pdata
 	public class CustomSettings 
 	{
         // CONST
-		private const string PREFS_PREFIX = "QTools.QHierarchy_";
+		private const string PREFS_PREFIX = "CustomTools.CustomHierarchy_";
         private const string PREFS_DARK = "Dark_";
         private const string PREFS_LIGHT = "Light_";
         public const string DEFAULT_ORDER = "0;1;2;3;4;5;6;7;8;9;10;11;12";
         public const int DEFAULT_ORDER_COUNT = 13;
-        private const string SETTINGS_FILE_NAME = "QSettingsObjectAsset";
+        private const string SETTINGS_FILE_NAME = "CustomSettingsObjectAsset";
 
         // PRIVATE
         private CustomSettingsObject settingsObject;
@@ -414,7 +414,7 @@ namespace customtools.customhierarchy.pdata
             initSetting(CustomSetting.ComponentsOrder                            , DEFAULT_ORDER);
 
             initSetting(CustomSetting.AdditionalShowObjectListContent            , false);
-            initSetting(CustomSetting.AdditionalShowHiddenQHierarchyObjectList   , true);
+            initSetting(CustomSetting.AdditionalShowHiddenCustomHierarchyObjectList   , true);
             initSetting(CustomSetting.AdditionalHideIconsIfNotFit                , true);
             initSetting(CustomSetting.AdditionalIdentation                       , 0);
             initSetting(CustomSetting.AdditionalShowModifierWarning              , true);
@@ -422,7 +422,7 @@ namespace customtools.customhierarchy.pdata
             #if UNITY_2019_1_OR_NEWER
             initSetting(CustomSetting.AdditionalBackgroundColor                  , "00383838", "00CFCFCF");
             #else
-            initSetting(QSetting.AdditionalBackgroundColor                  , "00383838", "00C2C2C2");
+            initSetting(CustomSetting.AdditionalBackgroundColor                  , "00383838", "00C2C2C2");
             #endif
             initSetting(CustomSetting.AdditionalActiveColor                      , "FFFFFF80", "CF363636");
             initSetting(CustomSetting.AdditionalInactiveColor                    , "FF4F4F4F", "1E000000");

@@ -13,16 +13,16 @@ namespace customtools.customhierarchy.phierarchy
 	public class CustomHierarchySettingsWindow : EditorWindow 
 	{	
         // STATIC
-		[MenuItem ("Tools/QHierarchy/Settings")]	
+		[MenuItem ("Tools/CustomHierarchy/Settings")]	
 		public static void ShowWindow () 
 		{ 
 			EditorWindow window = EditorWindow.GetWindow(typeof(CustomHierarchySettingsWindow));           
             window.minSize = new Vector2(350, 50);
 
             #if UNITY_4_6 || UNITY_4_7 || UNITY_5_0
-                window.title = "QHierarchy";
+                window.title = "CustomHierarchy";
             #else
-                window.titleContent = new GUIContent("QHierarchy");
+                window.titleContent = new GUIContent("CustomHierarchy");
             #endif
 		}
 
@@ -618,7 +618,7 @@ namespace customtools.customhierarchy.phierarchy
         {
             if (drawRestore())
             {
-                CustomSettings.getInstance().restore(CustomSetting.AdditionalShowHiddenQHierarchyObjectList);
+                CustomSettings.getInstance().restore(CustomSetting.AdditionalShowHiddenCustomHierarchyObjectList);
                 CustomSettings.getInstance().restore(CustomSetting.AdditionalHideIconsIfNotFit);
                 CustomSettings.getInstance().restore(CustomSetting.AdditionalIdentation);
                 CustomSettings.getInstance().restore(CustomSetting.AdditionalShowModifierWarning);
@@ -628,7 +628,7 @@ namespace customtools.customhierarchy.phierarchy
                 CustomSettings.getInstance().restore(CustomSetting.AdditionalSpecialColor);
             }
             drawSpace(4);
-            drawCheckBoxRight("Show QHierarchyObjectList GameObject", CustomSetting.AdditionalShowHiddenQHierarchyObjectList);
+            drawCheckBoxRight("Show CustomHierarchyObjectList GameObject", CustomSetting.AdditionalShowHiddenCustomHierarchyObjectList);
             drawCheckBoxRight("Hide icons if not fit", CustomSetting.AdditionalHideIconsIfNotFit);
             drawIntSlider("Right indent", CustomSetting.AdditionalIdentation, 0, 500);      
             drawCheckBoxRight("Show warning when using modifiers + click", CustomSetting.AdditionalShowModifierWarning);

@@ -69,21 +69,21 @@ namespace customtools.customhierarchy.pcomponent
                     GUI.DrawTexture(rect, prefabTexture);
                     CustomColorUtils.clearColor();
                 }
-            #else
+           #else
                 PrefabType prefabType = PrefabUtility.GetPrefabType(gameObject);
                 if (prefabType == PrefabType.MissingPrefabInstance || 
                     prefabType == PrefabType.DisconnectedPrefabInstance ||
                     prefabType == PrefabType.DisconnectedModelPrefabInstance)
                 {
-                    QColorUtils.setColor(inactiveColor);
+                    CustomColorUtils.setColor(inactiveColor);
                     GUI.DrawTexture(rect, prefabTexture);
-                    QColorUtils.clearColor();
+                    CustomColorUtils.clearColor();
                 }
                 else if (!showPrefabConnectedIcon && prefabType != PrefabType.None)
                 {
-                    QColorUtils.setColor(activeColor);
+                    CustomColorUtils.setColor(activeColor);
                     GUI.DrawTexture(rect, prefabTexture);
-                    QColorUtils.clearColor();
+                    CustomColorUtils.clearColor();
                 }
             #endif
         }

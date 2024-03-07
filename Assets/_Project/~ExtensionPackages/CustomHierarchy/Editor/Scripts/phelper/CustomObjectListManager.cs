@@ -13,7 +13,7 @@ namespace customtools.customhierarchy.phelper
     public class CustomObjectListManager
     {
         // CONST
-        private const string QObjectListName = "QHierarchyObjectList";
+        private const string CustomObjectListName = "CustomHierarchyObjectList";
 
         // SINGLETON
         private static CustomObjectListManager instance;
@@ -33,7 +33,7 @@ namespace customtools.customhierarchy.phelper
         // CONSTRUCTOR
         private CustomObjectListManager()
         {
-            CustomSettings.getInstance().addEventListener(CustomSetting.AdditionalShowHiddenQHierarchyObjectList , settingsChanged);
+            CustomSettings.getInstance().addEventListener(CustomSetting.AdditionalShowHiddenCustomHierarchyObjectList , settingsChanged);
             CustomSettings.getInstance().addEventListener(CustomSetting.LockPreventSelectionOfLockedObjects, settingsChanged);
             CustomSettings.getInstance().addEventListener(CustomSetting.LockShow              , settingsChanged);
             CustomSettings.getInstance().addEventListener(CustomSetting.LockShowDuringPlayMode, settingsChanged);
@@ -42,7 +42,7 @@ namespace customtools.customhierarchy.phelper
 
         private void settingsChanged()
         {
-            showObjectList = CustomSettings.getInstance().get<bool>(CustomSetting.AdditionalShowHiddenQHierarchyObjectList);
+            showObjectList = CustomSettings.getInstance().get<bool>(CustomSetting.AdditionalShowHiddenCustomHierarchyObjectList);
             preventSelectionOfLockedObjects = CustomSettings.getInstance().get<bool>(CustomSetting.LockShow) && CustomSettings.getInstance().get<bool>(CustomSetting.LockPreventSelectionOfLockedObjects);
             preventSelectionOfLockedObjectsDuringPlayMode = preventSelectionOfLockedObjects && CustomSettings.getInstance().get<bool>(CustomSetting.LockShowDuringPlayMode);
         }
@@ -64,18 +64,18 @@ namespace customtools.customhierarchy.phelper
             foreach (CustomObjectList objectList in CustomObjectList.instances)
                 objectList.CheckIntegrity();
             #if UNITY_5_3_OR_NEWER
-            objectListDictionary.Clear();
+            _objectListDictionary.Clear();
             foreach (CustomObjectList objectList in CustomObjectList.instances)            
-                objectListDictionary.Add(objectList.gameObject.scene, objectList);
+                _objectListDictionary.Add(objectList.gameObject.scene, objectList);
             #endif
         }
 
         #if UNITY_5_3_OR_NEWER
-        private Dictionary<Scene, CustomObjectList> objectListDictionary = new Dictionary<Scene, CustomObjectList>();
-        private Scene lastActiveScene;
-        private int lastSceneCount = 0;
+        private readonly Dictionary<Scene, CustomObjectList> _objectListDictionary = new Dictionary<Scene, CustomObjectList>();
+        private Scene _lastActiveScene;
+        private int _lastSceneCount = 0;
 
-        public void update()
+        public void Update()
         {
             try
             {     
@@ -88,24 +88,24 @@ namespace customtools.customhierarchy.phelper
                         CustomObjectList objectList = objectListList[i];
                         Scene objectListScene = objectList.gameObject.scene;
 						
-						if (objectListDictionary.ContainsKey(objectListScene) && objectListDictionary[objectListScene] == null)
-                            objectListDictionary.Remove(objectListScene);
+						if (_objectListDictionary.ContainsKey(objectListScene) && _objectListDictionary[objectListScene] == null)
+                            _objectListDictionary.Remove(objectListScene);
 							
-                        if (objectListDictionary.ContainsKey(objectListScene))
+                        if (_objectListDictionary.ContainsKey(objectListScene))
                         {
-                            if (objectListDictionary[objectListScene] != objectList)
+                            if (_objectListDictionary[objectListScene] != objectList)
                             {
-                                objectListDictionary[objectListScene].merge(objectList);
+                                _objectListDictionary[objectListScene].merge(objectList);
                                 GameObject.DestroyImmediate(objectList.gameObject);
                             }
                         }
                         else
                         {
-                            objectListDictionary.Add(objectListScene, objectList);
+                            _objectListDictionary.Add(objectListScene, objectList);
                         }
                     }
 
-                    foreach (KeyValuePair<Scene, CustomObjectList> objectListKeyValue in objectListDictionary)
+                    foreach (KeyValuePair<Scene, CustomObjectList> objectListKeyValue in _objectListDictionary)
                     {
                         CustomObjectList objectList = objectListKeyValue.Value;
                         setupObjectList(objectList);
@@ -128,9 +128,9 @@ namespace customtools.customhierarchy.phelper
                         {
                             GameObject gameObject = selections[i];
                             
-                            if (objectListDictionary.ContainsKey(gameObject.scene))
+                            if (_objectListDictionary.ContainsKey(gameObject.scene))
                             {
-                                bool isLock = objectListDictionary[gameObject.scene].lockedObjects.Contains(selections[i]);
+                                bool isLock = _objectListDictionary[gameObject.scene].lockedObjects.Contains(selections[i]);
                                 if (!isLock) actual.Add(selections[i]);
                                 else found = true;
                             }
@@ -138,8 +138,8 @@ namespace customtools.customhierarchy.phelper
                         if (found) Selection.objects = actual.ToArray();
                     }   
 
-                    lastActiveScene = EditorSceneManager.GetActiveScene();
-                    lastSceneCount = SceneManager.loadedSceneCount;
+                    _lastActiveScene = EditorSceneManager.GetActiveScene();
+                    _lastSceneCount = SceneManager.loadedSceneCount;
                 }
             }
             catch 
@@ -150,13 +150,13 @@ namespace customtools.customhierarchy.phelper
         public CustomObjectList getObjectList(GameObject gameObject, bool createIfNotExist = true)
         { 
             CustomObjectList objectList = null;
-            objectListDictionary.TryGetValue(gameObject.scene, out objectList);
+            _objectListDictionary.TryGetValue(gameObject.scene, out objectList);
             
             if (objectList == null && createIfNotExist)
             {         
                 objectList = createObjectList(gameObject);
                 if (gameObject.scene != objectList.gameObject.scene) EditorSceneManager.MoveGameObjectToScene(objectList.gameObject, gameObject.scene);
-                objectListDictionary.Add(gameObject.scene, objectList);
+                _objectListDictionary.Add(gameObject.scene, objectList);
             }
 
             return objectList;
@@ -164,7 +164,7 @@ namespace customtools.customhierarchy.phelper
 
         public bool isSceneChanged()
         {
-            if (lastActiveScene != EditorSceneManager.GetActiveScene() || lastSceneCount != SceneManager.loadedSceneCount)
+            if (_lastActiveScene != EditorSceneManager.GetActiveScene() || _lastSceneCount != SceneManager.loadedSceneCount)
                 return true;
             else 
                 return false;
@@ -176,7 +176,7 @@ namespace customtools.customhierarchy.phelper
         {
             try
             {  
-                List<QObjectList> objectListList = QObjectList.instances;
+                List<CustomObjectList> objectListList = CustomObjectList.instances;
                 int objectListCount = objectListList.Count;
                 if (objectListCount > 0) 
                 {
@@ -189,7 +189,7 @@ namespace customtools.customhierarchy.phelper
                         }
                     }
 
-                    QObjectList objectList = QObjectList.instances[0];
+                    CustomObjectList objectList = CustomObjectList.instances[0];
                     setupObjectList(objectList);
 
                     if (( showObjectList && ((objectList.gameObject.hideFlags & HideFlags.HideInHierarchy)  > 0)) ||
@@ -223,9 +223,9 @@ namespace customtools.customhierarchy.phelper
             }
         }
 
-        public QObjectList getObjectList(GameObject gameObject, bool createIfNotExists = false)
+        public CustomObjectList getObjectList(GameObject gameObject, bool createIfNotExists = false)
         { 
-            List<QObjectList> objectListList = QObjectList.instances;
+            List<CustomObjectList> objectListList = CustomObjectList.instances;
             int objectListCount = objectListList.Count;
             if (objectListCount != 1)
             {
@@ -242,7 +242,7 @@ namespace customtools.customhierarchy.phelper
                 }
             }
                 
-            return QObjectList.instances[0];
+            return CustomObjectList.instances[0];
         }
 
         #endif
@@ -250,7 +250,7 @@ namespace customtools.customhierarchy.phelper
         private CustomObjectList createObjectList(GameObject gameObject)
         {
             GameObject gameObjectList = new GameObject();
-            gameObjectList.name = QObjectListName;
+            gameObjectList.name = CustomObjectListName;
             CustomObjectList objectList = gameObjectList.AddComponent<CustomObjectList>();
             setupObjectList(objectList);
             return objectList;

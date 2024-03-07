@@ -106,7 +106,7 @@ namespace customtools.customhierarchy.pcomponent
                     else 
                         labelStyle.fontSize = 7;
                 #else
-                    if (labelSize == QHierarchyTagAndLayerLabelSize.Big || (labelSize == QHierarchyTagAndLayerLabelSize.BigIfSpecifiedOnlyTagOrLayer && needDrawTag != needDrawLayer)) 
+                    if (labelSize == CustomHierarchyTagAndLayerLabelSize.Big || (labelSize == CustomHierarchyTagAndLayerLabelSize.BigIfSpecifiedOnlyTagOrLayer && needDrawTag != needDrawLayer)) 
                         labelStyle.fontSize = 9;
                     else 
                         labelStyle.fontSize = 8;

@@ -36,7 +36,7 @@ namespace customtools.customhierarchy.pcomponent
             #if UNITY_2018_3_OR_NEWER
                 treeMapObjectTexture = CustomResources.getInstance().GetTexture(CustomTexture.CustomTreeMapLine);
             #else
-                treeMapObjectTexture  = QResources.getInstance().getTexture(QTexture.QTreeMapObject);
+                treeMapObjectTexture  = CustomResources.getInstance().getTexture(CustomTexture.CustomTreeMapObject);
             #endif
             treeMapLastTexture    = CustomResources.getInstance().GetTexture(CustomTexture.CustomTreeMapLast);
             

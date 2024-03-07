@@ -53,8 +53,8 @@ namespace customtools.customhierarchy.pcomponent
                 labelStyle.fontSize = labelSize == CustomHierarchySize.Big ? 7 : 6;
                 rect.width = labelSize == CustomHierarchySize.Big ? 24 : 22;
             #else
-                labelStyle.fontSize = labelSize == QHierarchySize.Big ? 9 : 8;
-                rect.width = labelSize == QHierarchySize.Big ? 33 : 25;
+                labelStyle.fontSize = labelSize == CustomHierarchySize.Big ? 9 : 8;
+                rect.width = labelSize == CustomHierarchySize.Big ? 33 : 25;
             #endif
         }   
 
