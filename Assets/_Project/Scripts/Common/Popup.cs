@@ -1,5 +1,5 @@
+using PrimeTween;
 using UnityEngine;
-using DG.Tweening;
 
 public class Popup : MonoBehaviour
 {
@@ -23,11 +23,10 @@ public class Popup : MonoBehaviour
             switch (showAnimationType)
             {
                 case ShowAnimationType.OutBack:
-                    DOTween.Sequence().OnStart(() => container.transform.localScale = Vector3.one*.9f)
-                        .Append(container.transform.DOScale(Vector3.one, ConfigController.Game.durationPopup).SetEase(Ease.OutBack));
+                    Sequence.Create().ChainCallback(()=>container.transform.localScale = Vector3.one*.9f).Chain(Tween.Scale(container.transform, Vector3.one, ConfigController.Game.durationPopup, Ease.OutBack));
                     break;
                 case ShowAnimationType.Fade:
-                    CanvasGroup.DOFade(1, ConfigController.Game.durationPopup);
+                    Tween.Alpha(CanvasGroup, 1, .5f);
                     break;
             }
             AfterShown();
@@ -46,7 +45,7 @@ public class Popup : MonoBehaviour
             switch (hideAnimationType)
             {
                 case HideAnimationType.Fade:
-                    CanvasGroup.DOFade(0, ConfigController.Game.durationPopup).OnComplete(() =>
+                    Tween.Alpha(CanvasGroup, 0, .5f).OnComplete(() =>
                     {
                         CanvasGroup.alpha = 1;
                         gameObject.SetActive(false);

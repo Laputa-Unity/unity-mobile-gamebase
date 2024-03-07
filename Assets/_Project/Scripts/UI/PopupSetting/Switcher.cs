@@ -1,4 +1,4 @@
-using DG.Tweening;
+using PrimeTween;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -61,13 +61,13 @@ public class Switcher : MonoBehaviour
         switchState = SwitchState.Moving;
         if (isOn)
         {
-            @switch.transform.DOMove(offPos.position, timeSwitching);
+            Tween.Position(@switch.transform, offPos.position, timeSwitching);
         }
         else
         {
-            @switch.transform.DOMove(pos.position, timeSwitching);
+            Tween.Position(@switch.transform, pos.position, timeSwitching);
         }
-        DOTween.Sequence().AppendInterval(timeSwitching / 2f).SetEase(Ease.Linear).AppendCallback(() =>
+        Sequence.Create().ChainDelay(timeSwitching / 2f).ChainCallback(() =>
         {
             switch (settingType)
             {

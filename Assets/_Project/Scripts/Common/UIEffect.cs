@@ -1,4 +1,4 @@
-using DG.Tweening;
+using PrimeTween;
 using UnityEngine;
 
 public class UIEffect : MonoBehaviour
@@ -46,44 +46,15 @@ public class UIEffect : MonoBehaviour
         switch (animType)
         {
             case AnimType.OutBack:
-                _sequence = DOTween.Sequence().SetDelay(delayAnimTime).OnStart(()=>transform.localScale = fromScale).Append(transform.DOScale(Vector3.one, animTime).OnKill(()=>transform.localScale = saveLocalScale).SetEase(Ease.OutBack));
-                break;
-            case AnimType.Shake:
-                _sequence = DOTween.Sequence().SetDelay(delayAnimTime).Append(transform.DOShakeRotation(animTime, strength).SetEase(Ease.Linear));
-                break;
-            case AnimType.Move:
-                _rectTransform.anchoredPosition = _saveAnchorPosition;
-                switch (_moveType)
-                {
-                    case MoveType.Vector3:
-                        transform.DOLocalMove(_saveAnchorPosition, animTime).SetDelay(delayAnimTime).SetEase(Ease.Linear);
-                        break;
-                    case MoveType.Direction:
-                        switch (directionType)
-                        {
-                            case DirectionType.Up:
-                                _sequence = DOTween.Sequence().SetDelay(delayAnimTime).Append(transform.DOLocalMoveY(transform.localPosition.y + offset, animTime).SetEase(Ease.InBack));
-                                break;
-                            case DirectionType.Down:
-                                _sequence = DOTween.Sequence().SetDelay(delayAnimTime).Append(transform.DOLocalMoveY(transform.localPosition.y - offset, animTime).SetEase(Ease.InBack));
-                                break;
-                            case DirectionType.Left:
-                                _sequence = DOTween.Sequence().SetDelay(delayAnimTime).Append(transform.DOLocalMoveX(transform.localPosition.x - offset, animTime).SetEase(Ease.InBack));
-                                break;
-                            case DirectionType.Right:
-                                _sequence = DOTween.Sequence().SetDelay(delayAnimTime).Append(transform.DOLocalMoveX(transform.localPosition.x + offset, animTime).SetEase(Ease.InBack));
-                                break;
-                        } 
-                        break;
-                }
-                break;
+                _sequence = Sequence.Create().ChainDelay(delayAnimTime).ChainCallback(()=>transform.localScale = fromScale).Chain(Tween.Scale(transform, Vector3.one, animTime,Ease.OutBack));
+                break; ;
         }
     }
 
     public void OnDisable()
     {
         Reset();
-        _sequence?.Kill();
+        _sequence.Stop();
     }
     
     

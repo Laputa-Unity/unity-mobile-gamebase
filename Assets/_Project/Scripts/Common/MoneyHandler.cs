@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using DG.Tweening;
 using Lean.Pool;
+using PrimeTween;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -118,19 +118,20 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
                 });
             });
         }
+        
     }
     
-    private DG.Tweening.Core.TweenerCore<Vector3, Vector3, DG.Tweening.Plugins.Options.VectorOptions> MoveTo(Vector3 endValue, GameObject coin, float duration, Ease ease)
+    private Tween MoveTo(Vector3 endValue, GameObject coin, float duration, Ease ease)
     {
-        return coin.transform.DOMove(endValue, duration).SetEase(ease);
+        return Tween.Position(coin.transform,  endValue, duration, ease);
     }
 
-    private DG.Tweening.Core.TweenerCore<Vector3, Vector3, DG.Tweening.Plugins.Options.VectorOptions> MoveToNear(GameObject coin)
+    private Tween MoveToNear(GameObject coin)
     {
         return MoveTo(coin.transform.position + (Vector3)Random.insideUnitCircle*3, coin, durationNear, easeNear);
     }
 
-    private DG.Tweening.Core.TweenerCore<Vector3, Vector3, DG.Tweening.Plugins.Options.VectorOptions> MoveToTarget(GameObject coin)
+    private Tween MoveToTarget(GameObject coin)
     {
         return MoveTo(target.transform.position, coin, durationTarget, easeTarget);
     }

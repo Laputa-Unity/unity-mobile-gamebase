@@ -1,4 +1,4 @@
-using DG.Tweening;
+using PrimeTween;
 using UnityEngine;
 
 public class PopupWin : Popup
@@ -21,7 +21,7 @@ public class PopupWin : Popup
         PopupController.Instance.Show<PopupUI>();
         Setup();
         
-        sequence = DOTween.Sequence().AppendInterval(2f).AppendCallback(() => { btnTapToContinue.SetActive(true); });
+        sequence = Sequence.Create().ChainDelay(2f).ChainCallback(() => { btnTapToContinue.SetActive(true); });
     }
 
     public void Setup()
@@ -48,9 +48,9 @@ public class PopupWin : Popup
         bonusArrowHandler.MoveObject.StopMoving();
         btnRewardAds.SetActive(false);
         btnTapToContinue.SetActive(false);
-        sequence?.Kill();
+        sequence.Stop();
 
-        DOTween.Sequence().AppendInterval(2f).AppendCallback(() => { GameManager.Instance.PlayCurrentLevel(); });
+        Sequence.Create().ChainDelay(2f).ChainCallback(() => { GameManager.Instance.PlayCurrentLevel(); });
     }
 
     public void OnClickContinue()
@@ -59,6 +59,6 @@ public class PopupWin : Popup
         btnRewardAds.SetActive(false);
         btnTapToContinue.SetActive(false);
 
-        DOTween.Sequence().AppendInterval(2f).AppendCallback(() => { GameManager.Instance.PlayCurrentLevel(); });
+        Sequence.Create().ChainDelay(2f).ChainCallback(() => { GameManager.Instance.PlayCurrentLevel(); });
     }
 }

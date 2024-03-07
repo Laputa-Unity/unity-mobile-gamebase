@@ -1,5 +1,5 @@
 using CodeStage.AdvancedFPSCounter;
-using DG.Tweening;
+using PrimeTween;
 using UnityEngine;
 
 public class GameManager : SingletonDontDestroy<GameManager>
@@ -82,7 +82,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
         gameState = GameState.WinGame;
         Observer.WinLevel?.Invoke(levelController.currentLevel);
         Data.CurrentLevel++;
-        DOTween.Sequence().AppendInterval(delayPopupShowTime).AppendCallback(() =>
+        Sequence.Create().ChainDelay(delayPopupShowTime).ChainCallback(() =>
         {
             PopupController.Instance.HideAll();
             if (PopupController.Instance.Get<PopupWin>() is PopupWin popupWin)
@@ -99,7 +99,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
         gameState = GameState.LoseGame;
         Observer.LoseLevel?.Invoke(levelController.currentLevel);
         
-        DOTween.Sequence().AppendInterval(delayPopupShowTime).AppendCallback(() =>
+        Sequence.Create().ChainDelay(delayPopupShowTime).ChainCallback(() =>
         {
             PopupController.Instance.Hide<PopupInGame>();
             PopupController.Instance.Show<PopupLose>();

@@ -1,4 +1,4 @@
-using DG.Tweening;
+using PrimeTween;
 using UnityEngine;
 
 public class EffectAppear : MonoBehaviour
@@ -21,6 +21,6 @@ public class EffectAppear : MonoBehaviour
     public void DoEffect()
     {
         if (!gameObject.activeInHierarchy) return;
-        transform.DOScale(CurrentScale, TimeScale).SetEase(EaseType);
+        Tween.Scale(transform, CurrentScale, TimeScale, EaseType);
     }
 }

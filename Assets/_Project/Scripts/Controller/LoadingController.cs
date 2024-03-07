@@ -1,4 +1,4 @@
-using DG.Tweening;
+using PrimeTween;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,7 +20,7 @@ public class LoadingController : MonoBehaviour
         _sceneOperation.allowSceneActivation = false;
         
         progressBar.fillAmount = 0;
-        progressBar.DOFillAmount(1, timeLoading).OnUpdate(()=>loadingText.text = $"Loading {(int) (progressBar.fillAmount * 100)}%").OnComplete(()=>
+        Tween.UIFillAmount(progressBar,1, timeLoading).OnUpdate(loadingText, (loadingText, tween) => loadingText.text = $"Loading {(int) (progressBar.fillAmount * 100)}%").OnComplete(()=>
         {
             _sceneOperation.allowSceneActivation = true;
         });

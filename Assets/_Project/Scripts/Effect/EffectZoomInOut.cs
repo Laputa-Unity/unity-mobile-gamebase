@@ -1,4 +1,4 @@
-using DG.Tweening;
+using PrimeTween;
 using UnityEngine;
 
 public class EffectZoomInOut : MonoBehaviour
@@ -21,12 +21,11 @@ public class EffectZoomInOut : MonoBehaviour
     public void DoEffect(float sizeScale, bool delay)
     {
         if (!gameObject.activeInHierarchy) return;
-        DOTween.Sequence().AppendInterval(timeDelay*(delay ? 1 : 0)).AppendCallback(() =>
+        Sequence.Create().ChainDelay(timeDelay*(delay ? 1 : 0)).ChainCallback(() =>
         {
-            transform.DOScale(
-                new Vector3(transform.localScale.x + sizeScale, transform.localScale.y + sizeScale,
+            Tween.Scale(transform,new Vector3(transform.localScale.x + sizeScale, transform.localScale.y + sizeScale,
                     transform.localScale.z),
-                timeScale).SetEase(Ease.Linear).OnComplete(() =>
+                timeScale, Ease.Linear).OnComplete(() =>
             {
                 DoEffect(-sizeScale,!delay);
             });
