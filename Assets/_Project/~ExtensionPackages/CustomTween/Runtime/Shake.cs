@@ -7,7 +7,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using SuppressMessage = System.Diagnostics.CodeAnalysis.SuppressMessageAttribute;
 
-namespace PrimeTween {
+namespace CustomTween {
     public partial struct Tween {
         /// <summary>Shakes the camera.<br/>
         /// If the camera is perspective, shakes all angles.<br/>
@@ -68,7 +68,7 @@ namespace PrimeTween {
         static Tween shake(TweenType tweenType, PropType propType, [NotNull] Transform target, ShakeSettings settings, [NotNull] Action<ReusableTween, Vector3> onValueChange, [NotNull] Func<ReusableTween, ValueContainer> getter) {
             Assert.IsNotNull(onValueChange);
             Assert.IsNotNull(getter);
-            var tween = PrimeTweenManager.fetchTween();
+            var tween = CustomTweenManager.fetchTween();
             tween.propType = propType;
             prepareShakeData(settings, tween);
             tween.tweenType = tweenType;
@@ -80,12 +80,12 @@ namespace PrimeTween {
                 var shakeVal = getShakeVal(state);
                 _onValueChange(state, shakeVal);
             }, getter, true);
-            return PrimeTweenManager.Animate(tween);
+            return CustomTweenManager.Animate(tween);
         }
 
         public static Tween ShakeCustom<T>([NotNull] T target, Vector3 startValue, ShakeSettings settings, [NotNull] Action<T, Vector3> onValueChange) where T : class {
             Assert.IsNotNull(onValueChange);
-            var tween = PrimeTweenManager.fetchTween();
+            var tween = CustomTweenManager.fetchTween();
             tween.propType = PropType.Vector3;
             tween.tweenType = TweenType.ShakeCustom;
             tween.startValue.CopyFrom(ref startValue);
@@ -104,7 +104,7 @@ namespace PrimeTween {
                     _tween.EmergencyStop();
                 }
             }, null, false);
-            return PrimeTweenManager.Animate(tween);
+            return CustomTweenManager.Animate(tween);
         }
         public static Tween PunchCustom<T>([NotNull] T target, Vector3 startValue, ShakeSettings settings, [NotNull] Action<T, Vector3> onValueChange) where T : class => ShakeCustom(target, startValue, settings.WithPunch(), onValueChange);
 
@@ -205,7 +205,7 @@ namespace PrimeTween {
                     _easeBetweenShakes = Ease.OutQuad;
                 }
                 if (_easeBetweenShakes == Ease.Default) {
-                    _easeBetweenShakes = PrimeTweenManager.defaultShakeEase;
+                    _easeBetweenShakes = CustomTweenManager.defaultShakeEase;
                 }
                 easeBetweenShakes = _easeBetweenShakes;
             }
@@ -330,7 +330,7 @@ namespace PrimeTween {
             if (shakeTransform == null) {
                 return false;
             }
-            var shakes = PrimeTweenManager.Instance.shakes;
+            var shakes = CustomTweenManager.Instance.shakes;
             var key = (shakeTransform, newTween.tweenType);
             if (!shakes.TryGetValue(key, out var data)) {
                 shakes.Add(key, (newTween.getter(newTween), 1));
@@ -349,7 +349,7 @@ namespace PrimeTween {
             var shakeTransform = tween.target as Transform;
             if (shakeTransform != null) {
                 var key = (shakeTransform, tween.tweenType);
-                var shakes = PrimeTweenManager.Instance.shakes;
+                var shakes = CustomTweenManager.Instance.shakes;
                 if (shakes.TryGetValue(key, out var data)) {
                     // no key present if it's a ShakeCustom() with Transform target because custom shakes have startFromCurrent == false and aren't added to shakes dict
                     Assert.IsTrue(data.count >= 1);

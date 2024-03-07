@@ -1,23 +1,23 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace PrimeTween {
+namespace CustomTween {
     /// Global PrimeTween configuration.
     [PublicAPI]
     public static partial class PrimeTweenConfig {
-        internal static PrimeTweenManager Instance {
+        internal static CustomTweenManager Instance {
             get {
                 #if UNITY_EDITOR
                 Assert.IsFalse(Constants.noInstance, Constants.editModeWarning);
                 #endif
-                return PrimeTweenManager.Instance;
+                return CustomTweenManager.Instance;
             }
         }
 
         /// <summary>
-        /// If <see cref="PrimeTweenManager"/> instance is already created, <see cref="SetTweensCapacity"/> will allocate garbage,
+        /// If <see cref="CustomTweenManager"/> instance is already created, <see cref="SetTweensCapacity"/> will allocate garbage,
         ///     so it's recommended to use it when no active gameplay is happening. For example, on game launch or when loading a level.
-        /// <para>To set initial capacity before <see cref="PrimeTweenManager"/> is created, call <see cref="SetTweensCapacity"/> from a method
+        /// <para>To set initial capacity before <see cref="CustomTweenManager"/> is created, call <see cref="SetTweensCapacity"/> from a method
         /// with <see cref="RuntimeInitializeOnLoadMethodAttribute"/> and <see cref="RuntimeInitializeLoadType.BeforeSplashScreen"/>. See example below.</para>
         /// </summary>
         /// <example>
@@ -30,9 +30,9 @@ namespace PrimeTween {
         /// </example>
         public static void SetTweensCapacity(int capacity) {
             Assert.IsTrue(capacity >= 0);
-            var instance = PrimeTweenManager.Instance; // should use PrimeTweenManager.Instance because Instance property has a built-in null check 
+            var instance = CustomTweenManager.Instance; // should use PrimeTweenManager.Instance because Instance property has a built-in null check 
             if (instance == null) {
-                PrimeTweenManager.customInitialCapacity = capacity;
+                CustomTweenManager.customInitialCapacity = capacity;
             } else {
                 instance.SetTweensCapacity(capacity);
             }

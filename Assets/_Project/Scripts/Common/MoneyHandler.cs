@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Lean.Pool;
-using PrimeTween;
+using CustomTween;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;

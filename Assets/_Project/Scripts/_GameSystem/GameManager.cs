@@ -1,5 +1,5 @@
 using CodeStage.AdvancedFPSCounter;
-using PrimeTween;
+using CustomTween;
 using UnityEngine;
 
 public class GameManager : SingletonDontDestroy<GameManager>
@@ -21,9 +21,9 @@ public class GameManager : SingletonDontDestroy<GameManager>
         ReturnHome();
     }
 
-    public void PlayCurrentLevel()
+    public void PlayCurrentLevel(bool ignorePrepareLevel = true)
     {
-        PrepareLevel();
+        if (ignorePrepareLevel) PrepareLevel();
         StartGame();
     }
 

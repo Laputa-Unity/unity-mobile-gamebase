@@ -847,7 +847,7 @@ MonoBehaviour:
     generateOnlyOverloads: 0
   - name: TweenTimeScale
     methodName: TweenTimeScale
-    targetType: PrimeTween.Tween
+    targetType: CustomTween.Tween
     propertyType: 1
     propertyName: 
     propertyGetter: 
@@ -858,7 +858,7 @@ MonoBehaviour:
     generateOnlyOverloads: 1
   - name: TweenTimeScale
     methodName: TweenTimeScale
-    targetType: PrimeTween.Sequence
+    targetType: CustomTween.Sequence
     propertyType: 1
     propertyName: 
     propertyGetter: 

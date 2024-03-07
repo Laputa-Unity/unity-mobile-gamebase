@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -43,4 +42,3 @@ public class GameBase : EditorWindow
         Debug.Log($"<color=Green>Add 100k coin succeed</color>");
     }
 }
-#endif

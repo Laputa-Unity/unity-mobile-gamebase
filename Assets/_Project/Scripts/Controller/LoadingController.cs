@@ -1,4 +1,4 @@
-using PrimeTween;
+using CustomTween;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;

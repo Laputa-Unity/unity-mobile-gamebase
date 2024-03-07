@@ -6,7 +6,7 @@ using System;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace PrimeTween {
+namespace CustomTween {
     /// <summary>The main API of the PrimeTween library.<br/><br/>
     /// Use static Tween methods to start animations (tweens).<br/>
     /// Use the returned Tween struct to control the running tween and access its properties.<br/><br/>

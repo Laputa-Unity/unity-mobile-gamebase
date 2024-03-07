@@ -7,7 +7,7 @@ using System.ComponentModel;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace PrimeTween {
+namespace CustomTween {
     public partial class PrimeTweenConfig {
         // ReSharper disable once ValueParameterNotUsed
         [EditorBrowsable(EditorBrowsableState.Never)] [Obsolete("this setting is replaced with the 'warnIfTargetDestroyed' parameter that you can pass to the tween.OnComplete(), Tween.Delay() and Sequence.ChainDelay() methods.")]

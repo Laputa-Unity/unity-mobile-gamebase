@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using PrimeTween;
+using CustomTween;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(PrimeTweenManager))]
-internal class PrimeTweenManagerInspector : Editor {
+[CustomEditor(typeof(CustomTweenManager))]
+internal class CustomTweenManagerInspector : Editor {
     SerializedProperty tweensProp;
     SerializedProperty fixedUpdateTweensProp;
     GUIContent aliveTweenGuiContent;
@@ -15,8 +15,8 @@ internal class PrimeTweenManagerInspector : Editor {
     StringCache currentPoolCapacityCache;
 
     void OnEnable() {
-        tweensProp = serializedObject.FindProperty(nameof(PrimeTweenManager.tweens));
-        fixedUpdateTweensProp = serializedObject.FindProperty(nameof(PrimeTweenManager.fixedUpdateTweens));
+        tweensProp = serializedObject.FindProperty(nameof(CustomTweenManager.tweens));
+        fixedUpdateTweensProp = serializedObject.FindProperty(nameof(CustomTweenManager.fixedUpdateTweens));
         Assert.IsNotNull(tweensProp);
         Assert.IsNotNull(fixedUpdateTweensProp);
         aliveTweenGuiContent = new GUIContent("Tweens");
@@ -28,7 +28,7 @@ internal class PrimeTweenManagerInspector : Editor {
             EditorGUILayout.ObjectField("Script", MonoScript.FromMonoBehaviour((MonoBehaviour)target), typeof(MonoBehaviour), false);
         }
         
-        var manager = target as PrimeTweenManager;
+        var manager = target as CustomTweenManager;
         Assert.IsNotNull(manager);
         
         GUILayout.BeginHorizontal();

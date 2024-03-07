@@ -13,10 +13,10 @@ using Debug = UnityEngine.Debug;
 using UnityEditor;
 #endif
 
-namespace PrimeTween {
+namespace CustomTween {
     [AddComponentMenu("")]
-    internal class PrimeTweenManager : MonoBehaviour {
-        internal static PrimeTweenManager Instance;
+    internal class CustomTweenManager : MonoBehaviour {
+        internal static CustomTweenManager Instance;
         #if UNITY_EDITOR
         static bool isHotReload = true;
         #endif
@@ -58,9 +58,9 @@ namespace PrimeTween {
             isHotReload = false;
             #endif
             Assert.IsNull(Instance);
-            var go = new GameObject(nameof(PrimeTweenManager));
+            var go = new GameObject(nameof(CustomTweenManager));
             DontDestroyOnLoad(go);
-            var instance = go.AddComponent<PrimeTweenManager>();
+            var instance = go.AddComponent<CustomTweenManager>();
             const int defaultInitialCapacity = 200;
             instance.init(customInitialCapacity != -1 ? customInitialCapacity : defaultInitialCapacity);
             Instance = instance;
@@ -77,7 +77,7 @@ namespace PrimeTween {
             currentPoolCapacity = capacity;
         }
 
-        const string manualInstanceCreationIsNotAllowedMessage = "Please don't create the " + nameof(PrimeTweenManager) + " instance manually.";
+        const string manualInstanceCreationIsNotAllowedMessage = "Please don't create the " + nameof(CustomTweenManager) + " instance manually.";
         void Awake() => Assert.IsNull(Instance, manualInstanceCreationIsNotAllowedMessage);
         
         #if UNITY_EDITOR
@@ -102,7 +102,7 @@ namespace PrimeTween {
                 #else
                 FindObjectOfType
                 #endif
-                <PrimeTweenManager>();
+                <CustomTweenManager>();
             Assert.IsNotNull(foundInScene);
             #if PRIME_TWEEN_INSPECTOR_DEBUGGING
             Debug.LogError("PRIME_TWEEN_INSPECTOR_DEBUGGING doesn't work with 'Recompile And Continue Playing' because Tween.id is serializable but Tween.tween is not.");
@@ -272,7 +272,7 @@ namespace PrimeTween {
                 if (tweensCount + 1 > currentPoolCapacity) {
                     var newCapacity = currentPoolCapacity == 0 ? 4 : currentPoolCapacity * 2;
                     Debug.LogWarning($"Tweens capacity has been increased from {currentPoolCapacity} to {newCapacity}. Please increase the capacity manually to prevent memory allocations at runtime by calling {Constants.setTweensCapacityMethod}.\n" +
-                                     $"To know the highest number of simultaneously running tweens, please observe the '{nameof(PrimeTweenManager)}/{Constants.maxAliveTweens}' in Inspector.\n");
+                                     $"To know the highest number of simultaneously running tweens, please observe the '{nameof(CustomTweenManager)}/{Constants.maxAliveTweens}' in Inspector.\n");
                     currentPoolCapacity = newCapacity;
                 }
             } else {

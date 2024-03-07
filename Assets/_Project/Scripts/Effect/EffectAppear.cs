@@ -1,4 +1,4 @@
-using PrimeTween;
+using CustomTween;
 using UnityEngine;
 
 public class EffectAppear : MonoBehaviour

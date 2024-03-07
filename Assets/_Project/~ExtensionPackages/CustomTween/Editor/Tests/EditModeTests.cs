@@ -1,6 +1,6 @@
 #if TEST_FRAMEWORK_INSTALLED
 using NUnit.Framework;
-using PrimeTween;
+using CustomTween;
 using UnityEngine;
 using UnityEngine.TestTools;
 using Assert = NUnit.Framework.Assert;
@@ -41,8 +41,8 @@ public class EditModeTests {
             Sequence.Create(new Tween());
             
             TweenSettings.ValidateCustomCurveKeyframes(AnimationCurve.Linear(0, 0, 1, 1));
-            PrimeTweenConfig.SetTweensCapacity(10);
-            Assert.Throws<AssertionException>(() => PrimeTweenConfig.defaultEase = Ease.InCirc);
+            CustomTweenConfig.SetTweensCapacity(10);
+            Assert.Throws<AssertionException>(() => CustomTweenConfig.defaultEase = Ease.InCirc);
         }
         Object.DestroyImmediate(go);
         void expectError() {

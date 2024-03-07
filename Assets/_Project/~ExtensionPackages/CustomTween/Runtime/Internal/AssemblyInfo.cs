@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("PrimeTween.Editor")]
-[assembly: InternalsVisibleTo("PrimeTween.Tests")]
-[assembly: InternalsVisibleTo("PrimeTween.Tests.Editor")]
-[assembly: InternalsVisibleTo("PrimeTween.Debug")]
+[assembly: InternalsVisibleTo("CustomTween.Editor")]
+[assembly: InternalsVisibleTo("CustomTween.Tests")]
+[assembly: InternalsVisibleTo("CustomTween.Tests.Editor")]
+[assembly: InternalsVisibleTo("CustomTween.Debug")]

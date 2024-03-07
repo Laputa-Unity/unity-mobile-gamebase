@@ -11,7 +11,7 @@
 // ReSharper disable CompareOfFloatsByEqualityOperator
 using UnityEngine;
 
-namespace PrimeTween {
+namespace CustomTween {
     internal static class StandardEasing {
         const float halfPi = Mathf.PI / 2f;
         internal const float backEaseConst = 1.70158f;

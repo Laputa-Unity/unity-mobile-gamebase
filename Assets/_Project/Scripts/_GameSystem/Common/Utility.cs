@@ -41,9 +41,8 @@ public static class Utility
         }
         catch (Exception e)
         {
+            Debug.Log(e);
             return -1;
         }
-
-        return -1;
     }
 }

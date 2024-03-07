@@ -1,5 +1,5 @@
 {
-    "name": "PrimeTween.Runtime",
+    "name": "CustomTween.Runtime",
     "rootNamespace": "",
     "references": [
         "Unity.TextMeshPro"

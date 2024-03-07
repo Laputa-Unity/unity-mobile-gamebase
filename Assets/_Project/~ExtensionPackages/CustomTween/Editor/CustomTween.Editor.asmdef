@@ -1,8 +1,8 @@
 {
-    "name": "PrimeTween.Editor",
+    "name": "CustomTween.Editor",
     "rootNamespace": "",
     "references": [
-        "PrimeTween.Runtime"
+        "CustomTween.Runtime"
     ],
     "includePlatforms": [
         "Editor"

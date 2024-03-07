@@ -178,8 +178,7 @@ MonoBehaviour:
   m_text: 1000000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8d15ab71442963c47b22b47460111e35, type: 2}
-  m_sharedMaterial: {fileID: 3604630249188092411, guid: 8d15ab71442963c47b22b47460111e35,
-    type: 2}
+  m_sharedMaterial: {fileID: 3604630249188092411, guid: 8d15ab71442963c47b22b47460111e35, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -299,12 +298,11 @@ MonoBehaviour:
   delay: 20
   durationNear: 0.5
   durationTarget: 0.5
-  easeNear: 34
+  easeNear: 27
   easeTarget: 21
   scale: 0.5
   target: {fileID: 8102002126672621462}
-  coinPrefab: {fileID: 6793577256207356087, guid: c16f53179d9a79242b8f3649594b682b,
-    type: 3}
+  coinPrefab: {fileID: 6793577256207356087, guid: c16f53179d9a79242b8f3649594b682b, type: 3}
   currencyAmountText: {fileID: 4168884197679007341}
   popupUI: {fileID: 3056728832346780796}
 --- !u!1 &3098736201743759505
@@ -653,11 +651,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42617f2f5cc91dd4e92a75e680e45c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useAnimation: 0
-  useShowAnimation: 0
-  showAnimationType: 0
-  useHideAnimation: 0
-  hideAnimationType: 0
 --- !u!1 &8102002126672621462
 GameObject:
   m_ObjectHideFlags: 0

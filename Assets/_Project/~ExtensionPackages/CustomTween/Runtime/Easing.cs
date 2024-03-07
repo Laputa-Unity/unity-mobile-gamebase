@@ -1,7 +1,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace PrimeTween {
+namespace CustomTween {
     /// <summary>
     /// A wrapper struct that encapsulates three available easing methods: standard Ease, AnimationCurve, or Parametric Easing.<br/>
     /// Use static methods to create an Easing struct, for example: Easing.Standard(Ease.OutBounce), Easing.Curve(animationCurve),

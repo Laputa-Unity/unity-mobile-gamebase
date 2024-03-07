@@ -1,4 +1,4 @@
-using PrimeTween;
+using CustomTween;
 using UnityEngine;
 
 public class UIEffect : MonoBehaviour
@@ -28,13 +28,14 @@ public class UIEffect : MonoBehaviour
 
     public void Awake()
     {
-        _rectTransform = GetComponent<RectTransform>();
-        _saveAnchorPosition = _rectTransform.anchoredPosition;
-        saveLocalScale = _rectTransform.localScale;
+        //_rectTransform = GetComponent<RectTransform>();
+        //_saveAnchorPosition = _rectTransform.anchoredPosition;
+        //saveLocalScale = _rectTransform.localScale;
     }
 
     public void OnEnable()
     {
+        Debug.Log("oke");
         if (playOnAwake)
         {
             PlayAnim();
@@ -46,13 +47,15 @@ public class UIEffect : MonoBehaviour
         switch (animType)
         {
             case AnimType.OutBack:
-                _sequence = Sequence.Create().ChainDelay(delayAnimTime).ChainCallback(()=>transform.localScale = fromScale).Chain(Tween.Scale(transform, Vector3.one, animTime,Ease.OutBack));
-                break; ;
+                transform.localScale = fromScale;
+                _sequence = Sequence.Create().ChainDelay(delayAnimTime).Chain(Tween.Scale(transform, Vector3.one, animTime,Ease.OutBack));
+                break;
         }
     }
 
     public void OnDisable()
     {
+        Debug.Log("ok1e");
         Reset();
         _sequence.Stop();
     }

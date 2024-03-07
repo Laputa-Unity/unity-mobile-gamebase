@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace PrimeTween {
+namespace CustomTween {
     /// <summary>Contains 'start' and 'end' values of an animation in addition to <see cref="TweenSettings"/>. Can be serialized and tweaked from the Inspector in Unity 2020.1+.<br/>
     /// Use this struct when the 'start' and 'end' values of an animation are known in advance.</summary>
     /// <example>Tweak animation from the Inspector, then pass the settings to the Tween method:

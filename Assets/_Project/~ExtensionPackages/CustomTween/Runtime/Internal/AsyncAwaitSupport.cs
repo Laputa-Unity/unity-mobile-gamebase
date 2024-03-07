@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 #pragma warning disable CS0618
 
-namespace PrimeTween {
+namespace CustomTween {
     public partial struct Tween {
         /// <summary>This method is needed for async/await support. Don't use it directly.</summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

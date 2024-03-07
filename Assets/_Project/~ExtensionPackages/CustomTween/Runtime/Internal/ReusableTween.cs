@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-namespace PrimeTween {
+namespace CustomTween {
     [Serializable]
     internal class ReusableTween {
         #if UNITY_EDITOR
@@ -411,11 +411,11 @@ namespace PrimeTween {
             }
             #endif
             if (_settings.ease == Ease.Default) {
-                _settings.ease = PrimeTweenManager.Instance.defaultEase;
+                _settings.ease = CustomTweenManager.Instance.defaultEase;
             } else if (_settings.ease == Ease.Custom && _settings.parametricEase == ParametricEase.None) {
                 if (_settings.customEase == null || !TweenSettings.ValidateCustomCurveKeyframes(_settings.customEase)) {
                     Debug.LogError($"Ease type is Ease.Custom, but {nameof(TweenSettings.customEase)} is not configured correctly.");
-                    _settings.ease = PrimeTweenManager.Instance.defaultEase;
+                    _settings.ease = CustomTweenManager.Instance.defaultEase;
                 }
             }
             state = State.Before;
@@ -443,7 +443,7 @@ namespace PrimeTween {
             } else {
                 prevVal.Reset();
             }
-            warnEndValueEqualsCurrent = PrimeTweenManager.Instance.warnEndValueEqualsCurrent;
+            warnEndValueEqualsCurrent = CustomTweenManager.Instance.warnEndValueEqualsCurrent;
         }
 
         internal void setUnityTarget(object _target) {
@@ -499,7 +499,7 @@ namespace PrimeTween {
             if (!_isAlive) {
                 result += " - ";
             }
-            if (target != PrimeTweenManager.dummyTarget) {
+            if (target != CustomTweenManager.dummyTarget) {
                 result += $"{(target is UnityEngine.Object unityObject && unityObject != null ? unityObject.name : target?.GetType().Name)} / ";
             }
             var duration = settings.duration;

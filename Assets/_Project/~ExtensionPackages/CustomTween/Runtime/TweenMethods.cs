@@ -5,7 +5,7 @@ using System;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace PrimeTween {
+namespace CustomTween {
     public partial struct Tween {
         /// <summary>Returns the number of alive tweens.</summary>
         /// <param name="onTarget">If specified, returns the number of running tweens on the target. Please note: if target is specified, this method call has O(n) complexity where n is the total number of running tweens.</param>
@@ -15,7 +15,7 @@ namespace PrimeTween {
                 return default;
             }
             #endif
-            var manager = PrimeTweenManager.Instance;
+            var manager = CustomTweenManager.Instance;
             if (onTarget == null && manager.updateDepth == 0) {
                 int result = manager.tweensCount;
                 #if PRIME_TWEEN_SAFETY_CHECKS && UNITY_ASSERTIONS
@@ -23,7 +23,7 @@ namespace PrimeTween {
                 #endif
                 return result;
             }
-            return PrimeTweenManager.processAll(onTarget, _ => true); // call processAll to filter null tweens
+            return CustomTweenManager.processAll(onTarget, _ => true); // call processAll to filter null tweens
         }
 
         #if PRIME_TWEEN_EXPERIMENTAL
@@ -40,7 +40,7 @@ namespace PrimeTween {
         /// If <see cref="onTarget"/> is provided, stops only tweens on this target (stopping a tween inside a Sequence is not allowed).</summary>
         /// <returns>The number of stopped tweens.</returns>
         public static int StopAll([CanBeNull] object onTarget = null) {
-            var result = PrimeTweenManager.processAll(onTarget, tween => {
+            var result = CustomTweenManager.processAll(onTarget, tween => {
                 if (tween.IsInSequence()) {
                     if (tween.isMainSequenceRoot()) {
                         tween.sequence.Stop();
@@ -59,7 +59,7 @@ namespace PrimeTween {
         /// If <see cref="onTarget"/> is provided, completes only tweens on this target (completing a tween inside a Sequence is not allowed).</summary>
         /// <returns>The number of completed tweens.</returns>
         public static int CompleteAll([CanBeNull] object onTarget = null) {
-            var result = PrimeTweenManager.processAll(onTarget, tween => {
+            var result = CustomTweenManager.processAll(onTarget, tween => {
                 if (tween.IsInSequence()) {
                     if (tween.isMainSequenceRoot()) {
                         tween.sequence.Complete();
@@ -76,7 +76,7 @@ namespace PrimeTween {
 
         static void forceUpdateManagerIfTargetIsNull([CanBeNull] object onTarget) {
             if (onTarget == null) {
-                var manager = PrimeTweenManager.Instance;
+                var manager = CustomTweenManager.Instance;
                 if (manager != null) {
                     if (manager.updateDepth == 0) {
                         manager.FixedUpdate();
@@ -92,11 +92,11 @@ namespace PrimeTween {
         /// <returns>The number of paused/unpaused tweens.</returns>
         public static int SetPausedAll(bool isPaused, [CanBeNull] object onTarget = null) {
             if (isPaused) {
-                return PrimeTweenManager.processAll(onTarget, tween => {
+                return CustomTweenManager.processAll(onTarget, tween => {
                     return tween.trySetPause(true);
                 });
             }
-            return PrimeTweenManager.processAll(onTarget, tween => {
+            return CustomTweenManager.processAll(onTarget, tween => {
                 return tween.trySetPause(false);
             });
         }
@@ -106,7 +106,7 @@ namespace PrimeTween {
         /// It's preferable to use the <see cref="Delay{T}"/> overload because it checks if the UnityEngine.Object target is still alive before calling the <see cref="onComplete"/>.</summary>
         /// <param name="warnIfTargetDestroyed">https://github.com/KyryloKuzyk/PrimeTween/discussions/4</param>
         public static Tween Delay(float duration, [CanBeNull] Action onComplete = null, bool useUnscaledTime = false, bool warnIfTargetDestroyed = true) {
-            return delay(PrimeTweenManager.dummyTarget, duration, onComplete, useUnscaledTime, warnIfTargetDestroyed);
+            return delay(CustomTweenManager.dummyTarget, duration, onComplete, useUnscaledTime, warnIfTargetDestroyed);
         }
         /// <param name="warnIfTargetDestroyed">https://github.com/KyryloKuzyk/PrimeTween/discussions/4</param>
         public static Tween Delay([NotNull] object target, float duration, [CanBeNull] Action onComplete = null, bool useUnscaledTime = false, bool warnIfTargetDestroyed = true) {
@@ -143,8 +143,8 @@ namespace PrimeTween {
         }
 
         static Tween? delay_internal([CanBeNull] object target, float duration, bool useUnscaledTime) {
-            PrimeTweenManager.checkDuration(target, duration);
-            return PrimeTweenManager.delayWithoutDurationCheck(target, duration, useUnscaledTime);
+            CustomTweenManager.checkDuration(target, duration);
+            return CustomTweenManager.delayWithoutDurationCheck(target, duration, useUnscaledTime);
         }
 
         public static Tween MaterialColor([NotNull] Material target, int propertyId, Color endValue, float duration, Ease ease = default, int cycles = 1, CycleMode cycleMode = CycleMode.Restart, float startDelay = 0, float endDelay = 0, bool useUnscaledTime = false)
@@ -318,7 +318,7 @@ namespace PrimeTween {
                 Debug.LogWarning("Setting " + nameof(TweenSettings.useUnscaledTime) + " to true to animate Time.timeScale correctly.");
                 settings.settings.useUnscaledTime = true;
             }
-            return animate(PrimeTweenManager.dummyTarget, ref settings, t => Time.timeScale = t.FloatVal, _ => Time.timeScale.ToContainer());
+            return animate(CustomTweenManager.dummyTarget, ref settings, t => Time.timeScale = t.FloatVal, _ => Time.timeScale.ToContainer());
             
             void clampTimescale(ref float value) {
                 if (value < 0) {

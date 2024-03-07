@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class InternetController : SingletonDontDestroy<InternetController>
 {
-    [SerializeField] private float repeatRate = .5f;
+    [SerializeField] [Min(0.1f)] private float repeatRate = .5f;
     [ReadOnly] public bool isConnected;
 
     private const float TimeStart = 0f;

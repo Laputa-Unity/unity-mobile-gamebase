@@ -3,7 +3,7 @@ using System.Collections;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace PrimeTween {
+namespace CustomTween {
     public partial struct Tween : IEnumerator {
         /// <summary>Use this method to wait for a Tween in coroutines.</summary>
         /// <example><code>
@@ -23,7 +23,7 @@ namespace PrimeTween {
         }
 
         bool IEnumerator.MoveNext() {
-            PrimeTweenManager.Instance.warnStructBoxingInCoroutineOnce(id);
+            CustomTweenManager.Instance.warnStructBoxingInCoroutineOnce(id);
             return isAlive;
         }
 
@@ -49,7 +49,7 @@ namespace PrimeTween {
         public IEnumerator ToYieldInstruction() => root.ToYieldInstruction();
 
         bool IEnumerator.MoveNext() {
-            PrimeTweenManager.Instance.warnStructBoxingInCoroutineOnce(id);
+            CustomTweenManager.Instance.warnStructBoxingInCoroutineOnce(id);
             return isAlive;
         }
 

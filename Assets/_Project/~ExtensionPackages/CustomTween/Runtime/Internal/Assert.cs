@@ -1,7 +1,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace PrimeTween {
+namespace CustomTween {
     internal static class Assert {
         internal static void LogError(string msg, int id, [CanBeNull] Object context = null) {
             Debug.LogError(TryAddStackTrace(msg, id), context);

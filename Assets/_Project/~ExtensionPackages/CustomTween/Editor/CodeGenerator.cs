@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using PrimeTween;
+using CustomTween;
 using UnityEditor;
 using UnityEngine;
 using Assert = UnityEngine.Assertions.Assert;
@@ -65,7 +65,7 @@ internal class CodeGenerator : ScriptableObject {
 using JetBrains.Annotations;
 using System;
 
-namespace PrimeTween {
+namespace CustomTween {
     [PublicAPI]
     public static partial class DOTweenAdapter {";
         const string dotweenOverload = "        public static Tween DOTWEEN_METHOD_NAME([NotNull] this UnityEngine.Camera target, Single endValue, float duration) => Tween.METHOD_NAME(target, endValue, duration);";
@@ -155,7 +155,7 @@ namespace PrimeTween {
 using System;
 using JetBrains.Annotations;
 
-namespace PrimeTween {
+namespace CustomTween {
     public partial struct Tween {";
 
         text += generateWithDefines(generate);
@@ -350,12 +350,12 @@ namespace PrimeTween {
             if (settings.startFromCurrent) {
                 UnityEngine.Debug.LogWarning(Constants.customTweensDontSupportStartFromCurrentWarning);
             }
-            var tween = PrimeTweenManager.fetchTween();
+            var tween = CustomTweenManager.fetchTween();
             tween.startValue.CopyFrom(ref settings.startValue);
             tween.endValue.CopyFrom(ref settings.endValue);
             tween.propType = PropType.Float;
             tween.customOnValueChange = onValueChange;
-            tween.Setup(PrimeTweenManager.dummyTarget, ref settings.settings, _tween => {
+            tween.Setup(CustomTweenManager.dummyTarget, ref settings.settings, _tween => {
                 var _onValueChange = _tween.customOnValueChange as Action<Single>;
                 var val = _tween.FloatVal;
                 try {
@@ -365,7 +365,7 @@ namespace PrimeTween {
                     _tween.EmergencyStop();
                 }
             }, null, false);
-            return PrimeTweenManager.Animate(tween);
+            return CustomTweenManager.Animate(tween);
         }
         public static Tween Custom_TEMPLATE<T>([NotNull] T target, Single startValue, Single endValue, float duration, [NotNull] Action<T, Single> onValueChange, Ease ease = Ease.Default, int cycles = 1, CycleMode cycleMode = CycleMode.Restart, float startDelay = 0, float endDelay = 0, bool useUnscaledTime = false) where T : class 
             => Custom_internal(target, new TweenSettings<float>(startValue, endValue, new TweenSettings(duration, ease, cycles, cycleMode, startDelay, endDelay, useUnscaledTime)), onValueChange);
@@ -384,7 +384,7 @@ namespace PrimeTween {
             if (settings.startFromCurrent) {
                 UnityEngine.Debug.LogWarning(Constants.customTweensDontSupportStartFromCurrentWarning);
             }
-            var tween = PrimeTweenManager.fetchTween();
+            var tween = CustomTweenManager.fetchTween();
             tween.startValue.CopyFrom(ref settings.startValue);
             tween.endValue.CopyFrom(ref settings.endValue);
             tween.propType = PropType.Float;
@@ -408,24 +408,24 @@ namespace PrimeTween {
                     _tween.EmergencyStop();
                 }
             }, null, false);
-            return PrimeTweenManager.Animate(tween);
+            return CustomTweenManager.Animate(tween);
         }
         static Tween animate(object target, ref TweenSettings<float> settings, [NotNull] Action<ReusableTween> setter, Func<ReusableTween, ValueContainer> getter) {
-            var tween = PrimeTweenManager.fetchTween();
+            var tween = CustomTweenManager.fetchTween();
             tween.startValue.CopyFrom(ref settings.startValue);
             tween.endValue.CopyFrom(ref settings.endValue);
             tween.propType = PropType.Float;
             tween.Setup(target, ref settings.settings, setter, getter, settings.startFromCurrent);
-            return PrimeTweenManager.Animate(tween);
+            return CustomTweenManager.Animate(tween);
         }
         static Tween animateWithIntParam([NotNull] object target, int intParam, ref TweenSettings<float> settings, [NotNull] Action<ReusableTween> setter, [NotNull] Func<ReusableTween, ValueContainer> getter) {
-            var tween = PrimeTweenManager.fetchTween();
+            var tween = CustomTweenManager.fetchTween();
             tween.intParam = intParam;
             tween.startValue.CopyFrom(ref settings.startValue);
             tween.endValue.CopyFrom(ref settings.endValue);
             tween.propType = PropType.Float;
             tween.Setup(target, ref settings.settings, setter, getter, settings.startFromCurrent);
-            return PrimeTweenManager.Animate(tween);
+            return CustomTweenManager.Animate(tween);
         }";
 
         var types = new[] { typeof(float), typeof(Color), typeof(Vector2), typeof(Vector3), typeof(Vector4), typeof(Quaternion), typeof(Rect) };

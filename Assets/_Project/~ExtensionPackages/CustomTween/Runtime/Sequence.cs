@@ -10,7 +10,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace PrimeTween {
+namespace CustomTween {
     /// <summary>An ordered group of tweens and callbacks. Tweens in a sequence can run in parallel to one another with <see cref="Group"/> and sequentially with <see cref="Chain"/>.<br/>
     /// To make tweens in a Sequence overlap each other, use <see cref="TweenSettings.startDelay"/> and <see cref="TweenSettings.endDelay"/>.</summary>
     /// <example><code>
@@ -106,7 +106,7 @@ namespace PrimeTween {
                 return default;
             }
             #endif
-            var tween = PrimeTweenManager.fetchTween();
+            var tween = CustomTweenManager.fetchTween();
             tween.propType = PropType.Float;
             tween.tweenType = TweenType.MainSequence;
             if (cycleMode == CycleMode.Incremental) {
@@ -121,9 +121,9 @@ namespace PrimeTween {
                 sequenceEase = Ease.Linear;
             }
             var settings = new TweenSettings(0f, sequenceEase, cycles, cycleMode, 0f, 0f, useUnscaledTime, useFixedUpdate);
-            tween.Setup(PrimeTweenManager.dummyTarget, ref settings, _ => {}, null, false);
+            tween.Setup(CustomTweenManager.dummyTarget, ref settings, _ => {}, null, false);
             tween.intParam = emptySequenceTag;
-            var root = PrimeTweenManager.addTween(tween);
+            var root = CustomTweenManager.addTween(tween);
             Assert.IsTrue(root.isAlive);
             return new Sequence(root);
         }
@@ -229,7 +229,7 @@ namespace PrimeTween {
             if (!tryManipulate()) {
                 return this;
             }
-            var maybeDelay = PrimeTweenManager.delayWithoutDurationCheck(PrimeTweenManager.dummyTarget, atTime, false);
+            var maybeDelay = CustomTweenManager.delayWithoutDurationCheck(CustomTweenManager.dummyTarget, atTime, false);
             Assert.IsTrue(maybeDelay.HasValue);
             var delay = maybeDelay.Value;
             delay.tween.OnComplete(callback, warnIfTargetDestroyed);
@@ -249,7 +249,7 @@ namespace PrimeTween {
             if (!tryManipulate()) {
                 return this;
             }
-            var maybeDelay = PrimeTweenManager.delayWithoutDurationCheck(target, atTime, false);
+            var maybeDelay = CustomTweenManager.delayWithoutDurationCheck(target, atTime, false);
             if (!maybeDelay.HasValue) {
                 return this;
             }

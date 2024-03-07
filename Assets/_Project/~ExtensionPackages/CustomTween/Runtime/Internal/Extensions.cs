@@ -1,7 +1,7 @@
 // ReSharper disable AnnotateNotNullParameter
 using UnityEngine;
 
-namespace PrimeTween {
+namespace CustomTween {
     internal static class Extensions {
         internal static float CalcDistance(Vector3 v1, Vector3 v2) => Vector3.Distance(v1, v2);
         internal static float CalcDistance(Quaternion q1, Quaternion q2) => Quaternion.Angle(q1, q2);

@@ -1,8 +1,8 @@
 using JetBrains.Annotations;
 using UnityEngine;
-using T = PrimeTween.TweenSettings<float>;
+using T = CustomTween.TweenSettings<float>;
 
-namespace PrimeTween {
+namespace CustomTween {
     internal static class Constants {
         internal const string onCompleteCallbackIgnored = "Tween's " + nameof(Tween.OnComplete) + " callback was ignored.";
         internal const string durationInvalidError = "Tween's duration is invalid.";
@@ -57,7 +57,7 @@ namespace PrimeTween {
             }
         }
 
-        internal static bool noInstance => ReferenceEquals(null, PrimeTweenManager.Instance);
+        internal static bool noInstance => ReferenceEquals(null, CustomTweenManager.Instance);
         #endif
     }
 }

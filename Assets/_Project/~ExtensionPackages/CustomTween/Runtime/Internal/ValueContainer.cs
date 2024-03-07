@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace PrimeTween {
+namespace CustomTween {
     [Serializable, StructLayout(LayoutKind.Explicit)]
     [SuppressMessage("ReSharper", "Unity.RedundantHideInInspectorAttribute")]
     internal struct ValueContainer {
