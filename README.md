@@ -13,7 +13,7 @@ Description: Gamebase for mobile hyper casual, casual game
 
 ## Installation
 - Version: **Unity 2022.3.16f1**
-- Type select: **Android**
+- Type select: **Android**, **IOS**
 
 ## Documents
 ### Sound Controller
