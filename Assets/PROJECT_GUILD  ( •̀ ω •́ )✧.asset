@@ -10,9 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dca7df1f6f61a7e45a883e4ce7c635f0, type: 3}
-  m_Name: PROJECT_GUILD
+  m_Name: "PROJECT_GUILD  ( \u2022\u0300 \u03C9 \u2022\u0301 )\u2727"
   m_EditorClassIdentifier: 
-  versionString: 1.0.0
-  longName: 
-  shortName: 
+  version: 1.0.0
+  projectName: Laputa's gamebase
   documentation: {fileID: 0}
