@@ -66,7 +66,3 @@ protected virtual void AfterHidden() { }
   
 </p>
 </details>
-
-## Used Plugins and Software
-1. [Rainbow Folders 2](https://assetstore.unity.com/packages/tools/utilities/rainbow-folders-2-143526)
-2. [DotWeen Pro](https://assetstore.unity.com/packages/tools/visual-scripting/dotween-pro-32416)
