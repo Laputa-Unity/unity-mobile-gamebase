@@ -1,15 +1,13 @@
-# Mobile Game Base
-Description: Gamebase for mobile hyper casual, casual game 
+# Mobile Game Base - Core Singleton architecture for fast building Unity games (Android & Ios)
+## Introduction
+- Project is a sample gamebase for mobile game using **singleton design pattern**.
+- Because the project is designed using the singleton pattern, you can get used to it very easily and build a complete game quickly. However, I do not recommend using it for large game projects. Anyway it is a bad pattern, you can see or read about it everywhere on the internet.
 ## Table of contents
 - [Introduction](#Introduce)
 - [Installation](#Install)
 - [Documentation](#Documents)
   - [Sound](#Sound-Controller)
   - [Popup](#Popup-Controller)
-
-## Introduce
-- This is a basic casual game base for intern and junior
-- The project has simple data stream flow to help you to handle the game easier.
 
 ## Installation
 - Version: **Unity 2022.3.16f1**
