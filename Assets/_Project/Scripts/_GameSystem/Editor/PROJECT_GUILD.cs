@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "GUILD", menuName = "ScriptableObject/GUILD")]
 public class PROJECT_GUILD : ScriptableObject

@@ -71,7 +71,7 @@ public class PROJECT_GUILD_CUSTOM_EDITOR : Editor
         }
         if (GUILayout.Button(new GUIContent("E-Mail Me", "Send an email")) == true)
         {
-            Application.OpenURL("guardian.of.gods99@gmail.com");
+            Application.OpenURL("mailto:guardian.of.gods99@gmail.com");
         }
         
         EditorGUILayout.Separator();
