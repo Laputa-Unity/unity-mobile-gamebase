@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "GUILD", menuName = "ScriptableObject/GUILD")]
-public class PROJECT_GUILD : ScriptableObject
+[CreateAssetMenu(fileName = "GUIDE", menuName = "ScriptableObject/GUIDE")]
+public class PROJECT_GUIDE : ScriptableObject
 {
     public string version = "1.0.0";
     public string projectName = "Laputa's gamebase";

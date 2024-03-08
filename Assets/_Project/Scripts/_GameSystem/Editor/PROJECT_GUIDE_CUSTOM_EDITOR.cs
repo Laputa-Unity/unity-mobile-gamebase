@@ -1,8 +1,8 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(PROJECT_GUILD))]
-public class PROJECT_GUILD_CUSTOM_EDITOR : Editor
+[CustomEditor(typeof(PROJECT_GUIDE))]
+public class PROJECT_GUIDE_CUSTOM_EDITOR : Editor
 {
     private static GUIStyle _titleStyle;
     private static GUIStyle _headerStyle;
@@ -39,11 +39,11 @@ public class PROJECT_GUILD_CUSTOM_EDITOR : Editor
 
     public override void OnInspectorGUI()
     {
-        var guild = (PROJECT_GUILD) target;
+        var guide = (PROJECT_GUIDE) target;
 
         UpdateStyles();
 
-        EditorGUILayout.LabelField("Welcome to project " + guild.projectName + "!", _headerStyle);
+        EditorGUILayout.LabelField("Welcome to project " + guide.projectName + "!", _headerStyle);
         EditorGUILayout.Separator();
         EditorGUILayout.LabelField("This is a project of Laputa. This project will help you reduce time and significantly increase game development performance.", _bodyStyle);
         EditorGUILayout.Separator();
@@ -86,20 +86,20 @@ public class PROJECT_GUILD_CUSTOM_EDITOR : Editor
 
     protected override void OnHeaderGUI()
     {
-        var guild = (PROJECT_GUILD) target;
+        var guide = (PROJECT_GUIDE) target;
 
         UpdateStyles();
 
         GUILayout.BeginHorizontal("In BigTitle");
         {
             var iconWidth = Mathf.Min(EditorGUIUtility.currentViewWidth / 3f - 20f, 128f);
-            var content = new GUIContent($"{guild.projectName}\nversion {guild.version}");
+            var content = new GUIContent($"{guide.projectName}\nversion {guide.version}");
             var height = Mathf.Max(_titleStyle.CalcHeight(content, EditorGUIUtility.currentViewWidth - iconWidth),
                 iconWidth);
 
-            if (guild.Icon != null)
+            if (guide.Icon != null)
             {
-                GUILayout.Label(guild.Icon, EditorStyles.centeredGreyMiniLabel, GUILayout.Width(iconWidth),
+                GUILayout.Label(guide.Icon, EditorStyles.centeredGreyMiniLabel, GUILayout.Width(iconWidth),
                     GUILayout.Height(iconWidth));
             }
 
