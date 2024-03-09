@@ -32,8 +32,6 @@
 │   ├── ~ExtensionPackage
 └── ...
 ```
-![image]()
-
 
 ## Documentation
 - [See Wiki](https://github.com/GuardianOfGods/unity-mobile-base/wiki)
