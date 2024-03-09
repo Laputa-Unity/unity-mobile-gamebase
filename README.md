@@ -1,7 +1,15 @@
 # Mobile Game Base - Core Singleton architecture (Android & Ios)
+
+<div align="center">
+<img width="1000" src="https://github.com/GuardianOfGods/unity-mobile-base/assets/52252046/0426fa69-18d3-4ae0-a868-6160345f9b2a">
+</div>
+
 ## Introduction
+
 - Project is a sample gamebase for mobile game using **singleton design pattern**.
 - Because the project is designed using the singleton pattern, you can get used to it very easily and build a complete game quickly. However, I do not recommend using it for large game projects. Anyway it is a bad pattern, you can see or read about it everywhere on the internet.
+
+
 
 ## Installation
 - Version: **Unity 2022.3.16f1 LTS**
@@ -24,6 +32,8 @@
 │   ├── ~ExtensionPackage
 └── ...
 ```
+![image]()
+
 
 ## Documentation
 - [See Wiki](https://github.com/GuardianOfGods/unity-mobile-base/wiki)
