@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class PopupDebug : Popup
@@ -36,10 +35,5 @@ public class PopupDebug : Popup
     public void ChangeTestingState()
     {
         Data.IsTesting = toggleTesting.isOn;
-    }
-
-    public void OnClickFPSBtn()
-    {
-        GameManager.Instance.ChangeAFpsState();
     }
 }

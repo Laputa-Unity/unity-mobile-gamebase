@@ -1,4 +1,3 @@
-using CodeStage.AdvancedFPSCounter;
 using CustomTween;
 using UnityEngine;
 
@@ -6,8 +5,6 @@ public class GameManager : SingletonDontDestroy<GameManager>
 {
     public LevelController levelController;
     public GameState gameState;
-
-    public AFPSCounter AFpsCounter => GetComponent<AFPSCounter>();
 
     protected override void Awake()
     {
@@ -104,14 +101,6 @@ public class GameManager : SingletonDontDestroy<GameManager>
             PopupController.Instance.Hide<PopupInGame>();
             PopupController.Instance.Show<PopupLose>();
         });
-    }
-
-    public void ChangeAFpsState()
-    {
-        if (Data.IsTesting)
-        {
-            AFpsCounter.enabled = !AFpsCounter.isActiveAndEnabled;
-        }
     }
 }
 

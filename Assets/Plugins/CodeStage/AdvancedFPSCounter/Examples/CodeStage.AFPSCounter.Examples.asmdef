@@ -1,8 +1,0 @@
-{
-    "name": "CodeStage.AFPSCounter.Examples",
-    "references": [
-        "CodeStage.AFPSCounter.Runtime"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": []
-}
