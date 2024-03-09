@@ -78,10 +78,16 @@ public class PROJECT_GUIDE_CUSTOM_EDITOR : Editor
         
         EditorGUILayout.LabelField("Support", _headerStyle);
         EditorGUILayout.LabelField("If you like this project. A star will be a great motivation for the project to further develop!", _bodyStyle);
+        
+        var oldColor = GUI.backgroundColor;
+        GUI.backgroundColor = Color.green;
+        
         if (GUILayout.Button(new GUIContent("☆ Star This Repository ☆", "Star repository")) == true)
         {
             Application.OpenURL("https://github.com/GuardianOfGods/unity-mobile-base");
         }
+        
+        GUI.backgroundColor = oldColor;
     }
 
     protected override void OnHeaderGUI()
