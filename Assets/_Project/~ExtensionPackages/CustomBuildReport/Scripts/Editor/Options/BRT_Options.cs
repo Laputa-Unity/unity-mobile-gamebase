@@ -265,7 +265,7 @@ namespace BuildReportTool
 	{
 		// =======================================================
 		// constants
-		public const string BUILD_REPORT_PACKAGE_MOVED_MSG = "BuildReport package seems to have been moved. Finding...";
+		public const string BUILD_REPORT_PACKAGE_MOVED_MSG = "CustomBuildReport package seems to have been moved. Finding...";
 
 		public const string BUILD_REPORT_PACKAGE_MISSING_MSG =
 			"Unable to find BuildReport package folder! Cannot find suitable GUI Skin.\nTry editing the source code and change the value\nof `BUILD_REPORT_TOOL_DEFAULT_PATH` to what path the Build Report Tool is in.\nMake sure the folder is named \"BuildReport\".";
@@ -273,8 +273,8 @@ namespace BuildReportTool
 		public const string BUILD_REPORT_GUI_SKIN_MISSING_MSG =
 			"Unable to find BuildReport's GUI Skin! The GUI will not render properly.\nTry editing the source code and change the value\nof `BUILD_REPORT_TOOL_DEFAULT_PATH` to what path the Build Report Tool is in.";
 
-		public const string BUILD_REPORT_TOOL_DEFAULT_PATH = "Assets/BuildReport";
-		public const string BUILD_REPORT_TOOL_DEFAULT_FOLDER_NAME = "BuildReport";
+		public const string BUILD_REPORT_TOOL_DEFAULT_PATH = "Assets/_Project/~ExtensionPackages/CustomBuildReport";
+		public const string BUILD_REPORT_TOOL_DEFAULT_FOLDER_NAME = "CustomBuildReport";
 
 		public const string BUILD_REPORTS_DEFAULT_FOLDER_NAME = "UnityBuildReports";
 
