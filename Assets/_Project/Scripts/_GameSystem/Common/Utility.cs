@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
 public static class Utility
 {
-    public static void RemoveChildrenGameObject(this Transform transform)
+    public static void Clear(this Transform transform)
     {
         var children = transform.childCount;
         for (int i = children - 1; i >= 0; i--)

@@ -16,6 +16,11 @@ public class LoadingController : MonoBehaviour
 
     void Start()
     {
+        #if UNITY_EDITOR
+        timeLoading = 0f;
+        #endif
+        
+        
         _sceneOperation = SceneManager.LoadSceneAsync(Constant.GameplayScene);
         _sceneOperation.allowSceneActivation = false;
         

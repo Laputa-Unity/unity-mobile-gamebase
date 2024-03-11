@@ -38,31 +38,31 @@ public class ItemConfig : ScriptableObject
 
     public List<ItemData> GetListItemDataByType(ItemType itemType)
     {
-        return itemData.FindAll(item => item.Type == itemType);
+        return itemData.FindAll(item => item.type == itemType);
     }
 
     public ItemData GetGiftItemData()
     {
-        List<ItemData> tempList = itemData.FindAll(item => !item.IsUnlocked && (item.buyType == BuyType.BuyCoin || item.buyType == BuyType.WatchAds));
+        List<ItemData> tempList = itemData.FindAll(item => !item.IsUnlocked && (item.buyType == BuyType.BuyMoney || item.buyType == BuyType.WatchAds));
         return tempList.Count > 0?tempList[Random.Range(0, tempList.Count)]:null;
     }
 }
 
 public class ItemIdentity
 {
-    public string Identity => $"{Type}_{NumberID}";
-
-    public string Name;
-    public ItemType Type;
-    public int NumberID;
+    public string Identity => $"{type}_{numberID}";
+    
+    public ItemType type;
+    public int numberID;
 }
 
 [Serializable]
 public class ItemData : ItemIdentity
 {
     public BuyType buyType;
+    public GameObject skinPrefab;
     public Sprite shopIcon;
-    public int CoinValue;
+    public int coinValue;
 
     public void ClaimItem()
     {
@@ -85,7 +85,6 @@ public class ItemData : ItemIdentity
 
         set
         {
-            //FirebaseManager.OnClaimItemSkin(Identity);
             Data.IdItemUnlocked = Identity;
             Data.IsItemUnlocked = value;
         }
@@ -95,7 +94,7 @@ public class ItemData : ItemIdentity
 public enum BuyType
 {
     Default,
-    BuyCoin,
+    BuyMoney,
     DailyReward,
     WatchAds,
     Event,

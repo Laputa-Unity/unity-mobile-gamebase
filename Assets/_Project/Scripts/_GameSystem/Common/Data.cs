@@ -56,6 +56,7 @@ public static partial class Data
     public static void SetItemEquipped(string itemIdentity, bool isEquipped = true)
     {
         SetBool($"{Constant.EquipItem}_{IdItemUnlocked}", isEquipped);
+        Observer.EquipItem?.Invoke(itemIdentity);
     }
 
     public static string IdItemUnlocked = "";
