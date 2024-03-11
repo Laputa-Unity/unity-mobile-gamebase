@@ -4,7 +4,9 @@ public class SoundController : SingletonDontDestroy<SoundController>
 {
     public AudioSource backgroundAudio;
     public AudioSource fxAudio;
-    private SoundConfig SoundConfig => ConfigController.Sound;
+    
+    [SerializeField] private SoundConfig soundConfig;
+    
 
     public void Start()
     {
@@ -32,7 +34,7 @@ public class SoundController : SingletonDontDestroy<SoundController>
 
     public void PlayFX(SoundName soundName)
     {
-        SoundData soundData = SoundConfig.GetSoundDataByType(soundName);
+        SoundData soundData = soundConfig.GetSoundDataByType(soundName);
 
         if (soundData != null)
         {
@@ -54,7 +56,7 @@ public class SoundController : SingletonDontDestroy<SoundController>
 
     public void PlayBackground(SoundName soundName)
     {
-        SoundData soundData = SoundConfig.GetSoundDataByType(soundName);
+        SoundData soundData = soundConfig.GetSoundDataByType(soundName);
 
         if (soundData != null)
         {

@@ -2,20 +2,21 @@ using UnityEngine;
 
 public class VibrationController : SingletonDontDestroy<VibrationController>
 {
-    public float timeDelay = .2f;
-
+    [SerializeField] private VibrationConfig vibrationConfig;
+    
     private float _timeCounter;
+    private float _timeDelay;
     protected override void Awake()
     {
         base.Awake();
         Vibration.Init();
 
-        _timeCounter = timeDelay;
+        _timeDelay = vibrationConfig.timeDelay;
     }
 
     private void Update()
     {
-        _timeCounter -= Time.deltaTime;
+        _timeCounter -= _timeDelay;
     }
 
     public void HapticLight()
@@ -23,7 +24,7 @@ public class VibrationController : SingletonDontDestroy<VibrationController>
         if (_timeCounter <= 0)
         {
             Vibration.Vibrate();
-            _timeCounter = timeDelay;
+            _timeCounter = _timeDelay;
         }
     }
     
@@ -32,7 +33,7 @@ public class VibrationController : SingletonDontDestroy<VibrationController>
         if (_timeCounter <= 0)
         {
             Vibration.VibratePop();
-            _timeCounter = timeDelay;
+            _timeCounter = _timeDelay;
         }
     }
     
@@ -41,7 +42,7 @@ public class VibrationController : SingletonDontDestroy<VibrationController>
         if (_timeCounter <= 0)
         {
             Vibration.VibratePeek();
-            _timeCounter = timeDelay;
+            _timeCounter = _timeDelay;
         }
     }
 }

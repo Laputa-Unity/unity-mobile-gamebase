@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class InternetController : SingletonDontDestroy<InternetController>
 {
-    [SerializeField] [Min(0.1f)] private float repeatRate = .5f;
+    [SerializeField] private InternetConfig internetConfig;
     [ReadOnly] public bool isConnected;
 
     private const float TimeStart = 0f;
 
     void Start()
     {
+        var repeatRate = internetConfig.repeatRate;
         InvokeRepeating(nameof(CheckInternet), TimeStart, repeatRate);
     }
 

@@ -7,28 +7,43 @@ using Random = UnityEngine.Random;
 
 public class VisualEffectsController : SingletonDontDestroy<VisualEffectsController>
 {
-    public List<VisualEffectData> visualEffectData;
-
-    public VisualEffectData GetVisualEffectDataByType(EffectName effectName)
+    [SerializeField] private VisualEffectConfig vfxConfig;
+    
+    public void SpawnEffect(EffectName effectName, Vector3 position, Transform parent)
     {
-        return visualEffectData.Find(item => item.name == effectName);
-    }
-
-    public void SpawnEffect(EffectName name, Vector3 position, Transform parent, Vector3? localScale = null,
-        bool isDestroyedOnEnd = true, float timeDestroy = 3f)
-    {
-        VisualEffectData vfxData = GetVisualEffectDataByType(name);
+        VisualEffectData vfxData = vfxConfig.GetVisualEffectData(effectName);
         if (vfxData != null)
         {
             GameObject randomEffect = vfxData.GetRandomEffect();
-            GameObject effect = LeanPool.Spawn(randomEffect, parent, false);
+            GameObject effect = LeanPool.Spawn(randomEffect, parent);
             effect.transform.position = position;
-            if (localScale != null) effect.transform.localScale = localScale.Value;
-            if (isDestroyedOnEnd) LeanPool.Despawn(effect, timeDestroy);
         }
     }
     
+    public void SpawnEffect(EffectName effectName, Vector3 position, Transform parent, Vector3 localScale)
+    {
+        VisualEffectData vfxData = vfxConfig.GetVisualEffectData(effectName);
+        if (vfxData != null)
+        {
+            GameObject randomEffect = vfxData.GetRandomEffect();
+            GameObject effect = LeanPool.Spawn(randomEffect, parent);
+            effect.transform.position = position;
+            effect.transform.localScale = localScale;
+        }
+    }
     
+    public void SpawnEffect(EffectName effectName, Vector3 position, Transform parent, Vector3 localScale, float timeDestroy)
+    {
+        VisualEffectData vfxData = vfxConfig.GetVisualEffectData(effectName);
+        if (vfxData != null)
+        {
+            GameObject randomEffect = vfxData.GetRandomEffect();
+            GameObject effect = LeanPool.Spawn(randomEffect, parent);
+            effect.transform.position = position;
+            effect.transform.localScale = localScale;
+            LeanPool.Despawn(effect, timeDestroy);
+        }
+    }
 }
 
 [Serializable]

@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93ad35fb8c77484c932108b66d8e1a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  repeatRate: 0.5
+  internetConfig: {fileID: 11400000, guid: 8566687ddaf2cb945bed6b82236f2e24, type: 2}
   isConnected: 0
 --- !u!1 &653625963
 GameObject:
@@ -687,7 +687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd6ce0fa49039144a943032090c0d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  visualEffectData: []
+  vfxConfig: {fileID: 11400000, guid: 4bf20fac3727674479c3e1e78c583479, type: 2}
 --- !u!1 &964121671
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,7 +717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d55a171e9d6c57f4a81fde4f1128199b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeDelay: 0.2
+  vibrationConfig: {fileID: 11400000, guid: 7522b17f4c42c8f418adf0e966625571, type: 2}
 --- !u!4 &964121673
 Transform:
   m_ObjectHideFlags: 0
@@ -764,6 +764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundAudio: {fileID: 1875187658}
   fxAudio: {fileID: 1971299803}
+  soundConfig: {fileID: 11400000, guid: 9e4fe3c39c0d13245a16b3df1d05522d, type: 2}
 --- !u!4 &1047350084
 Transform:
   m_ObjectHideFlags: 0
@@ -1219,17 +1220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 1579314926}
   canvasScaler: {fileID: 1579314928}
-  popups:
-  - {fileID: 6757482024752608808, guid: a3ffb9bece6d88b42afa90a0722accec, type: 3}
-  - {fileID: -5522501779321461619, guid: 587f3ae9e6583c641af7334c3e7cd01e, type: 3}
-  - {fileID: 5900877145956595185, guid: f09001724e3f0b644aada44bd0a99cc2, type: 3}
-  - {fileID: 7125858397958467425, guid: b9d19d35a41c9864889d42bde3de9a92, type: 3}
-  - {fileID: 7403689956956133583, guid: 3bcc65973dc055c44bd7621c9a3631ae, type: 3}
-  - {fileID: 8541034256649808196, guid: 978822c5a74dfba4dab63a5a695a08fc, type: 3}
-  - {fileID: 1139648773171673726, guid: 1bd72ebe47024c0428d207cb890f7d32, type: 3}
-  - {fileID: 2915254623132364138, guid: 813a9cef4af4e4a4c91638583b5577d4, type: 3}
-  - {fileID: 7338174430931127897, guid: 0a7d626686eff674c9417735b945d004, type: 3}
-  - {fileID: 3056728832346780796, guid: 65181ee735119bf47a143625bf9b01bc, type: 3}
+  popupConfig: {fileID: 11400000, guid: c45c30f794c42b745b31ed68ceaa4b50, type: 2}
 --- !u!4 &1797787785
 Transform:
   m_ObjectHideFlags: 0
@@ -1409,54 +1400,6 @@ Transform:
   - {fileID: 653625967}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1883667437
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1883667438}
-  - component: {fileID: 1883667439}
-  m_Layer: 0
-  m_Name: ConfigController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1883667438
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1883667437}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1883667439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1883667437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34618eb6141f3154490c9dbcde9e7cb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameConfig: {fileID: 11400000, guid: fc010066eec5ef24eb9fa923867c670f, type: 2}
-  soundConfig: {fileID: 11400000, guid: 9e4fe3c39c0d13245a16b3df1d05522d, type: 2}
-  dailyRewardConfig: {fileID: 11400000, guid: 8595dbcfcc8e4d24b85c87242a5d3778, type: 2}
-  itemConfig: {fileID: 11400000, guid: bf6201b4097e66c43983ff56f832ac35, type: 2}
 --- !u!1 &1885131754
 GameObject:
   m_ObjectHideFlags: 0
@@ -1468,7 +1411,7 @@ GameObject:
   - component: {fileID: 1885131756}
   - component: {fileID: 1885131755}
   m_Layer: 0
-  m_Name: LoadingController
+  m_Name: LoadingHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1712,7 +1655,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1882194249}
-  - {fileID: 1883667438}
   - {fileID: 1047350084}
   - {fileID: 1797787785}
   - {fileID: 964121673}

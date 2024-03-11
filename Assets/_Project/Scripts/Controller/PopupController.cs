@@ -6,9 +6,9 @@ using Debug = System.Diagnostics.Debug;
 
 public class PopupController : SingletonDontDestroy<PopupController>
 {
-    public Transform canvasTransform;
-    public CanvasScaler canvasScaler;
-    public List<Popup> popups;
+    [SerializeField] private Transform canvasTransform;
+    [SerializeField] private CanvasScaler canvasScaler;
+    [SerializeField] private PopupConfig popupConfig;
 
     private readonly Dictionary<Type, Popup> _dictionary = new Dictionary<Type, Popup>();
 
@@ -22,7 +22,7 @@ public class PopupController : SingletonDontDestroy<PopupController>
     public void Initialize()
     {
         int index = 0;
-        popups.ForEach(popup =>
+        popupConfig.popups.ForEach(popup =>
         {
             Popup popupInstance = Instantiate(popup, canvasTransform);
             popupInstance.gameObject.SetActive(false);

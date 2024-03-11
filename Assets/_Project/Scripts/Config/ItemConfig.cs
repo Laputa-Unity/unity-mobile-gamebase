@@ -10,7 +10,6 @@ public class ItemConfig : ScriptableObject
 
     public void Initialize()
     {
-        //if (IAPManager.Instance.IsPurchased(Constant.IAP_VIP) || IAPManager.Instance.IsPurchased(Constant.IAP_ALL_SKINS)) UnlockAllSkins();
         UnlockDefaultSkins();
     }
 
@@ -44,8 +43,7 @@ public class ItemConfig : ScriptableObject
 
     public ItemData GetGiftItemData()
     {
-        List<ItemData> tempList =
-            itemData.FindAll(item => !item.IsUnlocked && (item.buyType == BuyType.BuyCoin || item.buyType == BuyType.WatchAds));
+        List<ItemData> tempList = itemData.FindAll(item => !item.IsUnlocked && (item.buyType == BuyType.BuyCoin || item.buyType == BuyType.WatchAds));
         return tempList.Count > 0?tempList[Random.Range(0, tempList.Count)]:null;
     }
 }

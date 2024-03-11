@@ -4,7 +4,6 @@ using UnityEngine;
 public class GameConfig : ScriptableObject
 {
     [Header("UI config")]
-    public float durationPopup = .5f;
     public int watchAdsMoney = 1000;
     [Header("Level config")] 
     public LevelLoopType levelLoopType;
