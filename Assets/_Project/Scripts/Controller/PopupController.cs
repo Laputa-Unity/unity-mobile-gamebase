@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
-using Debug = System.Diagnostics.Debug;
 
 public class PopupController : SingletonDontDestroy<PopupController>
 {
+    public Camera uiCamera;
     [SerializeField] private Transform canvasTransform;
     [SerializeField] private CanvasScaler canvasScaler;
     [SerializeField] private PopupConfig popupConfig;

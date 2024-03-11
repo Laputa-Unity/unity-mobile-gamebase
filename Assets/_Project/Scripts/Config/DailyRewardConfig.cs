@@ -1,33 +1,32 @@
 using System;
 using System.Collections.Generic;
+using CustomInspector;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "DailyRewardConfig", menuName = "ScriptableObject/DailyRewardConfig")]
 public class DailyRewardConfig : ScriptableObject
 {
-    [SerializeField] private List<DailyRewardData> dailyRewardData;
-    [SerializeField] private List<DailyRewardData> dailyRewardDataLoop;
+    public List<DailyRewardData> dailyRewardData;
+    public List<DailyRewardData> loopDailyRewardData;
 
-    public List<DailyRewardData> DailyRewardData
+    public DailyRewardData GetDailyRewardData(int index)
     {
-        get => dailyRewardData;
-        set => dailyRewardData = value;
-    }
-
-    public List<DailyRewardData> DailyRewardDataLoop
-    {
-        get => dailyRewardDataLoop;
-        set => dailyRewardDataLoop = value;
+        if (index < dailyRewardData.Count)
+        {
+            return dailyRewardData[index];
+        }
+        var newIndex = (index - dailyRewardData.Count) % loopDailyRewardData.Count;
+        return loopDailyRewardData[newIndex];
     }
 }
 
 [Serializable]
 public class DailyRewardData
 {
-    [SerializeField] private DailyRewardType dailyRewardType;
-    [SerializeField] private Sprite icon;
-    [SerializeField] private string skinID;
-    [SerializeField] private int value;
+    public DailyRewardType dailyRewardType;
+    public Sprite icon;
+    [ShowIf("dailyRewardType", DailyRewardType.Money)] public int value;
+    [ShowIf("dailyRewardType", DailyRewardType.Skin)] public string skinID;
 
     public DailyRewardType DailyRewardType
     {
@@ -56,6 +55,6 @@ public class DailyRewardData
 
 public enum DailyRewardType
 {
-    Currency,
+    Money,
     Skin,
 }

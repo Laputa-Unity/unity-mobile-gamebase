@@ -98,28 +98,7 @@ public static partial class Data
     #endregion
     
     #region DAILY_REWARD
-
-    public static bool IsClaimedTodayDailyReward()
-    {
-        return (int) (DateTime.Now - DateTime.Parse(LastDailyRewardClaimed)).TotalDays == 0;
-    }
-    
-    public static bool IsStartLoopingDailyReward
-    {
-        get => PlayerPrefs.GetInt(Constant.IsStartLoopingDailyReward, 0) == 1;
-        set => PlayerPrefs.SetInt(Constant.IsStartLoopingDailyReward, value ? 1 : 0);
-    }
-
-    public static string DateTimeStart
-    {
-        get => GetString(Constant.DateTimeStart, DateTime.Now.ToString());
-        set => SetString(Constant.DateTimeStart, value);
-    }
-
-    public static int TotalPlayedDays =>
-        (int) (DateTime.Now - DateTime.Parse(DateTimeStart)).TotalDays + 1;
-
-    public static int DailyRewardDayIndex
+    public static int CurrentDailyReward
     {
         get => GetInt(Constant.DailyRewardDayIndex, 1);
         set => SetInt(Constant.DailyRewardDayIndex, value);
@@ -129,12 +108,6 @@ public static partial class Data
     {
         get => GetString(Constant.LastDailyRewardClaim, DateTime.Now.AddDays(-1).ToString());
         set => SetString(Constant.LastDailyRewardClaim, value);
-    }
-    
-    public static int TotalClaimDailyReward
-    {
-        get => GetInt(Constant.TotalClaimDailyReward, 0);
-        set => SetInt(Constant.TotalClaimDailyReward, value);
     }
 
     #endregion

@@ -146,7 +146,6 @@ GameObject:
   - component: {fileID: 4173377787948394697}
   - component: {fileID: 70054050123096804}
   - component: {fileID: 7866762345814246338}
-  - component: {fileID: 5346463288494445243}
   m_Layer: 5
   m_Name: BtnRank
   m_TagString: Untagged
@@ -255,23 +254,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5346463288494445243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1871594788385590235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
-  animTime: 0.5
-  delayAnimTime: 0
-  fromScale: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!1 &1991553265009018330
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +265,6 @@ GameObject:
   - component: {fileID: 8758060768050583988}
   - component: {fileID: 5227045043287302683}
   - component: {fileID: 8660902622431067783}
-  - component: {fileID: 7608551487605107408}
   - component: {fileID: 140792204775366548}
   m_Layer: 5
   m_Name: BtnTest
@@ -349,23 +330,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7608551487605107408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1991553265009018330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
-  animTime: 0.5
-  delayAnimTime: 0
-  fromScale: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!114 &140792204775366548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,7 +434,6 @@ GameObject:
   - component: {fileID: 8128687199944629590}
   - component: {fileID: 4241444007514722542}
   - component: {fileID: 5582595640170456508}
-  - component: {fileID: 7650623674762178637}
   - component: {fileID: 5987824186110217978}
   m_Layer: 5
   m_Name: BtnDebug
@@ -536,23 +499,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &7650623674762178637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2357932876705697321}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
-  animTime: 0.5
-  delayAnimTime: 0
-  fromScale: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!114 &5987824186110217978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,7 +603,6 @@ GameObject:
   - component: {fileID: 3391064210457374220}
   - component: {fileID: 9062633713398777730}
   - component: {fileID: 7246788184827243429}
-  - component: {fileID: 6006018560280557927}
   - component: {fileID: 1064014270405598301}
   m_Layer: 5
   m_Name: BtnDailyReward
@@ -723,23 +668,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6006018560280557927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2653305589341099279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
-  animTime: 0.5
-  delayAnimTime: 0
-  fromScale: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!114 &1064014270405598301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -844,7 +772,6 @@ GameObject:
   - component: {fileID: 8560036186242972699}
   - component: {fileID: 6624154313343655020}
   - component: {fileID: 6630264910390600177}
-  - component: {fileID: 3601572779712894057}
   - component: {fileID: 643585362425639375}
   m_Layer: 5
   m_Name: BtnShop
@@ -910,23 +837,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3601572779712894057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3125538786469480657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
-  animTime: 0.5
-  delayAnimTime: 0
-  fromScale: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!114 &643585362425639375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1032,7 +942,6 @@ GameObject:
   - component: {fileID: 3657964111056794123}
   - component: {fileID: 3540566285154381283}
   - component: {fileID: 8377949978831766691}
-  - component: {fileID: 6399903876307802600}
   - component: {fileID: 3312768138456249596}
   m_Layer: 5
   m_Name: BtnStart
@@ -1115,25 +1024,6 @@ MonoBehaviour:
   timeDelay: 0
   sizeScale: 0.1
   timeScale: 0.7
---- !u!114 &6399903876307802600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4140034710552530372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62e4947d070cf41eb87bc6a9968c32a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Location: 0
-  m_Width: 0.14
-  m_Softness: 0.756
-  m_Brightness: 0.573
-  m_Rotation: -62
-  m_Highlight: 0.478
-  m_EffectMaterial: {fileID: 2100000, guid: 2d37c4afca8784ce9ab899810e29aa9c, type: 2}
 --- !u!114 &3312768138456249596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1709,7 +1599,6 @@ GameObject:
   - component: {fileID: 7061879500219380460}
   - component: {fileID: 2584431202668035657}
   - component: {fileID: 89262921429321214}
-  - component: {fileID: 5294806444587631806}
   - component: {fileID: 4901951094340627441}
   m_Layer: 5
   m_Name: BtnSetting
@@ -1775,23 +1664,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5294806444587631806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9157407162633601335}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe270764967ed7b4abbfde5c9a04e74a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animType: 0
-  playOnAwake: 1
-  animTime: 0.5
-  delayAnimTime: 0
-  fromScale: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!114 &4901951094340627441
 MonoBehaviour:
   m_ObjectHideFlags: 0

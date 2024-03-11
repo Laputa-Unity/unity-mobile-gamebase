@@ -1,32 +1,26 @@
-using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using CustomInspector;
 
 public class PopupDailyReward : Popup
 {
     [SerializeField] private GameObject btnWatchVideo;
     [SerializeField] private GameObject btnClaim;
+    [SerializeField] private List<DailyRewardItem> dailyRewardItems;
 
     [ReadOnly] public DailyRewardItem currentItem;
-    public List<DailyRewardItem> DailyRewardItems => GetComponentsInChildren<DailyRewardItem>().ToList();
+
     
+    protected override void OnInstantiate()
+    {
+        base.OnInstantiate();
+    }
+
     protected override void BeforeShow()
     {
         base.BeforeShow();
-        PopupController.Instance.Show<PopupUI>();
-        ResetDailyReward();
         Setup();
-    }
-
-    public void ResetDailyReward()
-    {
-        if (!Data.IsClaimedTodayDailyReward() && Data.DailyRewardDayIndex == 29)
-        {
-            Data.DailyRewardDayIndex = 1;
-            Data.IsStartLoopingDailyReward = true;
-        }
     }
 
     protected override void AfterHidden()
@@ -41,23 +35,26 @@ public class PopupDailyReward : Popup
 
     private bool IsCurrentItem(int index)
     {
-        return Data.DailyRewardDayIndex == index;
+        return Data.CurrentDailyReward == index;
     }
 
     public void Setup()
     {
+        PopupController.Instance.Show<PopupUI>();
         SetUpItems();
     }
 
     private void SetUpItems()
     {
-        var week = (Data.DailyRewardDayIndex - 1) / 7;
-        if (Data.IsClaimedTodayDailyReward()) week = (Data.DailyRewardDayIndex - 2) / 7;
-
+        int week = (Data.CurrentDailyReward - 1) / 7;
+        if (IsClaimTodayDailyReward()) week = (Data.CurrentDailyReward - 2) / 7;
+        
         for (var i = 0; i < 7; i++)
         {
-            var item = DailyRewardItems[i];
-            item.SetUp(this, i + 7 * week);
+            int day = i + 7 * week;
+            DailyRewardData data = DailyRewardController.Instance.GetDailyRewardData(day);
+            var item = dailyRewardItems[i];
+            item.SetUp(day, data, this);
             if (IsCurrentItem(item.dayIndex)) currentItem = item;
         }
 
@@ -65,7 +62,7 @@ public class PopupDailyReward : Popup
         {
             if (currentItem.DailyRewardItemState == DailyRewardItemState.ReadyToClaim)
             {
-                btnWatchVideo.SetActive(currentItem.DailyRewardData.DailyRewardType == DailyRewardType.Currency);
+                btnWatchVideo.SetActive(currentItem.DailyRewardData.DailyRewardType == DailyRewardType.Money);
                 btnClaim.SetActive(true);
             }
             else
@@ -100,9 +97,8 @@ public class PopupDailyReward : Popup
         
         // Save data
         Data.LastDailyRewardClaimed = DateTime.Now.ToString();
-        Data.DailyRewardDayIndex++;
-        Data.TotalClaimDailyReward++;
-        
+        Data.CurrentDailyReward++;
+
         currentItem.OnClaim(isX5Reward);
         
         Setup();
@@ -111,7 +107,21 @@ public class PopupDailyReward : Popup
     public void OnClickNextDay()
     {
         Data.LastDailyRewardClaimed = DateTime.Now.AddDays(-1).ToString();
-        ResetDailyReward();
         Setup();
+    }
+
+    public bool IsClaimTodayDailyReward()
+    {
+        if (DateTime.TryParse(Data.LastDailyRewardClaimed, out var dateTimeValue))
+        {
+            return DateTime.Now.Date == dateTimeValue.Date;
+        }
+
+        return false;
+    }
+
+    private void OnApplicationQuit()
+    {
+        
     }
 }

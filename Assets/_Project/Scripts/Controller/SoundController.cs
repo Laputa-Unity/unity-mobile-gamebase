@@ -7,7 +7,6 @@ public class SoundController : SingletonDontDestroy<SoundController>
     
     [SerializeField] private SoundConfig soundConfig;
     
-
     public void Start()
     {
         Setup();

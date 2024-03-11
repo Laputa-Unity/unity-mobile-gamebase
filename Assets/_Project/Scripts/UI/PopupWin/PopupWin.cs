@@ -9,10 +9,10 @@ public class PopupWin : Popup
     [SerializeField] private int totalMoney;
 
     private Sequence sequence;
-    public int MoneyWin => ConfigController.Game.winLevelMoney;
+    //public int MoneyWin => ConfigController.Level.winLevelMoney;
     public void SetupMoneyWin(int bonusMoney)
     {
-        totalMoney = MoneyWin + bonusMoney;
+        totalMoney = 100 + bonusMoney;
     }
 
     protected override void BeforeShow()
