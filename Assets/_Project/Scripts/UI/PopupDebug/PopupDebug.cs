@@ -24,7 +24,7 @@ public class PopupDebug : Popup
         }
         if (!string.IsNullOrEmpty(setCoin.text))
         {
-            Data.MoneyTotal = int.Parse(setCoin.text);
+            Data.CurrentMoney = int.Parse(setCoin.text);
         }
 
         setCoin.text = string.Empty;

@@ -15,4 +15,9 @@ public class ItemController : SingletonDontDestroy<ItemController>
     {
         return itemConfig.itemData[Random.Range(0, itemConfig.itemData.Count)];
     }
+
+    public ItemData GetCurrentPlayerSkin()
+    {
+        return itemConfig.itemData.Find(item => item.itemType == ItemType.PlayerSkin);
+    }
 }

@@ -4,21 +4,23 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private Transform skinHolder;
+    
     void Start()
     {
-        Observer.EquipItem += SetSkin;
+        SetSkin(Data.CurrentPlayerSkin);
+    
+        Observer.EquipPlayerSkin += SetSkin;
     }
 
     private void OnDestroy()
     {
-        Observer.EquipItem -= SetSkin;
+        Observer.EquipPlayerSkin -= SetSkin;
     }
 
     private void SetSkin(string itemIdentity)
     {
         var item = ItemController.Instance.GetItemData(itemIdentity);
         var skinPrefab = item.skinPrefab;
-        
         skinHolder.Clear();
         Instantiate(skinPrefab, skinHolder);
     }
@@ -31,5 +33,7 @@ public class Player : MonoBehaviour
         
         skinHolder.Clear();
         Instantiate(skinPrefab, skinHolder);
+        
+        Data.CurrentPlayerSkin = item.Identity;
     }
 }

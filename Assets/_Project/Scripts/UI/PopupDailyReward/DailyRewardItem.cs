@@ -110,7 +110,7 @@ public class DailyRewardItem : MonoBehaviour
         {
             case DailyRewardType.Money:
                 MoneyHandler.Instance.SetFrom(transform.position);
-                Data.MoneyTotal += _coinValue * (isClaimX5 ? 5 : 1);
+                Data.CurrentMoney += _coinValue * (isClaimX5 ? 5 : 1);
                 break;
             case DailyRewardType.Skin:
                 //shopItemData.IsUnlocked = true;

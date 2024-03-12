@@ -19,7 +19,7 @@ public class ItemConfig : ScriptableObject
         {
             if (item.buyType == BuyType.Default)
             {
-                item.ClaimItem();
+                item.IsUnlocked = true;
             }
         }
     }
@@ -59,22 +59,12 @@ public class ItemIdentity
 [Serializable]
 public class ItemData : ItemIdentity
 {
+    public ItemType itemType;
     public BuyType buyType;
     public GameObject skinPrefab;
     public Sprite shopIcon;
     public int coinValue;
 
-    public void ClaimItem()
-    {
-        IsUnlocked = true;
-        EquipItem();
-    }
-
-    public void EquipItem()
-    {
-        Data.SetItemEquipped(Identity);
-    }
-    
     public bool IsUnlocked
     {
         get

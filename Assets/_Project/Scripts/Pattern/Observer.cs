@@ -32,7 +32,7 @@ public static class Observer
     public static Action<Level> WinLevel;
     public static Action<Level> LoseLevel;
 
-    public static Action<string> EquipItem;
+    public static Action<string> EquipPlayerSkin;
 
     #endregion
 }
