@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class VibrationController : SingletonDontDestroy<VibrationController>
@@ -21,7 +22,7 @@ public class VibrationController : SingletonDontDestroy<VibrationController>
 
     public void HapticLight()
     {
-        if (_timeCounter <= 0)
+        if (_timeCounter <= 0 && Data.VibrateState)
         {
             Vibration.Vibrate();
             _timeCounter = _timeDelay;
@@ -30,7 +31,7 @@ public class VibrationController : SingletonDontDestroy<VibrationController>
     
     public void HapticMedium()
     {
-        if (_timeCounter <= 0)
+        if (_timeCounter <= 0 && Data.VibrateState)
         {
             Vibration.VibratePop();
             _timeCounter = _timeDelay;
@@ -39,7 +40,7 @@ public class VibrationController : SingletonDontDestroy<VibrationController>
     
     public void HapticHeavy()
     {
-        if (_timeCounter <= 0)
+        if (_timeCounter <= 0 && Data.VibrateState)
         {
             Vibration.VibratePeek();
             _timeCounter = _timeDelay;

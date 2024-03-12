@@ -11,12 +11,6 @@ public class PopupDailyReward : Popup
 
     [ReadOnly] public DailyRewardItem currentItem;
 
-    
-    protected override void OnInstantiate()
-    {
-        base.OnInstantiate();
-    }
-
     protected override void BeforeShow()
     {
         base.BeforeShow();
@@ -93,9 +87,6 @@ public class PopupDailyReward : Popup
 
     private void OnClaimReward(bool isX5Reward)
     {
-        Observer.ClaimDailyReward?.Invoke();
-        
-        // Save data
         Data.LastDailyRewardClaimed = DateTime.Now.ToString();
         Data.CurrentDailyReward++;
 
@@ -118,10 +109,5 @@ public class PopupDailyReward : Popup
         }
 
         return false;
-    }
-
-    private void OnApplicationQuit()
-    {
-        
     }
 }

@@ -23,7 +23,11 @@ public static partial class Data
     public static bool VibrateState
     {
         get => GetBool(Constant.VibrateState, true);
-        set => SetBool(Constant.VibrateState, value);
+        set
+        {
+            SetBool(Constant.VibrateState, value);
+            Observer.VibrationChanged?.Invoke();
+        }
     }
 }
 
