@@ -12,7 +12,7 @@ namespace CustomTween {
                                                                   "Use Stop()/Complete()/isPaused/timeScale/elapsedTime/etc. of their parent Sequence instead.\n";
         [NotNull]
         internal static string buildWarningCanBeDisabledMessage(string settingName) {
-            return $"To disable this warning, set '{nameof(PrimeTweenConfig)}.{settingName} = false;'.";
+            return $"To disable this warning, set '{nameof(CustomTweenConfig)}.{settingName} = false;'.";
         }
 
         internal const string isDeadMessage = "Tween/Sequence is not alive. Please check the 'isAlive' property before calling this API.\n";
@@ -36,7 +36,7 @@ namespace CustomTween {
                                                   "For example, if you're animating a window, the 'startValue' can represent the closed (off-screen) position of the window.";
         internal const string endValueTooltip = "End value of a tween.\n\n" +
                                                 "For example, if you're animating a window, the 'endValue' can represent the opened position of the window.";
-        internal const string setTweensCapacityMethod = "'" + nameof(PrimeTweenConfig) + "." + nameof(PrimeTweenConfig.SetTweensCapacity) + "(int capacity)'";
+        internal const string setTweensCapacityMethod = "'" + nameof(CustomTweenConfig) + "." + nameof(CustomTweenConfig.SetTweensCapacity) + "(int capacity)'";
         internal const string maxAliveTweens = "Max alive tweens";
         internal const string sequenceAlreadyStarted = "Sequence has already been started, it's not allowed to manipulate it anymore.";
         internal const string recursiveCallError = "Please don't call this API recursively from Tween.Custom() or tween.OnUpdate().";
@@ -45,7 +45,7 @@ namespace CustomTween {
         internal const string addDeadTweenToSequenceError = "It's not allowed to add 'dead' tweens to a sequence.";
 
         #if UNITY_EDITOR
-        internal const string editModeWarning = "Please don't call PrimeTween's API in Edit mode (while the scene is not playing).";
+        internal const string editModeWarning = "Please don't call CustomTween's API in Edit mode (while the scene is not playing).";
 
         internal static bool warnNoInstance {
             get {

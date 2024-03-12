@@ -72,11 +72,11 @@ namespace CustomTween {
             this.useFixedUpdate = useFixedUpdate;
         }
 
-        public ShakeSettings(Vector3 strength, float duration = 0.5f, float frequency = defaultFrequency, bool enableFalloff = true, Ease easeBetweenShakes = Ease.Default, float asymmetryFactor = 0f, int cycles = 1, float startDelay = 0, float endDelay = 0, bool useUnscaledTime = PrimeTweenConfig.defaultUseUnscaledTimeForShakes, bool useFixedUpdate = false)
+        public ShakeSettings(Vector3 strength, float duration = 0.5f, float frequency = defaultFrequency, bool enableFalloff = true, Ease easeBetweenShakes = Ease.Default, float asymmetryFactor = 0f, int cycles = 1, float startDelay = 0, float endDelay = 0, bool useUnscaledTime = CustomTweenConfig.defaultUseUnscaledTimeForShakes, bool useFixedUpdate = false)
             // ReSharper disable once RedundantCast
             : this(strength, duration, frequency, enableFalloff ? Ease.Default : (Ease?)null, null, easeBetweenShakes, asymmetryFactor, cycles, startDelay, endDelay, useUnscaledTime, useFixedUpdate) {}
 
-        public ShakeSettings(Vector3 strength, float duration, float frequency, AnimationCurve strengthOverTime, Ease easeBetweenShakes = Ease.Default, float asymmetryFactor = 0f, int cycles = 1, float startDelay = 0, float endDelay = 0, bool useUnscaledTime = PrimeTweenConfig.defaultUseUnscaledTimeForShakes, bool useFixedUpdate = false)
+        public ShakeSettings(Vector3 strength, float duration, float frequency, AnimationCurve strengthOverTime, Ease easeBetweenShakes = Ease.Default, float asymmetryFactor = 0f, int cycles = 1, float startDelay = 0, float endDelay = 0, bool useUnscaledTime = CustomTweenConfig.defaultUseUnscaledTimeForShakes, bool useFixedUpdate = false)
             : this(strength, duration, frequency, Ease.Custom, strengthOverTime, easeBetweenShakes, asymmetryFactor, cycles, startDelay, endDelay, useUnscaledTime, useFixedUpdate) { }
 
         internal TweenSettings tweenSettings => new TweenSettings(duration, Ease.Linear, cycles, CycleMode.Restart, startDelay, endDelay, useUnscaledTime, useFixedUpdate);

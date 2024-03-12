@@ -19,7 +19,7 @@ namespace CustomTween {
             if (onTarget == null && manager.updateDepth == 0) {
                 int result = manager.tweensCount;
                 #if PRIME_TWEEN_SAFETY_CHECKS && UNITY_ASSERTIONS
-                Assert.AreEqual(result, PrimeTweenManager.processAll(null, _ => true));
+                Assert.AreEqual(result, CustomTweenManager.processAll(null, _ => true));
                 #endif
                 return result;
             }
@@ -28,9 +28,9 @@ namespace CustomTween {
 
         #if PRIME_TWEEN_EXPERIMENTAL
         public static int GetTweensCapacity() {
-            var instance = PrimeTweenConfig.Instance;
+            var instance = CustomTweenConfig.Instance;
             if (instance == null) {
-                return PrimeTweenManager.customInitialCapacity;
+                return CustomTweenManager.customInitialCapacity;
             }
             return instance.currentPoolCapacity;
         }
@@ -104,11 +104,11 @@ namespace CustomTween {
         /// <summary>Please note: delay may outlive the caller (the calling UnityEngine.Object may already be destroyed).
         /// When using this overload, it's user's responsibility to ensure that <see cref="onComplete"/> is safe to execute once the delay is finished.
         /// It's preferable to use the <see cref="Delay{T}"/> overload because it checks if the UnityEngine.Object target is still alive before calling the <see cref="onComplete"/>.</summary>
-        /// <param name="warnIfTargetDestroyed">https://github.com/KyryloKuzyk/PrimeTween/discussions/4</param>
+        /// <param name="warnIfTargetDestroyed">https://github.com/KyryloKuzyk/CustomTween/discussions/4</param>
         public static Tween Delay(float duration, [CanBeNull] Action onComplete = null, bool useUnscaledTime = false, bool warnIfTargetDestroyed = true) {
             return delay(CustomTweenManager.dummyTarget, duration, onComplete, useUnscaledTime, warnIfTargetDestroyed);
         }
-        /// <param name="warnIfTargetDestroyed">https://github.com/KyryloKuzyk/PrimeTween/discussions/4</param>
+        /// <param name="warnIfTargetDestroyed">https://github.com/KyryloKuzyk/CustomTween/discussions/4</param>
         public static Tween Delay([NotNull] object target, float duration, [CanBeNull] Action onComplete = null, bool useUnscaledTime = false, bool warnIfTargetDestroyed = true) {
             return delay(target, duration, onComplete, useUnscaledTime, warnIfTargetDestroyed);
         }
@@ -131,7 +131,7 @@ namespace CustomTween {
         /// });
         /// </code>
         /// </example>
-        /// <param name="warnIfTargetDestroyed">https://github.com/KyryloKuzyk/PrimeTween/discussions/4</param>
+        /// <param name="warnIfTargetDestroyed">https://github.com/KyryloKuzyk/CustomTween/discussions/4</param>
         public static Tween Delay<T>([NotNull] T target, float duration, [NotNull] Action<T> onComplete, bool useUnscaledTime = false, bool warnIfTargetDestroyed = true) where T : class {
             var maybeDelay = delay_internal(target, duration, useUnscaledTime);
             if (!maybeDelay.HasValue) {

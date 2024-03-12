@@ -3,7 +3,7 @@
 using JetBrains.Annotations;
 using System;
 
-namespace PrimeTween {
+namespace CustomTween {
     [PublicAPI]
     public static partial class DOTweenAdapter {
         public static Tween DOShadowStrength([NotNull] this UnityEngine.Light target, Single endValue, float duration) => Tween.LightShadowStrength(target, endValue, duration);
@@ -60,9 +60,9 @@ namespace PrimeTween {
 
         public static Tween DOFade([NotNull] this UnityEngine.SpriteRenderer target, Single endValue, float duration) => Tween.Alpha(target, endValue, duration);
 
-        public static Tween DOTimeScale([NotNull] this PrimeTween.Tween target, Single endValue, float duration) => Tween.TweenTimeScale(target, endValue, duration);
+        public static Tween DOTimeScale([NotNull] this CustomTween.Tween target, Single endValue, float duration) => Tween.TweenTimeScale(target, endValue, duration);
 
-        public static Tween DOTimeScale([NotNull] this PrimeTween.Sequence target, Single endValue, float duration) => Tween.TweenTimeScale(target, endValue, duration);
+        public static Tween DOTimeScale([NotNull] this CustomTween.Sequence target, Single endValue, float duration) => Tween.TweenTimeScale(target, endValue, duration);
 
         #if !UNITY_2019_1_OR_NEWER || UNITY_UGUI_INSTALLED
         public static Tween DOValue([NotNull] this UnityEngine.UI.Slider target, Single endValue, float duration) => Tween.UISliderValue(target, endValue, duration);

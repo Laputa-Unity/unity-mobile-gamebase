@@ -19,7 +19,7 @@ namespace CustomTween {
     public struct TweenSettings {
         public float duration;
         [Tooltip("The easing curve of an animation.\n\n" +
-                 "Default is Ease." + nameof(Ease.OutQuad) + ". The Default ease can be modified via '" + nameof(PrimeTweenConfig) + "." + nameof(PrimeTweenConfig.defaultEase) + "' setting.\n\n" +
+                 "Default is Ease." + nameof(Ease.OutQuad) + ". The Default ease can be modified via '" + nameof(CustomTweenConfig) + "." + nameof(CustomTweenConfig.defaultEase) + "' setting.\n\n" +
                  "Set to " + nameof(Ease) + "." + nameof(Ease.Custom) + " to control the easing with custom " + nameof(AnimationCurve) + ".")]
         public Ease ease;
         [Tooltip("A custom Animation Curve that will work as an easing curve.")]
@@ -141,7 +141,7 @@ namespace CustomTween {
                 var error = getError();
                 if (error != null) {
                     Debug.LogWarning($"Custom animation curve is not configured correctly which may have unexpected results: {error}. " +
-                                     Constants.buildWarningCanBeDisabledMessage(nameof(PrimeTweenConfig.validateCustomCurves)));
+                                     Constants.buildWarningCanBeDisabledMessage(nameof(CustomTweenConfig.validateCustomCurves)));
                 }
                 string getError() {
                     var start = curve[0];

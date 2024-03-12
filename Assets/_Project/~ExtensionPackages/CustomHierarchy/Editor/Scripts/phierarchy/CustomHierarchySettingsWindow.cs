@@ -13,7 +13,7 @@ namespace customtools.customhierarchy.phierarchy
 	public class CustomHierarchySettingsWindow : EditorWindow 
 	{	
         // STATIC
-		[MenuItem ("Tools/CustomHierarchy/Settings")]	
+		[MenuItem ("GameBase/Custom Hierarchy &3")]
 		public static void ShowWindow () 
 		{ 
 			EditorWindow window = EditorWindow.GetWindow(typeof(CustomHierarchySettingsWindow));           

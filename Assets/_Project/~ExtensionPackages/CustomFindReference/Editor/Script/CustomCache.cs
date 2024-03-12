@@ -476,30 +476,6 @@ namespace custom.find.reference
 			}
 		}
 
-//		private static void initIgnoreFiltered()
-//		{
-//			CustomAsset.ignoreTS = Time.realtimeSinceStartup;
-//
-//			_IgnoreFiltered = new Dictionary<string, List<string>>();
-//			var lst = new List<string>(s.listIgnore);
-//			lst = lst.OrderBy(x => x.Length).ToList();
-//			int count = lst.Count;
-//			for (var i = 0; i < count; i++)
-//			{
-//				string str = lst[i];
-//				_IgnoreFiltered.Add(str, new List<string> {str});
-//				for (int j = count - 1; j > i; j--)
-//				{
-//					if (lst[j].StartsWith(str))
-//					{
-//						_IgnoreFiltered[str].Add(lst[j]);
-//						lst.RemoveAt(j);
-//						count--;
-//					}
-//				}
-//			}
-//		}
-
 		public static void AddIgnore(string path)
 		{
 			if (string.IsNullOrEmpty(path) || IgnoreAsset.Contains(path) || path == "Assets")

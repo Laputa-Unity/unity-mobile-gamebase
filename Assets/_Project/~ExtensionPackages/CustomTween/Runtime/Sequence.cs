@@ -217,7 +217,7 @@ namespace CustomTween {
         }
 
         /// <summary>Schedules <see cref="callback"/> after all previously added tweens.</summary>
-        /// <param name="warnIfTargetDestroyed">https://github.com/KyryloKuzyk/PrimeTween/discussions/4</param>
+        /// <param name="warnIfTargetDestroyed">https://github.com/KyryloKuzyk/CustomTween/discussions/4</param>
         public Sequence ChainCallback([NotNull] Action callback, bool warnIfTargetDestroyed = true) {
             if (tryManipulate()) {
                 InsertCallback(duration, callback, warnIfTargetDestroyed);
@@ -237,7 +237,7 @@ namespace CustomTween {
         }
 
         /// <summary>Schedules <see cref="callback"/> after all previously added tweens. Passing 'target' allows to write a non-allocating callback.</summary>
-        /// <param name="warnIfTargetDestroyed">https://github.com/KyryloKuzyk/PrimeTween/discussions/4</param>
+        /// <param name="warnIfTargetDestroyed">https://github.com/KyryloKuzyk/CustomTween/discussions/4</param>
         public Sequence ChainCallback<T>([NotNull] T target, [NotNull] Action<T> callback, bool warnIfTargetDestroyed = true) where T: class {
             if (tryManipulate()) {
                 InsertCallback(duration, target, callback, warnIfTargetDestroyed);

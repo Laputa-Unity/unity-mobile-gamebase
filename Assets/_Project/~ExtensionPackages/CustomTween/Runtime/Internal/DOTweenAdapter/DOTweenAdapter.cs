@@ -6,7 +6,7 @@ using System.Collections;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace PrimeTween {
+namespace CustomTween {
     public static partial class DOTweenAdapter {
         static int remapFrequency(float frequency) {
             return (int) (frequency * 1.35f);
@@ -16,10 +16,10 @@ namespace PrimeTween {
             => DOShakePosition(target, duration, Vector3.one * strength, vibrato, randomness, snapping, fadeOut);
         public static Tween DOShakePosition([NotNull] this Component target, float duration, Vector3 strength, int vibrato = 10, float randomness = 90, bool snapping = false, bool fadeOut = true) {
             if (Math.Abs(randomness - 90f) > 0.001f) {
-                Debug.LogWarning("PrimeTween doesn't support " + nameof(randomness));
+                Debug.LogWarning("CustomTween doesn't support " + nameof(randomness));
             }
             if (snapping) {
-                Debug.LogWarning("PrimeTween doesn't support " + nameof(snapping));
+                Debug.LogWarning("CustomTween doesn't support " + nameof(snapping));
             }
             var settings = new ShakeSettings(strength, duration, vibrato);
             if (fadeOut) {
@@ -30,7 +30,7 @@ namespace PrimeTween {
         }
         public static Tween DOPunchPosition([NotNull] this Component target, Vector3 punch, float duration, int vibrato = 10, float elasticity = 1, bool snapping = false) {
             if (snapping) {
-                Debug.LogWarning("PrimeTween doesn't support " + nameof(snapping));
+                Debug.LogWarning("CustomTween doesn't support " + nameof(snapping));
             }
             var shakeSettings = new ShakeSettings(punch, duration, remapFrequency(vibrato), asymmetryFactor: 1 - elasticity);
             return Tween.PunchLocalPosition(target.transform, shakeSettings);
@@ -40,7 +40,7 @@ namespace PrimeTween {
             => DOShakeRotation(target, duration, Vector3.one * strength, vibrato, randomness, fadeOut);
         public static Tween DOShakeRotation([NotNull] this Component target, float duration, Vector3 strength, int vibrato = 10, float randomness = 90, bool fadeOut = true) {
             if (Math.Abs(randomness - 90f) > 0.001f) {
-                Debug.LogWarning("PrimeTween doesn't support " + nameof(randomness));
+                Debug.LogWarning("CustomTween doesn't support " + nameof(randomness));
             }
             var settings = new ShakeSettings(strength, duration, vibrato);
             if (fadeOut) {
@@ -58,7 +58,7 @@ namespace PrimeTween {
             => DOShakeScale(target, duration, Vector3.one * strength, vibrato, randomness, fadeOut);
         public static Tween DOShakeScale([NotNull] this Component target, float duration, Vector3 strength, int vibrato = 10, float randomness = 90, bool fadeOut = true) {
             if (Math.Abs(randomness - 90f) > 0.001f) {
-                Debug.LogWarning("PrimeTween doesn't support " + nameof(randomness));
+                Debug.LogWarning("CustomTween doesn't support " + nameof(randomness));
             }
             var settings = new ShakeSettings(strength, duration, vibrato);
             if (fadeOut) {
@@ -88,10 +88,10 @@ namespace PrimeTween {
         public static int DOKill([NotNull] this Material target, bool complete = false) => doKill_internal(target, complete);
 
         internal static int doKill_internal([CanBeNull] object target, bool complete = false) {
-            bool prevLogCantManipulateError = PrimeTweenManager.logCantManipulateError;
-            PrimeTweenManager.logCantManipulateError = false;
+            bool prevLogCantManipulateError = CustomTweenManager.logCantManipulateError;
+            CustomTweenManager.logCantManipulateError = false;
             var result = complete ? Tween.CompleteAll(target) : Tween.StopAll(target);
-            PrimeTweenManager.logCantManipulateError = prevLogCantManipulateError;
+            CustomTweenManager.logCantManipulateError = prevLogCantManipulateError;
             return result;
         }
         
@@ -116,11 +116,11 @@ namespace PrimeTween {
 
     public static class DOTween {
         public static Ease defaultEaseType {
-            get => PrimeTweenConfig.defaultEase;
-            set => PrimeTweenConfig.defaultEase = value;
+            get => CustomTweenConfig.defaultEase;
+            set => CustomTweenConfig.defaultEase = value;
         }
         
-        public static Sequence Sequence() => PrimeTween.Sequence.Create();
+        public static Sequence Sequence() => CustomTween.Sequence.Create();
         
         public static void Kill([NotNull] object target, bool complete = false) => DOTweenAdapter.doKill_internal(target, complete);
         
@@ -216,7 +216,7 @@ namespace PrimeTween {
 
         public void Complete(bool withCallbacks) {
             if (withCallbacks) {
-                Debug.LogWarning("PrimeTween doesn't support " + nameof(Sequence) + "." + nameof(Complete) + "() " + nameof(withCallbacks) + " == true");
+                Debug.LogWarning("CustomTween doesn't support " + nameof(Sequence) + "." + nameof(Complete) + "() " + nameof(withCallbacks) + " == true");
             }
             Complete();
         }
@@ -262,7 +262,7 @@ namespace PrimeTween {
 
         public IEnumerator WaitForCompletion() => ToYieldInstruction();
 
-        /// <summary>It's safe to destroy objects with running animations in PrimeTween, so this adapter method does nothing. More info: https://github.com/KyryloKuzyk/PrimeTween/discussions/4</summary>
+        /// <summary>It's safe to destroy objects with running animations in CustomTween, so this adapter method does nothing. More info: https://github.com/KyryloKuzyk/CustomTween/discussions/4</summary>
         [PublicAPI]
         public Sequence SetLink(GameObject gameObject) => this;
 

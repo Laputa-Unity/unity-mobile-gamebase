@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 
 namespace CustomTween {
-    /// <summary>The main API of the PrimeTween library.<br/><br/>
+    /// <summary>The main API of the CustomTween library.<br/><br/>
     /// Use static Tween methods to start animations (tweens).<br/>
     /// Use the returned Tween struct to control the running tween and access its properties.<br/><br/>
     /// Tweens are non-reusable. That is, when a tween completes (or is stopped manually), it becomes 'dead' (<see cref="isAlive"/> == false) and can no longer be used to control the tween or access its properties.<br/>
@@ -271,7 +271,7 @@ namespace CustomTween {
         }
 
         /// <summary>Adds completion callback. Please consider using <see cref="OnComplete{T}"/> to prevent a possible capture of variable into a closure.</summary>
-        /// <param name="warnIfTargetDestroyed">Set to 'false' to disable the error about target's destruction. Please note that the the <see cref="onComplete"/> callback will be silently ignored in the case of target's destruction. More info: https://github.com/KyryloKuzyk/PrimeTween/discussions/4</param>
+        /// <param name="warnIfTargetDestroyed">Set to 'false' to disable the error about target's destruction. Please note that the the <see cref="onComplete"/> callback will be silently ignored in the case of target's destruction. More info: https://github.com/KyryloKuzyk/CustomTween/discussions/4</param>
         public Tween OnComplete(Action onComplete, bool warnIfTargetDestroyed = true) {
             if (validateIsAlive()) {
                 tween.OnComplete(onComplete, warnIfTargetDestroyed);
@@ -280,7 +280,7 @@ namespace CustomTween {
         }
 
         /// <summary>Adds completion callback.</summary>
-        /// <param name="warnIfTargetDestroyed">Set to 'false' to disable the error about target's destruction. Please note that the the <see cref="onComplete"/> callback will be silently ignored in the case of target's destruction. More info: https://github.com/KyryloKuzyk/PrimeTween/discussions/4</param>
+        /// <param name="warnIfTargetDestroyed">Set to 'false' to disable the error about target's destruction. Please note that the the <see cref="onComplete"/> callback will be silently ignored in the case of target's destruction. More info: https://github.com/KyryloKuzyk/CustomTween/discussions/4</param>
         /// <example>The example shows how to destroy the object after the completion of a tween.
         /// Please note: we're using the '_transform' variable from the onComplete callback to prevent garbage allocation. Using the 'transform' variable directly will capture it into a closure and generate garbage.
         /// <code>

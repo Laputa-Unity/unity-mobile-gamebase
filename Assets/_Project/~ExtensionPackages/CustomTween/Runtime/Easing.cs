@@ -43,7 +43,7 @@ namespace CustomTween {
         public static Easing Standard(Ease ease) {
             Assert.AreNotEqual(Ease.Custom, ease);
             if (ease == Ease.Default) {
-                ease = PrimeTweenConfig.defaultEase;
+                ease = CustomTweenConfig.defaultEase;
             }
             return new Easing(ease, null);
         }
@@ -135,7 +135,7 @@ namespace CustomTween {
 
         #if PRIME_TWEEN_DOTWEEN_ADAPTER
         /// Can't be public API because ParametricEase.BounceExact can only be evaluated with these params: propType, startValue, endValue
-        /// <see cref="Evaluate(float,PrimeTween.ReusableTween)"/>
+        /// <see cref="Evaluate(float,CustomTween.ReusableTween)"/>
         internal float Evaluate(float interpolationFactor) {
             if (ease == Ease.Custom) {
                 if (parametricEase != ParametricEase.None) {
@@ -161,7 +161,7 @@ namespace CustomTween {
                         return interpolationFactor;
                     }
                     #endif
-                    return StandardEasing.Evaluate(interpolationFactor, PrimeTweenManager.Instance.defaultEase);
+                    return StandardEasing.Evaluate(interpolationFactor, CustomTweenManager.Instance.defaultEase);
                 default:
                     return StandardEasing.Evaluate(interpolationFactor, ease);
             }

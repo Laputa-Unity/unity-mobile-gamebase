@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace custom.find.reference
@@ -80,7 +78,7 @@ namespace custom.find.reference
 			bool v = api.disabled;
 			if (v)
 			{
-				EditorGUILayout.HelpBox("Find References 2 is disabled!", MessageType.Warning);
+				EditorGUILayout.HelpBox("Find References is disabled!", MessageType.Warning);
 				
 				if (GUILayout.Button("Enable"))
 				{

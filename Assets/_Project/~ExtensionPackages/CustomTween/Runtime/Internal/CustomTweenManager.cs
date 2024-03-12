@@ -24,7 +24,7 @@ namespace CustomTween {
 
         /// Item can be null if the list is accessed from the <see cref="ReusableTween.updateAndCheckIfRunning"/> via onValueChange() or onComplete()
         /// Changing list to array gives about 8% performance improvement and is possible to do in the future
-        ///     The current implementation is simpler and PrimeTweenManagerInspector can draw tweens with no additional code
+        ///     The current implementation is simpler and CustomTweenManagerInspector can draw tweens with no additional code
         #if UNITY_2021_3_OR_NEWER
         [ItemCanBeNull]
         #endif
@@ -135,10 +135,10 @@ namespace CustomTween {
         /// <summary>
         /// The most common tween lifecycle:
         /// 1. User's script creates a tween in Update() in frame N.
-        /// 2. PrimeTweenManager.LateUpdate() applies the 'startValue' to the tween in the SAME FRAME N. This guarantees that the animation is rendered at the 'startValue' in the same frame the tween is created.
-        /// 3. PrimeTweenManager.Update() executes the first animation step on frame N+1. PrimeTweenManager's execution order is -2000, this means that
+        /// 2. CustomTweenManager.LateUpdate() applies the 'startValue' to the tween in the SAME FRAME N. This guarantees that the animation is rendered at the 'startValue' in the same frame the tween is created.
+        /// 3. CustomTweenManager.Update() executes the first animation step on frame N+1. CustomTweenManager's execution order is -2000, this means that
         ///     all tweens created in previous frames will already be updated before user's script Update() (if user's script execution order is greater than -2000). 
-        /// 4. PrimeTweenManager.Update() completes the tween on frame N+(duration*targetFrameRate) given that targetFrameRate is stable.
+        /// 4. CustomTweenManager.Update() completes the tween on frame N+(duration*targetFrameRate) given that targetFrameRate is stable.
         /// </summary>
         internal void Update() => update(tweens, Time.deltaTime, Time.unscaledDeltaTime, out processedCount);
         
@@ -342,12 +342,12 @@ namespace CustomTween {
             maxSimultaneousTweensCount = Math.Max(maxSimultaneousTweensCount, tweensCount);
             if (warnBenchmarkWithAsserts && maxSimultaneousTweensCount > 50000) {
                 warnBenchmarkWithAsserts = false;
-                var msg = "PrimeTween detected more than 50000 concurrent tweens. If you're running benchmarks, please add the PRIME_TWEEN_DISABLE_ASSERTIONS to the 'ProjectSettings/Player/Script Compilation' to disable assertions. This will ensure PrimeTween runs with the release performance.\n" +
-                          "Also disable optional convenience features: PrimeTweenConfig.warnZeroDuration and PrimeTweenConfig.warnTweenOnDisabledTarget.\n";
+                var msg = "CustomTween detected more than 50000 concurrent tweens. If you're running benchmarks, please add the PRIME_TWEEN_DISABLE_ASSERTIONS to the 'ProjectSettings/Player/Script Compilation' to disable assertions. This will ensure CustomTween runs with the release performance.\n" +
+                          "Also disable optional convenience features: CustomTweenConfig.warnZeroDuration and CustomTweenConfig.warnTweenOnDisabledTarget.\n";
                 if (Application.isEditor) {
                     msg += "Please also run the tests in real builds, not in the Editor, to measure the performance correctly.\n";
                 }
-                msg += $"{Constants.buildWarningCanBeDisabledMessage(nameof(PrimeTweenConfig.warnBenchmarkWithAsserts))}\n";
+                msg += $"{Constants.buildWarningCanBeDisabledMessage(nameof(CustomTweenConfig.warnBenchmarkWithAsserts))}\n";
                 Debug.LogError(msg);
             }
             #endif
@@ -452,7 +452,7 @@ namespace CustomTween {
             }
             warnStructBoxingAllocationInCoroutine = false;
             Assert.LogWarning("Please use Tween/Sequence." + nameof(Tween.ToYieldInstruction) + "() when waiting for a Tween/Sequence in coroutines to prevent struct boxing.\n" + 
-                              Constants.buildWarningCanBeDisabledMessage(nameof(PrimeTweenConfig.warnStructBoxingAllocationInCoroutine)) + "\n", id);
+                              Constants.buildWarningCanBeDisabledMessage(nameof(CustomTweenConfig.warnStructBoxingAllocationInCoroutine)) + "\n", id);
         }
     }
     

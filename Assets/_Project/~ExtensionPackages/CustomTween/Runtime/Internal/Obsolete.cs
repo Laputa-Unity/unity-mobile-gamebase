@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 
 namespace CustomTween {
-    public partial class PrimeTweenConfig {
+    public partial class CustomTweenConfig {
         // ReSharper disable once ValueParameterNotUsed
         [EditorBrowsable(EditorBrowsableState.Never)] [Obsolete("this setting is replaced with the 'warnIfTargetDestroyed' parameter that you can pass to the tween.OnComplete(), Tween.Delay() and Sequence.ChainDelay() methods.")]
         public static bool warnDestroyedTweenHasOnComplete { set {} }
@@ -168,13 +168,13 @@ namespace CustomTween {
         
         [EditorBrowsable(EditorBrowsableState.Never)] [Obsolete(localScaleRenamed)]
         public static Tween ShakeLocalScale([NotNull] Transform target, Vector3 strength, float duration, float frequency = ShakeSettings.defaultFrequency, bool enableFalloff = true, Ease easeBetweenShakes = Ease.Default, float asymmetryFactor = 0f, int cycles = 1,
-            float startDelay = 0, float endDelay = 0, bool useUnscaledTime = PrimeTweenConfig.defaultUseUnscaledTimeForShakes) 
+            float startDelay = 0, float endDelay = 0, bool useUnscaledTime = CustomTweenConfig.defaultUseUnscaledTimeForShakes) 
             => ShakeScale(target, new ShakeSettings(strength, duration, frequency, enableFalloff, easeBetweenShakes, asymmetryFactor, cycles, startDelay, endDelay, useUnscaledTime));
         [EditorBrowsable(EditorBrowsableState.Never)] [Obsolete(localScaleRenamed)]
         public static Tween ShakeLocalScale([NotNull] Transform target, ShakeSettings settings) => ShakeScale(target, settings);
         [EditorBrowsable(EditorBrowsableState.Never)] [Obsolete(localScaleRenamed)]
         public static Tween PunchLocalScale([NotNull] Transform target, Vector3 strength, float duration, float frequency = ShakeSettings.defaultFrequency, bool enableFalloff = true, Ease easeBetweenShakes = Ease.Default, float asymmetryFactor = 0f, int cycles = 1,
-            float startDelay = 0, float endDelay = 0, bool useUnscaledTime = PrimeTweenConfig.defaultUseUnscaledTimeForShakes) 
+            float startDelay = 0, float endDelay = 0, bool useUnscaledTime = CustomTweenConfig.defaultUseUnscaledTimeForShakes) 
             => PunchScale(target, new ShakeSettings(strength, duration, frequency, enableFalloff, easeBetweenShakes, asymmetryFactor, cycles, startDelay, endDelay, useUnscaledTime));
         [EditorBrowsable(EditorBrowsableState.Never)] [Obsolete(localScaleRenamed)]
         public static Tween PunchLocalScale([NotNull] Transform target, ShakeSettings settings) => ShakeScale(target, settings.WithPunch());

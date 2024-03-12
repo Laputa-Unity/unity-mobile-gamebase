@@ -2,9 +2,9 @@ using JetBrains.Annotations;
 using UnityEngine;
 
 namespace CustomTween {
-    /// Global PrimeTween configuration.
+    /// Global CustomTween configuration.
     [PublicAPI]
-    public static partial class PrimeTweenConfig {
+    public static partial class CustomTweenConfig {
         internal static CustomTweenManager Instance {
             get {
                 #if UNITY_EDITOR
@@ -24,13 +24,13 @@ namespace CustomTween {
         /// <code>
         /// [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
         /// static void beforeSplashScreen() {
-        ///     PrimeTweenConfig.SetTweensCapacity(42);
+        ///     CustomTweenConfig.SetTweensCapacity(42);
         /// }
         /// </code>
         /// </example>
         public static void SetTweensCapacity(int capacity) {
             Assert.IsTrue(capacity >= 0);
-            var instance = CustomTweenManager.Instance; // should use PrimeTweenManager.Instance because Instance property has a built-in null check 
+            var instance = CustomTweenManager.Instance; // should use CustomTweenManager.Instance because Instance property has a built-in null check 
             if (instance == null) {
                 CustomTweenManager.customInitialCapacity = capacity;
             } else {

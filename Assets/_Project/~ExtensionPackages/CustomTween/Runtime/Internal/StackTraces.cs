@@ -6,7 +6,7 @@ using System.Text;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace PrimeTween {
+namespace CustomTween {
     internal static class StackTraces {
         static readonly List<int> idToHash = new List<int>(1000);
         static readonly Dictionary<int, List<byte[]>> hashToTraces = new Dictionary<int, List<byte[]>>(100);
@@ -90,7 +90,7 @@ namespace PrimeTween {
                         return str;
                     }
                     i++;
-                    int j = str.IndexOf("PrimeTween.", i, StringComparison.Ordinal);
+                    int j = str.IndexOf("CustomTween.", i, StringComparison.Ordinal);
                     if (j != i) {
                         return str.Substring(prev);
                     }

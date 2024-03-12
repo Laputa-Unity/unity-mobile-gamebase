@@ -341,7 +341,7 @@ namespace CustomTween {
             clearOnUpdate();
         }
 
-        /// <param name="warnIfTargetDestroyed">https://github.com/KyryloKuzyk/PrimeTween/discussions/4</param>
+        /// <param name="warnIfTargetDestroyed">https://github.com/KyryloKuzyk/CustomTween/discussions/4</param>
         internal void OnComplete([NotNull] Action _onComplete, bool warnIfTargetDestroyed) {
             Assert.IsNotNull(_onComplete);
             validateOnCompleteAssignment();
@@ -464,7 +464,7 @@ namespace CustomTween {
                 }
                 if (startValue.Vector4Val == endValue.Vector4Val && warnEndValueEqualsCurrent && !shakeData.isAlive) {
                     Assert.LogWarning($"Tween's 'endValue' equals to the current animated value: {startValue.Vector4Val}, tween: {GetDescription()}.\n" +
-                                      $"{Constants.buildWarningCanBeDisabledMessage(nameof(PrimeTweenConfig.warnEndValueEqualsCurrent))}\n", id);
+                                      $"{Constants.buildWarningCanBeDisabledMessage(nameof(CustomTweenConfig.warnEndValueEqualsCurrent))}\n", id);
                 }
                 cacheDiff();
             }
@@ -487,7 +487,7 @@ namespace CustomTween {
         internal bool isUnityTargetDestroyed() {
             // must use target here instead of unityTarget
             // unityTarget has the SerializeField attribute, so if ReferenceEquals(unityTarget, null), then Unity will populate the field with non-null UnityEngine.Object when a new scene is loaded in the Editor
-            // https://github.com/KyryloKuzyk/PrimeTween/issues/32
+            // https://github.com/KyryloKuzyk/CustomTween/issues/32
             return isDestroyedUnityObject(target);
         }
 
@@ -680,7 +680,7 @@ namespace CustomTween {
                 var msg = $"{Constants.onCompleteCallbackIgnored} Tween: {GetDescription()}.\n";
                 if (isTargetDestroyed) {
                     msg += "\nIf you use tween.OnComplete(), Tween.Delay(), or sequence.ChainDelay() only for cosmetic purposes, you can turn off this error by passing 'warnIfTargetDestroyed: false' to the method.\n" +
-                           "More info: https://github.com/KyryloKuzyk/PrimeTween/discussions/4\n";
+                           "More info: https://github.com/KyryloKuzyk/CustomTween/discussions/4\n";
                 }
                 Assert.LogError(msg, id, target as UnityEngine.Object);
             }

@@ -2,7 +2,7 @@
 using System;
 using JetBrains.Annotations;
 
-namespace PrimeTween {
+namespace CustomTween {
     // ReSharper disable once TypeParameterCanBeVariant
     internal interface ITween<TResult> {
         bool isAlive { get; }

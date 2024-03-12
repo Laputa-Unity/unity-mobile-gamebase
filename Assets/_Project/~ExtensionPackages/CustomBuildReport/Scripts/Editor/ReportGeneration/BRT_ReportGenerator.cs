@@ -3108,7 +3108,7 @@ namespace BuildReportTool
 
 		const string EDITOR_WINDOW_TITLE = "Build Report";
 
-		[MenuItem("Window/Show Build Report")]
+		[MenuItem("GameBase/Custom Build Report &1")]
 		public static void ShowBuildReport()
 		{
 			//RefreshData(ref _lastKnownBuildInfo);

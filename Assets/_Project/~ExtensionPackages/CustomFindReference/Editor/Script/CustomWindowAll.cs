@@ -15,8 +15,7 @@ namespace custom.find.reference
 	// optimize lag duplicate khi use
 	public class CustomWindowAll : CustomWindowBase, IHasCustomMenu
 	{
-
-		[MenuItem("Window/Custom Find Reference")]
+		[MenuItem("GameBase/Custom Find Reference &2")]
 		private static void ShowWindow()
 		{
 			var _window = CreateInstance<CustomWindowAll>();

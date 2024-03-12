@@ -19,11 +19,11 @@ namespace CustomInspector.Editor.Samples
         private MonoScript _currentMonoScript;
         private Vector2 _currentScroll;
 
-        [MenuItem("Tools/Custom Inspector/Samples")]
+        [MenuItem("GameBase/Custom Inspector &4")]
         public static void Open()
         {
             var window = GetWindow<CustomSamplesWindow>();
-            window.titleContent = new GUIContent("Custom Samples");
+            window.titleContent = new GUIContent("Custom Inspector");
             window.Show();
         }
 
