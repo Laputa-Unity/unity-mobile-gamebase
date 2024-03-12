@@ -22,13 +22,13 @@ MonoBehaviour:
   - type: 0
     numberID: 1
     buyType: 1
-    skinPrefab: {fileID: 3555586318773060387, guid: 5f7450b644716cd49b2bfd22d47b34b5, type: 3}
+    skinPrefab: {fileID: 2796806711168831234, guid: 5f7450b644716cd49b2bfd22d47b34b5, type: 3}
     shopIcon: {fileID: 0}
     coinValue: 0
   - type: 0
     numberID: 2
     buyType: 1
-    skinPrefab: {fileID: 5513014555063895158, guid: 057e2d7891f3fa242b2d26b2cd5a18c5, type: 3}
+    skinPrefab: {fileID: 5723130531476527263, guid: 057e2d7891f3fa242b2d26b2cd5a18c5, type: 3}
     shopIcon: {fileID: 0}
     coinValue: 0
   - type: 0
@@ -64,7 +64,7 @@ MonoBehaviour:
   - type: 0
     numberID: 8
     buyType: 1
-    skinPrefab: {fileID: 4670607190544729695, guid: e4ac6e45989c6464c851b61c101a5eb2, type: 3}
+    skinPrefab: {fileID: 878453915949434321, guid: e4ac6e45989c6464c851b61c101a5eb2, type: 3}
     shopIcon: {fileID: 0}
     coinValue: 0
   - type: 0
