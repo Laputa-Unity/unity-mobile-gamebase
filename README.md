@@ -41,6 +41,9 @@
 ## Documentation
 - [See Wiki](https://github.com/GuardianOfGods/unity-mobile-base/wiki)
 
+## Third Party
+- Lean Packages (LeanTouch, LeanPool)
+- TextMeshPro
 ## Support
 - If you like this topic, you can give this repository a star ⭐
 - I would greatly appreciate it if you could support me with a cup of coffee
