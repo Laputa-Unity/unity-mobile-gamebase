@@ -11,20 +11,20 @@ public class PopupDebug : Popup
     protected override void OnEnable()
     {
         base.OnEnable();
-        toggleTesting.isOn = Data.IsTesting;
+        toggleTesting.isOn = Data.PlayerData.isTesting;
     }
 
     public void OnClickAccept()
     {
         if (!string.IsNullOrEmpty(setLevel.text))
         {
-            Data.CurrentLevel = int.Parse(setLevel.text);
+            Data.PlayerData.currentLevel = int.Parse(setLevel.text);
             GameManager.Instance.PrepareLevel();
             GameManager.Instance.StartGame();
         }
         if (!string.IsNullOrEmpty(setCoin.text))
         {
-            Data.CurrentMoney = int.Parse(setCoin.text);
+            Data.PlayerData.currentMoney = int.Parse(setCoin.text);
         }
 
         setCoin.text = string.Empty;
@@ -34,6 +34,6 @@ public class PopupDebug : Popup
 
     public void ChangeTestingState()
     {
-        Data.IsTesting = toggleTesting.isOn;
+        Data.PlayerData.isTesting = toggleTesting.isOn;
     }
 }

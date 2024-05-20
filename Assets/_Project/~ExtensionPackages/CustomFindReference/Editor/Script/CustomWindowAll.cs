@@ -20,7 +20,7 @@ namespace custom.find.reference
 		{
 			var _window = CreateInstance<CustomWindowAll>();
 			_window.InitIfNeeded();
-			CustomUnity.SetWindowTitle(_window, "CR");
+			CustomUnity.SetWindowTitle(_window, "Custom Reference");
 			_window.Show();
 		}
 

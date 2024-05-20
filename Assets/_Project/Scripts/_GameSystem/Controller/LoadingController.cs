@@ -21,7 +21,7 @@ public class LoadingController : MonoBehaviour
         #endif
         
         
-        _sceneOperation = SceneManager.LoadSceneAsync(Constant.GameplayScene);
+        _sceneOperation = SceneManager.LoadSceneAsync("GameplayScene");
         _sceneOperation.allowSceneActivation = false;
         
         progressBar.fillAmount = 0;

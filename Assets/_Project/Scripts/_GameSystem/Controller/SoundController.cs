@@ -17,12 +17,12 @@ public class SoundController : SingletonDontDestroy<SoundController>
 
     private void OnMusicChanged()
     {
-        backgroundAudio.mute = !Data.BgSoundState;
+        backgroundAudio.mute = !Data.PlayerData.musicState;
     }
     
     private void OnSoundChanged()
     {
-        fxAudio.mute = !Data.FxSoundState;
+        fxAudio.mute = !Data.PlayerData.soundState;
     }
 
     private void Setup()
@@ -33,11 +33,11 @@ public class SoundController : SingletonDontDestroy<SoundController>
 
     public void PlayFX(SoundName soundName)
     {
-        SoundData soundData = soundConfig.GetSoundDataByType(soundName);
+        SoundData soundPlayerData = soundConfig.GetSoundDataByType(soundName);
 
-        if (soundData != null)
+        if (soundPlayerData != null)
         {
-            var soundClip = soundData.GetRandomAudioClip();
+            var soundClip = soundPlayerData.GetRandomAudioClip();
             if (soundClip)
             {
                 fxAudio.PlayOneShot(soundClip);
@@ -55,11 +55,11 @@ public class SoundController : SingletonDontDestroy<SoundController>
 
     public void PlayBackground(SoundName soundName)
     {
-        SoundData soundData = soundConfig.GetSoundDataByType(soundName);
+        SoundData soundPlayerData = soundConfig.GetSoundDataByType(soundName);
 
-        if (soundData != null)
+        if (soundPlayerData != null)
         {
-            var clip = soundData.GetRandomAudioClip();
+            var clip = soundPlayerData.GetRandomAudioClip();
 
             if (clip)
             {

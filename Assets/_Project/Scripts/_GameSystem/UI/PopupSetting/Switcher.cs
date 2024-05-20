@@ -26,13 +26,13 @@ public class Switcher : MonoBehaviour
         switch (settingType)
         {
             case SettingType.BackgroundSound:
-                isOn = Data.BgSoundState;
+                isOn = Data.PlayerData.musicState;
                 break;
             case SettingType.FxSound:
-                isOn = Data.FxSoundState;
+                isOn = Data.PlayerData.soundState;
                 break;
             case SettingType.Vibration:
-                isOn = Data.VibrateState;
+                isOn = Data.PlayerData.vibrationState;
                 break;
         }
     }
@@ -72,13 +72,13 @@ public class Switcher : MonoBehaviour
             switch (settingType)
             {
                 case SettingType.BackgroundSound:
-                    Data.BgSoundState = !isOn;
+                    Data.PlayerData.musicState = !isOn;
                     break;
                 case SettingType.FxSound:
-                    Data.FxSoundState = !isOn;
+                    Data.PlayerData.soundState = !isOn;
                     break;
                 case SettingType.Vibration:
-                    Data.VibrateState = !isOn;
+                    Data.PlayerData.vibrationState = !isOn;
                     break;
             }
             Setup();

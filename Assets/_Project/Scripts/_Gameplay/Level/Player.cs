@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     
     void Start()
     {
-        SetSkin(Data.CurrentPlayerSkin);
+        SetSkin(Data.PlayerData.currentSkin);
     
         Observer.EquipPlayerSkin += SetSkin;
     }
@@ -34,6 +34,6 @@ public class Player : MonoBehaviour
         skinHolder.Clear();
         Instantiate(skinPrefab, skinHolder);
         
-        Data.CurrentPlayerSkin = item.Identity;
+        Data.PlayerData.currentSkin = item.identity;
     }
 }

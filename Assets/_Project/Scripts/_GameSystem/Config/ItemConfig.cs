@@ -19,66 +19,50 @@ public class ItemConfig : ScriptableObject
         {
             if (item.buyType == BuyType.Default)
             {
-                item.IsUnlocked = true;
+                if (!Data.PlayerData.IsOwnedSkin(item.identity))
+                {
+                    Data.PlayerData.ownedSkins.Add(item.identity);
+                }
             }
         }
     }
 
     public void UnlockAllSkins()
     {
-        foreach (var data in itemData)
+        foreach (var item in itemData)
         {
-            data.IsUnlocked = true;
+            if (!Data.PlayerData.ownedSkins.Contains(item.identity))
+            {
+                Data.PlayerData.ownedSkins.Add(item.identity);
+            }
         }
     }
     public ItemData GetItemData(string itemIdentity)
     {
-        return itemData.Find(item => item.Identity == itemIdentity);
+        return itemData.Find(item => item.identity == itemIdentity);
     }
 
     public List<ItemData> GetListItemDataByType(ItemType itemType)
     {
-        return itemData.FindAll(item => item.type == itemType);
+        return itemData.FindAll(item => item.itemType == itemType);
     }
 
     public ItemData GetGiftItemData()
     {
-        List<ItemData> tempList = itemData.FindAll(item => !item.IsUnlocked && (item.buyType == BuyType.BuyMoney || item.buyType == BuyType.WatchAds));
+        List<ItemData> tempList = itemData.FindAll(item => Data.PlayerData.IsOwnedSkin(item.identity) && (item.buyType == BuyType.BuyMoney || item.buyType == BuyType.WatchAds));
         return tempList.Count > 0?tempList[Random.Range(0, tempList.Count)]:null;
     }
 }
 
-public class ItemIdentity
-{
-    public string Identity => $"{type}_{numberID}";
-    
-    public ItemType type;
-    public int numberID;
-}
-
 [Serializable]
-public class ItemData : ItemIdentity
+public class ItemData
 {
+    public string identity;
     public ItemType itemType;
     public BuyType buyType;
     public GameObject skinPrefab;
     public Sprite shopIcon;
     public int coinValue;
-
-    public bool IsUnlocked
-    {
-        get
-        {
-            Data.IdItemUnlocked = Identity;
-            return Data.IsItemUnlocked;
-        }
-
-        set
-        {
-            Data.IdItemUnlocked = Identity;
-            Data.IsItemUnlocked = value;
-        }
-    }
 }
 
 public enum BuyType

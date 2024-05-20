@@ -13,7 +13,7 @@ public class Level : MonoBehaviour
     #if UNITY_EDITOR
     private void StartLevel()
     {
-        Data.CurrentLevel = Utility.GetNumberInAString(gameObject.name);
+        Data.PlayerData.currentLevel = Utility.GetNumberInAString(gameObject.name);
         
         EditorApplication.isPlaying = true;
     }

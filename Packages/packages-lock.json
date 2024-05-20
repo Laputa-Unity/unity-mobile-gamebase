@@ -50,11 +50,32 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.burst": {
+      "version": "1.8.13",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.1",
+        "com.unity.modules.jsonserialize": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.collab-proxy": {
-      "version": "2.2.0",
+      "version": "2.3.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.collections": {
+      "version": "2.1.4",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.burst": "1.8.4",
+        "com.unity.modules.unityanalytics": "1.0.0",
+        "com.unity.nuget.mono-cecil": "1.11.4"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {
@@ -65,7 +86,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.27",
+      "version": "3.0.28",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -98,8 +119,15 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.mathematics": {
+      "version": "1.2.6",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.mobile.notifications": {
-      "version": "2.3.0",
+      "version": "2.3.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -107,24 +135,27 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.nuget.newtonsoft-json": {
-      "version": "3.2.1",
+    "com.unity.nuget.mono-cecil": {
+      "version": "1.11.4",
       "depth": 2,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.unity.purchasing": {
-      "version": "4.9.3",
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
+      "depth": 3,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.serialization": {
+      "version": "3.1.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.ugui": "1.0.0",
-        "com.unity.modules.unityanalytics": "1.0.0",
-        "com.unity.modules.unitywebrequest": "1.0.0",
-        "com.unity.modules.jsonserialize": "1.0.0",
-        "com.unity.modules.androidjni": "1.0.0",
-        "com.unity.services.core": "1.8.1"
+        "com.unity.collections": "2.1.4",
+        "com.unity.burst": "1.7.2"
       },
       "url": "https://packages.unity.com"
     },
@@ -140,8 +171,8 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.services.core": {
-      "version": "1.12.0",
-      "depth": 1,
+      "version": "1.12.5",
+      "depth": 2,
       "source": "registry",
       "dependencies": {
         "com.unity.modules.unitywebrequest": "1.0.0",

@@ -1,10 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemController : SingletonDontDestroy<ItemController>
 {
     [SerializeField] private ItemConfig itemConfig;
+    void Start()
+    {
+        itemConfig.Initialize();
+    }
 
     public ItemData GetItemData(string itemIdentity)
     {

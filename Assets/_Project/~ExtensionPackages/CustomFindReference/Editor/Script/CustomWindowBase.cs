@@ -36,7 +36,7 @@ namespace custom.find.reference
 				return;
 			}
 
-			menu.AddDisabledItem(new GUIContent("CR - v2.5.1"));
+			menu.AddDisabledItem(new GUIContent("Custom Reference - v1.0.0"));
 			menu.AddSeparator(string.Empty);
 
 			menu.AddItem(new GUIContent("Enable"), !api.disabled, () => { api.disabled = !api.disabled; });

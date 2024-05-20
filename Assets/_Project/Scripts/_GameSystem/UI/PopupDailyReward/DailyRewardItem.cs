@@ -49,11 +49,11 @@ public class DailyRewardItem : MonoBehaviour
             //shopItemData = ConfigController.ItemConfig.GetShopItemDataById(dailyRewardData.SkinID);
         }
 
-        if (Data.CurrentDailyReward > dayIndex)
+        if (Data.PlayerData.currentDailyReward > dayIndex)
         {
             _dailyRewardItemState = DailyRewardItemState.Claimed;
         }
-        else if (Data.CurrentDailyReward == dayIndex)
+        else if (Data.PlayerData.currentDailyReward == dayIndex)
         {
             if (!_popupDailyReward.IsClaimTodayDailyReward())
                 _dailyRewardItemState = DailyRewardItemState.ReadyToClaim;
@@ -110,7 +110,7 @@ public class DailyRewardItem : MonoBehaviour
         {
             case DailyRewardType.Money:
                 MoneyHandler.Instance.SetFrom(transform.position);
-                Data.CurrentMoney += _coinValue * (isClaimX5 ? 5 : 1);
+                Data.PlayerData.currentMoney += _coinValue * (isClaimX5 ? 5 : 1);
                 break;
             case DailyRewardType.Skin:
                 //shopItemData.IsUnlocked = true;

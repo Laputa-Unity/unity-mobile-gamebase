@@ -6,6 +6,6 @@ public class PopupUI : Popup
 {
     public void Debugging()
     {
-        Data.CurrentMoney += 100;
+        Data.PlayerData.currentMoney += 100;
     }
 }

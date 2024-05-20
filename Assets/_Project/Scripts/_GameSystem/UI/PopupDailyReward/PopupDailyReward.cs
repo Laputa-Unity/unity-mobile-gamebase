@@ -29,7 +29,7 @@ public class PopupDailyReward : Popup
 
     private bool IsCurrentItem(int index)
     {
-        return Data.CurrentDailyReward == index;
+        return Data.PlayerData.currentDailyReward == index;
     }
 
     public void Setup()
@@ -40,8 +40,8 @@ public class PopupDailyReward : Popup
 
     private void SetUpItems()
     {
-        int week = (Data.CurrentDailyReward - 1) / 7;
-        if (IsClaimTodayDailyReward()) week = (Data.CurrentDailyReward - 2) / 7;
+        int week = (Data.PlayerData.currentDailyReward - 1) / 7;
+        if (IsClaimTodayDailyReward()) week = (Data.PlayerData.currentDailyReward - 2) / 7;
         
         for (var i = 0; i < 7; i++)
         {
@@ -87,8 +87,8 @@ public class PopupDailyReward : Popup
 
     private void OnClaimReward(bool isX5Reward)
     {
-        Data.LastDailyRewardClaimed = DateTime.Now.ToString();
-        Data.CurrentDailyReward++;
+        Data.PlayerData.lastDailyRewardClaimed = DateTime.Now.ToString();
+        Data.PlayerData.currentDailyReward++;
 
         currentItem.OnClaim(isX5Reward);
         
@@ -97,13 +97,13 @@ public class PopupDailyReward : Popup
 
     public void OnClickNextDay()
     {
-        Data.LastDailyRewardClaimed = DateTime.Now.AddDays(-1).ToString();
+        Data.PlayerData.lastDailyRewardClaimed = DateTime.Now.AddDays(-1).ToString();
         Setup();
     }
 
     public bool IsClaimTodayDailyReward()
     {
-        if (DateTime.TryParse(Data.LastDailyRewardClaimed, out var dateTimeValue))
+        if (DateTime.TryParse(Data.PlayerData.lastDailyRewardClaimed, out var dateTimeValue))
         {
             return DateTime.Now.Date == dateTimeValue.Date;
         }

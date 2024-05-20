@@ -22,7 +22,7 @@ public class VibrationController : SingletonDontDestroy<VibrationController>
 
     public void HapticLight()
     {
-        if (_timeCounter <= 0 && Data.VibrateState)
+        if (_timeCounter <= 0 && Data.PlayerData.vibrationState)
         {
             Vibration.Vibrate();
             _timeCounter = _timeDelay;
@@ -31,7 +31,7 @@ public class VibrationController : SingletonDontDestroy<VibrationController>
     
     public void HapticMedium()
     {
-        if (_timeCounter <= 0 && Data.VibrateState)
+        if (_timeCounter <= 0 && Data.PlayerData.vibrationState)
         {
             Vibration.VibratePop();
             _timeCounter = _timeDelay;
@@ -40,7 +40,7 @@ public class VibrationController : SingletonDontDestroy<VibrationController>
     
     public void HapticHeavy()
     {
-        if (_timeCounter <= 0 && Data.VibrateState)
+        if (_timeCounter <= 0 && Data.PlayerData.vibrationState)
         {
             Vibration.VibratePeek();
             _timeCounter = _timeDelay;
