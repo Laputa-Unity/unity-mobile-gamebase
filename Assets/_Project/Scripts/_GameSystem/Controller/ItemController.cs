@@ -1,9 +1,11 @@
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ItemController : SingletonDontDestroy<ItemController>
 {
     [SerializeField] private ItemConfig itemConfig;
-    void Start()
+
+    private void Start()
     {
         itemConfig.Initialize();
     }

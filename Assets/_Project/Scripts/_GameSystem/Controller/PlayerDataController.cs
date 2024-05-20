@@ -1,3 +1,4 @@
+using System;
 using Custom.DataStorage;
 using CustomInspector;
 using UnityEngine;
@@ -13,7 +14,6 @@ public class PlayerDataController : SingletonDontDestroy<PlayerDataController>
 
         GameData.TryGet("PlayerData", out PlayerData data);
         Data.PlayerData = data ?? new PlayerData();
-        Debug.Log(Data.PlayerData);
     }
 
     protected override void Awake()

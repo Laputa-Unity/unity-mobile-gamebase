@@ -13,74 +13,74 @@ MonoBehaviour:
   m_Name: ItemConfig
   m_EditorClassIdentifier: 
   itemData:
-  - type: 0
-    numberID: 0
+  - identity: Skin_01
+    itemType: 0
     buyType: 0
     skinPrefab: {fileID: 6344571644816312556, guid: faaf8ff5a70af0347b373119ffc335ae, type: 3}
     shopIcon: {fileID: 0}
     coinValue: 0
-  - type: 0
-    numberID: 1
+  - identity: Skin_02
+    itemType: 0
     buyType: 1
     skinPrefab: {fileID: 2796806711168831234, guid: 5f7450b644716cd49b2bfd22d47b34b5, type: 3}
     shopIcon: {fileID: 0}
     coinValue: 0
-  - type: 0
-    numberID: 2
+  - identity: Skin_03
+    itemType: 0
     buyType: 1
     skinPrefab: {fileID: 5723130531476527263, guid: 057e2d7891f3fa242b2d26b2cd5a18c5, type: 3}
     shopIcon: {fileID: 0}
     coinValue: 0
-  - type: 0
-    numberID: 3
+  - identity: Skin_04
+    itemType: 0
     buyType: 1
     skinPrefab: {fileID: 7265175059203395335, guid: 94e9d1b7cf75afc4f8482bfcfab23146, type: 3}
     shopIcon: {fileID: 0}
     coinValue: 0
-  - type: 0
-    numberID: 4
+  - identity: Skin_05
+    itemType: 0
     buyType: 1
     skinPrefab: {fileID: 8548809443421844661, guid: 539dbfd779f1d4f4ebf9bb6b5e866d31, type: 3}
     shopIcon: {fileID: 0}
     coinValue: 0
-  - type: 0
-    numberID: 5
+  - identity: Skin_06
+    itemType: 0
     buyType: 1
     skinPrefab: {fileID: 3941486963212415844, guid: 66847c67d988a234abbc895080119c55, type: 3}
     shopIcon: {fileID: 0}
     coinValue: 0
-  - type: 0
-    numberID: 6
+  - identity: Skin_07
+    itemType: 0
     buyType: 1
     skinPrefab: {fileID: 8591614041566719234, guid: daa9429e7ab666e4398120393e9c4d5b, type: 3}
     shopIcon: {fileID: 0}
     coinValue: 0
-  - type: 0
-    numberID: 7
+  - identity: Skin_08
+    itemType: 0
     buyType: 1
     skinPrefab: {fileID: 9193633670093741310, guid: d49382d2e077e444c9a739ad5e568ce9, type: 3}
     shopIcon: {fileID: 0}
     coinValue: 0
-  - type: 0
-    numberID: 8
+  - identity: Skin_09
+    itemType: 0
     buyType: 1
     skinPrefab: {fileID: 878453915949434321, guid: e4ac6e45989c6464c851b61c101a5eb2, type: 3}
     shopIcon: {fileID: 0}
     coinValue: 0
-  - type: 0
-    numberID: 9
+  - identity: Skin_10
+    itemType: 0
     buyType: 1
     skinPrefab: {fileID: 1481125114507024799, guid: 4b781d31fb4f19d4fbba89fd1c0b955e, type: 3}
     shopIcon: {fileID: 0}
     coinValue: 0
-  - type: 0
-    numberID: 10
+  - identity: Skin_11
+    itemType: 0
     buyType: 1
     skinPrefab: {fileID: 2969699785687537517, guid: d0fa4a571aefede4bb78924961cd2628, type: 3}
     shopIcon: {fileID: 0}
     coinValue: 0
-  - type: 0
-    numberID: 11
+  - identity: Skin_12
+    itemType: 0
     buyType: 1
     skinPrefab: {fileID: 5995458487565948184, guid: 4810e9798e2f09d4ab223e3e4d6dde26, type: 3}
     shopIcon: {fileID: 0}

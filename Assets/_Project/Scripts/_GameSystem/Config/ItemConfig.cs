@@ -37,6 +37,7 @@ public class ItemConfig : ScriptableObject
             }
         }
     }
+
     public ItemData GetItemData(string itemIdentity)
     {
         return itemData.Find(item => item.identity == itemIdentity);
@@ -50,7 +51,7 @@ public class ItemConfig : ScriptableObject
     public ItemData GetGiftItemData()
     {
         List<ItemData> tempList = itemData.FindAll(item => Data.PlayerData.IsOwnedSkin(item.identity) && (item.buyType == BuyType.BuyMoney || item.buyType == BuyType.WatchAds));
-        return tempList.Count > 0?tempList[Random.Range(0, tempList.Count)]:null;
+        return tempList.Count > 0 ? tempList[Random.Range(0, tempList.Count)] : null;
     }
 }
 
