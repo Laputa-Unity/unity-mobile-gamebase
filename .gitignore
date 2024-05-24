@@ -73,5 +73,7 @@ crashlytics-build.properties
 # Ignore some files
 /remote_config_data
 /.idea
+
 /TempDataStorage
-/CustomReferenceCache.asset
+/[Aa]ssets/_Project/[Ee]ditor/[C]ustomReferenceCache
+/[Aa]ssets/_Project/[Ee]ditor/[C]ustomReferenceCache.meta

@@ -653,7 +653,7 @@ namespace custom.find.reference
 		{
 			float w = EditorGUIUtility.labelWidth;
 			EditorGUIUtility.labelWidth = 120f;
-			CustomCache.priority = EditorGUILayout.IntSlider("  Scan Priority", CustomCache.priority, 0, 5);
+			priority = EditorGUILayout.IntSlider("Scan Priority", priority, 0, 5);
 			EditorGUIUtility.labelWidth = w;
 		}
 
