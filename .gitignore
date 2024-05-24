@@ -74,3 +74,4 @@ crashlytics-build.properties
 /remote_config_data
 /.idea
 /TempDataStorage
+/CustomReferenceCache.asset
