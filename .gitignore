@@ -75,5 +75,5 @@ crashlytics-build.properties
 /.idea
 
 /TempDataStorage
-/[Aa]ssets/_Project/[Ee]ditor/[C]ustomReferenceCache
-/[Aa]ssets/_Project/[Ee]ditor/[C]ustomReferenceCache.meta
+/[Aa]ssets/[C]ustomReferenceCache
+/[Aa]ssets/[C]ustomReferenceCache.meta
