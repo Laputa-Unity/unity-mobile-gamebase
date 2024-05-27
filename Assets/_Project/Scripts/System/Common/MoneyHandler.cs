@@ -16,6 +16,7 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
     [SerializeField] private float scale = 1;
 
     [SerializeField] private Vector3? from;
+    [SerializeField] private GameObject bar;
     [SerializeField] private GameObject target;
     [SerializeField] private GameObject coinPrefab;
     [SerializeField] private TextMeshProUGUI currencyAmountText;
@@ -35,7 +36,7 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
     
     void ResetCache()
     {
-        _moneyCache = Data.PlayerData.currentMoney;
+        _moneyCache = Data.PlayerData.CurrentMoney;
         currencyAmountText.text = $"{_moneyCache}";
     }
 
@@ -115,10 +116,11 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
                     _moneyCache += moneyPerStep;
                     currencyAmountText.text = $"{_moneyCache}";
                     from = null;
+
+                    Tween.PunchScale(bar.transform, Vector3.one, .2f,1,easeBetweenShakes: Ease.Linear);
                 });
             });
         }
-        
     }
     
     private Tween MoveTo(Vector3 endValue, GameObject coin, float duration, Ease ease)
