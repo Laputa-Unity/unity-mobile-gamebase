@@ -48,7 +48,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
 
     public void BackLevel()
     {
-        Data.PlayerData.CurrentLevel--;
+        Data.PlayerData.CurrentLevelIndex--;
         
         PrepareLevel();
         StartGame();
@@ -57,7 +57,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
     public void NextLevel()
     {
         Observer.SkipLevel?.Invoke(levelController.currentLevel);
-        Data.PlayerData.CurrentLevel++;
+        Data.PlayerData.CurrentLevelIndex++;
 
         PrepareLevel();
         StartGame();
@@ -78,7 +78,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
         if (gameState == GameState.WaitingResult || gameState == GameState.LoseGame || gameState == GameState.WinGame) return;
         gameState = GameState.WinGame;
         Observer.WinLevel?.Invoke(levelController.currentLevel);
-        Data.PlayerData.CurrentLevel++;
+        Data.PlayerData.CurrentLevelIndex++;
         Sequence.Create().ChainDelay(delayPopupShowTime).ChainCallback(() =>
         {
             PopupController.Instance.HideAll();

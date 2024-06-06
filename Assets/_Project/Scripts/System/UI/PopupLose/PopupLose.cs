@@ -12,6 +12,12 @@ public class PopupLose : Popup
         PopupController.Instance.Hide<PopupUI>();
     }
 
+    public void OnClickSkip()
+    {
+        Data.PlayerData.CurrentLevelIndex++;
+        GameManager.Instance.PlayCurrentLevel();
+    }
+
     public void OnClickReplay()
     {
         GameManager.Instance.ReplayGame();

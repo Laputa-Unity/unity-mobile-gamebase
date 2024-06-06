@@ -10,15 +10,6 @@ public class Level : MonoBehaviour
 
     private Camera Camera => GetComponentInChildren<Camera>(true);
     
-    #if UNITY_EDITOR
-    private void StartLevel()
-    {
-        Data.PlayerData.CurrentLevel = Utility.GetNumberInAString(gameObject.name);
-        
-        EditorApplication.isPlaying = true;
-    }
-    #endif
-    
     void OnEnable()
     {
         Lean.Touch.LeanTouch.OnFingerDown += HandleFingerDown;

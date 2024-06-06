@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using CustomInspector;
 using UnityEngine;
 
@@ -6,9 +8,10 @@ public class LevelController : SingletonDontDestroy<LevelController>
     [SerializeField] private LevelConfig levelConfig;
     [ReadOnly] public Level currentLevel;
     
+    private Stack<Level> _stackLevel = new Stack<Level>();
     public void PrepareLevel()
     {
-        GenerateLevel(Data.PlayerData.CurrentLevel);
+        GenerateLevel(Data.PlayerData.CurrentLevelIndex);
     }
     
     public void GenerateLevel(int indexLevel)
@@ -25,9 +28,27 @@ public class LevelController : SingletonDontDestroy<LevelController>
 
     public Level GetLevelByIndex(int indexLevel)
     {
-        var levelGo = Resources.Load($"Levels/Level {indexLevel}") as GameObject;
-        Debug.Assert(levelGo != null, nameof(levelGo) + " != null");
-        return levelGo.GetComponent<Level>();
+        if (indexLevel >= levelConfig.levels.Count)
+        {
+            switch (levelConfig.levelLoopType)
+            {
+                case LevelLoopType.Recycle:
+                    var newIndexLevel = indexLevel - levelConfig.levels.Count;
+                    return levelConfig.loopLevels[newIndexLevel % levelConfig.loopLevels.Count];
+                case LevelLoopType.Random:
+                    return levelConfig.loopLevels[Random.Range(0, levelConfig.loopLevels.Count)];
+                case LevelLoopType.RandomNoRepeat:
+                    if (_stackLevel == null || _stackLevel.Count == 0)
+                    {
+                        _stackLevel = new Stack<Level>(levelConfig.loopLevels.OrderBy( x => Random.value));
+                        return _stackLevel.Pop();
+                    }
+
+                    return _stackLevel.Pop();
+            }
+           
+        }
+        return levelConfig.levels[indexLevel];
     }
 }
 

@@ -8,6 +8,12 @@ public class PopupDebug : Popup
     [SerializeField] private TMP_InputField setCoin;
     [SerializeField] private Toggle toggleTesting;
 
+    protected override void BeforeShow()
+    {
+        base.BeforeShow();
+        PopupController.Instance.Hide<PopupUI>();
+    }
+
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -18,7 +24,7 @@ public class PopupDebug : Popup
     {
         if (!string.IsNullOrEmpty(setLevel.text))
         {
-            Data.PlayerData.CurrentLevel = int.Parse(setLevel.text);
+            Data.PlayerData.CurrentLevelIndex = int.Parse(setLevel.text) - 1;
             GameManager.Instance.PrepareLevel();
             GameManager.Instance.StartGame();
         }

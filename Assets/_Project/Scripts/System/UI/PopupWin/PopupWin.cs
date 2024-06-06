@@ -6,13 +6,13 @@ public class PopupWin : Popup
     [SerializeField] private BonusArrowHandler bonusArrowHandler;
     [SerializeField] private GameObject btnRewardAds;
     [SerializeField] private GameObject btnTapToContinue; 
-    [SerializeField] private int totalMoney;
+    private int _totalMoney;
 
-    private Sequence sequence;
+    private Sequence _sequence;
     //public int MoneyWin => ConfigController.Level.winLevelMoney;
     public void SetupMoneyWin(int bonusMoney)
     {
-        totalMoney = 100 + bonusMoney;
+        _totalMoney = 100 + bonusMoney;
     }
 
     protected override void BeforeShow()
@@ -21,7 +21,7 @@ public class PopupWin : Popup
         PopupController.Instance.Show<PopupUI>();
         Setup();
         
-        sequence = Sequence.Create().ChainDelay(2f).ChainCallback(() => { btnTapToContinue.SetActive(true); });
+        _sequence = Sequence.Create().ChainDelay(2f).ChainCallback(() => { btnTapToContinue.SetActive(true); });
     }
 
     public void Setup()
@@ -44,18 +44,18 @@ public class PopupWin : Popup
     
     public void GetRewardAds()
     {
-        Data.PlayerData.CurrentMoney += totalMoney * bonusArrowHandler.CurrentAreaItem.MultiBonus;
+        Data.PlayerData.CurrentMoney += _totalMoney * bonusArrowHandler.CurrentAreaItem.MultiBonus;
         bonusArrowHandler.MoveObject.StopMoving();
         btnRewardAds.SetActive(false);
         btnTapToContinue.SetActive(false);
-        sequence.Stop();
+        _sequence.Stop();
 
         Sequence.Create().ChainDelay(2f).ChainCallback(() => { GameManager.Instance.PlayCurrentLevel(); });
     }
 
     public void OnClickContinue()
     {
-        Data.PlayerData.CurrentMoney += totalMoney;
+        Data.PlayerData.CurrentMoney += _totalMoney;
         btnRewardAds.SetActive(false);
         btnTapToContinue.SetActive(false);
 

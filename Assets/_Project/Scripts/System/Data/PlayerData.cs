@@ -5,8 +5,8 @@ using UnityEngine;
 public partial class PlayerData
 {
     [SerializeField] private bool isTesting;
-    [SerializeField] private int currentLevel = 1;
-    [SerializeField] private int currentMoney = 0;
+    [SerializeField] private int currentLevelIndex;
+    [SerializeField] private int currentMoney;
 
     public bool IsTesting
     {
@@ -18,12 +18,12 @@ public partial class PlayerData
         }
     }
 
-    public int CurrentLevel
+    public int CurrentLevelIndex
     {
-        get => currentLevel;
+        get => currentLevelIndex;
         set
         {
-            currentLevel = value;
+            currentLevelIndex = value;
             Observer.CurrentLevelChanged?.Invoke();
         }
     }

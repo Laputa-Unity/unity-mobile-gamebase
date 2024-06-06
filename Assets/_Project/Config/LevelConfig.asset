@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44c6dd8ae2ee1da4db653e7719b669f5, type: 3}
   m_Name: LevelConfig
   m_EditorClassIdentifier: 
-  levelLoopType: 0
+  levelLoopType: 2
   levels:
   - {fileID: 4891354742427979741, guid: f6775d9c9e42e83488540c32e69e4d51, type: 3}
   - {fileID: 4891354742427979741, guid: 00379e619286d4e49bfa035c1dec9b61, type: 3}
   loopLevels:
   - {fileID: 4891354742427979741, guid: f6775d9c9e42e83488540c32e69e4d51, type: 3}
   - {fileID: 4891354742427979741, guid: 00379e619286d4e49bfa035c1dec9b61, type: 3}
+  - {fileID: 4891354742427979741, guid: 09a0bb76fef916743a414f4bdb3bd542, type: 3}
+  - {fileID: 4891354742427979741, guid: d8af64f53aa88f54dac18ff541b7d8b1, type: 3}
