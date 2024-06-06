@@ -111,6 +111,7 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
             {
                 MoveToTarget(coin).OnComplete(() =>
                 {
+                    VisualEffectsController.Instance.SpawnEffect(EffectName.SparkCoin, Vector3.zero, target.transform, .5f);
                     LeanPool.Despawn(coin);
 
                     _moneyCache += moneyPerStep;

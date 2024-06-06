@@ -12,9 +12,9 @@ public class Switcher : MonoBehaviour
     [FormerlySerializedAs("SettingType")]
     [Header("Components")]
     [SerializeField] private SettingType settingType;
-    [SerializeField] private Sprite on;
-    [SerializeField] private Sprite off;
-    [SerializeField] private Image @switch;
+    [SerializeField] private Color onColor;
+    [SerializeField] private Color offColor;
+    [SerializeField] private Image switchImage;
     [SerializeField] private Transform offPos;
     [SerializeField] private Transform pos;
     [SerializeField] private TextMeshProUGUI switchText;
@@ -40,7 +40,6 @@ public class Switcher : MonoBehaviour
     private void SetupUI()
     {
         if (switchText) switchText.text = isOn ? "On" : "Off";
-        @switch.sprite = isOn ? @on : off;
     }
 
     private void Setup()
@@ -51,7 +50,7 @@ public class Switcher : MonoBehaviour
     
     private void OnEnable()
     {
-        @switch.transform.position = isOn ? pos.position : offPos.position;
+        switchImage.transform.position = isOn ? pos.position : offPos.position;
         Setup();
     }
 
@@ -61,11 +60,13 @@ public class Switcher : MonoBehaviour
         switchState = SwitchState.Moving;
         if (isOn)
         {
-            Tween.Position(@switch.transform, offPos.position, timeSwitching);
+            Tween.Position(switchImage.transform, offPos.position, timeSwitching);
+            Tween.Color(switchImage, offColor, timeSwitching);
         }
         else
         {
-            Tween.Position(@switch.transform, pos.position, timeSwitching);
+            Tween.Position(switchImage.transform, pos.position, timeSwitching);
+            Tween.Color(switchImage, onColor, timeSwitching);
         }
         Sequence.Create().ChainDelay(timeSwitching / 2f).ChainCallback(() =>
         {

@@ -11,7 +11,11 @@ public partial class PlayerData
     public bool IsTesting
     {
         get => isTesting;
-        set => isTesting = value;
+        set
+        {
+            isTesting = value;
+            Observer.DebugChanged?.Invoke();
+        }
     }
 
     public int CurrentLevel

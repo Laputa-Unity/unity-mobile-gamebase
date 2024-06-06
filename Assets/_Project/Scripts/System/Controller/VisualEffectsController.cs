@@ -15,8 +15,20 @@ public class VisualEffectsController : SingletonDontDestroy<VisualEffectsControl
         if (vfxData != null)
         {
             GameObject randomEffect = vfxData.GetRandomEffect();
-            GameObject effect = LeanPool.Spawn(randomEffect, parent);
-            effect.transform.position = position;
+            GameObject effect = LeanPool.Spawn(randomEffect, position, Quaternion.identity, parent);
+            effect.transform.localPosition = position;
+        }
+    }
+    
+    public void SpawnEffect(EffectName effectName, Vector3 position, Transform parent, float timeDestroy)
+    {
+        VisualEffectData vfxData = vfxConfig.GetVisualEffectData(effectName);
+        if (vfxData != null)
+        {
+            GameObject randomEffect = vfxData.GetRandomEffect();
+            GameObject effect = LeanPool.Spawn(randomEffect, position, Quaternion.identity, parent);
+            effect.transform.localPosition = position;
+            LeanPool.Despawn(effect, timeDestroy);
         }
     }
     
@@ -27,7 +39,7 @@ public class VisualEffectsController : SingletonDontDestroy<VisualEffectsControl
         {
             GameObject randomEffect = vfxData.GetRandomEffect();
             GameObject effect = LeanPool.Spawn(randomEffect, parent);
-            effect.transform.position = position;
+            effect.transform.localPosition = position;
             effect.transform.localScale = localScale;
         }
     }
@@ -39,7 +51,7 @@ public class VisualEffectsController : SingletonDontDestroy<VisualEffectsControl
         {
             GameObject randomEffect = vfxData.GetRandomEffect();
             GameObject effect = LeanPool.Spawn(randomEffect, parent);
-            effect.transform.position = position;
+            effect.transform.localPosition = position;
             effect.transform.localScale = localScale;
             LeanPool.Despawn(effect, timeDestroy);
         }
@@ -61,5 +73,5 @@ public class VisualEffectData
 
 public enum EffectName
 {
-    Default,
+    SparkCoin,
 }

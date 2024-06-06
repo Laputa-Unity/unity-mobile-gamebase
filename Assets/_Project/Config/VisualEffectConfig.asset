@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a42c666347a1ebe4cbec9377e9a83b69, type: 3}
   m_Name: VisualEffectConfig
   m_EditorClassIdentifier: 
-  visualEffectData: []
+  visualEffectData:
+  - name: 0
+    effects:
+    - {fileID: 2323850132663422129, guid: 91bf0396bf462f94e9c9fb01fedc836b, type: 3}
