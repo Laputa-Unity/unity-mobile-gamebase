@@ -3832,7 +3832,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bonusArrowHandler: {fileID: 4182017765428493193}
   btnRewardAds: {fileID: 684091610695217680}
-  btnTapToContinue: {fileID: 684091610695217680}
+  btnTapToContinue: {fileID: 9196906812386607124}
 --- !u!1 &7418177931432179246
 GameObject:
   m_ObjectHideFlags: 0
