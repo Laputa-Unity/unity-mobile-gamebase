@@ -74,4 +74,5 @@ public class VisualEffectData
 public enum EffectName
 {
     SparkCoin,
+    NukeExplosion,
 }

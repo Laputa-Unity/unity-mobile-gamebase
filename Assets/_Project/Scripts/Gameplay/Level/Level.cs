@@ -1,14 +1,17 @@
-using UnityEditor;
+using CustomInspector;
 using UnityEngine;
 
 public class Level : MonoBehaviour
 {
-    public int bonusMoney;
+    [SerializeField] private int bombNumber = 10;
+    [ReadOnly] public int bonusMoney;
     
+    private Camera Camera => GetComponentInChildren<Camera>(true);
+    private ObstacleSpawner _obstacleSpawner;
+    private Player _player;
+
     private bool _isFingerDown;
     private bool _isFingerDrag;
-
-    private Camera Camera => GetComponentInChildren<Camera>(true);
     
     void OnEnable()
     {
@@ -53,9 +56,18 @@ public class Level : MonoBehaviour
             _isFingerDrag = true;
         }
     }
-    
+
+    private void Awake()
+    {
+        _obstacleSpawner = GetComponentInChildren<ObstacleSpawner>();
+        _player = GetComponentInChildren<Player>();
+    }
+
     private void Start()
     {
+        _obstacleSpawner.Setup(bombNumber);
+        _obstacleSpawner.StartSpawn();
+
         Observer.WinLevel += OnWin;
         Observer.LoseLevel += OnLose;
     }
@@ -68,11 +80,11 @@ public class Level : MonoBehaviour
 
     public void OnWin(Level level)
     {
-        
+        _obstacleSpawner.StopSpawn();
     }
 
     public void OnLose(Level level)
     {
-         
+         _obstacleSpawner.StopSpawn();
     }
 }
