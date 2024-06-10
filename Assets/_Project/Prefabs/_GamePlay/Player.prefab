@@ -59,14 +59,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6012856820011900175}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -8.5, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 870583897081006525}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &905866857755903645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,8 +82,6 @@ MonoBehaviour:
   speed: 10
   minX: -5.8
   maxX: 5.8
-  vector3: {x: 0.5, y: 2, z: -2}
-  forceDead: 50
   rigid: {fileID: 7028986949296117847}
   skinHolder: {fileID: 870583897081006525}
 --- !u!65 &4006449599502203222

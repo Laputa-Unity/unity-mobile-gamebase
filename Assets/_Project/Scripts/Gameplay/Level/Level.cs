@@ -12,7 +12,8 @@ public class Level : MonoBehaviour
 
     private bool _isFingerDown;
     private bool _isFingerDrag;
-    
+    private float _screenWidth;
+
     void OnEnable()
     {
         Lean.Touch.LeanTouch.OnFingerDown += HandleFingerDown;
@@ -54,6 +55,19 @@ public class Level : MonoBehaviour
         if (_isFingerDown)
         {
             _isFingerDrag = true;
+            HandleFingerInput(finger);
+        }
+    }
+    
+    void HandleFingerInput(Lean.Touch.LeanFinger finger)
+    {
+        if (finger.ScreenPosition.x < _screenWidth / 2)
+        {
+            _player.MoveLeft();
+        }
+        else if (finger.ScreenPosition.x > _screenWidth / 2)
+        {
+            _player.MoveRight();
         }
     }
 
@@ -61,6 +75,8 @@ public class Level : MonoBehaviour
     {
         _obstacleSpawner = GetComponentInChildren<ObstacleSpawner>();
         _player = GetComponentInChildren<Player>();
+        
+        _screenWidth = Screen.width;
     }
 
     private void Start()

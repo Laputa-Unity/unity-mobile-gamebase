@@ -13,7 +13,14 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform skinHolder;
 
     private bool _isDead;
-    
+    private float _screenWidth;
+    private float _screenHeight;
+
+    private void Awake()
+    {
+        
+    }
+
     void Start()
     {
         SetSkin(Data.PlayerData.CurrentSkin);
@@ -37,6 +44,17 @@ public class Player : MonoBehaviour
         newPosition.x = Mathf.Clamp(newPosition.x, minX, maxX);
         
         transform.position = newPosition;
+
+    }
+    
+    public void MoveLeft()
+    {
+        transform.Translate(Vector3.left * speed * Time.deltaTime);
+    }
+
+    public void MoveRight()
+    {
+        transform.Translate(Vector3.right * speed * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision other)

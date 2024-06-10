@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45dd11d646118348b4f2e994976c4ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeSurvive: 5
+  bombNumber: 10
   bonusMoney: 0
 --- !u!1001 &2757237543809686866
 PrefabInstance:
@@ -137,19 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6443010028041456465, guid: 409f7dc150055d44abf968808521b644, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6443010028041456465, guid: 409f7dc150055d44abf968808521b644, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6443010028041456465, guid: 409f7dc150055d44abf968808521b644, type: 3}
-      propertyPath: m_LocalRotation.y
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6443010028041456465, guid: 409f7dc150055d44abf968808521b644, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443010028041456465, guid: 409f7dc150055d44abf968808521b644, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
