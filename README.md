@@ -1,7 +1,7 @@
 # Mobile Game Base - Core Singleton architecture (Android & Ios)
 
 <div align="center">
-<img width="1000" src="https://github.com/GuardianOfGods/unity-mobile-base/assets/52252046/0426fa69-18d3-4ae0-a868-6160345f9b2a">
+<img src="https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/5a4e4f4c-9b65-411a-823b-385406aa0887">
 </div>
 
 ## Introduction
