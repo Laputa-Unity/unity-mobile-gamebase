@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5446fa35761cff4f813ea07fb568340, type: 3}
+  m_Name: SpinConfig
+  m_EditorClassIdentifier: 
+  slotData:
+  - type: 0
+    minWeight: 0
+    maxWeight: 12
+    amount: 1000
+    sprite: {fileID: 21300000, guid: b9ce8081b41f7d64ebf3d32a107890f2, type: 3}
+  - type: 0
+    minWeight: 13
+    maxWeight: 24
+    amount: 700
+    sprite: {fileID: 21300000, guid: b9ce8081b41f7d64ebf3d32a107890f2, type: 3}
+  - type: 0
+    minWeight: 25
+    maxWeight: 40
+    amount: 500
+    sprite: {fileID: 21300000, guid: b9ce8081b41f7d64ebf3d32a107890f2, type: 3}
+  - type: 0
+    minWeight: 31
+    maxWeight: 45
+    amount: 1200
+    sprite: {fileID: 21300000, guid: b9ce8081b41f7d64ebf3d32a107890f2, type: 3}
+  - type: 0
+    minWeight: 46
+    maxWeight: 60
+    amount: 600
+    sprite: {fileID: 21300000, guid: b9ce8081b41f7d64ebf3d32a107890f2, type: 3}
+  - type: 0
+    minWeight: 61
+    maxWeight: 70
+    amount: 800
+    sprite: {fileID: 21300000, guid: b9ce8081b41f7d64ebf3d32a107890f2, type: 3}
+  - type: 0
+    minWeight: 71
+    maxWeight: 90
+    amount: 1500
+    sprite: {fileID: 21300000, guid: b9ce8081b41f7d64ebf3d32a107890f2, type: 3}
+  - type: 0
+    minWeight: 91
+    maxWeight: 100
+    amount: 2000
+    sprite: {fileID: 21300000, guid: b9ce8081b41f7d64ebf3d32a107890f2, type: 3}
