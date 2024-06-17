@@ -51,6 +51,7 @@ public class Switcher : MonoBehaviour
     private void OnEnable()
     {
         switchImage.transform.position = isOn ? pos.position : offPos.position;
+        switchImage.color = isOn ? onColor : offColor;
         Setup();
     }
 
