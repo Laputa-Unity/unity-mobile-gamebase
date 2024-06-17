@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Bomb"))
+        if (other.gameObject.CompareTag("Nuke"))
         {
             GameManager.Instance.OnLoseGame();
             Die();

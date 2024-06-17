@@ -9,18 +9,30 @@ public partial class PlayerData
     public bool MusicState
     {
         get => musicState;
-        set => musicState = value;
+        set
+        {
+            musicState = value;
+            Observer.MusicChanged?.Invoke();
+        }
     }
 
     public bool SoundState
     {
         get => soundState;
-        set => soundState = value;
+        set
+        {
+            soundState = value;
+            Observer.SoundChanged?.Invoke();
+        }
     }
 
     public bool VibrationState
     {
         get => vibrationState;
-        set => vibrationState = value;
+        set
+        {
+            vibrationState = value;
+            Observer.VibrationChanged?.Invoke();
+        }
     }
 }

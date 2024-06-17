@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
-    [SerializeField] private int bombNumber = 10;
+    [SerializeField] private int nukeNumber = 10;
     [ReadOnly] public int bonusMoney;
     
     private Camera Camera => GetComponentInChildren<Camera>(true);
@@ -81,7 +81,7 @@ public class Level : MonoBehaviour
 
     private void Start()
     {
-        _obstacleSpawner.Setup(bombNumber);
+        _obstacleSpawner.Setup(nukeNumber);
         _obstacleSpawner.StartSpawn();
 
         Observer.WinLevel += OnWin;

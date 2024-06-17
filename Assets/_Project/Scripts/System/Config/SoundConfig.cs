@@ -40,4 +40,5 @@ public enum SoundName
     PurchaseCompleted,
     PurchaseFailed,
     CoinMoving,
+    NukeExplosion,
 }

@@ -111,4 +111,4 @@ MonoBehaviour:
   delayTime: 1
   bottomLeftPoint: {fileID: 4197588431909264072}
   topRightPoint: {fileID: 5033632540296270012}
-  bombPrefab: {fileID: 8135165906437060622, guid: 077fb49697ff2c342817841d83dcac18, type: 3}
+  nukePrefab: {fileID: 8135165906437060622, guid: 077fb49697ff2c342817841d83dcac18, type: 3}

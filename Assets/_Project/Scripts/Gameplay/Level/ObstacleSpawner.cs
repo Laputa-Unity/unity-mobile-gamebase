@@ -1,5 +1,6 @@
 using Lean.Pool;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class ObstacleSpawner : MonoBehaviour
@@ -9,7 +10,7 @@ public class ObstacleSpawner : MonoBehaviour
 
     [SerializeField] private Transform bottomLeftPoint;
     [SerializeField] private Transform topRightPoint;
-    [SerializeField] Bomb bombPrefab;
+    [SerializeField] Nuke nukePrefab;
 
     private int _bombNumber;
     private float _delayCounter;
@@ -48,7 +49,7 @@ public class ObstacleSpawner : MonoBehaviour
     private void SpawnObstacle()
     {
         if (_bombNumber <= 0) return;
-        var bomb = LeanPool.Spawn(bombPrefab,
+        var bomb = LeanPool.Spawn(nukePrefab,
             new Vector3(Random.Range(bottomLeftPoint.position.x, topRightPoint.position.x),
                 Random.Range(bottomLeftPoint.position.y, topRightPoint.position.y), 0), Quaternion.Euler(90, 0, 0),
             LevelController.Instance.currentLevel.transform);

@@ -13,6 +13,12 @@ public class PopupSetting : Popup
             btnRestorePurchased.SetActive(false);
         #endif
     }
+
+    public void OnClickBack()
+    {
+        SoundController.Instance.PlayFX(SoundName.ClickButton);
+        Hide();
+    }
     
     public void OnClickRestorePurchase()
     {

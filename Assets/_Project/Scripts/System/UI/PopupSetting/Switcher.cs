@@ -59,6 +59,21 @@ public class Switcher : MonoBehaviour
     {
         if (switchState == SwitchState.Moving) return;
         switchState = SwitchState.Moving;
+        
+        switch (settingType)
+        {
+            case SettingType.BackgroundSound:
+                Data.PlayerData.MusicState = !isOn;
+                break;
+            case SettingType.FxSound:
+                Data.PlayerData.SoundState = !isOn;
+                break;
+            case SettingType.Vibration:
+                Data.PlayerData.VibrationState = !isOn;
+                break;
+        }
+        SoundController.Instance.PlayFX(SoundName.ClickButton);
+        
         if (isOn)
         {
             Tween.Position(switchImage.transform, offPos.position, timeSwitching);
@@ -69,22 +84,7 @@ public class Switcher : MonoBehaviour
             Tween.Position(switchImage.transform, pos.position, timeSwitching);
             Tween.Color(switchImage, onColor, timeSwitching);
         }
-        Sequence.Create().ChainDelay(timeSwitching / 2f).ChainCallback(() =>
-        {
-            switch (settingType)
-            {
-                case SettingType.BackgroundSound:
-                    Data.PlayerData.MusicState = !isOn;
-                    break;
-                case SettingType.FxSound:
-                    Data.PlayerData.SoundState = !isOn;
-                    break;
-                case SettingType.Vibration:
-                    Data.PlayerData.VibrationState = !isOn;
-                    break;
-            }
-            Setup();
-        }).OnComplete(() =>
+        Sequence.Create().ChainDelay(timeSwitching / 2f).ChainCallback(Setup).OnComplete(() =>
         {
             switchState = SwitchState.Idle;
         });

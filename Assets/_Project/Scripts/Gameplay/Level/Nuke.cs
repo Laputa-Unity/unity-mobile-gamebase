@@ -1,21 +1,22 @@
 using Lean.Pool;
 using UnityEngine;
 
-public class Bomb : MonoBehaviour
+public class Nuke : MonoBehaviour
 {
-    private bool _isLastBomb;
+    private bool _isLastNuke;
 
-    public void Setup(bool isLastBomb)
+    public void Setup(bool isLasNuke)
     {
-        _isLastBomb = isLastBomb;
+        _isLastNuke = isLasNuke;
     }
     
     private void OnCollisionEnter(Collision other)
     {
         LeanPool.Despawn(gameObject);
+        SoundController.Instance.PlayFX(SoundName.NukeExplosion);
         VisualEffectsController.Instance.SpawnEffect(EffectName.NukeExplosion, other.GetContact(0).point, LevelController.Instance.currentLevel.transform, 1.5f);
         
-        if (other.gameObject.CompareTag("Ground") && _isLastBomb)
+        if (other.gameObject.CompareTag("Ground") && _isLastNuke)
         {
             GameManager.Instance.OnWinGame();
         }
@@ -24,7 +25,7 @@ public class Bomb : MonoBehaviour
 
     private void RefreshAfterPool()
     {
-        _isLastBomb = false;
+        _isLastNuke = false;
         transform.localPosition = Vector3.zero;
         transform.localEulerAngles = new Vector3(90, 0, 0);
     }
