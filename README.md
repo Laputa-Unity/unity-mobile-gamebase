@@ -14,6 +14,8 @@
 ## Installation
 - Version: **Unity 2022.3 or higher**
 - Type select: **Android**, **IOS**
+![image](https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/fa61651e-daa6-4b0c-bd9c-e866ca94125e)
+
 
 ## Folder Structure
 ```bash
