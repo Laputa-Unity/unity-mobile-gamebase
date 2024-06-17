@@ -12,7 +12,7 @@
 
 
 ## Installation
-- Version: **Unity 2022.3.16f1 LTS**
+- Version: **Unity 2022.3 or higher**
 - Type select: **Android**, **IOS**
 
 ## Folder Structure
