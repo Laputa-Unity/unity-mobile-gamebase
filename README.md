@@ -1,15 +1,11 @@
 # Mobile Game Base - Core Singleton architecture (Android & Ios)
 
-<div align="center">
-<img src="https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/5a4e4f4c-9b65-411a-823b-385406aa0887">
-</div>
-
-## Introduction
-
 - Project is a sample gamebase for mobile game using **singleton design pattern**.
 - Because the project is designed using the singleton pattern, you can get used to it very easily and build a complete game quickly. However, I do not recommend using it for large game projects. Anyway it is a bad pattern, you can see or read about it everywhere on the internet.
 
-
+<div align="center">
+<img src="https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/5a4e4f4c-9b65-411a-823b-385406aa0887">
+</div>
 
 ## Installation
 - Version: **Unity 2022.3 or higher**
