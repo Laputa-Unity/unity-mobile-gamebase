@@ -27,6 +27,17 @@ public class PlayerDataController : SingletonDontDestroy<PlayerDataController>
         GameData.Set("PlayerData", Data.PlayerData);
         GameData.Save();
     }
+
+    public void SaveData()
+    {
+        GameData.Save();
+    }
+
+    public void LoadData()
+    {
+        GameData.TryGet("PlayerData", out PlayerData data);
+        Data.PlayerData = data ?? new PlayerData();
+    }
 }
 
 public static class Data

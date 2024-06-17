@@ -3,8 +3,8 @@ using UnityEngine;
 public partial class PlayerData
 {
     [SerializeField] private bool musicState = true;
-    [SerializeField] bool soundState = true;
-    [SerializeField] bool vibrationState = true;
+    [SerializeField] private bool soundState = true;
+    [SerializeField] private bool vibrationState = true;
 
     public bool MusicState
     {
