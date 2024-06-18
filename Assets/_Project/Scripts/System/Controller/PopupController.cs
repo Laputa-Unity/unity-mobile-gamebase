@@ -1,14 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using CustomInspector;
-using UnityEngine.UI;
 
 public class PopupController : SingletonDontDestroy<PopupController>
 {
     public Camera uiCamera;
     [SerializeField] private Transform canvasTransform;
-    [SerializeField] private UnityEngine.UI.CanvasScaler canvasScaler;
     [SerializeField] private PopupConfig popupConfig;
 
     private readonly Dictionary<Type, Popup> _dictionary = new Dictionary<Type, Popup>();
@@ -16,12 +13,6 @@ public class PopupController : SingletonDontDestroy<PopupController>
     protected void Start()
     {
         Initialize();
-    }
-
-    [Button("Test")]
-    public void Test()
-    {
-        Debug.Log(Screen.width + " " + Screen.height);
     }
 
     public void Initialize()

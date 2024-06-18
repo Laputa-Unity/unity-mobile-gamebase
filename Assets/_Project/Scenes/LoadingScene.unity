@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3708985, g: 0.3783704, b: 0.35722548, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -384,6 +383,7 @@ MonoBehaviour:
     vibrationState: 1
     currentSkin: Skin_01
     ownedSkins: []
+    lastSpin: 6/16/2024 10:10:45 AM
 --- !u!1 &326257131
 GameObject:
   m_ObjectHideFlags: 0

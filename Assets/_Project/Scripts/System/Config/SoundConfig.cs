@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CustomInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,7 +19,7 @@ public class SoundConfig : ScriptableObject
 [Serializable]
 public class SoundData
 {
-    public SoundName name;
+    [EnumExtend] public SoundName name;
     public List<AudioClip> clips;
 
     public AudioClip GetRandomAudioClip()
