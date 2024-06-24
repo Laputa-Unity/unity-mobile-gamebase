@@ -373,6 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDataReader:
+    isFirstPlaying: 1
     isTesting: 0
     currentLevelIndex: 0
     currentMoney: 0
@@ -1429,7 +1430,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiCamera: {fileID: 183462101}
   canvasTransform: {fileID: 1579314926}
-  canvasScaler: {fileID: 1579314928}
   popupConfig: {fileID: 11400000, guid: c45c30f794c42b745b31ed68ceaa4b50, type: 2}
 --- !u!4 &1797787785
 Transform:

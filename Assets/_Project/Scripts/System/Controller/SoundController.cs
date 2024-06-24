@@ -63,7 +63,7 @@ public class SoundController : SingletonDontDestroy<SoundController>
 
             if (clip)
             {
-                if (!backgroundAudio.clip == clip)
+                if (backgroundAudio.clip != clip)
                 {
                     backgroundAudio.clip = clip;
                     backgroundAudio.Play();
@@ -78,5 +78,10 @@ public class SoundController : SingletonDontDestroy<SoundController>
         {
             Debug.LogWarning($"<color=Red>Missing {soundName}</color>");
         }
+    }
+
+    public void ChangeBackgroundVolume(float volume)
+    {
+        backgroundAudio.volume = volume;
     }
 }

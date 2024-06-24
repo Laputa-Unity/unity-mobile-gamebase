@@ -12,6 +12,7 @@ public class Arrow : MonoBehaviour
         {
             currentSlotItem = other.GetComponent<SlotItem>();
             spin.currentSlotItem = currentSlotItem;
+            SoundController.Instance.PlayFX(SoundName.SpinWheel);
         }
     }
 }

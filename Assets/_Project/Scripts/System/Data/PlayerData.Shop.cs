@@ -3,7 +3,7 @@ using UnityEngine;
 
 public partial class PlayerData
 {
-    [SerializeField] private string currentSkin = "Skin_01";
+    [SerializeField] private string currentSkin = "Skin_00";
     [SerializeField] private List<string> ownedSkins = new List<string>();
 
     public string CurrentSkin

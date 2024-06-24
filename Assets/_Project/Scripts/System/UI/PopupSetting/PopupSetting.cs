@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 #if UNITY_IOS
 using UnityEngine.iOS;
@@ -6,6 +7,13 @@ using UnityEngine.iOS;
 public class PopupSetting : Popup
 {
     public GameObject btnRestorePurchased;
+    public TextMeshProUGUI test;
+
+    protected override void BeforeShow()
+    {
+        base.BeforeShow();
+        test.text = Data.PlayerData.IsFirstPlaying.ToString();
+    }
 
     void Start()
     {

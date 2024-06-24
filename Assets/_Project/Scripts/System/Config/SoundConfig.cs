@@ -40,6 +40,7 @@ public enum SoundName
     ClickButton,
     PurchaseCompleted,
     PurchaseFailed,
-    CoinMoving,
+    CollectCoin,
     NukeExplosion,
-}
+SpawnCoin,
+CaribeanThemeSong, BackgroundIngame, SpinWheel, }

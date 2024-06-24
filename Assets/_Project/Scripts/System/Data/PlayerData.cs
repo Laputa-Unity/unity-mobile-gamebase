@@ -4,9 +4,16 @@ using UnityEngine;
 [Serializable]
 public partial class PlayerData
 {
+    [SerializeField] private bool isFirstPlaying = true;
     [SerializeField] private bool isTesting;
     [SerializeField] private int currentLevelIndex;
     [SerializeField] private int currentMoney;
+
+    public bool IsFirstPlaying
+    {
+        get => isFirstPlaying;
+        set => isFirstPlaying = value;
+    }
 
     public bool IsTesting
     {

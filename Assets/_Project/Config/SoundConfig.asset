@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundData:
   - name: 0
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: 3f147b5f863d6f5469b2933254840c7f, type: 3}
   - name: 1
     clips: []
   - name: 2
@@ -28,7 +29,19 @@ MonoBehaviour:
     - {fileID: 0}
   - name: 5
     clips:
-    - {fileID: 8300000, guid: e64a815b5b859704a8b9fb7d8ae396cf, type: 3}
+    - {fileID: 8300000, guid: e69d1c487b66dbc4e9f6e018cc6157e9, type: 3}
   - name: 6
     clips:
     - {fileID: 8300000, guid: 92d3259b6a9732e4ba3fb95331b2c95d, type: 3}
+  - name: 7
+    clips:
+    - {fileID: 8300000, guid: e64a815b5b859704a8b9fb7d8ae396cf, type: 3}
+  - name: 8
+    clips:
+    - {fileID: 8300000, guid: 6cadffc4a992cd649a2a869ad5aed8a6, type: 3}
+  - name: 9
+    clips:
+    - {fileID: 8300000, guid: f490fbb8a4c0e5e42a9d655a86adacc5, type: 3}
+  - name: 10
+    clips:
+    - {fileID: 8300000, guid: 9ce6410d4dfc80244af822696d2b00a2, type: 3}

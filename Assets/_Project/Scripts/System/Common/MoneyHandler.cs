@@ -91,6 +91,7 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
     {
         int moneyPerStep = moneyAmount/numberCoin;
         
+        SoundController.Instance.PlayFX(SoundName.SpawnCoin);
         for (int i = 0; i < numberCoin; i++)
         {
             await Task.Delay(Random.Range(0, delay));
@@ -105,15 +106,16 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
                 coin.transform.localPosition = Vector3.zero;
             }
             
-            SoundController.Instance.PlayFX(SoundName.CoinMoving);
+            
             
             MoveToNear(coin).OnComplete(() =>
             {
                 MoveToTarget(coin).OnComplete(() =>
                 {
+                    SoundController.Instance.PlayFX(SoundName.CollectCoin);
                     VisualEffectsController.Instance.SpawnEffect(EffectName.SparkCoin, Vector3.zero, target.transform, .5f);
                     LeanPool.Despawn(coin);
-
+                    
                     _moneyCache += moneyPerStep;
                     currencyAmountText.text = $"{_moneyCache}";
                     from = null;

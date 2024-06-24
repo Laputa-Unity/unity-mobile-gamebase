@@ -1,4 +1,4 @@
-    using CustomTween;
+using CustomTween;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,6 +17,17 @@ public class LoadingController : MonoBehaviour
     
     void Start()
     {
+        if (Data.PlayerData.IsFirstPlaying)
+        {
+            timeLoading = 10;
+            SoundController.Instance.PlayBackground(SoundName.CaribeanThemeSong);
+        }
+        else
+        {
+            SoundController.Instance.PlayBackground(SoundName.Background);
+
+        }
+        
         _sceneOperation = SceneManager.LoadSceneAsync("GameplayScene");
         _sceneOperation.allowSceneActivation = false;
 
@@ -26,4 +37,6 @@ public class LoadingController : MonoBehaviour
                 (loadingText, tween) => { loadingText.text = $"Loading {(int) (progressBar.fillAmount * 100)}%"; })
             .OnComplete(() => { _sceneOperation.allowSceneActivation = true; });
     }
+    
+    
 }
