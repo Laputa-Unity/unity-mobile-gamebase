@@ -1,4 +1,4 @@
-# Mobile Game Base - Core Singleton architecture (Android & Ios)
+# Mobile Game Base - Core Singleton Architecture (Android & Ios)
 
 <div align="center">
 <img src="https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/ba7c8ff2-3419-4bc4-b9dc-8ea009a8732b">
