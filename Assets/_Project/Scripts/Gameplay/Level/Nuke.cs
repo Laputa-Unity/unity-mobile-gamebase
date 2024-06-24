@@ -13,6 +13,7 @@ public class Nuke : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         LeanPool.Despawn(gameObject);
+        VibrationController.Instance.HapticLight();
         SoundController.Instance.PlayFX(SoundName.NukeExplosion);
         VisualEffectsController.Instance.SpawnEffect(EffectName.NukeExplosion, other.GetContact(0).point, LevelController.Instance.currentLevel.transform, 1.5f);
         

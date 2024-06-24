@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class VibrationController : SingletonDontDestroy<VibrationController>
@@ -24,7 +23,7 @@ public class VibrationController : SingletonDontDestroy<VibrationController>
     {
         if (_timeCounter <= 0 && Data.PlayerData.VibrationState)
         {
-            Vibration.Vibrate();
+            Vibration.VibratePop();
             _timeCounter = _timeDelay;
         }
     }
@@ -33,7 +32,7 @@ public class VibrationController : SingletonDontDestroy<VibrationController>
     {
         if (_timeCounter <= 0 && Data.PlayerData.VibrationState)
         {
-            Vibration.VibratePop();
+            Vibration.Vibrate();
             _timeCounter = _timeDelay;
         }
     }
