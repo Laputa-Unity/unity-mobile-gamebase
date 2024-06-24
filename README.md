@@ -39,9 +39,8 @@
 
 ## ExtensionPackage
 ### CustomDataStorage
-- This package store data in binary format, which fast and secure.
-- Supports debugging, viewing data and automatically storing data.
- 
+- This package store is using for saving and loading player data.
+
 [See more](https://github.com/Laputa-Unity/unity-mobile-gamebase/wiki/Data-storage)
 
 ## Documentation
