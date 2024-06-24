@@ -41,7 +41,7 @@
 ### CustomDataStorage
 - This package store is using for saving and loading player data.
 
-[See more](https://github.com/Laputa-Unity/unity-mobile-gamebase/wiki/Data-storage)
+[See more](https://github.com/Laputa-Unity/unity-mobile-gamebase/wiki/Custom-Build-Report)
 
 ## Documentation
 - [See Wiki](https://github.com/GuardianOfGods/unity-mobile-base/wiki)
