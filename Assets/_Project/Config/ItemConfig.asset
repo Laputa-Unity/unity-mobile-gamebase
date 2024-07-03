@@ -17,35 +17,47 @@ MonoBehaviour:
     itemType: 0
     buyType: 0
     skinPrefab: {fileID: 817056856077070368, guid: cb947ad3287bc1a42819b121daaa9eb1, type: 3}
-    shopIcon: {fileID: 0}
-    coinValue: 0
+    shopIcon: {fileID: 21300000, guid: ce28ba955dccd9a40b3e87c379314491, type: 3}
+    price: 0
   - identity: Skin_01
     itemType: 0
     buyType: 1
     skinPrefab: {fileID: 1519810795499111710, guid: faaf8ff5a70af0347b373119ffc335ae, type: 3}
-    shopIcon: {fileID: 0}
-    coinValue: 0
+    shopIcon: {fileID: 21300000, guid: d41635ee3baad814dbad169056c41197, type: 3}
+    price: 1000
   - identity: Skin_02
     itemType: 0
     buyType: 1
     skinPrefab: {fileID: 2279602108309011555, guid: 5f7450b644716cd49b2bfd22d47b34b5, type: 3}
-    shopIcon: {fileID: 0}
-    coinValue: 0
+    shopIcon: {fileID: 21300000, guid: 0b0d5c57c12d4804d8b81152566d5aee, type: 3}
+    price: 1000
   - identity: Skin_03
     itemType: 0
     buyType: 1
     skinPrefab: {fileID: 1563667382773929699, guid: 057e2d7891f3fa242b2d26b2cd5a18c5, type: 3}
-    shopIcon: {fileID: 0}
-    coinValue: 0
+    shopIcon: {fileID: 21300000, guid: adab2dbb4f642b44f913b484ef56f3c2, type: 3}
+    price: 1000
   - identity: Skin_04
     itemType: 0
     buyType: 1
     skinPrefab: {fileID: 2695683194601606898, guid: 94e9d1b7cf75afc4f8482bfcfab23146, type: 3}
-    shopIcon: {fileID: 0}
-    coinValue: 0
+    shopIcon: {fileID: 21300000, guid: 473b1a57a72996d47b8e0666ed5e7d9c, type: 3}
+    price: 1000
   - identity: Skin_05
     itemType: 0
     buyType: 1
     skinPrefab: {fileID: 6626026455983565418, guid: 539dbfd779f1d4f4ebf9bb6b5e866d31, type: 3}
-    shopIcon: {fileID: 0}
-    coinValue: 0
+    shopIcon: {fileID: 21300000, guid: 95ee2afdc6675f1428a29ba84f0e98cc, type: 3}
+    price: 1000
+  - identity: Skin_06
+    itemType: 0
+    buyType: 1
+    skinPrefab: {fileID: 6626026455983565418, guid: 68faa6f2df954c54a964ed6e3a3f3ed0, type: 3}
+    shopIcon: {fileID: 21300000, guid: 807e6ea1a8f06d748bdb92ef5303d720, type: 3}
+    price: 1000
+  - identity: Skin_07
+    itemType: 0
+    buyType: 1
+    skinPrefab: {fileID: 6626026455983565418, guid: 95cf6aec0261d1e47b4e20823bf4d182, type: 3}
+    shopIcon: {fileID: 21300000, guid: 9ce2b4c9e5468a443b8ee0bc09625ab2, type: 3}
+    price: 1000

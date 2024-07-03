@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CustomInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -7,7 +8,7 @@ using Random = UnityEngine.Random;
 public class ItemConfig : ScriptableObject
 {
     public List<ItemData> itemData;
-
+    
     public void Initialize()
     {
         UnlockDefaultSkins();
@@ -50,7 +51,7 @@ public class ItemConfig : ScriptableObject
 
     public ItemData GetGiftItemData()
     {
-        List<ItemData> tempList = itemData.FindAll(item => Data.PlayerData.IsOwnedSkin(item.identity) && (item.buyType == BuyType.BuyMoney || item.buyType == BuyType.WatchAds));
+        List<ItemData> tempList = itemData.FindAll(item => Data.PlayerData.IsOwnedSkin(item.identity) && (item.buyType == BuyType.Money || item.buyType == BuyType.WatchAds));
         return tempList.Count > 0 ? tempList[Random.Range(0, tempList.Count)] : null;
     }
 }
@@ -63,13 +64,13 @@ public class ItemData
     public BuyType buyType;
     public GameObject skinPrefab;
     public Sprite shopIcon;
-    public int coinValue;
+    [ShowIf("buyType", BuyType.Money)] public int price;
 }
 
 public enum BuyType
 {
     Default,
-    BuyMoney,
+    Money,
     DailyReward,
     WatchAds,
     Event,

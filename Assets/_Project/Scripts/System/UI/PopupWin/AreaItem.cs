@@ -1,12 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class AreaItem : MonoBehaviour
 {
+    [SerializeField] private Color selectedColor;
+    [SerializeField] private Color unselectedColor;
+    [SerializeField] private Image image;
     [SerializeField] private GameObject borderLight;
     [SerializeField] private int multiBonus = 1;
+
+    private void OnEnable()
+    {
+        image.color = unselectedColor;
+    }
 
     public int MultiBonus
     {
@@ -16,11 +22,13 @@ public class AreaItem : MonoBehaviour
 
     public void ActivateBorderLight()
     {
+        image.color = selectedColor;
         borderLight.SetActive(true);
     }
 
     public void DeActivateBorderLight()
     {
+        image.color = unselectedColor;
         borderLight.SetActive(false);
     }
 }
