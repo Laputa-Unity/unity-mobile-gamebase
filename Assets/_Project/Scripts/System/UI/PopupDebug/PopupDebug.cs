@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,10 +8,13 @@ public class PopupDebug : Popup
     [SerializeField] private TMP_InputField setLevel;
     [SerializeField] private TMP_InputField setCoin;
     [SerializeField] private Toggle toggleTesting;
+    [SerializeField] private GameObject panelPlayerData;
+    [SerializeField] private TMP_InputField inputField;
 
     protected override void BeforeShow()
     {
         base.BeforeShow();
+        panelPlayerData.SetActive(false);
         PopupController.Instance.Hide<PopupUI>();
     }
 
@@ -41,5 +45,16 @@ public class PopupDebug : Popup
     public void ChangeTestingState()
     {
         Data.PlayerData.IsTesting = toggleTesting.isOn;
+    }
+
+    public void OnClickPanelPlayerData()
+    {
+        panelPlayerData.SetActive(true);
+        inputField.text = JsonConvert.SerializeObject(Data.PlayerData, Formatting.Indented);
+    }
+
+    public void OnClickExitPanelPlayerData()
+    {
+        panelPlayerData.SetActive(false);
     }
 }

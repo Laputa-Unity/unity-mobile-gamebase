@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -11,8 +13,10 @@ public class PopupSpin : Popup
     [SerializeField] private GameObject btnFreeSpinAds;
 
     private bool _isSpinning;
+    private List<UIButton>_listUiButton;
     private void Start()
     {
+        _listUiButton = GetComponentsInChildren<UIButton>().ToList();
         SetupSlotItems();
     }
 
@@ -72,14 +76,23 @@ public class PopupSpin : Popup
 
     private void Spin()
     {
+        SetStateButtons(false);
         spin.OnSpin();
         Data.PlayerData.LastSpin = DateTime.Now.ToString();
     }
-
+    
     public void OnStopWheel()
     {
+        SetStateButtons(true);
         _isSpinning = false;
         spin.OnStopWheel();
     }
 
+    private void SetStateButtons(bool isInteractable)
+    {
+        foreach (var uiButton in _listUiButton)
+        {
+            uiButton.interactable = isInteractable;
+        }
+    }
 }

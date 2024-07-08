@@ -47,6 +47,7 @@ public class ShopItem : Popup
 
     public void OnClickSelect()
     {
+        SoundController.Instance.PlayFX(SoundName.ClickButton);
         if (playerData.OwnedSkins.Contains(_itemData.identity))
         {
             playerData.CurrentSkin = _itemData.identity;
@@ -57,6 +58,7 @@ public class ShopItem : Popup
     public void OnClickBuy()
     {
         SoundController.Instance.PlayFX(SoundName.ClickButton);
+        SoundController.Instance.PlayFX(SoundName.PurchaseCompleted);
         playerData.CurrentMoney -= _itemData.price;
         playerData.OwnedSkins.Add(_itemData.identity);
         playerData.CurrentSkin = _itemData.identity;
