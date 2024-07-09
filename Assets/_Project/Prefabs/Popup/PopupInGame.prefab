@@ -71,8 +71,8 @@ GameObject:
   - component: {fileID: 2110820821374203978}
   - component: {fileID: 8288219723752485141}
   - component: {fileID: 331501569123143340}
-  - component: {fileID: 6645780417153125706}
   - component: {fileID: 3234627605744440964}
+  - component: {fileID: 6672051321091118343}
   m_Layer: 5
   m_Name: BtnWin
   m_TagString: Untagged
@@ -155,7 +155,7 @@ MonoBehaviour:
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
---- !u!114 &6645780417153125706
+--- !u!114 &3234627605744440964
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,7 +164,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 337785703427156683}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d327287640dac41b4aaade109e3242c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 63da107d5c776be479de5edc3dc13dec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6672051321091118343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337785703427156683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05e5d2e9cb943e54f841c49227a507d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -196,6 +208,10 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 8288219723752485141}
+  useMotion: 1
+  scaleDuration: 0.2
+  scalePercent: 0.9
+  scaleEase: 1
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -211,55 +227,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  clickType: 0
-  allowMultipleClick: 1
-  timeDisableButton: 0.2
-  doubleClickInterval: 0.2
-  longClickInterval: 0.5
-  delayDetectHold: 0.2
-  onDoubleClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onLongClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onPointerUp:
-    m_PersistentCalls:
-      m_Calls: []
-  onHold:
-    m_PersistentCalls:
-      m_Calls: []
-  isMotion: 1
-  ignoreTimeScale: 0
-  isMotionUnableInteract: 0
-  isAffectToSelf: 1
-  affectObject: {fileID: 0}
-  motionData:
-    scale: {x: 1.05, y: 1.05}
-    motion: 2
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
-  motionDataUnableInteract:
-    scale: {x: 1.15, y: 1.15}
-    motion: 3
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
---- !u!114 &3234627605744440964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 337785703427156683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63da107d5c776be479de5edc3dc13dec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &500080215166614254
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,7 +373,7 @@ GameObject:
   - component: {fileID: 8275243719829209432}
   - component: {fileID: 4995003225708122407}
   - component: {fileID: 4139460289340240365}
-  - component: {fileID: 7376978022758260584}
+  - component: {fileID: 2103057980600854552}
   m_Layer: 5
   m_Name: BtnHome
   m_TagString: Untagged
@@ -489,7 +456,7 @@ MonoBehaviour:
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0.5, y: 0.5, z: 0.5}
---- !u!114 &7376978022758260584
+--- !u!114 &2103057980600854552
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -498,7 +465,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 972229794992604582}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d327287640dac41b4aaade109e3242c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 05e5d2e9cb943e54f841c49227a507d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -530,6 +497,10 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 4995003225708122407}
+  useMotion: 1
+  scaleDuration: 0.2
+  scalePercent: 0.9
+  scaleEase: 1
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -545,43 +516,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  clickType: 0
-  allowMultipleClick: 1
-  timeDisableButton: 0.2
-  doubleClickInterval: 0.2
-  longClickInterval: 0.5
-  delayDetectHold: 0.2
-  onDoubleClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onLongClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onPointerUp:
-    m_PersistentCalls:
-      m_Calls: []
-  onHold:
-    m_PersistentCalls:
-      m_Calls: []
-  isMotion: 1
-  ignoreTimeScale: 0
-  isMotionUnableInteract: 0
-  isAffectToSelf: 1
-  affectObject: {fileID: 0}
-  motionData:
-    scale: {x: 1.05, y: 1.05}
-    motion: 2
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
-  motionDataUnableInteract:
-    scale: {x: 1.15, y: 1.15}
-    motion: 3
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
 --- !u!1 &3592698499990389922
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,8 +528,8 @@ GameObject:
   - component: {fileID: 5861430742064186920}
   - component: {fileID: 5907823700991422491}
   - component: {fileID: 5513561723334349175}
-  - component: {fileID: 2143295536133822422}
   - component: {fileID: 753485664683778328}
+  - component: {fileID: 5295466948833915885}
   m_Layer: 5
   m_Name: BtnLose
   m_TagString: Untagged
@@ -678,7 +612,7 @@ MonoBehaviour:
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
---- !u!114 &2143295536133822422
+--- !u!114 &753485664683778328
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -687,7 +621,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 3592698499990389922}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d327287640dac41b4aaade109e3242c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 63da107d5c776be479de5edc3dc13dec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5295466948833915885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3592698499990389922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05e5d2e9cb943e54f841c49227a507d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -719,6 +665,10 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 5907823700991422491}
+  useMotion: 1
+  scaleDuration: 0.2
+  scalePercent: 0.9
+  scaleEase: 1
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -734,55 +684,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  clickType: 0
-  allowMultipleClick: 1
-  timeDisableButton: 0.2
-  doubleClickInterval: 0.2
-  longClickInterval: 0.5
-  delayDetectHold: 0.2
-  onDoubleClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onLongClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onPointerUp:
-    m_PersistentCalls:
-      m_Calls: []
-  onHold:
-    m_PersistentCalls:
-      m_Calls: []
-  isMotion: 1
-  ignoreTimeScale: 0
-  isMotionUnableInteract: 0
-  isAffectToSelf: 1
-  affectObject: {fileID: 0}
-  motionData:
-    scale: {x: 1.05, y: 1.05}
-    motion: 2
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
-  motionDataUnableInteract:
-    scale: {x: 1.15, y: 1.15}
-    motion: 3
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
---- !u!114 &753485664683778328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3592698499990389922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63da107d5c776be479de5edc3dc13dec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4429355886652026346
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,8 +696,8 @@ GameObject:
   - component: {fileID: 434853575595296403}
   - component: {fileID: 6411312079665324011}
   - component: {fileID: 7041843638920532719}
-  - component: {fileID: 8580436411738377938}
   - component: {fileID: 114903496016737341}
+  - component: {fileID: 3974660779537991608}
   m_Layer: 5
   m_Name: BtnSkip
   m_TagString: Untagged
@@ -879,7 +780,7 @@ MonoBehaviour:
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
---- !u!114 &8580436411738377938
+--- !u!114 &114903496016737341
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -888,7 +789,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4429355886652026346}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d327287640dac41b4aaade109e3242c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 63da107d5c776be479de5edc3dc13dec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3974660779537991608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4429355886652026346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05e5d2e9cb943e54f841c49227a507d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -920,6 +833,10 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 6411312079665324011}
+  useMotion: 1
+  scaleDuration: 0.2
+  scalePercent: 0.9
+  scaleEase: 1
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -935,55 +852,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  clickType: 0
-  allowMultipleClick: 1
-  timeDisableButton: 0.2
-  doubleClickInterval: 0.2
-  longClickInterval: 0.5
-  delayDetectHold: 0.2
-  onDoubleClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onLongClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onPointerUp:
-    m_PersistentCalls:
-      m_Calls: []
-  onHold:
-    m_PersistentCalls:
-      m_Calls: []
-  isMotion: 1
-  ignoreTimeScale: 0
-  isMotionUnableInteract: 0
-  isAffectToSelf: 1
-  affectObject: {fileID: 0}
-  motionData:
-    scale: {x: 1.05, y: 1.05}
-    motion: 2
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
-  motionDataUnableInteract:
-    scale: {x: 1.15, y: 1.15}
-    motion: 3
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
---- !u!114 &114903496016737341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4429355886652026346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63da107d5c776be479de5edc3dc13dec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4957344726548281664
 GameObject:
   m_ObjectHideFlags: 0
@@ -1853,7 +1721,7 @@ GameObject:
   - component: {fileID: 9161932885862187896}
   - component: {fileID: 1735350241572243168}
   - component: {fileID: 5117205151153870509}
-  - component: {fileID: 8826423797174123682}
+  - component: {fileID: 1404481201022735773}
   m_Layer: 5
   m_Name: BtnReplay
   m_TagString: Untagged
@@ -1936,7 +1804,7 @@ MonoBehaviour:
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
---- !u!114 &8826423797174123682
+--- !u!114 &1404481201022735773
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1945,7 +1813,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8785879184831882045}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d327287640dac41b4aaade109e3242c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 05e5d2e9cb943e54f841c49227a507d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -1977,6 +1845,10 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1735350241572243168}
+  useMotion: 1
+  scaleDuration: 0.2
+  scalePercent: 0.9
+  scaleEase: 1
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -1992,43 +1864,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  clickType: 0
-  allowMultipleClick: 1
-  timeDisableButton: 0.2
-  doubleClickInterval: 0.2
-  longClickInterval: 0.5
-  delayDetectHold: 0.2
-  onDoubleClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onLongClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onPointerUp:
-    m_PersistentCalls:
-      m_Calls: []
-  onHold:
-    m_PersistentCalls:
-      m_Calls: []
-  isMotion: 1
-  ignoreTimeScale: 0
-  isMotionUnableInteract: 0
-  isAffectToSelf: 1
-  affectObject: {fileID: 0}
-  motionData:
-    scale: {x: 1.05, y: 1.05}
-    motion: 2
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
-  motionDataUnableInteract:
-    scale: {x: 1.15, y: 1.15}
-    motion: 3
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
 --- !u!1 &8948520160005386127
 GameObject:
   m_ObjectHideFlags: 0
@@ -2116,8 +1951,8 @@ GameObject:
   - component: {fileID: 6155008036255519497}
   - component: {fileID: 640313825970560007}
   - component: {fileID: 586999487551448420}
-  - component: {fileID: 4560236152226466752}
   - component: {fileID: 1882166521311778732}
+  - component: {fileID: 7629682398493402619}
   m_Layer: 5
   m_Name: BtnPrevious
   m_TagString: Untagged
@@ -2200,7 +2035,7 @@ MonoBehaviour:
   animTime: 0.5
   delayAnimTime: 0
   fromScale: {x: 0, y: 0, z: 0}
---- !u!114 &4560236152226466752
+--- !u!114 &1882166521311778732
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2209,7 +2044,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 9054173132683076706}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d327287640dac41b4aaade109e3242c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 63da107d5c776be479de5edc3dc13dec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7629682398493402619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9054173132683076706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05e5d2e9cb943e54f841c49227a507d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -2241,6 +2088,10 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 640313825970560007}
+  useMotion: 1
+  scaleDuration: 0.2
+  scalePercent: 0.9
+  scaleEase: 1
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -2256,52 +2107,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  clickType: 0
-  allowMultipleClick: 1
-  timeDisableButton: 0.2
-  doubleClickInterval: 0.2
-  longClickInterval: 0.5
-  delayDetectHold: 0.2
-  onDoubleClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onLongClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onPointerUp:
-    m_PersistentCalls:
-      m_Calls: []
-  onHold:
-    m_PersistentCalls:
-      m_Calls: []
-  isMotion: 1
-  ignoreTimeScale: 0
-  isMotionUnableInteract: 0
-  isAffectToSelf: 1
-  affectObject: {fileID: 0}
-  motionData:
-    scale: {x: 1.05, y: 1.05}
-    motion: 2
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
-  motionDataUnableInteract:
-    scale: {x: 1.15, y: 1.15}
-    motion: 3
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
---- !u!114 &1882166521311778732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9054173132683076706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63da107d5c776be479de5edc3dc13dec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

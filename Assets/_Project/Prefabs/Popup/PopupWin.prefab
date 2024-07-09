@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 5904753474609162163}
   - component: {fileID: 7411982131516459011}
   - component: {fileID: 484905023820971656}
-  - component: {fileID: 2113089077794801520}
+  - component: {fileID: 2027439689535141191}
   m_Layer: 5
   m_Name: WatchAds
   m_TagString: Untagged
@@ -551,7 +551,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2113089077794801520
+--- !u!114 &2027439689535141191
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -560,7 +560,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 684091610695217680}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d327287640dac41b4aaade109e3242c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 05e5d2e9cb943e54f841c49227a507d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -592,6 +592,10 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 484905023820971656}
+  useMotion: 1
+  scaleDuration: 0.2
+  scalePercent: 0.9
+  scaleEase: 1
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -607,43 +611,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  clickType: 0
-  allowMultipleClick: 1
-  timeDisableButton: 0.2
-  doubleClickInterval: 0.2
-  longClickInterval: 0.5
-  delayDetectHold: 0.2
-  onDoubleClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onLongClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onPointerUp:
-    m_PersistentCalls:
-      m_Calls: []
-  onHold:
-    m_PersistentCalls:
-      m_Calls: []
-  isMotion: 1
-  ignoreTimeScale: 0
-  isMotionUnableInteract: 0
-  isAffectToSelf: 1
-  affectObject: {fileID: 0}
-  motionData:
-    scale: {x: 1.05, y: 1.05}
-    motion: 2
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
-  motionDataUnableInteract:
-    scale: {x: 1.15, y: 1.15}
-    motion: 3
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
 --- !u!1 &872215847354943931
 GameObject:
   m_ObjectHideFlags: 0
@@ -4476,7 +4443,7 @@ GameObject:
   - component: {fileID: 1050422456352430429}
   - component: {fileID: 7997092612348833975}
   - component: {fileID: 3451255413487190160}
-  - component: {fileID: 5927054458216624543}
+  - component: {fileID: 7913050813542003408}
   m_Layer: 5
   m_Name: ContinueBtn
   m_TagString: Untagged
@@ -4542,7 +4509,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5927054458216624543
+--- !u!114 &7913050813542003408
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4551,7 +4518,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9196906812386607124}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d327287640dac41b4aaade109e3242c0, type: 3}
+  m_Script: {fileID: 11500000, guid: 05e5d2e9cb943e54f841c49227a507d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -4583,6 +4550,10 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 3451255413487190160}
+  useMotion: 1
+  scaleDuration: 0.2
+  scalePercent: 0.9
+  scaleEase: 1
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -4598,43 +4569,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  clickType: 0
-  allowMultipleClick: 1
-  timeDisableButton: 0.2
-  doubleClickInterval: 0.2
-  longClickInterval: 0.5
-  delayDetectHold: 0.2
-  onDoubleClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onLongClick:
-    m_PersistentCalls:
-      m_Calls: []
-  onPointerUp:
-    m_PersistentCalls:
-      m_Calls: []
-  onHold:
-    m_PersistentCalls:
-      m_Calls: []
-  isMotion: 1
-  ignoreTimeScale: 0
-  isMotionUnableInteract: 0
-  isAffectToSelf: 1
-  affectObject: {fileID: 0}
-  motionData:
-    scale: {x: 1.05, y: 1.05}
-    motion: 2
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
-  motionDataUnableInteract:
-    scale: {x: 1.15, y: 1.15}
-    motion: 3
-    durationDown: 0.1
-    durationUp: 0.1
-    interpolatorDown: 0
-    interpolatorUp: 0
 --- !u!1 &9211212431835267844
 GameObject:
   m_ObjectHideFlags: 0

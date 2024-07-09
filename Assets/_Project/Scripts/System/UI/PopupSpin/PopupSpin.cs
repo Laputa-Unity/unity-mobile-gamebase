@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PopupSpin : Popup
 {
     [SerializeField] private Spin spin;
     [SerializeField] private TextMeshProUGUI textTimeLeft;
-    [SerializeField] private GameObject btnSpinGo;
-    [SerializeField] private GameObject fakeBtnSpinGo;
+    [SerializeField] private CustomButton btnSpin;
     [SerializeField] private GameObject btnFreeSpinAds;
 
     private bool _isSpinning;
-    private List<UIButton>_listUiButton;
+    private List<CustomButton>_listUiButton;
     private void Start()
     {
-        _listUiButton = GetComponentsInChildren<UIButton>().ToList();
+        _listUiButton = GetComponentsInChildren<CustomButton>().ToList();
         SetupSlotItems();
     }
 
@@ -24,8 +24,7 @@ public class PopupSpin : Popup
     {
         if (_isSpinning)
         {
-            btnSpinGo.SetActive(!_isSpinning);
-            fakeBtnSpinGo.SetActive(_isSpinning);
+            btnSpin.interactable = false;
             btnFreeSpinAds.SetActive(!_isSpinning);
             textTimeLeft.gameObject.SetActive(!_isSpinning);
         }
@@ -34,8 +33,7 @@ public class PopupSpin : Popup
             if (DateTime.TryParse(Data.PlayerData.LastSpin, out var lastTime))
             {
                 bool isEnableSpin = DateTime.Now > lastTime.AddHours(12);
-                btnSpinGo.SetActive(isEnableSpin);
-                fakeBtnSpinGo.SetActive(!isEnableSpin);
+                btnSpin.interactable = true;
                 btnFreeSpinAds.SetActive(!isEnableSpin);
                 textTimeLeft.gameObject.SetActive(!isEnableSpin);
                 if (!isEnableSpin)

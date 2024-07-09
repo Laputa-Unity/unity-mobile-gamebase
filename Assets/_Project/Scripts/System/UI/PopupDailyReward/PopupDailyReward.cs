@@ -70,7 +70,12 @@ public class PopupDailyReward : Popup
             btnWatchVideo.SetActive(false);
             btnClaim.SetActive(false);
         }
-           
+    }
+
+    public void OnClickBack()
+    {
+        SoundController.Instance.PlayFX(SoundName.ClickButton);
+        Hide();
     }
 
     public void OnClickBtnClaimX5Video()
