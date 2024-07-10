@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PopupSpin : Popup
 {
@@ -24,7 +23,7 @@ public class PopupSpin : Popup
     {
         if (_isSpinning)
         {
-            btnSpin.interactable = false;
+            btnSpin.Interactable = false;
             btnFreeSpinAds.SetActive(!_isSpinning);
             textTimeLeft.gameObject.SetActive(!_isSpinning);
         }
@@ -33,7 +32,7 @@ public class PopupSpin : Popup
             if (DateTime.TryParse(Data.PlayerData.LastSpin, out var lastTime))
             {
                 bool isEnableSpin = DateTime.Now > lastTime.AddHours(12);
-                btnSpin.interactable = true;
+                btnSpin.Interactable = isEnableSpin;
                 btnFreeSpinAds.SetActive(!isEnableSpin);
                 textTimeLeft.gameObject.SetActive(!isEnableSpin);
                 if (!isEnableSpin)
@@ -90,7 +89,7 @@ public class PopupSpin : Popup
     {
         foreach (var uiButton in _listUiButton)
         {
-            uiButton.interactable = isInteractable;
+            uiButton.Interactable = isInteractable;
         }
     }
 }
