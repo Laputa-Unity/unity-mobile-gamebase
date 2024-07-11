@@ -3,6 +3,7 @@ using Lean.Pool;
 using CustomTween;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
@@ -18,7 +19,7 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
     [SerializeField] private Vector3? from;
     [SerializeField] private GameObject bar;
     [SerializeField] private GameObject target;
-    [SerializeField] private GameObject coinPrefab;
+    [SerializeField] private Money moneyPrefab;
     [SerializeField] private TextMeshProUGUI currencyAmountText;
     [SerializeField] private PopupUI popupUI;
     
@@ -95,26 +96,27 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
         for (int i = 0; i < numberCoin; i++)
         {
             await Task.Delay(Random.Range(0, delay));
-            GameObject coin = LeanPool.Spawn(coinPrefab, transform);
-            coin.transform.localScale = Vector3.one * scale;
+            Money money = LeanPool.Spawn(moneyPrefab, transform);
+            money.transform.localScale = Vector3.one * scale;
             if (from != null)
             {
-                coin.transform.position = from.Value;
+                money.transform.position = from.Value;
             }
             else
             {
-                coin.transform.localPosition = Vector3.zero;
+                money.transform.localPosition = Vector3.zero;
             }
             
             
-            
-            MoveToNear(coin).OnComplete(() =>
+            money.SetLineRenderState(false);
+            MoveToNear(money.gameObject).OnComplete(() =>
             {
-                MoveToTarget(coin).OnComplete(() =>
+                money.SetLineRenderState(true);
+                MoveToTarget(money.gameObject).OnComplete(() =>
                 {
                     SoundController.Instance.PlayFX(SoundName.CollectCoin);
                     VisualEffectsController.Instance.SpawnEffect(EffectName.SparkCoin, Vector3.zero, target.transform, .5f);
-                    LeanPool.Despawn(coin);
+                    LeanPool.Despawn(money);
                     
                     _moneyCache += moneyPerStep;
                     currencyAmountText.text = $"{_moneyCache}";
@@ -126,23 +128,23 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
         }
     }
     
-    private Tween MoveTo(Vector3 endValue, GameObject coin, float duration, Ease ease)
+    private Tween MoveTo(Vector3 endValue, GameObject money, float duration, Ease ease)
     {
-        return Tween.Position(coin.transform,  endValue, duration, ease);
+        return Tween.Position(money.transform,  endValue, duration, ease);
     }
 
-    private Tween MoveToNear(GameObject coin)
+    private Tween MoveToNear(GameObject money)
     {
-        return MoveTo(coin.transform.position + (Vector3)Random.insideUnitCircle*3, coin, durationNear, easeNear);
+        return MoveTo(money.transform.position + (Vector3)Random.insideUnitCircle*3, money, durationNear, easeNear);
     }
 
-    private Tween MoveToTarget(GameObject coin)
+    private Tween MoveToTarget(GameObject money)
     {
-        return MoveTo(target.transform.position, coin, durationTarget, easeTarget);
+        return MoveTo(target.transform.position, money, durationTarget, easeTarget);
     }
     
-    public void SetNumberCoin(int coin)
+    public void SetNumberCoin(int money)
     {
-        numberCoin = coin;
+        numberCoin = money;
     }
 }
