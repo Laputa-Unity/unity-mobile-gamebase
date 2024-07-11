@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
 {
-    [SerializeField] private int numberCoin;
+    [SerializeField] private int numberObject;
     [SerializeField] private int delay;
     [SerializeField] private float durationNear;
     [SerializeField] private float durationTarget;
@@ -24,10 +24,13 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
     [SerializeField] private PopupUI popupUI;
     
     private int _moneyCache;
+    private int _canvasOrderInLayer;
 
     private void Start()
     {
         Observer.MoneyChanged += OnMoneyChanged;
+
+        _canvasOrderInLayer = GetComponentInParent<Canvas>().sortingOrder;
     }
 
     private void OnEnable()
@@ -58,14 +61,14 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
     
     private void IncreaseMoney(int moneyAmount)
     {
-        GenerateCoin(moneyAmount);
+        GenerateMoney(moneyAmount);
     }
 
     private async void DecreaseMoney(int moneyAmount)
     {
-        int moneyPerStep = moneyAmount/numberCoin;
+        int moneyPerStep = moneyAmount/numberObject;
         
-        for (int i = 0; i < numberCoin; i++)
+        for (int i = 0; i < numberObject; i++)
         {
             await Task.Delay(Random.Range(0, delay));
             _moneyCache += moneyPerStep;
@@ -88,12 +91,12 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
         target = targetGo;
     }
 
-    public async void GenerateCoin(int moneyAmount)
+    public async void GenerateMoney(int moneyAmount)
     {
-        int moneyPerStep = moneyAmount/numberCoin;
+        int moneyPerStep = moneyAmount/numberObject;
         
         SoundController.Instance.PlayFX(SoundName.SpawnCoin);
-        for (int i = 0; i < numberCoin; i++)
+        for (int i = 0; i < numberObject; i++)
         {
             await Task.Delay(Random.Range(0, delay));
             Money money = LeanPool.Spawn(moneyPrefab, transform);
@@ -107,11 +110,11 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
                 money.transform.localPosition = Vector3.zero;
             }
             
-            
-            money.SetLineRenderState(false);
+            money.SetTrailOrderInLayer(_canvasOrderInLayer);
+            money.SetTrailState(false);
             MoveToNear(money.gameObject).OnComplete(() =>
             {
-                money.SetLineRenderState(true);
+                money.SetTrailState(true);
                 MoveToTarget(money.gameObject).OnComplete(() =>
                 {
                     SoundController.Instance.PlayFX(SoundName.CollectCoin);
@@ -145,6 +148,6 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
     
     public void SetNumberCoin(int money)
     {
-        numberCoin = money;
+        numberObject = money;
     }
 }

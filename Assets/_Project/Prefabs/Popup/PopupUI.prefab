@@ -703,7 +703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ceb034d373ad4c43a89725401e504c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberCoin: 20
+  numberObject: 20
   delay: 20
   durationNear: 0.4
   durationTarget: 0.4
