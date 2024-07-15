@@ -4,7 +4,7 @@ using UnityEngine;
 public class PopupDebugConsole : Popup
 {
     [SerializeField] private List<ConsoleTabItem> tabs;
-    private ConsoleTabType _currentTab = ConsoleTabType.Console;
+    private ConsoleTabType _currentTab = ConsoleTabType.Command;
 
     protected override void OnEnable()
     {
@@ -42,7 +42,7 @@ public class PopupDebugConsole : Popup
 
 public enum ConsoleTabType
 {
-    Console,
+    Command,
     Information,
     Settings,
 }
