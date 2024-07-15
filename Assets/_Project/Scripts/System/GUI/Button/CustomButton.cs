@@ -69,12 +69,14 @@ public class CustomButton : UIBehaviour, IPointerDownHandler, IPointerUpHandler,
     private List<Image> images => GetComponentsInChildren<Image>().ToList();
     private Vector3 _currentScale;
 
+#if UNITY_EDITOR
     protected override void OnValidate()
     {
         base.OnValidate();
         SetupButtonInteractable(interactable, true);
     }
-
+#endif
+    
     protected override void Awake()
     {
         base.Awake();
@@ -116,6 +118,7 @@ public class CustomButton : UIBehaviour, IPointerDownHandler, IPointerUpHandler,
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
+        if (!interactable) return;
         buttonPressState = ButtonPressState.Pressed;
         if (useFadeColorMotion)
         {

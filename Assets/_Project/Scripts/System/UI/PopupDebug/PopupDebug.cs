@@ -10,6 +10,9 @@ public class PopupDebug : Popup
     [SerializeField] private Toggle toggleTesting;
     [SerializeField] private GameObject panelPlayerData;
     [SerializeField] private TMP_InputField inputField;
+    [SerializeField] private PopupDebugConsole popupDebugConsolePrefab;
+
+    public static PopupDebugConsole PopupDebugConsole;
 
     protected override void BeforeShow()
     {
@@ -56,5 +59,19 @@ public class PopupDebug : Popup
     public void OnClickExitPanelPlayerData()
     {
         panelPlayerData.SetActive(false);
+    }
+
+    public void OnClickDebugConsole()
+    {
+        if (PopupDebugConsole == null)
+        {
+            PopupDebugConsole = Instantiate(popupDebugConsolePrefab, PopupController.Instance.CanvasTransform);
+            PopupDebugConsole.Canvas.sortingOrder = 999;
+            PopupDebugConsole.Show();
+        }
+        else
+        {
+            PopupDebugConsole.Show();
+        }
     }
 }

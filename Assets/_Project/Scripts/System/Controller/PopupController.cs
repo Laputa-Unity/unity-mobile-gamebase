@@ -10,6 +10,12 @@ public class PopupController : SingletonDontDestroy<PopupController>
 
     private readonly Dictionary<Type, Popup> _dictionary = new Dictionary<Type, Popup>();
 
+    public Transform CanvasTransform
+    {
+        get => canvasTransform;
+        set => canvasTransform = value;
+    }
+
     protected void Start()
     {
         Initialize();
