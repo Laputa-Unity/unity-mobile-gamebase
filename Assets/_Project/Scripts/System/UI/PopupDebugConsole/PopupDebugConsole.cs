@@ -4,6 +4,7 @@ using UnityEngine;
 public class PopupDebugConsole : Popup
 {
     [SerializeField] private List<ConsoleTabItem> tabs;
+    [SerializeField] private List<ConsolePanelItem> panels;
     private ConsoleTabType _currentTab = ConsoleTabType.Command;
 
     protected override void OnEnable()
@@ -24,12 +25,16 @@ public class PopupDebugConsole : Popup
         Setup(_currentTab);
     }
 
-    public void Setup(ConsoleTabType tabType)
+    private void Setup(ConsoleTabType tabType)
     {
         _currentTab = tabType;
         foreach (var tab in tabs)
         {
             tab.Setup(_currentTab);
+        }
+        foreach (var panel in panels)
+        {
+            panel.Setup(_currentTab);
         }
     }
     
