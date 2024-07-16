@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ConsolePanelItem : MonoBehaviour
 {
-    [SerializeField] private ConsoleTabType consoleTabType;
+    protected virtual ConsoleTabType consoleTabType { get; set; }
 
     public virtual void Setup(ConsoleTabType tabType)
     {

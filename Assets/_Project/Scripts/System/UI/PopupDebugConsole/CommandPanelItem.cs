@@ -9,6 +9,8 @@ public class CommandPanelItem : ConsolePanelItem
     [SerializeField] private Material validInputPreset;
     [SerializeField] private Material invalidInputPreset;
 
+    protected override ConsoleTabType consoleTabType => ConsoleTabType.Command;
+
     public void OnClickRun()
     {
         var text = inputField.text;
@@ -59,7 +61,7 @@ public class CommandPanelItem : ConsolePanelItem
             throw;
         }
     }
-
+    
     private void ExecuteCommand(string str, int param)
     {
         try
