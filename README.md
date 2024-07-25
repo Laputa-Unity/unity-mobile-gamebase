@@ -64,12 +64,6 @@
 <img width="200" src="https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/656afe6e-315f-47f7-be67-6ef71f0821c5">
 </div>
 
-## ExtensionPackage
-### CustomDataStorage
-- This package store is using for saving and loading player data.
-
-[See more](https://github.com/Laputa-Unity/unity-mobile-gamebase/wiki/Custom-Build-Report)
-
 ## Documentation
 - [See Wiki](https://github.com/GuardianOfGods/unity-mobile-base/wiki)
 
