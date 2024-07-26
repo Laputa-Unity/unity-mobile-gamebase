@@ -17,6 +17,7 @@ public class CommandPanelItem : ConsolePanelItem
         text = text.Replace(" ", "");
         string letters = string.Empty;
         string numbers = string.Empty;
+        bool isFloat = false;
 
         foreach (char c in text)
         {
@@ -24,19 +25,34 @@ public class CommandPanelItem : ConsolePanelItem
             {
                 letters += c;
             }
+            else if (c == '.')
+            {
+                if (!isFloat)
+                {
+                    isFloat = true;
+                    numbers += c;
+                }
+            }
             else if (char.IsDigit(c))
             {
                 numbers += c;
             }
         }
 
-        if (numbers.Length == 0)
+        if (string.IsNullOrEmpty(numbers))
         {
-            ExecuteCommand(letters);
+            ExecuteCommand(letters.ToLower());
         }
         else
         {
-            ExecuteCommand(letters, int.Parse(numbers));
+            if (isFloat)
+            {
+                ExecuteCommand(letters.ToLower(), float.Parse(numbers));
+            }
+            else
+            {
+                ExecuteCommand(letters.ToLower(), int.Parse(numbers));
+            }
         }
     }
 
@@ -46,6 +62,12 @@ public class CommandPanelItem : ConsolePanelItem
         {
             switch (str)
             {
+                case "time_stop":
+                    Time.timeScale = 0;
+                    break;
+                case "time_resume":
+                    Time.timeScale = 1;
+                    break;
                 default:
                     resultText.text = "Command not found";
                     return;
@@ -68,7 +90,7 @@ public class CommandPanelItem : ConsolePanelItem
         {
             switch (str)
             {
-                case "lv":
+                case "level":
                 {
                     if (param <= 0)
                     {
@@ -78,6 +100,37 @@ public class CommandPanelItem : ConsolePanelItem
                     GameManager.Instance.PlayCurrentLevel();
                     break;
                 }
+                case "coin":
+                    Data.PlayerData.CurrentMoney += param;
+                    break;
+                case "timescale":
+                    Time.timeScale = param;
+                    break;
+                default:
+                    resultText.text = "Command not found";
+                    return;
+            }
+            
+            resultText.fontSharedMaterial = validInputPreset;
+            resultText.text = "Command executed successfully";
+        }
+        catch (Exception e)
+        {
+            resultText.fontSharedMaterial = invalidInputPreset;
+            resultText.text = e.Message;
+            throw;
+        }
+    }
+    
+    private void ExecuteCommand(string str, float param)
+    {
+        try
+        {
+            switch (str)
+            {
+                case "timescale":
+                    Time.timeScale = param;
+                    break;
                 default:
                     resultText.text = "Command not found";
                     return;

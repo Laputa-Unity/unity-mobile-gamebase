@@ -41,7 +41,15 @@ public class PlayerDataController : SingletonDontDestroy<PlayerDataController>
         GameData.Save();
     }
 
+    // Not working on simulator
     void OnApplicationPause(bool pauseStatus)
+    {
+        GameData.Set("PlayerData", Data.PlayerData);
+        GameData.Save();
+    }
+    
+    // Not working on mobile device
+    private void OnApplicationQuit()
     {
         GameData.Set("PlayerData", Data.PlayerData);
         GameData.Save();

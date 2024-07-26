@@ -49,5 +49,6 @@ public enum ConsoleTabType
 {
     Command,
     Information,
+    Profiler,
     Settings,
 }

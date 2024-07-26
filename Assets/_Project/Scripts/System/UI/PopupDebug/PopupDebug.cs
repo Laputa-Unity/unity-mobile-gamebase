@@ -52,17 +52,20 @@ public class PopupDebug : Popup
 
     public void OnClickPanelPlayerData()
     {
+        SoundController.Instance.PlayFX(SoundName.ClickButton);
         panelPlayerData.SetActive(true);
         inputField.text = JsonConvert.SerializeObject(Data.PlayerData, Formatting.Indented);
     }
 
     public void OnClickExitPanelPlayerData()
     {
+        SoundController.Instance.PlayFX(SoundName.ClickButton);
         panelPlayerData.SetActive(false);
     }
 
     public void OnClickDebugConsole()
     {
+        SoundController.Instance.PlayFX(SoundName.ClickButton);
         if (PopupDebugConsole == null)
         {
             PopupDebugConsole = Instantiate(popupDebugConsolePrefab, PopupController.Instance.CanvasTransform);
