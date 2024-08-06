@@ -5,14 +5,15 @@ public class DraggableConsole : MonoBehaviour, IPointerDownHandler, IBeginDragHa
 {
     [SerializeField] private float minScale = 0.5f;
     [SerializeField] private float maxScale = 2.0f;
-
+    [SerializeField] private RectTransform anchorRectTransform;
+    
     private RectTransform _rectTransform;
     private CanvasGroup _canvasGroup;
     private Canvas _canvas;
 
     private void Start()
     {
-        _rectTransform = GetComponent<RectTransform>();
+        _rectTransform = GetComponentInParent<RectTransform>();
         _canvasGroup = GetComponentInParent<CanvasGroup>();
         _canvas = GetComponentInParent<Canvas>();
     }
@@ -36,7 +37,7 @@ public class DraggableConsole : MonoBehaviour, IPointerDownHandler, IBeginDragHa
 
         if (Input.touchCount == 1)
         {
-            _rectTransform.anchoredPosition += eventData.delta / _canvas.scaleFactor;
+            anchorRectTransform.anchoredPosition += eventData.delta / _canvas.scaleFactor;
         }
         else if (Input.touchCount == 2)
         {
