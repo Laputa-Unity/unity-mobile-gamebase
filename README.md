@@ -8,6 +8,30 @@
 - Project is a sample gamebase for mobile game using **singleton design pattern**, you can get used to it very easily and build a complete game quickly. Besides, the utilities of the **custom packages** will help you a lot in searching, displaying and programming.
 - However, I do not recommend using it for large game projects. Anyway it is a bad pattern, you can see or read about it everywhere on the internet.
 
+---
+_**TASK LIST**_
+
+- [x] **Coin System**
+- [x] **Gameplay**
+- [x] **Setting**
+- [x] **Shop**
+- [x] **Daily Reward**
+- [x] **Lucky Spin**
+- [x] **Debug**
+- [x] **Data Storage**
+- [x] **Custom Inspector**
+- [x] **Custom Hierachy**
+- [x] **Find Reference**
+- [x] **Build Report**
+- [x] **Custom Tween**
+- [x] **PlayerPref Editor**
+- [ ] Debug Console
+- [ ] Laputa Thirdparty (Tracking, Ads, ...)
+- [ ] Localization
+- [ ] Rank
+- [ ] Inventory
+
+
 ## Installation
 - Version: **Unity  2022.3.33f1 LTS**
 - Type select: **Android**, **IOS**
