@@ -13,8 +13,11 @@ public class LogItem : MonoBehaviour
     [SerializeField] private Sprite warningIcon;
     [SerializeField] private Sprite errorIcon;
 
+    public LogType CurrentLogType { get; set; }
+
     public void Setup(LogType logType, string desc)
     {
+        CurrentLogType = logType;
         switch (logType)
         {
             case LogType.Log:
@@ -30,7 +33,7 @@ public class LogItem : MonoBehaviour
                 icon.sprite = errorIcon;
                 break;
             case LogType.Exception:
-                icon.sprite = warningIcon;
+                icon.sprite = errorIcon;
                 break;
         }
 

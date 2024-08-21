@@ -10,10 +10,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
+[AddComponentMenu("UI/Custom Switch Button", 30)]
 public class CustomSwitchButton : UIBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler,
     IPointerExitHandler, ISelectHandler, IDeselectHandler, IPointerClickHandler, ISubmitHandler
 {
-    [SerializeField] private SwitchButtonState switchButtonState;
+    [SerializeField] private bool isOn = true;
     [SerializeField] private SwitchButtonChangeStyle switchButtonChangeStyle = SwitchButtonChangeStyle.Color;
     
     [SerializeField] [ShowIf("switchButtonChangeStyle", SwitchButtonChangeStyle.Color)] private bool affectSelf;
@@ -28,10 +30,10 @@ public class CustomSwitchButton : UIBehaviour, IPointerDownHandler, IPointerUpHa
     [SerializeField] [ReadOnly] private SwitchButtonPressState switchButtonPressState;
     private Image targetImage => GetComponent<Image>();
 
-    public SwitchButtonState SwitchButtonState
+    public bool IsOn
     {
-        get => switchButtonState;
-        set => switchButtonState = value;
+        get => isOn;
+        set => isOn = value;
     }
 
     [Serializable]
@@ -74,7 +76,7 @@ public class CustomSwitchButton : UIBehaviour, IPointerDownHandler, IPointerUpHa
     protected override void OnValidate()
     {
         base.OnValidate();
-        SetupSwitchButton(switchButtonState, affectSelf);
+        SetupSwitchButton(isOn, affectSelf);
     }
 #endif
     
@@ -108,13 +110,14 @@ public class CustomSwitchButton : UIBehaviour, IPointerDownHandler, IPointerUpHa
         // don't run the coroutine.
         if (!IsActive())
             return;
-        
         StartCoroutine(OnFinishSubmit());
     }
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
         switchButtonPressState = SwitchButtonPressState.Pressed;
+        isOn = !isOn;
+        SetupSwitchButton(isOn, affectSelf);
         if (useScaleMotion)
         {
             Tween.Scale(transform, _currentScale * scalePercent, scaleDuration, scaleEase);
@@ -130,47 +133,48 @@ public class CustomSwitchButton : UIBehaviour, IPointerDownHandler, IPointerUpHa
         }
     }
     
-    protected virtual void SetupSwitchButton(SwitchButtonState state, bool affectSelf)
+    protected virtual void SetupSwitchButton(bool state, bool affectSelf)
     {
         if (!gameObject.activeInHierarchy)
             return;
-        
-        switch (state)
+
+        if (state)
         {
-            case SwitchButtonState.On:
-                if (affectSelf)
+            if (affectSelf)
+            {
+                targetImage.color = onColor;
+            }
+            else
+            {
+                foreach (var img in images)
                 {
-                    targetImage.color = onColor;
+                    img.color = onColor;
                 }
-                else
-                {
-                    foreach (var img in images)
-                    {
-                        img.color = onColor;
-                    }
-                }
-                break;
-            case SwitchButtonState.Off:
-                if (affectSelf)
-                {
-                    targetImage.color = offColor;
-                }
-                else
-                {
-                    foreach (var img in images)
-                    {
-                        img.color = offColor;
-                    }
-                }
-                break;
+            }
         }
+        else
+        {
+            if (affectSelf)
+            {
+                targetImage.color = offColor;
+            }
+            else
+            {
+                foreach (var img in images)
+                {
+                    img.color = offColor;
+                }
+            }
+        }
+        
+        m_OnStateChange?.Invoke();
     }
 
     private IEnumerator OnFinishSubmit()
     {
+        isOn = !isOn;
+        SetupSwitchButton(isOn, affectSelf);
         yield return null;
-        
-        SetupSwitchButton(switchButtonState, affectSelf);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -198,12 +202,6 @@ public enum SwitchButtonPressState
 {
     Normal,
     Pressed,
-}
-
-public enum SwitchButtonState
-{
-    On,
-    Off,
 }
 
 public enum SwitchButtonChangeStyle
