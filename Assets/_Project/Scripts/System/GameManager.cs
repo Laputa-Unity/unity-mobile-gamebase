@@ -11,6 +11,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
         base.Awake();
         Application.targetFrameRate = 60;
         Input.multiTouchEnabled = true;
+        CustomTweenConfig.warnZeroDuration = false;
     }
     
     void Start()

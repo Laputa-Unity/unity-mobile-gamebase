@@ -21,14 +21,29 @@ public class EffectZoomInOut : MonoBehaviour
     public void DoEffect(float sizeScale, bool delay)
     {
         if (!gameObject.activeInHierarchy) return;
-        Sequence.Create().ChainDelay(timeDelay*(delay ? 1 : 0)).ChainCallback(() =>
+        if (delay)
         {
-            Tween.Scale(transform,new Vector3(transform.localScale.x + sizeScale, transform.localScale.y + sizeScale,
-                    transform.localScale.z),
-                timeScale, Ease.Linear).OnComplete(() =>
+            Sequence.Create().ChainDelay(timeDelay).ChainCallback(() =>
             {
-                DoEffect(-sizeScale,!delay);
+                Tween.Scale(transform,new Vector3(transform.localScale.x + sizeScale, transform.localScale.y + sizeScale,
+                        transform.localScale.z),
+                    timeScale, Ease.Linear).OnComplete(() =>
+                {
+                    DoEffect(-sizeScale,true);
+                });
             });
-        });
+        }
+        else
+        {
+            Sequence.Create().ChainCallback(() =>
+            {
+                Tween.Scale(transform,new Vector3(transform.localScale.x + sizeScale, transform.localScale.y + sizeScale,
+                        transform.localScale.z),
+                    timeScale, Ease.Linear).OnComplete(() =>
+                {
+                    DoEffect(-sizeScale,false);
+                });
+            });
+        }
     }
 }

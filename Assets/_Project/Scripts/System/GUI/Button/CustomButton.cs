@@ -24,6 +24,7 @@ public class CustomButton : UIBehaviour, IPointerDownHandler, IPointerUpHandler,
     [SerializeField] [ShowIf("disableType", ButtonDisableType.Sprite)] private Sprite disableSprite;
     
     [SerializeField] private bool useFadeColorMotion = true; 
+    [SerializeField] [ShowIf("useFadeColorMotion")] private bool affectSelf;
     [SerializeField] [ShowIf("useFadeColorMotion")] [Min(0)] private float fadeDuration = .1f;
     [SerializeField] [ShowIf("useFadeColorMotion")] private Color pressColor = new Color(200/255f, 200/255f, 200/255f, 255/255f);
     
@@ -122,7 +123,7 @@ public class CustomButton : UIBehaviour, IPointerDownHandler, IPointerUpHandler,
         buttonPressState = ButtonPressState.Pressed;
         if (useFadeColorMotion)
         {
-            DoStateTransition(ButtonPressState.Pressed, false);
+            DoStateTransition(ButtonPressState.Pressed, false, affectSelf);
         }
         if (useScaleMotion)
         {
@@ -135,7 +136,7 @@ public class CustomButton : UIBehaviour, IPointerDownHandler, IPointerUpHandler,
         buttonPressState = ButtonPressState.Normal;
         if (useFadeColorMotion)
         {
-            DoStateTransition(ButtonPressState.Normal, false);
+            DoStateTransition(ButtonPressState.Normal, false, affectSelf);
         }
         if (useScaleMotion)
         {
@@ -143,23 +144,37 @@ public class CustomButton : UIBehaviour, IPointerDownHandler, IPointerUpHandler,
         }
     }
 
-    protected virtual void DoStateTransition(ButtonPressState state, bool instant)
+    protected virtual void DoStateTransition(ButtonPressState state, bool instant, bool affectSelf)
     {
         if (!gameObject.activeInHierarchy)
             return;
-
+        
         switch (state)
         {
             case ButtonPressState.Normal:
-                foreach (var img in images)
+                if (affectSelf)
                 {
-                    Tween.Color(img, normalColor, fadeDuration);
+                    Tween.Color(targetImage, normalColor, fadeDuration);
+                }
+                else
+                {
+                    foreach (var img in images)
+                    {
+                        Tween.Color(img, normalColor, fadeDuration);
+                    }
                 }
                 break;
             case ButtonPressState.Pressed:
-                foreach (var img in images)
+                if (affectSelf)
                 {
-                    Tween.Color(img, pressColor, fadeDuration);
+                    Tween.Color(targetImage, pressColor, fadeDuration);
+                }
+                else
+                {
+                    foreach (var img in images)
+                    {
+                        Tween.Color(img, pressColor, fadeDuration);
+                    }
                 }
                 break;
         }
@@ -176,7 +191,7 @@ public class CustomButton : UIBehaviour, IPointerDownHandler, IPointerUpHandler,
         yield return null;
         }
         
-        DoStateTransition(ButtonPressState.Pressed, true);
+        DoStateTransition(ButtonPressState.Pressed, true, affectSelf);
     }
 
     private void SetupButtonInteractable(bool isInteracted, bool instant)
