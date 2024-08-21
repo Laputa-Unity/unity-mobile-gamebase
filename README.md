@@ -8,28 +8,26 @@
 - Project is a sample gamebase for mobile game using **singleton design pattern**, you can get used to it very easily and build a complete game quickly. Besides, the utilities of the **custom packages** will help you a lot in searching, displaying and programming.
 - However, I do not recommend using it for large game projects. Anyway it is a bad pattern, you can see or read about it everywhere on the internet.
 
----
-_**TASK LIST**_
-
-- [x] **Coin System**
-- [x] **Gameplay**
-- [x] **Setting**
-- [x] **Shop**
-- [x] **Daily Reward**
-- [x] **Lucky Spin**
-- [x] **Debug**
-- [x] **Data Storage**
-- [x] **Custom Inspector**
-- [x] **Custom Hierachy**
-- [x] **Find Reference**
-- [x] **Build Report**
-- [x] **Custom Tween**
-- [x] **PlayerPref Editor**
-- [ ] Debug Console
-- [ ] Laputa Thirdparty (Tracking, Ads, ...)
-- [ ] Localization
-- [ ] Rank
-- [ ] Inventory
+## The Goals of the Project
+- [x] `Coin System`: add animations when player coin increase.
+- [x] `Gameplay`: simple gameplay with ui ingame, win and lose.
+- [x] `Setting`: setting for the game.
+- [x] `Shop`: shop to buy skins.
+- [x] `Daily Reward`: daily reward feature.
+- [x] `Lucky Spin`: daily spin feature.
+- [x] `Debug`: simple debugging.
+- [x] `Data Storage`: easy to save player data, also fast and secure.
+- [x] `Custom Inspector`: adjust variables showed on inspector.
+- [x] `Custom Hierachy`: hierachy now more features
+- [x] `Find Reference`: find all reference of an asset
+- [x] `Build Report`: report build
+- [x] `Custom Tween`: like dotween but faster and customizable
+- [x] `PlayerPref Editor`: to read data which saved by playerPref
+- [ ] `Debug Console`: advanced debugging
+- [ ] `Laputa Thirdparty`: window to install third party like firebase, ads
+- [ ] `Localization`: localization system
+- [ ] `Rank`: online ranking
+- [ ] `Inventory`: player inventory
 
 
 ## Installation
@@ -60,33 +58,6 @@ _**TASK LIST**_
 │   │   ├── CustomTween
 └── ...
 ```
-## Features
-### Gameplay
-<div align="center">
-<img width="200" src="https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/ed6898c5-5c1e-4991-92e7-3dfd63299774">
-<img width="200" src="https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/98c81975-2793-44bc-895f-4cf4b9bd25fa">
-<img width="200" src="https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/f4f323bb-a5fb-43ef-b544-1d06d988b26a">
-</div>
-
-### Setting
-<div align="center">
-<img width="200" src="https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/812e9763-79a4-4ad7-9ad4-cd2c01a45e96">
-</div>
-
-### Daily Reward
-<div align="center">
-<img width="200" src="https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/8a6d61b3-6d18-48c6-83c0-212174dd9251">
-</div>
-
-### Shop
-<div align="center">
-<img width="200" src="https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/9feff5da-6bfc-461b-b872-888c7fddf22d">
-</div>
-
-### Debug
-<div align="center">
-<img width="200" src="https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/656afe6e-315f-47f7-be67-6ef71f0821c5">
-</div>
 
 ## Documentation
 - [See Wiki](https://github.com/GuardianOfGods/unity-mobile-base/wiki)
