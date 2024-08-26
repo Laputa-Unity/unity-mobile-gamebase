@@ -12,48 +12,64 @@ public class VisualEffectsController : SingletonDontDestroy<VisualEffectsControl
     public void SpawnEffect(EffectName effectName, Vector3 position, Transform parent)
     {
         VisualEffectData vfxData = vfxConfig.GetVisualEffectData(effectName);
-        if (vfxData != null)
+        if (vfxData != null && vfxData.GetRandomEffect() != null)
         {
             GameObject randomEffect = vfxData.GetRandomEffect();
             GameObject effect = LeanPool.Spawn(randomEffect, position, Quaternion.identity, parent);
             effect.transform.localPosition = position;
+        }
+        else
+        {
+            Debug.LogWarning("<color=Red> Missing visual effect </color>");
         }
     }
     
     public void SpawnEffect(EffectName effectName, Vector3 position, Transform parent, float timeDestroy)
     {
         VisualEffectData vfxData = vfxConfig.GetVisualEffectData(effectName);
-        if (vfxData != null)
+        if (vfxData != null && vfxData.GetRandomEffect() != null)
         {
             GameObject randomEffect = vfxData.GetRandomEffect();
             GameObject effect = LeanPool.Spawn(randomEffect, position, Quaternion.identity, parent);
             effect.transform.localPosition = position;
             LeanPool.Despawn(effect, timeDestroy);
         }
+        else
+        {
+            Debug.LogWarning("<color=Red> Missing visual effect </color>");
+        }
     }
     
     public void SpawnEffect(EffectName effectName, Vector3 position, Transform parent, Vector3 localScale)
     {
         VisualEffectData vfxData = vfxConfig.GetVisualEffectData(effectName);
-        if (vfxData != null)
+        if (vfxData != null && vfxData.GetRandomEffect() != null)
         {
             GameObject randomEffect = vfxData.GetRandomEffect();
             GameObject effect = LeanPool.Spawn(randomEffect, parent);
             effect.transform.localPosition = position;
             effect.transform.localScale = localScale;
         }
+        else
+        {
+            Debug.LogWarning("<color=Red> Missing visual effect </color>");
+        }
     }
     
     public void SpawnEffect(EffectName effectName, Vector3 position, Transform parent, Vector3 localScale, float timeDestroy)
     {
         VisualEffectData vfxData = vfxConfig.GetVisualEffectData(effectName);
-        if (vfxData != null)
+        if (vfxData != null && vfxData.GetRandomEffect() != null)
         {
             GameObject randomEffect = vfxData.GetRandomEffect();
             GameObject effect = LeanPool.Spawn(randomEffect, parent);
             effect.transform.localPosition = position;
             effect.transform.localScale = localScale;
             LeanPool.Despawn(effect, timeDestroy);
+        }
+        else
+        {
+            Debug.LogWarning("<color=Red> Missing visual effect </color>");
         }
     }
 }
