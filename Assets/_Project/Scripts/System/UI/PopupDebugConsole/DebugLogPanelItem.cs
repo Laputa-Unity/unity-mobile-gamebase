@@ -8,10 +8,10 @@ public class DebugLogPanelItem : ConsolePanelItem
     [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private LogItem logItemPrefab;
     [SerializeField] private Transform content;
+    [SerializeField] private CustomSwitchButton btnSwitchCollapse;
     [SerializeField] private CustomSwitchButton btnSwitchInfo;
     [SerializeField] private CustomSwitchButton btnSwitchWarning;
     [SerializeField] private CustomSwitchButton btnSwitchError;
-
 
     private List<LogItem> _logItems = new List<LogItem>();
 
@@ -32,6 +32,7 @@ public class DebugLogPanelItem : ConsolePanelItem
 
     private void HandleLog(string condition, string stacktrace, LogType type)
     {
+        bool isCollapse = btnSwitchCollapse.IsOn;
         bool isLogInfo = btnSwitchInfo.IsOn;
         bool isLogWarning = btnSwitchWarning.IsOn;
         bool isLogError = btnSwitchError.IsOn;
@@ -49,10 +50,25 @@ public class DebugLogPanelItem : ConsolePanelItem
         {
             return;
         }
+
+        if (isCollapse)
+        {
+            var tempLogItem = _logItems.Find(item => item.CacheContent == condition);
+            if (tempLogItem == null)
+            {
+                var logItem = LeanPool.Spawn(logItemPrefab, content);
+                logItem.Setup(type, condition);
+                _logItems.Add(logItem);
+            }
+        }
+        else
+        {
+            var logItem = LeanPool.Spawn(logItemPrefab, content);
+            logItem.Setup(type, condition);
+            _logItems.Add(logItem);
+        }
         
-        var logItem = LeanPool.Spawn(logItemPrefab, content);
-        logItem.Setup(type, condition);
-        _logItems.Add(logItem);
+        
         scrollRect.verticalNormalizedPosition = 0f;
     }
 

@@ -13,6 +13,8 @@ public class LogItem : MonoBehaviour
     [SerializeField] private Sprite warningIcon;
     [SerializeField] private Sprite errorIcon;
 
+    public string CacheContent { get; set; }
+
     public LogType CurrentLogType { get; set; }
 
     public void Setup(LogType logType, string desc)
@@ -38,5 +40,6 @@ public class LogItem : MonoBehaviour
         }
 
         description.text = $"{desc}";
+        CacheContent = $"{desc}";
     }
 }
