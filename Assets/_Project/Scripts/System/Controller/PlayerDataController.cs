@@ -1,5 +1,4 @@
-using System;
-using Custom.DataStorage;
+using System.IO;
 using CustomInspector;
 using UnityEngine;
 
@@ -7,25 +6,30 @@ public class PlayerDataController : SingletonDontDestroy<PlayerDataController>
 {
     [ReadOnly] [SerializeField] private PlayerData playerDataReader;
 
+    private static bool _isFetchPlayerDataSucceed;
     private bool _cacheFirstPlaying;
-    
+
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void AutoInitialize()
     {
-        GameData.Init();
-
-        GameData.TryGet("PlayerData", out PlayerData data);
-        Data.PlayerData = data ?? new PlayerData();
+        Initialize();
     }
-    
+
+    private static void Initialize()
+    {
+        Data.LoadData();
+        _isFetchPlayerDataSucceed = true;
+    }
+
     protected override void Awake()
     {
         base.Awake();
         playerDataReader = Data.PlayerData;
     }
-    
+
     void OnApplicationFocus(bool hasFocus)
     {
+        if (!_isFetchPlayerDataSucceed) return;
         if (!hasFocus && Data.PlayerData.IsFirstPlaying)
         {
             Data.PlayerData.IsFirstPlaying = false;
@@ -36,38 +40,30 @@ public class PlayerDataController : SingletonDontDestroy<PlayerDataController>
         {
             Data.PlayerData.IsFirstPlaying = true;
         }
-        
-        GameData.Set("PlayerData", Data.PlayerData);
-        GameData.Save();
+
+        Data.SaveData();
     }
 
     // Not working on simulator
     void OnApplicationPause(bool pauseStatus)
     {
-        GameData.Set("PlayerData", Data.PlayerData);
-        GameData.Save();
+        SaveData();
     }
-    
+
     // Not working on mobile device
     private void OnApplicationQuit()
     {
-        GameData.Set("PlayerData", Data.PlayerData);
-        GameData.Save();
+        SaveData();
     }
 
     public void SaveData()
     {
-        GameData.Save();
+        if (!_isFetchPlayerDataSucceed) return;
+        Data.SaveData();
     }
 
     public void LoadData()
     {
-        GameData.TryGet("PlayerData", out PlayerData data);
-        Data.PlayerData = data ?? new PlayerData();
+        Data.LoadData();
     }
-}
-
-public static class Data
-{
-    public static PlayerData PlayerData;
 }

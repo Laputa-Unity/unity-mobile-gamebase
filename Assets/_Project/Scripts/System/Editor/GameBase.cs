@@ -20,6 +20,12 @@ public class GameBase : EditorWindow
         EditorSceneManager.OpenScene($"Assets/_Project/Scenes/GameplayScene.unity");
         Debug.Log($"<color=Green>Change scene succeed</color>");
     }
+    
+    [MenuItem("GameBase/Debug/Clear Data")]
+    public static void ClearData()
+    {
+        Data.ClearData();
+    }
 
     [MenuItem("GameBase/Debug/Add 100k Money")]
     public static void Add100kMoney()
