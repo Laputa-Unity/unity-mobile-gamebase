@@ -1,4 +1,7 @@
+using System;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,7 +27,7 @@ public class PopupDebug : Popup
     protected override void OnEnable()
     {
         base.OnEnable();
-        toggleTesting.isOn = Data.PlayerData.IsTesting;
+        toggleTesting.isOn = GameController.IsTesting;
     }
 
     public void OnClickAccept()
@@ -47,14 +50,23 @@ public class PopupDebug : Popup
 
     public void ChangeTestingState()
     {
-        Data.PlayerData.IsTesting = toggleTesting.isOn;
+        GameController.IsTesting = toggleTesting.isOn;
     }
 
     public void OnClickPanelPlayerData()
     {
         SoundController.Instance.PlayFX(SoundName.ClickButton);
         panelPlayerData.SetActive(true);
-        inputField.text = JsonConvert.SerializeObject(Data.PlayerData, Formatting.Indented);
+        var settings = new JsonSerializerSettings
+        {
+            Formatting = Formatting.Indented,
+            ContractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new CamelCaseNamingStrategy()
+            }
+        };
+
+        inputField.text = JsonConvert.SerializeObject(Data.PlayerData, settings);
     }
 
     public void OnClickExitPanelPlayerData()
@@ -63,18 +75,17 @@ public class PopupDebug : Popup
         panelPlayerData.SetActive(false);
     }
 
-    public void OnClickDebugConsole()
+    public void OnClickUpdate()
     {
         SoundController.Instance.PlayFX(SoundName.ClickButton);
-        if (PopupDebugConsole == null)
+        try
         {
-            PopupDebugConsole = Instantiate(popupDebugConsolePrefab, PopupController.Instance.CanvasTransform);
-            PopupDebugConsole.Canvas.sortingOrder = 999;
-            PopupDebugConsole.Show();
+            Data.UpdateData(inputField.text);
         }
-        else
+        catch (Exception e)
         {
-            PopupDebugConsole.Show();
+            Debug.Log(e);
+            throw;
         }
     }
 }

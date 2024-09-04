@@ -16,6 +16,6 @@ public class GoDebug : MonoBehaviour
 
     void OnDebugChanged()
     {
-        gameObject.SetActive(Data.PlayerData.IsTesting);
+        gameObject.SetActive(GameController.IsTesting);
     }
 }

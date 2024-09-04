@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class GameController : SingletonDontDestroy<GameController>
 {
-    [SerializeField] private GameConfig gameConfig;
     public static bool IsTesting;
+    [SerializeField] private GameConfig gameConfig;
+
     protected override void Awake()
     {
         base.Awake();
-        IsTesting = gameConfig.IsTesting;
+        IsTesting = gameConfig.isTesting;
     }
 }

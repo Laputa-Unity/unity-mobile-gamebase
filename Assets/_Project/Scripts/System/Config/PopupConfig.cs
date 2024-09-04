@@ -6,4 +6,5 @@ public class PopupConfig : ScriptableObject
 {
     public float durationPopup = .5f;
     public List<Popup> popups;
+    public PopupDebugConsole popupDebugConsole;
 }

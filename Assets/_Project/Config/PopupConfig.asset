@@ -25,3 +25,4 @@ MonoBehaviour:
   - {fileID: 2915254623132364138, guid: 813a9cef4af4e4a4c91638583b5577d4, type: 3}
   - {fileID: 369120204540651683, guid: 1ef737273f7f90241aaeb0a7d98b3f2d, type: 3}
   - {fileID: 3056728832346780796, guid: 65181ee735119bf47a143625bf9b01bc, type: 3}
+  popupDebugConsole: {fileID: 3106791832395491467, guid: bc26f29ea8643dc48a1f63cbc0bccfaa, type: 3}

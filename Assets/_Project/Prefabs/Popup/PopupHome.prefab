@@ -455,6 +455,7 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   disableSprite: {fileID: 0}
   useFadeColorMotion: 1
+  affectSelf: 0
   fadeDuration: 0.1
   pressColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   useScaleMotion: 1
@@ -573,6 +574,7 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   disableSprite: {fileID: 0}
   useFadeColorMotion: 1
+  affectSelf: 0
   fadeDuration: 0.1
   pressColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   useScaleMotion: 1
@@ -691,6 +693,7 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   disableSprite: {fileID: 0}
   useFadeColorMotion: 1
+  affectSelf: 0
   fadeDuration: 0.1
   pressColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   useScaleMotion: 1
@@ -959,6 +962,7 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   disableSprite: {fileID: 0}
   useFadeColorMotion: 1
+  affectSelf: 0
   fadeDuration: 0.1
   pressColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   useScaleMotion: 1
@@ -1094,6 +1098,7 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   disableSprite: {fileID: 0}
   useFadeColorMotion: 1
+  affectSelf: 0
   fadeDuration: 0.1
   pressColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   useScaleMotion: 0
@@ -1211,6 +1216,7 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   disableSprite: {fileID: 0}
   useFadeColorMotion: 1
+  affectSelf: 0
   fadeDuration: 0.1
   pressColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   useScaleMotion: 1
@@ -1876,6 +1882,7 @@ MonoBehaviour:
   normalSprite: {fileID: 0}
   disableSprite: {fileID: 0}
   useFadeColorMotion: 1
+  affectSelf: 0
   fadeDuration: 0.1
   pressColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   useScaleMotion: 1

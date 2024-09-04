@@ -9,7 +9,7 @@ public class PopupDebugConsole : Popup
     [SerializeField] private GameObject frame;
     [SerializeField] private List<ConsoleTabItem> tabs;
     [SerializeField] private List<ConsolePanelItem> panels;
-    private ConsoleTabType _currentTab = ConsoleTabType.Command;
+    private ConsoleTabType _currentTab = ConsoleTabType.DebugLog;
     private bool _isActiveFrame = true;
     private Vector3 _saveFrameScale = Vector3.one;
     
@@ -49,8 +49,8 @@ public class PopupDebugConsole : Popup
     
    public void OnClickExit()
    {
-         SoundController.Instance.PlayFX(SoundName.ClickButton);
-         Hide();
+       SoundController.Instance.PlayFX(SoundName.ClickButton);
+       Hide();
    }
 
 

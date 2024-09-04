@@ -5,7 +5,6 @@ using UnityEngine;
 public partial class PlayerData
 {
     [SerializeField] private bool isFirstPlaying = true;
-    [SerializeField] private bool isTesting;
     [SerializeField] private int currentLevelIndex;
     [SerializeField] private int currentMoney;
 
@@ -13,16 +12,6 @@ public partial class PlayerData
     {
         get => isFirstPlaying;
         set => isFirstPlaying = value;
-    }
-
-    public bool IsTesting
-    {
-        get => isTesting;
-        set
-        {
-            isTesting = value;
-            Observer.DebugChanged?.Invoke();
-        }
     }
 
     public int CurrentLevelIndex

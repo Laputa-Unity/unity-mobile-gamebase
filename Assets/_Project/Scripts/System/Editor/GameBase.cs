@@ -37,7 +37,12 @@ public class GameBase : EditorWindow
     [MenuItem("GameBase/Debug/Switch Debug %`")]
     public static void SwitchDebug()
     {
-        Data.PlayerData.IsTesting = !Data.PlayerData.IsTesting;
-        Debug.Log($"<color=Green>Data.IsTesting = {Data.PlayerData.IsTesting}</color>");
+        string path = "Assets/_Project/Config/GameConfig.asset";
+        GameConfig gameConfig = AssetDatabase.LoadAssetAtPath<GameConfig>(path);
+        gameConfig.isTesting = !gameConfig.isTesting;
+        EditorUtility.SetDirty(gameConfig);
+        AssetDatabase.SaveAssets();
+        
+        Debug.Log($"<color=Green>Switched debug mode to: {gameConfig.isTesting}</color>");
     }
 }

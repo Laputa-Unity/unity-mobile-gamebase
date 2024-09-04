@@ -1,4 +1,3 @@
-using System.IO;
 using CustomInspector;
 using UnityEngine;
 
@@ -53,7 +52,10 @@ public class PlayerDataController : SingletonDontDestroy<PlayerDataController>
     // Not working on mobile device
     private void OnApplicationQuit()
     {
-        SaveData();
+        if (!_isFetchPlayerDataSucceed) return;
+        Data.PlayerData.IsFirstPlaying = false;
+
+        Data.SaveData();
     }
 
     public void SaveData()

@@ -19,6 +19,10 @@ public class PopupController : SingletonDontDestroy<PopupController>
     protected void Start()
     {
         Initialize();
+        if (GameController.IsTesting)
+        {
+            InitializeDebugConsole();
+        }
     }
 
     public void Initialize()
@@ -31,6 +35,13 @@ public class PopupController : SingletonDontDestroy<PopupController>
             popupInstance.Canvas.sortingOrder = index++;
             _dictionary.Add(popupInstance.GetType(), popupInstance);
         });
+    }
+
+    public void InitializeDebugConsole()
+    {
+        PopupDebugConsole popupDebugConsole = Instantiate(popupConfig.popupDebugConsole, canvasTransform);
+        popupDebugConsole.Canvas.sortingOrder = 999;
+        popupDebugConsole.Show();
     }
 
     public void Show<T>()

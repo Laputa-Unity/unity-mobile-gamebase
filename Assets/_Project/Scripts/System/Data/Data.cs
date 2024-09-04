@@ -1,4 +1,6 @@
 using System.IO;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public static class Data 
@@ -38,5 +40,14 @@ public static class Data
         {
             Debug.LogWarning("No save file found to delete!");
         }
+    }
+
+    public static async Task UpdateData(string jsonContent)
+    {
+        Debug.Log(Application.persistentDataPath);
+        await File.WriteAllTextAsync(SavePath, jsonContent);
+        string jsonData = await File.ReadAllTextAsync(SavePath);
+        PlayerData = JsonUtility.FromJson<PlayerData>(jsonData);
+        Debug.Log("<color=green>Update player data succeed </color>");
     }
 }
