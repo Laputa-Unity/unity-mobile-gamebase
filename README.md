@@ -23,7 +23,7 @@
 - [x] `Build Report`: report build
 - [x] `Custom Tween`: like dotween but faster and customizable
 - [x] `PlayerPref Editor`: to read data which saved by playerPref
-- [ ] `Debug Console`: advanced debugging
+- [x] `Debug Console`: advanced debugging
 - [ ] `Laputa Thirdparty`: window to install third party like firebase, ads
 - [ ] `Localization`: localization system
 - [ ] `Rank`: online ranking
