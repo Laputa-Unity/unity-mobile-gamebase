@@ -57,14 +57,18 @@ public class DebugLogPanelItem : ConsolePanelItem
             if (tempLogItem == null)
             {
                 var logItem = LeanPool.Spawn(logItemPrefab, content);
-                logItem.Setup(type, condition);
+                logItem.Setup(type, condition, true);
                 _logItems.Add(logItem);
+            }
+            else
+            {
+                tempLogItem.IncreaseCollapseCounter();
             }
         }
         else
         {
             var logItem = LeanPool.Spawn(logItemPrefab, content);
-            logItem.Setup(type, condition);
+            logItem.Setup(type, condition, false);
             _logItems.Add(logItem);
         }
         
@@ -90,29 +94,13 @@ public class DebugLogPanelItem : ConsolePanelItem
 
     public void UpdateContent()
     {
+        bool isCollapse = btnSwitchCollapse.IsOn;
         bool isLogInfo = btnSwitchInfo.IsOn;
         bool isLogWarning = btnSwitchWarning.IsOn;
         bool isLogError = btnSwitchError.IsOn;
         foreach (var logItem in _logItems)
         {
-            switch (logItem.CurrentLogType)
-            {
-                case LogType.Log:
-                    logItem.gameObject.SetActive(isLogInfo);
-                    break;
-                case LogType.Warning:
-                    logItem.gameObject.SetActive(isLogWarning);
-                    break;
-                case LogType.Assert:
-                    logItem.gameObject.SetActive(isLogWarning);
-                    break;
-                case LogType.Error:
-                    logItem.gameObject.SetActive(isLogError);
-                    break;
-                case LogType.Exception:
-                    logItem.gameObject.SetActive(isLogError);
-                    break;
-            }
+            logItem.Refresh(isCollapse, isLogInfo, isLogWarning, isLogError);
         }
     }
 }
