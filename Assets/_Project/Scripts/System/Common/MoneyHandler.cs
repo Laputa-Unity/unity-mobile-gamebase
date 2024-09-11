@@ -32,6 +32,11 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
 
         _canvasOrderInLayer = GetComponentInParent<Canvas>().sortingOrder;
     }
+    
+    private void OnDestroy()
+    {
+        Observer.MoneyChanged -= OnMoneyChanged;
+    }
 
     private void OnEnable()
     {
