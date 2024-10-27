@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using CustomTween;
 using UnityEngine;
 
 public class SoundController : SingletonDontDestroy<SoundController>
@@ -6,13 +9,20 @@ public class SoundController : SingletonDontDestroy<SoundController>
     public AudioSource fxAudio;
     
     [SerializeField] private SoundConfig soundConfig;
-    
+
+    private List<SoundName> _cacheDelaySounds = new List<SoundName>();
     public void Start()
     {
         Setup();
 
         Observer.MusicChanged += OnMusicChanged;
         Observer.SoundChanged += OnSoundChanged;
+    }
+
+    private void OnDestroy()
+    {
+        Observer.MusicChanged -= OnMusicChanged;
+        Observer.SoundChanged -= OnSoundChanged;
     }
 
     private void OnMusicChanged()
@@ -37,6 +47,19 @@ public class SoundController : SingletonDontDestroy<SoundController>
 
         if (soundPlayerData != null)
         {
+            if (soundPlayerData.delayTime > 0)
+            {
+                if (!_cacheDelaySounds.Contains(soundName))
+                {
+                    _cacheDelaySounds.Add(soundName);
+                    Tween.Delay(transform, soundPlayerData.delayTime, () => _cacheDelaySounds.Remove(soundName));
+                }
+                else
+                {
+                    return;
+                }
+            }
+            
             var soundClip = soundPlayerData.GetRandomAudioClip();
             if (soundClip)
             {
