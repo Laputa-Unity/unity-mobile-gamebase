@@ -30,7 +30,6 @@
 - [ ] `Inventory`: player inventory
 - [ ] `Push Notification`: mobile notification
 
-.
 ## Installation
 - Version: **Unity  2022.3.33f1 LTS**
 - Type select: **Android**, **IOS**
