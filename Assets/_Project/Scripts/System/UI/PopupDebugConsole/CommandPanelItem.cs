@@ -96,7 +96,7 @@ public class CommandPanelItem : ConsolePanelItem
                     {
                         throw new Exception();
                     }
-                    Data.PlayerData.CurrentLevelIndex = param - 1;
+                    Data.PlayerData.CurrentLevelIndex = param;
                     GameManager.Instance.PlayCurrentLevel();
                     break;
                 }

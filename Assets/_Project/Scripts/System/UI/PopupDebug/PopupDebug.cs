@@ -22,7 +22,7 @@ public class PopupDebug : Popup
     {
         if (!string.IsNullOrEmpty(setLevel.text))
         {
-            Data.PlayerData.CurrentLevelIndex = int.Parse(setLevel.text) - 1;
+            Data.PlayerData.CurrentLevelIndex = int.Parse(setLevel.text);
             GameManager.Instance.PrepareLevel();
             GameManager.Instance.StartGame();
         }

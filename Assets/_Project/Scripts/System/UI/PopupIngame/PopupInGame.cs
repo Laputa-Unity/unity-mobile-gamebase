@@ -13,7 +13,7 @@ public class PopupInGame : Popup
    
    private void Setup()
    {
-      levelText.text = $"Level {Data.PlayerData.CurrentLevelIndex + 1}";
+      levelText.text = $"Level {Data.PlayerData.CurrentLevelIndex}";
    }
 
    public void OnClickHome()

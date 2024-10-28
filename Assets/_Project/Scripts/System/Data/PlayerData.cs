@@ -5,7 +5,7 @@ using UnityEngine;
 public partial class PlayerData
 {
     [SerializeField] private bool isFirstPlaying = true;
-    [SerializeField] private int currentLevelIndex;
+    [SerializeField] private int currentLevelIndex = 1;
     [SerializeField] private int currentMoney;
 
     public bool IsFirstPlaying
@@ -19,7 +19,7 @@ public partial class PlayerData
         get => currentLevelIndex;
         set
         {
-            currentLevelIndex = value;
+            currentLevelIndex = Mathf.Max(1, value);
             Observer.CurrentLevelChanged?.Invoke();
         }
     }
