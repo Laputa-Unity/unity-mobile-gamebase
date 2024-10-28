@@ -50,7 +50,6 @@
 │   ├── Spines
 │   ├── Sprites
 │   ├── ~ExtensionPackage
-│   │   ├── CustomDataStorage
 │   │   ├── CustomBuildReport
 │   │   ├── CustomHierarchy
 │   │   ├── CustomInspector
