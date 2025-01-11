@@ -50,13 +50,13 @@
 │   ├── Sounds
 │   ├── Spines
 │   ├── Sprites
-│   ├── ~ExtensionPackage (For all project)
+│   ├── ~ExtensionPackage `(For all projects)`
 │   │   ├── CustomBuildReport
 │   │   ├── CustomHierarchy
 │   │   ├── CustomInspector
 │   │   ├── CustomReference
 │   │   ├── CustomTween
-│   ├── ~LevelEditor (This project only)
+│   ├── ~LevelEditor `(This project only)`
 └── ...
 ```
 
