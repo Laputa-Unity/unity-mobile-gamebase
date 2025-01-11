@@ -12,9 +12,9 @@ public class LevelEditorWindow : EditorWindow
     private Vector2 _scrollPosition;
     private Texture2D _greenOverlayTexture;
     private float _previewObjectAngle = 0f;
-    private float _rotationSpeed = 10f;
     private Vector3? _startLinePosition = null;
     private int _previewObjectCount = 1;
+    private float _previewRotationSpeed = 10f;
     private List<GameObject> _previewObjects = new List<GameObject>();
     private float _maxDistance = 1000f;
     private float _lastScrollValue = 0f;
@@ -27,10 +27,11 @@ public class LevelEditorWindow : EditorWindow
     private float _zAxisPosition = 0f;
     private Vector2 _levelScrollPosition;
     private List<string> _levelPrefabPaths = new List<string>();
-    private string _levelDirectory = "Assets/_Project/Resources/Levels";
     private SerializedObject _serializedLevelObject;
     private List<SerializedProperty> _levelProperties = new List<SerializedProperty>();
     private string _selectedLevelPath = "";
+
+    private LevelEditorSetting _setting;
 
     public enum LevelEditMode
     {
@@ -46,8 +47,9 @@ public class LevelEditorWindow : EditorWindow
 
     private void OnEnable()
     {
-        minSize = new Vector2(1000, 600);
+        _setting = Resources.Load("LevelEditorSetting") as LevelEditorSetting;
         
+        SetupSetting();
         CreateGreenOverlayTexture();
         SceneView.duringSceneGui += OnSceneGUI;
         LoadLevelPrefabs(); // Load level prefabs at initialization
@@ -87,7 +89,12 @@ public class LevelEditorWindow : EditorWindow
         PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
         return prefabStage != null;
     }
-
+    
+    private void SetupSetting()
+    {
+        minSize = _setting.windowMinSize;
+        
+    }
     
     private void DrawLevelPrefabsScrollView()
     {
@@ -185,7 +192,15 @@ public class LevelEditorWindow : EditorWindow
             }
 
             // Additional setting for Z-axis in 2D mode
-            _zAxisPosition = EditorGUILayout.FloatField("Z-Axis Position", _zAxisPosition,GUILayout.Width(200));
+            
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Label("Z position", GUILayout.Width(100));
+            _zAxisPosition = EditorGUILayout.FloatField(_zAxisPosition,GUILayout.Width(60));
+            GUILayout.FlexibleSpace();
+            GUILayout.Label("Rotation speed", GUILayout.Width(100));
+            _previewRotationSpeed = EditorGUILayout.FloatField(_previewRotationSpeed,GUILayout.Width(60));
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
         }
 
         // Search field to filter prefabs by name
@@ -200,9 +215,9 @@ public class LevelEditorWindow : EditorWindow
     {
         _levelPrefabPaths.Clear();
 
-        if (Directory.Exists(_levelDirectory))
+        if (Directory.Exists(_setting.levelDirectory))
         {
-            string[] prefabFiles = Directory.GetFiles(_levelDirectory, "*.prefab");
+            string[] prefabFiles = Directory.GetFiles(_setting.levelDirectory, "*.prefab");
 
             // List to store level index and paths
             List<(int index, string path)> indexedLevels = new List<(int, string)>();
@@ -234,7 +249,7 @@ public class LevelEditorWindow : EditorWindow
         }
         else
         {
-            Debug.LogWarning($"Level directory not found: {_levelDirectory}");
+            Debug.LogWarning($"Level directory not found: {_setting.levelDirectory}");
         }
     }
     
@@ -398,8 +413,6 @@ public class LevelEditorWindow : EditorWindow
 
  private void DrawPrefabsGrid()
 {
-    string prefabDirectory = "Assets/_Project/Resources/LevelDesign";
-
     GUILayout.Label("Available Prefabs", EditorStyles.boldLabel);
 
     int columnWidth = 80; // Width of each grid item
@@ -410,7 +423,7 @@ public class LevelEditorWindow : EditorWindow
 
     _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, GUILayout.ExpandWidth(true));
 
-    string[] prefabPaths = Directory.GetFiles(prefabDirectory, "*.prefab", SearchOption.AllDirectories);
+    string[] prefabPaths = Directory.GetFiles(_setting.prefabDirectory, "*.prefab", SearchOption.AllDirectories);
     List<GameObject> levelDesignPrefabs = new List<GameObject>();
 
     foreach (string path in prefabPaths)
@@ -522,11 +535,11 @@ public class LevelEditorWindow : EditorWindow
             {
                 if (scrollValue > 0)
                 {
-                    _previewObjectAngle -= _rotationSpeed;
+                    _previewObjectAngle -= _previewRotationSpeed;
                 }
                 else if (scrollValue < 0)
                 {
-                    _previewObjectAngle += _rotationSpeed;
+                    _previewObjectAngle += _previewRotationSpeed;
                 }
             }
             else
@@ -786,7 +799,7 @@ public class LevelEditorWindow : EditorWindow
         outlineSpriteMaterial.SetFloat("_OutlineSize", 5f);
         outlineSpriteMaterial.SetColor("_OutlineColor", Color.green);
 
-        outlineMaterial.SetFloat("_OutlineWidth", 0.001f);
+        outlineMaterial.SetFloat("_OutlineWidth", 0.00001f);
         outlineMaterial.SetColor("_OutlineColor", Color.green);
 
         ApplyMaterialToRenderers<SpriteRenderer>(obj, outlineSpriteMaterial);
