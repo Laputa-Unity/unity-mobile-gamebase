@@ -24,6 +24,7 @@
 - [x] `Custom Tween`: like dotween but faster and customizable
 - [x] `PlayerPref Editor`: to read data which saved by playerPref
 - [x] `Debug Console`: advanced debugging
+- [x] `Level Editor`: design levels 
 - [ ] `Laputa Thirdparty`: window to install third party like firebase, ads
 - [ ] `Localization`: localization system
 - [ ] `Rank`: online ranking
