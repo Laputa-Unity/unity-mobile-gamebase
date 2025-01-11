@@ -374,16 +374,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDataReader:
     isFirstPlaying: 1
-    currentLevelIndex: 0
+    currentLevelIndex: 1
     currentMoney: 0
     currentDailyReward: 1
-    lastDailyRewardClaimed: 5/19/2024 9:07:31 AM
+    lastDailyRewardClaimed: 1/10/2025 7:52:40 PM
     musicState: 1
     soundState: 1
     vibrationState: 1
     currentSkin: Skin_00
     ownedSkins: []
-    lastSpin: 6/16/2024 10:10:45 AM
+    lastSpin: 1/10/2025 7:52:40 PM
 --- !u!1 &326257131
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,7 +621,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 1
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1253,7 +1253,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 1
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

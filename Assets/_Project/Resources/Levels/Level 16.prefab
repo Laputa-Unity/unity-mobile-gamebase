@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45dd11d646118348b4f2e994976c4ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombNumber: 10
+  nukeNumber: 10
   bonusMoney: 0
 --- !u!1001 &2757237543809686866
 PrefabInstance:

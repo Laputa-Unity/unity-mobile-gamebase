@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LevelConfig
   m_EditorClassIdentifier: 
   levelLoopType: 0
-  maxLevel: 4
-  startLoopLevel: 1
+  maxLevel: 20
+  startLoopLevel: 10

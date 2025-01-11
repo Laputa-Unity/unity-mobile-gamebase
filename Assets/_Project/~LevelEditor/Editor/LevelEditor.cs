@@ -30,6 +30,7 @@ public class LevelEditorWindow : EditorWindow
     private SerializedObject _serializedLevelObject;
     private List<SerializedProperty> _levelProperties = new List<SerializedProperty>();
     private string _selectedLevelPath = "";
+    private GameObject _selectedLevelPrefab;
 
     private LevelEditorSetting _setting;
 
@@ -66,6 +67,8 @@ public class LevelEditorWindow : EditorWindow
         if (!IsInPrefabMode() && !string.IsNullOrEmpty(_selectedLevelPath))
         {
             _selectedLevelPath = ""; // Clear the selected level path
+            _selectedPrefab = null;
+            _selectedLevelPrefab = null;
             Repaint(); // Force the window to repaint
         }
         
@@ -140,6 +143,14 @@ public class LevelEditorWindow : EditorWindow
             }
 
             GUI.backgroundColor = Color.white; // Reset background color
+        }
+        
+        GUILayout.Space(20);
+        
+        if (GUILayout.Button("Play This Level", GUILayout.ExpandWidth(true), GUILayout.Height(40)))
+        {
+            var level = _selectedLevelPrefab.GetComponent<Level>();
+            level.PlayThisLevel();
         }
 
         EditorGUILayout.EndScrollView();
@@ -270,10 +281,10 @@ public class LevelEditorWindow : EditorWindow
 
     private void OpenLevelPrefab(string prefabPath)
     {
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
-        if (prefab != null)
+        _selectedLevelPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+        if (_selectedLevelPrefab != null)
         {
-            AssetDatabase.OpenAsset(prefab); // Open the prefab in Prefab Mode
+            AssetDatabase.OpenAsset(_selectedLevelPrefab); // Open the prefab in Prefab Mode
         }
         else
         {
