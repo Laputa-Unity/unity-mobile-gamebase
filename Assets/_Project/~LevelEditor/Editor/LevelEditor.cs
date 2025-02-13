@@ -462,105 +462,110 @@ public class LevelEditorWindow : EditorWindow
     }
 
 
-private void DrawPrefabsGrid()
-{
-    GUILayout.Label("Available Prefabs", EditorStyles.boldLabel);
-
-    int columnWidth = 80; // Width of each grid item
-    float availableWidth = position.width - 220;
-    int spacing = 10;
-    int maxItemsPerRow = Mathf.FloorToInt((availableWidth + spacing) / (columnWidth + spacing));
-    maxItemsPerRow = Mathf.Max(maxItemsPerRow, 1);
-
-    _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, GUILayout.ExpandWidth(true));
-
-    string[] prefabPaths = Directory.GetFiles(_setting.prefabDirectory, "*.prefab", SearchOption.AllDirectories);
-    List<GameObject> levelDesignPrefabs = new List<GameObject>();
-
-    foreach (string path in prefabPaths)
+    private void DrawPrefabsGrid()
     {
-        string assetPath = path.Replace("\\", "/");
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
-        if (prefab != null)
+        GUILayout.Label("Available Prefabs", EditorStyles.boldLabel);
+
+        int columnWidth = 80; // Width of each grid item
+        float availableWidth = position.width - 220;
+        int spacing = 10;
+        int maxItemsPerRow = Mathf.FloorToInt((availableWidth + spacing) / (columnWidth + spacing));
+        maxItemsPerRow = Mathf.Max(maxItemsPerRow, 1);
+
+        _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, GUILayout.ExpandWidth(true));
+
+        string[] prefabPaths = Directory.GetFiles(_setting.prefabDirectory, "*.prefab", SearchOption.AllDirectories);
+        List<GameObject> levelDesignPrefabs = new List<GameObject>();
+
+        foreach (string path in prefabPaths)
         {
-            levelDesignPrefabs.Add(prefab);
-        }
-    }
-
-    var filteredPrefabs = string.IsNullOrEmpty(_prefabFilter)
-        ? levelDesignPrefabs
-        : levelDesignPrefabs.FindAll(prefab => prefab.name.ToLower().Contains(_prefabFilter.ToLower()));
-
-    int currentRowItemCount = 0;
-    EditorGUILayout.BeginHorizontal();
-
-    foreach (var prefab in filteredPrefabs)
-    {
-        if (currentRowItemCount >= maxItemsPerRow)
-        {
-            EditorGUILayout.EndHorizontal();
-            GUILayout.Space(spacing);
-            EditorGUILayout.BeginHorizontal();
-            currentRowItemCount = 0;
-        }
-
-        EditorGUILayout.BeginVertical(GUILayout.Width(columnWidth));
-
-        Texture2D previewTexture = null;
-
-        if (_editMode == LevelEditMode.Mode3D)
-        {
-            // Use Unity's Asset Preview for 3D mode
-            previewTexture = AssetPreview.GetAssetPreview(prefab);
-            if (previewTexture == null)
+            string assetPath = path.Replace("\\", "/");
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+            if (prefab != null)
             {
-                AssetPreview.SetPreviewTextureCacheSize(filteredPrefabs.Count * 3);
-                AssetPreview.GetAssetPreview(prefab);
-                EditorApplication.delayCall += Repaint;
-                previewTexture = AssetPreview.GetMiniThumbnail(prefab);
+                levelDesignPrefabs.Add(prefab);
             }
         }
-        else
+
+        var filteredPrefabs = string.IsNullOrEmpty(_prefabFilter)
+            ? levelDesignPrefabs
+            : levelDesignPrefabs.FindAll(prefab => prefab.name.ToLower().Contains(_prefabFilter.ToLower()));
+
+        int currentRowItemCount = 0;
+        EditorGUILayout.BeginHorizontal();
+
+        foreach (var prefab in filteredPrefabs)
         {
-            // Use custom 2D-generated thumbnails
-            if (!_prefabThumbnails.ContainsKey(prefab))
+            if (currentRowItemCount >= maxItemsPerRow)
             {
-                _prefabThumbnails[prefab] = CapturePrefabThumbnail(prefab, 128, 128);
+                EditorGUILayout.EndHorizontal();
+                GUILayout.Space(spacing);
+                EditorGUILayout.BeginHorizontal();
+                currentRowItemCount = 0;
             }
-            previewTexture = _prefabThumbnails[prefab];
-        }
 
-        bool isSelected = _selectedPrefab == prefab;
-        bool newSelectedState = GUILayout.Toggle(
-            isSelected,
-            new GUIContent(previewTexture ?? Texture2D.grayTexture), // Fallback in case of null
-            new GUIStyle(GUI.skin.button)
+            EditorGUILayout.BeginVertical(GUILayout.Width(columnWidth));
+
+            Texture2D previewTexture = null;
+
+            if (_editMode == LevelEditMode.Mode3D)
             {
-                alignment = TextAnchor.MiddleCenter,
-                fixedHeight = columnWidth,
-                fixedWidth = columnWidth
-            });
+                // Use Unity's Asset Preview for 3D mode
+                previewTexture = AssetPreview.GetAssetPreview(prefab);
+                if (previewTexture == null)
+                {
+                    AssetPreview.SetPreviewTextureCacheSize(filteredPrefabs.Count * 3);
+                    AssetPreview.GetAssetPreview(prefab);
+                    EditorApplication.delayCall += Repaint;
+                    previewTexture = AssetPreview.GetMiniThumbnail(prefab);
+                }
+            }
+            else
+            {
+                // Use custom 2D-generated thumbnails
+                if (!_prefabThumbnails.ContainsKey(prefab))
+                {
+                    _prefabThumbnails[prefab] = CapturePrefabThumbnail(prefab, 128, 128);
+                }
 
-        if (newSelectedState && !isSelected)
-        {
-            _selectedPrefab = prefab;
+                previewTexture = _prefabThumbnails[prefab];
+            }
+
+            bool isSelected = _selectedPrefab == prefab;
+            bool newSelectedState = GUILayout.Toggle(
+                isSelected,
+                new GUIContent(previewTexture ?? Texture2D.grayTexture), // Fallback in case of null
+                new GUIStyle(GUI.skin.button)
+                {
+                    alignment = TextAnchor.MiddleCenter,
+                    fixedHeight = columnWidth,
+                    fixedWidth = columnWidth
+                });
+
+            if (newSelectedState && !isSelected)
+            {
+                _selectedPrefab = prefab;
+            }
+            else if (!newSelectedState && isSelected)
+            {
+                _selectedPrefab = null;
+            }
+
+            GUIStyle prefabNameStyle = new GUIStyle(EditorStyles.miniLabel)
+            {
+                alignment = TextAnchor.MiddleLeft,
+                clipping = TextClipping.Clip
+            };
+
+            GUILayout.Label(prefab.name, prefabNameStyle, GUILayout.Width(columnWidth));
+            EditorGUILayout.EndVertical();
+
+            currentRowItemCount++;
         }
-        else if (!newSelectedState && isSelected)
-        {
-            _selectedPrefab = null;
-        }
 
-        GUILayout.Label(prefab.name, new GUIStyle(EditorStyles.miniLabel) { alignment = TextAnchor.MiddleCenter });
-        EditorGUILayout.EndVertical();
-
-        currentRowItemCount++;
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.EndScrollView();
     }
-
-    EditorGUILayout.EndHorizontal();
-    EditorGUILayout.EndScrollView();
-}
-
-
 
 
     private void OnSceneGUI(SceneView sceneView)
