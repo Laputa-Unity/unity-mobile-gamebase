@@ -23,7 +23,7 @@ public class LevelEditorWindow : EditorWindow
     private Dictionary<GameObject, Texture2D> _prefabThumbnails = new Dictionary<GameObject, Texture2D>();
     private List<GameObject> _levelPrefabs = new List<GameObject>();
     private bool _enableHint = true;
-    private LevelEditMode _editMode = LevelEditMode.MouseZ2D;
+    private LevelEditMode _editMode = LevelEditMode.Mode2D;
     private float _zAxisPosition = 0f;
     private Vector2 _levelScrollPosition;
     private List<string> _levelPrefabPaths = new List<string>();
@@ -36,8 +36,8 @@ public class LevelEditorWindow : EditorWindow
 
     public enum LevelEditMode
     {
-        MouseZ2D,
-        Raycast3D,
+        Mode2D,
+        Mode3D,
     }
 
     [MenuItem("Window/Level Editor")]
@@ -49,7 +49,7 @@ public class LevelEditorWindow : EditorWindow
     private void OnEnable()
     {
         _setting = Resources.Load("LevelEditorSetting") as LevelEditorSetting;
-        
+
         SetupSetting();
         CreateGreenOverlayTexture();
         SceneView.duringSceneGui += OnSceneGUI;
@@ -71,8 +71,13 @@ public class LevelEditorWindow : EditorWindow
             _selectedLevelPrefab = null;
             Repaint(); // Force the window to repaint
         }
-        
+
         DrawTitleEditorUI();
+
+        if (GUILayout.Button("Refresh", GUILayout.ExpandWidth(true), GUILayout.Height(30)))
+        {
+            LoadLevelPrefabs();
+        }
 
         EditorGUILayout.BeginHorizontal(); // Split into two vertical sections (Left and Right)
 
@@ -86,19 +91,18 @@ public class LevelEditorWindow : EditorWindow
 
         EditorGUILayout.EndHorizontal();
     }
-    
+
     private bool IsInPrefabMode()
     {
         PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
         return prefabStage != null;
     }
-    
+
     private void SetupSetting()
     {
         minSize = _setting.windowMinSize;
-        
     }
-    
+
     private void DrawLevelPrefabsScrollView()
     {
         // Scroll view for level prefabs
@@ -119,7 +123,7 @@ public class LevelEditorWindow : EditorWindow
             GUIStyle itemStyle = new GUIStyle(GUI.skin.button)
             {
                 alignment = TextAnchor.MiddleLeft,
-                normal = { textColor = Color.white },
+                normal = {textColor = Color.white},
             };
 
             if (prefabPath == _selectedLevelPath)
@@ -132,7 +136,8 @@ public class LevelEditorWindow : EditorWindow
             }
 
             // Toggle for selecting a level
-            bool isSelected = prefabPath == _selectedLevelPath; // Set initial toggle state based on the current selection
+            bool isSelected =
+                prefabPath == _selectedLevelPath; // Set initial toggle state based on the current selection
             bool newSelectedState = GUILayout.Toggle(isSelected, prefabName, itemStyle, GUILayout.ExpandWidth(true));
 
             // Check if the toggle state has changed
@@ -144,9 +149,9 @@ public class LevelEditorWindow : EditorWindow
 
             GUI.backgroundColor = Color.white; // Reset background color
         }
-        
+
         GUILayout.Space(20);
-        
+
         if (GUILayout.Button("Play This Level", GUILayout.ExpandWidth(true), GUILayout.Height(40)))
         {
             var level = _selectedLevelPrefab.GetComponent<Level>();
@@ -166,7 +171,7 @@ public class LevelEditorWindow : EditorWindow
                 alignment = TextAnchor.MiddleCenter,
                 fontSize = 14,
                 fontStyle = FontStyle.Bold,
-                normal = { textColor = Color.green }
+                normal = {textColor = Color.green}
             };
 
             GUILayout.Label($"EDITING LEVEL: {prefabStage.prefabContentsRoot.name.ToUpper()}", centeredHelpBoxStyle);
@@ -184,15 +189,16 @@ public class LevelEditorWindow : EditorWindow
         {
             alignment = TextAnchor.MiddleCenter,
         };
-        
+
         GUILayout.Label("Settings", style);
         _enableHint = EditorGUILayout.Toggle("Show Hints", _enableHint);
-        
+
         // Enum dropdown for 2D/3D Mode
-        _editMode = (LevelEditMode)EditorGUILayout.EnumPopup("Edit Mode", _editMode, GUILayout.ExpandWidth(false), GUILayout.Width(250));
+        _editMode = (LevelEditMode) EditorGUILayout.EnumPopup("Edit Mode", _editMode, GUILayout.ExpandWidth(false),
+            GUILayout.Width(250));
 
         // Check if Scene view is in 2D mode when editMode is MouseZ2D
-        if (_editMode == LevelEditMode.MouseZ2D)
+        if (_editMode == LevelEditMode.Mode2D)
         {
             if (!IsSceneViewIn2DMode())
             {
@@ -203,13 +209,13 @@ public class LevelEditorWindow : EditorWindow
             }
 
             // Additional setting for Z-axis in 2D mode
-            
+
             EditorGUILayout.BeginHorizontal();
             GUILayout.Label("Z position", GUILayout.Width(100));
-            _zAxisPosition = EditorGUILayout.FloatField(_zAxisPosition,GUILayout.Width(60));
+            _zAxisPosition = EditorGUILayout.FloatField(_zAxisPosition, GUILayout.Width(60));
             GUILayout.FlexibleSpace();
             GUILayout.Label("Rotation speed", GUILayout.Width(100));
-            _previewRotationSpeed = EditorGUILayout.FloatField(_previewRotationSpeed,GUILayout.Width(60));
+            _previewRotationSpeed = EditorGUILayout.FloatField(_previewRotationSpeed, GUILayout.Width(60));
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
         }
@@ -225,12 +231,12 @@ public class LevelEditorWindow : EditorWindow
     private void LoadLevelPrefabs()
     {
         _levelPrefabPaths.Clear();
+        _prefabThumbnails.Clear(); // Clear old thumbnails
 
         if (Directory.Exists(_setting.levelDirectory))
         {
             string[] prefabFiles = Directory.GetFiles(_setting.levelDirectory, "*.prefab");
 
-            // List to store level index and paths
             List<(int index, string path)> indexedLevels = new List<(int, string)>();
 
             foreach (string prefabFile in prefabFiles)
@@ -238,7 +244,6 @@ public class LevelEditorWindow : EditorWindow
                 string assetPath = prefabFile.Replace("\\", "/");
                 string prefabName = Path.GetFileNameWithoutExtension(assetPath);
 
-                // Extract numeric index from the prefab name
                 if (TryExtractLevelIndex(prefabName, out int levelIndex))
                 {
                     indexedLevels.Add((levelIndex, assetPath));
@@ -249,13 +254,18 @@ public class LevelEditorWindow : EditorWindow
                 }
             }
 
-            // Sort levels by their numeric index
             indexedLevels.Sort((a, b) => a.index.CompareTo(b.index));
 
-            // Add the sorted paths to the levelPrefabPaths list
             foreach (var (_, path) in indexedLevels)
             {
                 _levelPrefabPaths.Add(path);
+
+                // Load prefab and generate a thumbnail
+                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+                if (prefab != null)
+                {
+                    _prefabThumbnails[prefab] = CapturePrefabThumbnail(prefab, 128, 128);
+                }
             }
         }
         else
@@ -263,7 +273,43 @@ public class LevelEditorWindow : EditorWindow
             Debug.LogWarning($"Level directory not found: {_setting.levelDirectory}");
         }
     }
-    
+
+    private List<GameObject> LoadAvailablePrefabs()
+    {
+        List<GameObject> prefabs = new List<GameObject>();
+
+        // Ensure the directory exists
+        if (Directory.Exists(_setting.prefabDirectory))
+        {
+            string[] prefabFiles =
+                Directory.GetFiles(_setting.prefabDirectory, "*.prefab", SearchOption.AllDirectories);
+
+            foreach (string prefabFile in prefabFiles)
+            {
+                string assetPath = prefabFile.Replace("\\", "/");
+                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+
+                if (prefab != null)
+                {
+                    prefabs.Add(prefab);
+
+                    // Capture and cache the thumbnail
+                    if (!_prefabThumbnails.ContainsKey(prefab))
+                    {
+                        _prefabThumbnails[prefab] = CapturePrefabThumbnail(prefab, 128, 128);
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Prefab directory not found: {_setting.prefabDirectory}");
+        }
+
+        return prefabs;
+    }
+
+
     private bool TryExtractLevelIndex(string prefabName, out int levelIndex)
     {
         levelIndex = 0;
@@ -330,7 +376,7 @@ public class LevelEditorWindow : EditorWindow
                 GUIStyle selectedPrefabIconStyle = new GUIStyle(EditorStyles.helpBox)
                 {
                     alignment = TextAnchor.MiddleCenter,
-                    normal = { textColor = Color.white },
+                    normal = {textColor = Color.white},
                 };
 
                 // Display the preview texture
@@ -339,9 +385,9 @@ public class LevelEditorWindow : EditorWindow
                 GUIStyle centeredLabelStyle = new GUIStyle(EditorStyles.label)
                 {
                     alignment = TextAnchor.MiddleCenter,
-                    normal = { textColor = Color.green }
+                    normal = {textColor = Color.green}
                 };
-                
+
                 // Display the selected prefab's name
                 GUILayout.Label($"Selected: {_selectedPrefab.name}", centeredLabelStyle, GUILayout.ExpandWidth(true));
 
@@ -362,38 +408,31 @@ public class LevelEditorWindow : EditorWindow
         }
     }
 
-    private Texture2D GetCachedThumbnail(GameObject prefab, int width, int height)
-    {
-        if (_prefabThumbnails.ContainsKey(prefab))
-            return _prefabThumbnails[prefab];
-
-        Texture2D thumbnail = CapturePrefabThumbnail(prefab, width, height);
-        _prefabThumbnails[prefab] = thumbnail;
-        return thumbnail;
-    }
-
     private Texture2D CapturePrefabThumbnail(GameObject prefab, int width, int height)
     {
-        GameObject cameraObject = new GameObject("ThumbnailCamera");
-        Camera camera = cameraObject.AddComponent<Camera>();
+        GameObject cameraObject = new GameObject("ThumbnailCamera", typeof(Camera));
+        Camera camera = cameraObject.GetComponent<Camera>();
         camera.clearFlags = CameraClearFlags.SolidColor;
-        camera.backgroundColor = new Color(1, 1, 1, 0.1f);
+        camera.backgroundColor = new Color(0, 0, 0, 0); // Transparent background
         camera.orthographic = true;
-
-        RenderTexture renderTexture = new RenderTexture(width, height, 16);
-        camera.targetTexture = renderTexture;
+        camera.orthographicSize = 1;
+        camera.nearClipPlane = 0.1f;
+        camera.farClipPlane = 10f;
+        camera.targetTexture = new RenderTexture(width, height, 16);
 
         GameObject tempPrefabInstance = Instantiate(prefab);
         tempPrefabInstance.transform.position = Vector3.zero;
+        tempPrefabInstance.transform.rotation = Quaternion.identity;
+        tempPrefabInstance.transform.localScale = Vector3.one;
 
         Bounds bounds = CalculateBounds(tempPrefabInstance);
-        camera.orthographicSize = bounds.extents.y > bounds.extents.x ? bounds.extents.y : bounds.extents.x;
-        camera.transform.position = bounds.center + new Vector3(0, 0, -10);
+        camera.orthographicSize = Mathf.Max(bounds.extents.y, bounds.extents.x) * 1.2f;
+        camera.transform.position = bounds.center + new Vector3(0, 0, -5);
         camera.transform.LookAt(bounds.center);
 
         camera.Render();
 
-        RenderTexture.active = renderTexture;
+        RenderTexture.active = camera.targetTexture;
         Texture2D thumbnail = new Texture2D(width, height, TextureFormat.ARGB32, false);
         thumbnail.ReadPixels(new Rect(0, 0, width, height), 0, 0);
         thumbnail.Apply();
@@ -401,17 +440,17 @@ public class LevelEditorWindow : EditorWindow
         RenderTexture.active = null;
         camera.targetTexture = null;
         DestroyImmediate(cameraObject);
-        DestroyImmediate(renderTexture);
         DestroyImmediate(tempPrefabInstance);
 
         return thumbnail;
     }
 
+
     private Bounds CalculateBounds(GameObject obj)
     {
         Renderer[] renderers = obj.GetComponentsInChildren<Renderer>();
         if (renderers.Length == 0)
-            return new Bounds(obj.transform.position, Vector3.zero);
+            return new Bounds(obj.transform.position, Vector3.one * 0.5f);
 
         Bounds bounds = renderers[0].bounds;
         foreach (Renderer renderer in renderers)
@@ -422,15 +461,16 @@ public class LevelEditorWindow : EditorWindow
         return bounds;
     }
 
- private void DrawPrefabsGrid()
+
+private void DrawPrefabsGrid()
 {
     GUILayout.Label("Available Prefabs", EditorStyles.boldLabel);
 
     int columnWidth = 80; // Width of each grid item
-    float availableWidth = position.width - 220; // Adjusted for left panel and padding
-    int spacing = 10; // Space between items
+    float availableWidth = position.width - 220;
+    int spacing = 10;
     int maxItemsPerRow = Mathf.FloorToInt((availableWidth + spacing) / (columnWidth + spacing));
-    maxItemsPerRow = Mathf.Max(maxItemsPerRow, 1); // Ensure at least one item per row
+    maxItemsPerRow = Mathf.Max(maxItemsPerRow, 1);
 
     _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, GUILayout.ExpandWidth(true));
 
@@ -439,7 +479,7 @@ public class LevelEditorWindow : EditorWindow
 
     foreach (string path in prefabPaths)
     {
-        string assetPath = path.Replace("\\", "/"); // Assuming path is already relative
+        string assetPath = path.Replace("\\", "/");
         GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
         if (prefab != null)
         {
@@ -452,33 +492,48 @@ public class LevelEditorWindow : EditorWindow
         : levelDesignPrefabs.FindAll(prefab => prefab.name.ToLower().Contains(_prefabFilter.ToLower()));
 
     int currentRowItemCount = 0;
-
     EditorGUILayout.BeginHorizontal();
+
     foreach (var prefab in filteredPrefabs)
     {
         if (currentRowItemCount >= maxItemsPerRow)
         {
             EditorGUILayout.EndHorizontal();
-            GUILayout.Space(spacing); // Add spacing between rows
+            GUILayout.Space(spacing);
             EditorGUILayout.BeginHorizontal();
             currentRowItemCount = 0;
         }
 
         EditorGUILayout.BeginVertical(GUILayout.Width(columnWidth));
 
-        // Fetch or generate the asset preview
-        Texture2D previewTexture = AssetPreview.GetAssetPreview(prefab);
-        if (previewTexture == null)
+        Texture2D previewTexture = null;
+
+        if (_editMode == LevelEditMode.Mode3D)
         {
-            AssetPreview.SetPreviewTextureCacheSize(filteredPrefabs.Count * 3);
-            previewTexture = AssetPreview.GetMiniThumbnail(prefab);
+            // Use Unity's Asset Preview for 3D mode
+            previewTexture = AssetPreview.GetAssetPreview(prefab);
+            if (previewTexture == null)
+            {
+                AssetPreview.SetPreviewTextureCacheSize(filteredPrefabs.Count * 3);
+                AssetPreview.GetAssetPreview(prefab);
+                EditorApplication.delayCall += Repaint;
+                previewTexture = AssetPreview.GetMiniThumbnail(prefab);
+            }
+        }
+        else
+        {
+            // Use custom 2D-generated thumbnails
+            if (!_prefabThumbnails.ContainsKey(prefab))
+            {
+                _prefabThumbnails[prefab] = CapturePrefabThumbnail(prefab, 128, 128);
+            }
+            previewTexture = _prefabThumbnails[prefab];
         }
 
-        // Create a toggle for selection
         bool isSelected = _selectedPrefab == prefab;
         bool newSelectedState = GUILayout.Toggle(
             isSelected,
-            new GUIContent(previewTexture),
+            new GUIContent(previewTexture ?? Texture2D.grayTexture), // Fallback in case of null
             new GUIStyle(GUI.skin.button)
             {
                 alignment = TextAnchor.MiddleCenter,
@@ -486,14 +541,13 @@ public class LevelEditorWindow : EditorWindow
                 fixedWidth = columnWidth
             });
 
-        // Toggle selection state
         if (newSelectedState && !isSelected)
         {
-            _selectedPrefab = prefab; // Select the prefab
+            _selectedPrefab = prefab;
         }
         else if (!newSelectedState && isSelected)
         {
-            _selectedPrefab = null; // Deselect if already selected
+            _selectedPrefab = null;
         }
 
         GUILayout.Label(prefab.name, new GUIStyle(EditorStyles.miniLabel) { alignment = TextAnchor.MiddleCenter });
@@ -502,22 +556,12 @@ public class LevelEditorWindow : EditorWindow
         currentRowItemCount++;
     }
 
-    // Close the last row
     EditorGUILayout.EndHorizontal();
-
     EditorGUILayout.EndScrollView();
 }
 
-    private Texture2D MakeTex(int width, int height, Color col)
-    {
-        Color[] pix = new Color[width * height];
-        for (int i = 0; i < pix.Length; i++)
-            pix[i] = col;
-        Texture2D result = new Texture2D(width, height);
-        result.SetPixels(pix);
-        result.Apply();
-        return result;
-    }
+
+
 
     private void OnSceneGUI(SceneView sceneView)
     {
@@ -586,7 +630,7 @@ public class LevelEditorWindow : EditorWindow
                 "Shift + Scroll to adjust count, Shift + Alt + Scroll to rotate, Shift + Click to spawn", new GUIStyle
                 {
                     fontSize = 12,
-                    normal = new GUIStyleState { textColor = Color.green },
+                    normal = new GUIStyleState {textColor = Color.green},
                     alignment = TextAnchor.MiddleCenter
                 });
         }
@@ -607,7 +651,7 @@ public class LevelEditorWindow : EditorWindow
     {
         Ray ray = HandleUtility.GUIPointToWorldRay(mousePosition);
 
-        if (_editMode == LevelEditMode.Raycast3D)
+        if (_editMode == LevelEditMode.Mode3D)
         {
             // Check if we're in Prefab Mode
             PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
@@ -710,7 +754,7 @@ public class LevelEditorWindow : EditorWindow
         for (int i = 0; i < _previewObjectCount; i++)
         {
             Vector3 position = start + direction * spacing * i;
-            GameObject preview = (GameObject)PrefabUtility.InstantiatePrefab(_selectedPrefab,
+            GameObject preview = (GameObject) PrefabUtility.InstantiatePrefab(_selectedPrefab,
                 prefabStage != null ? prefabStage.scene : activeScene);
             preview.transform.position = position;
             preview.transform.rotation = Quaternion.Euler(0, 0, _previewObjectAngle);
@@ -731,12 +775,14 @@ public class LevelEditorWindow : EditorWindow
         PrefabStage prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
         Scene activeScene = SceneManager.GetActiveScene();
 
+        GameObject lastSpawnedPrefab = null;
+
         foreach (var preview in _previewObjects)
         {
             if (preview != null)
             {
                 // Instantiate prefabs based on the current mode
-                GameObject spawnedPrefab = (GameObject)PrefabUtility.InstantiatePrefab(_selectedPrefab,
+                GameObject spawnedPrefab = (GameObject) PrefabUtility.InstantiatePrefab(_selectedPrefab,
                     prefabStage != null ? prefabStage.scene : activeScene);
                 spawnedPrefab.transform.position = preview.transform.position;
                 spawnedPrefab.transform.rotation = preview.transform.rotation;
@@ -748,7 +794,16 @@ public class LevelEditorWindow : EditorWindow
                 }
 
                 Undo.RegisterCreatedObjectUndo(spawnedPrefab, "Spawn Prefab");
+
+                // Keep track of the last spawned prefab
+                lastSpawnedPrefab = spawnedPrefab;
             }
+        }
+
+        // Select the last spawned prefab in the hierarchy
+        if (lastSpawnedPrefab != null)
+        {
+            Selection.activeObject = lastSpawnedPrefab;
         }
 
         ClearPreviewObjects();
