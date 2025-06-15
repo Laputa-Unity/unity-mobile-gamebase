@@ -27,12 +27,12 @@ public class SoundController : SingletonDontDestroy<SoundController>
 
     private void OnMusicChanged()
     {
-        backgroundAudio.mute = !Data.PlayerData.MusicState;
+        backgroundAudio.volume = Data.PlayerData.MusicVolume / 3f;
     }
     
     private void OnSoundChanged()
     {
-        fxAudio.mute = !Data.PlayerData.SoundState;
+        fxAudio.volume = Data.PlayerData.SoundVolume;
     }
 
     private void Setup()
@@ -41,9 +41,14 @@ public class SoundController : SingletonDontDestroy<SoundController>
         OnSoundChanged();
     }
 
+    public SoundData GetSoundData(SoundName soundName)
+    {
+        return soundConfig.GetSoundDataByType(soundName);
+    }
+
     public void PlayFX(SoundName soundName)
     {
-        SoundData soundPlayerData = soundConfig.GetSoundDataByType(soundName);
+        SoundData soundPlayerData = GetSoundData(soundName);
 
         if (soundPlayerData != null)
         {

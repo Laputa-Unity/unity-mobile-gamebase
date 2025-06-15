@@ -2,26 +2,26 @@ using UnityEngine;
 
 public partial class PlayerData
 {
-    [SerializeField] private bool musicState = true;
-    [SerializeField] private bool soundState = true;
+    [SerializeField] private float musicVolume = 1;
+    [SerializeField] private float soundVolume = 1;
     [SerializeField] private bool vibrationState = true;
 
-    public bool MusicState
+    public float MusicVolume
     {
-        get => musicState;
+        get => musicVolume;
         set
         {
-            musicState = value;
+            musicVolume = value;
             Observer.MusicChanged?.Invoke();
         }
     }
 
-    public bool SoundState
+    public float SoundVolume
     {
-        get => soundState;
+        get => soundVolume;
         set
         {
-            soundState = value;
+            soundVolume = value;
             Observer.SoundChanged?.Invoke();
         }
     }
