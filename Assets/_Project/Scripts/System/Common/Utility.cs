@@ -1,15 +1,28 @@
 using System;
+using System.Collections;
 using System.Text.RegularExpressions;
+using Lean.Pool;
 using UnityEngine;
 
 public static class Utility
 {
+    public static string DateTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
+
     public static void Clear(this Transform transform)
     {
         var children = transform.childCount;
         for (int i = children - 1; i >= 0; i--)
         {
             UnityEngine.Object.DestroyImmediate(transform.GetChild(i).gameObject, true);
+        }
+    }
+    
+    public static void LeanPoolClear(this Transform transform)
+    {
+        var children = transform.childCount;
+        for (int i = children - 1; i >= 0; i--)
+        {
+            LeanPool.Despawn(transform.GetChild(i).gameObject);
         }
     }
 
@@ -42,5 +55,20 @@ public static class Utility
             Debug.Log(e);
             return -1;
         }
+    }
+    
+    public static void SetLayerRecursively(GameObject obj, int layer)
+    {
+        obj.layer = layer;
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, layer);
+        }
+    }
+    
+    public static IEnumerator WaitAFrame(Action onEnd)
+    {
+        yield return null;
+        onEnd?.Invoke();
     }
 }

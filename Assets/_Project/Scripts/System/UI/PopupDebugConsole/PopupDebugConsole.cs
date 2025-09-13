@@ -50,7 +50,7 @@ public class PopupDebugConsole : Popup
    public void OnClickExit()
    {
        SoundController.Instance.PlayFX(SoundName.ClickButton);
-       Hide();
+       Hide(PopupAnimation.None);
    }
 
 

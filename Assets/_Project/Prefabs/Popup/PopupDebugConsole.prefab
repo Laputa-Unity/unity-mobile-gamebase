@@ -521,7 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e5b9d84340ea9a4cae060af77886400, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onPressAction:
+  action:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3106791832395491467}
@@ -14347,6 +14347,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b151a8c4d928e4ea723e2e74e3e326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  background: {fileID: 0}
+  container: {fileID: 0}
+  scaleMaxValue: {x: 1, y: 1, z: 1}
+  scaleMinValue: {x: 0.2, y: 0.2, z: 0.2}
+  alphaMaxValue: 1
+  alphaMinValue: 0
+  animationDuration: 0.5
+  delayDuration: 0
+  showEase: 0
+  hideEase: 0
   btnShow: {fileID: 343195660621996111}
   frameAnchor: {fileID: 8970038055419230740}
   frame: {fileID: 6404594214190163583}

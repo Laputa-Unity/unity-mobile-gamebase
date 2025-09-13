@@ -1,53 +1,109 @@
-using System;
 using UnityEngine;
+using Lean.Touch;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
-public class DebugConsoleShortcut : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class DebugConsoleShortcut : MonoBehaviour
 {
-    [SerializeField] private UnityEvent onPressAction;
-    
+    [SerializeField] private UnityEvent action; // Exposed in Inspector
+
     private RectTransform _rectTransform;
     private Canvas _canvas;
+    private Vector2 _fingerDownPos;
     private bool _isDrag;
+    private bool _isOverThisObject;
+    private const float TapThreshold = 10f; // Distance threshold to detect a tap
 
     private void Start()
     {
-        _rectTransform = GetComponentInParent<RectTransform>();
-        _canvas = GetComponentInParent<Canvas>();
+        _rectTransform = GetComponent<RectTransform>();
+        _canvas = GetComponentInParent<Canvas>(); // Ensure we have the correct canvas
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    // **Check if Finger is Over THIS GameObject**
+    private bool IsFingerOverThisObject(LeanFinger finger)
     {
-        Debug.Log("OnPointerDown");
-    }
-    
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        if (!_isDrag)
+        PointerEventData pointerData = new PointerEventData(EventSystem.current)
         {
-            SoundController.Instance.PlayFX(SoundName.ClickButton);
-            onPressAction.Invoke();
+            position = finger.ScreenPosition
+        };
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerData, results);
+
+        foreach (var hit in results)
+        {
+            if (hit.gameObject == gameObject) // Check if hit is THIS object
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Called when a finger begins touching
+    public void OnFingerDown(LeanFinger finger)
+    {
+        if (IsFingerOverThisObject(finger)) // Check if tap started on this object
+        {
+            _isOverThisObject = true;
+            _fingerDownPos = finger.ScreenPosition;
+        }
+        else
+        {
+            _isOverThisObject = false; // Ignore if tap started elsewhere
         }
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+    // Called when a finger is released
+    public void OnFingerUp(LeanFinger finger)
     {
-        Debug.Log("OnBeginDrag");
+        if (!_isOverThisObject) return; // Ignore if tap started elsewhere
+
+        float distance = Vector2.Distance(_fingerDownPos, finger.ScreenPosition);
+
+        if (distance < TapThreshold) // Small movement = Tap
+        {
+            Debug.Log("✅ Tap on DebugConsoleShortcut - Invoking Action!");
+            action?.Invoke();
+        }
+        else
+        {
+            Debug.Log("❌ Drag detected, no action triggered.");
+        }
+
+        _isOverThisObject = false;
     }
 
-    public void OnDrag(PointerEventData eventData)
+    // Called when a finger is dragged
+    public void OnFingerDrag(LeanFinger finger)
     {
         _isDrag = true;
-        
-        if (Input.touchCount == 1)
+
+        // Move object when dragging
+        if (_isOverThisObject)
         {
-            _rectTransform.anchoredPosition += eventData.delta / _canvas.scaleFactor;
+            Vector2 delta = finger.ScreenDelta / _canvas.scaleFactor;
+            if (finger.Index == LeanTouch.HOVER_FINGER_INDEX)
+            {
+                delta *= 0.6f;
+            }
+            _rectTransform.anchoredPosition += delta;
         }
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    private void OnEnable()
     {
-        _isDrag = false;
+        LeanTouch.OnFingerDown += OnFingerDown;
+        LeanTouch.OnFingerUp += OnFingerUp;
+        LeanTouch.OnFingerUpdate += OnFingerDrag;
+    }
+
+    private void OnDisable()
+    {
+        LeanTouch.OnFingerDown -= OnFingerDown;
+        LeanTouch.OnFingerUp -= OnFingerUp;
+        LeanTouch.OnFingerUpdate -= OnFingerDrag;
     }
 }

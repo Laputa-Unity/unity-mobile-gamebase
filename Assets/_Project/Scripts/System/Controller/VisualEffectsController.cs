@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class VisualEffectsController : SingletonDontDestroy<VisualEffectsController>
 {
-    [SerializeField] private VisualEffectConfig vfxConfig;
+      [SerializeField] private VisualEffectConfig vfxConfig;
     
     public void SpawnEffect(EffectName effectName, Vector3 position, Transform parent)
     {
@@ -15,7 +15,7 @@ public class VisualEffectsController : SingletonDontDestroy<VisualEffectsControl
         if (vfxData != null && vfxData.GetRandomEffect() != null)
         {
             GameObject randomEffect = vfxData.GetRandomEffect();
-            GameObject effect = LeanPool.Spawn(randomEffect, position, Quaternion.identity, parent);
+            GameObject effect = LeanPool.Spawn(randomEffect, position, randomEffect.transform.rotation, parent);
             effect.transform.localPosition = position;
         }
         else
@@ -30,7 +30,7 @@ public class VisualEffectsController : SingletonDontDestroy<VisualEffectsControl
         if (vfxData != null && vfxData.GetRandomEffect() != null)
         {
             GameObject randomEffect = vfxData.GetRandomEffect();
-            GameObject effect = LeanPool.Spawn(randomEffect, position, Quaternion.identity, parent);
+            GameObject effect = LeanPool.Spawn(randomEffect, position, randomEffect.transform.rotation, parent);
             effect.transform.localPosition = position;
             LeanPool.Despawn(effect, timeDestroy);
         }

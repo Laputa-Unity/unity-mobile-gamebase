@@ -42,9 +42,4 @@ public class PopupHome : Popup
         PopupController.Instance.Show<PopupShop>();
     }
 
-    public void OnClickSpin()
-    {
-        SoundController.Instance.PlayFX(SoundName.ClickButton);
-        PopupController.Instance.Show<PopupSpin>();
-    }
 }

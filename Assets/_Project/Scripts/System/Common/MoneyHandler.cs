@@ -52,7 +52,7 @@ public class MoneyHandler : SingletonDontDestroy<MoneyHandler>
     private void OnMoneyChanged(int moneyAmount)
     {
         bool isPopupUIActive = popupUI.isActiveAndEnabled;
-        if (!isPopupUIActive) popupUI.Show();
+        if (!isPopupUIActive) popupUI.Show(PopupAnimation.None);
         
         if (moneyAmount >= 0)
         {
