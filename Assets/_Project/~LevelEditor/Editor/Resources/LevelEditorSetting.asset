@@ -12,3 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e54c9b5cfae7e54498b805a8b192c713, type: 3}
   m_Name: LevelEditorSetting
   m_EditorClassIdentifier: 
+  windowMinSize: {x: 1000, y: 600}
+  levelDirectory: Assets/_Project/Resources/Levels
+  rowCount: 10
+  columnCount: 10

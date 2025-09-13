@@ -19,7 +19,7 @@ public class BlockUI : MonoBehaviour
     [SerializeField] private Image botRightCornerImg;
     [SerializeField] private Image botLeftCornerImg;
 
-    private BlockType _blockType;
+    private BlockUIType _blockUIType;
     private Material _blockMaterial;
     private float _rectangleOffSet = 15f;
     
@@ -123,7 +123,7 @@ public class BlockUI : MonoBehaviour
         Tween.Position(botLeftCornerImg.rectTransform, bottomLeftOffset, corners[0],.4f,  Ease.Linear);
     }
     
-    public void SetBlockUIState(bool isActive, BlockType blockType = BlockType.Black, bool useFetching = false, float timeDelay = 0,  Action onComplete = null)
+    public void SetBlockUIState(bool isActive, BlockUIType blockUIType = BlockUIType.Black, bool useFetching = false, float timeDelay = 0,  Action onComplete = null)
     {
         frameImg.gameObject.SetActive(false);
         handImg.gameObject.SetActive(false);
@@ -133,37 +133,37 @@ public class BlockUI : MonoBehaviour
             gameObject.SetActive(true);
             if (timeDelay == 0)
             {
-                switch (blockType)
+                switch (blockUIType)
                 {
-                    case BlockType.Transparent:
+                    case BlockUIType.Transparent:
                         blockImg.color = transparentColor;
                         break;
-                    case BlockType.Black:
+                    case BlockUIType.Black:
                         blockImg.color = blackColor;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(blockType), blockType, null);
+                        throw new ArgumentOutOfRangeException(nameof(blockUIType), blockUIType, null);
                 }
                 onComplete?.Invoke();
             }
             else
             {
-                switch (blockType)
+                switch (blockUIType)
                 {
-                    case BlockType.Transparent:
+                    case BlockUIType.Transparent:
                         Tween.Color(blockImg, transparentColor, timeDelay).OnComplete(()=>
                         {
                             onComplete?.Invoke();
                         });
                         break;
-                    case BlockType.Black:
+                    case BlockUIType.Black:
                         Tween.Color(blockImg, blackColor, timeDelay).OnComplete(()=>
                         {
                             onComplete?.Invoke();
                         });
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(blockType), blockType, null);
+                        throw new ArgumentOutOfRangeException(nameof(blockUIType), blockUIType, null);
                 }
             }
         }
@@ -174,7 +174,7 @@ public class BlockUI : MonoBehaviour
     }
 }
 
-public enum BlockType
+public enum BlockUIType
 {
     Black,
     Transparent,

@@ -10,18 +10,16 @@ using Newtonsoft.Json.Serialization;
 
 public class Level : MonoBehaviour
 {
-    [SerializeField] private int nukeNumber = 10;
-    [ReadOnly] public int bonusMoney;
-
+    [SerializeField] private Environment environment;
+    [SerializeField] private Board board;
     private Camera Camera => GetComponentInChildren<Camera>(true);
-    private ObstacleSpawner _obstacleSpawner;
-    private Player _player;
 
     private bool _isFingerDown;
     private bool _isFingerDrag;
     private float _screenWidth;
 
 #if UNITY_EDITOR
+    
     [Button("Play This Level")]
     public void PlayThisLevel()
     {
@@ -95,46 +93,6 @@ public class Level : MonoBehaviour
 
     void HandleFingerInput(Lean.Touch.LeanFinger finger)
     {
-        if (finger.ScreenPosition.x < _screenWidth / 2)
-        {
-            _player.MoveLeft();
-        }
-        else if (finger.ScreenPosition.x > _screenWidth / 2)
-        {
-            _player.MoveRight();
-        }
-    }
-
-    private void Awake()
-    {
-        _obstacleSpawner = GetComponentInChildren<ObstacleSpawner>();
-        _player = GetComponentInChildren<Player>();
-
-        _screenWidth = Screen.width;
-    }
-
-    private void Start()
-    {
-        _obstacleSpawner.Setup(nukeNumber);
-        _obstacleSpawner.StartSpawn();
-
-        Observer.WinLevel += OnWin;
-        Observer.LoseLevel += OnLose;
-    }
-
-    private void OnDestroy()
-    {
-        Observer.WinLevel -= OnWin;
-        Observer.LoseLevel -= OnLose;
-    }
-
-    public void OnWin(Level level)
-    {
-        _obstacleSpawner.StopSpawn();
-    }
-
-    public void OnLose(Level level)
-    {
-        _obstacleSpawner.StopSpawn();
+      
     }
 }

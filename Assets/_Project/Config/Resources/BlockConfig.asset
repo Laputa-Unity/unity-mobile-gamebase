@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 346c0856d63c7c145869799aec6d0132, type: 3}
+  m_Name: BlockConfig
+  m_EditorClassIdentifier: 
+  blockData:
+  - blockType: 0
+    texture: {fileID: 2800000, guid: 16c0e07d5649049fea8a5c66a230d515, type: 3}
+    sprite: {fileID: 21300000, guid: 16c0e07d5649049fea8a5c66a230d515, type: 3}
+  - blockType: 1
+    texture: {fileID: 2800000, guid: 6d5f41fc21c1542668f6c5ff9a920fd6, type: 3}
+    sprite: {fileID: 21300000, guid: 6d5f41fc21c1542668f6c5ff9a920fd6, type: 3}
+  - blockType: 2
+    texture: {fileID: 2800000, guid: 91f515bbb00f84a77a489ddd2ffbcb25, type: 3}
+    sprite: {fileID: 21300000, guid: 91f515bbb00f84a77a489ddd2ffbcb25, type: 3}
+  - blockType: 3
+    texture: {fileID: 2800000, guid: ebd13afba32704d0e82e34defbc7cc53, type: 3}
+    sprite: {fileID: 21300000, guid: ebd13afba32704d0e82e34defbc7cc53, type: 3}
+  - blockType: 4
+    texture: {fileID: 2800000, guid: 97d312c1c5e0448ebb9e485efbbc6fb8, type: 3}
+    sprite: {fileID: 21300000, guid: 97d312c1c5e0448ebb9e485efbbc6fb8, type: 3}
+  - blockType: 5
+    texture: {fileID: 2800000, guid: cabc50efdbbd04c44b4c210637a91e06, type: 3}
+    sprite: {fileID: 21300000, guid: cabc50efdbbd04c44b4c210637a91e06, type: 3}
+  - blockType: 6
+    texture: {fileID: 2800000, guid: abcd4bdc5f61542088e7159c2a9b07e4, type: 3}
+    sprite: {fileID: 21300000, guid: abcd4bdc5f61542088e7159c2a9b07e4, type: 3}
+  - blockType: 7
+    texture: {fileID: 2800000, guid: 9efad2c2e3e4a4f6eb790c021b1f2f11, type: 3}
+    sprite: {fileID: 21300000, guid: 9efad2c2e3e4a4f6eb790c021b1f2f11, type: 3}
+  - blockType: 8
+    texture: {fileID: 2800000, guid: 35bdaae79377b4558bb731acf47b5949, type: 3}
+    sprite: {fileID: 21300000, guid: 35bdaae79377b4558bb731acf47b5949, type: 3}
+  - blockType: 9
+    texture: {fileID: 2800000, guid: 77574d1490e29470685a498b77521a00, type: 3}
+    sprite: {fileID: 21300000, guid: 77574d1490e29470685a498b77521a00, type: 3}
+  - blockType: 10
+    texture: {fileID: 2800000, guid: 48b362562d6bd41baa64177fbacd57fa, type: 3}
+    sprite: {fileID: 21300000, guid: 48b362562d6bd41baa64177fbacd57fa, type: 3}
+  - blockType: 11
+    texture: {fileID: 2800000, guid: 8db8cee0ef67c497eb36800ff1137e82, type: 3}
+    sprite: {fileID: 21300000, guid: 8db8cee0ef67c497eb36800ff1137e82, type: 3}
+  - blockType: 12
+    texture: {fileID: 2800000, guid: 5eb6db049174d4e78a6945e2a02b06e0, type: 3}
+    sprite: {fileID: 21300000, guid: 5eb6db049174d4e78a6945e2a02b06e0, type: 3}
+  - blockType: 13
+    texture: {fileID: 2800000, guid: ba51931d4610a4a2c925ee6dc93d8560, type: 3}
+    sprite: {fileID: 21300000, guid: ba51931d4610a4a2c925ee6dc93d8560, type: 3}
+  - blockType: 14
+    texture: {fileID: 2800000, guid: 291b96a267b3a47e9a72b76319ec28b2, type: 3}
+    sprite: {fileID: 21300000, guid: 291b96a267b3a47e9a72b76319ec28b2, type: 3}
+  - blockType: 15
+    texture: {fileID: 2800000, guid: ed73ab390c29044e49d8da0c04ab50ad, type: 3}
+    sprite: {fileID: 21300000, guid: ed73ab390c29044e49d8da0c04ab50ad, type: 3}
+  - blockType: 16
+    texture: {fileID: 2800000, guid: 67796738073a14579b4080dc50150e81, type: 3}
+    sprite: {fileID: 21300000, guid: 67796738073a14579b4080dc50150e81, type: 3}
+  - blockType: 17
+    texture: {fileID: 2800000, guid: e9f6e7807b5a44015bb50a1ff7da1ca0, type: 3}
+    sprite: {fileID: 21300000, guid: e9f6e7807b5a44015bb50a1ff7da1ca0, type: 3}
+  - blockType: 18
+    texture: {fileID: 2800000, guid: fac059d9c52cb4b9cadbab3996601898, type: 3}
+    sprite: {fileID: 21300000, guid: fac059d9c52cb4b9cadbab3996601898, type: 3}
+  - blockType: 19
+    texture: {fileID: 2800000, guid: 68fe33d75e3164de097457983ba6fc8e, type: 3}
+    sprite: {fileID: 21300000, guid: 68fe33d75e3164de097457983ba6fc8e, type: 3}

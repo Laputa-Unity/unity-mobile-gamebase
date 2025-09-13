@@ -147,9 +147,9 @@ public class PopupController : SingletonDontDestroy<PopupController>
         blockUI.SetTargetUI(isActive, targetUIType, targetTransform, timeDelay);
     }
     
-    public void SetBlockUIState(bool isActive, BlockType blockType = BlockType.Black, bool useFetching = false, float timeDelay = 0,  Action onComplete = null)
+    public void SetBlockUIState(bool isActive, BlockUIType blockUIType = BlockUIType.Black, bool useFetching = false, float timeDelay = 0,  Action onComplete = null)
     {
-        blockUI.SetBlockUIState(isActive, blockType, useFetching, timeDelay, onComplete);
+        blockUI.SetBlockUIState(isActive, blockUIType, useFetching, timeDelay, onComplete);
     }
 
     public void BringToFront(GameObject go)

@@ -88,7 +88,6 @@ public class GameManager : SingletonDontDestroy<GameManager>
             PopupController.Instance.HideAll();
             if (PopupController.Instance.Get<PopupWin>() is PopupWin popupWin)
             {
-                popupWin.SetupMoneyWin(levelController.currentLevel.bonusMoney);
                 popupWin.Show();
             }
         });
