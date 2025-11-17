@@ -30,7 +30,7 @@ public class GameBase : EditorWindow
     [MenuItem("GameBase/Debug/Add 100k Money")]
     public static void Add100kMoney()
     {
-        Data.PlayerData.CurrentMoney += 100000;
+        Data.PlayerData.CurrentGold += 100000;
         Debug.Log($"<color=Green>Add 100k coin succeed</color>");
     }
     

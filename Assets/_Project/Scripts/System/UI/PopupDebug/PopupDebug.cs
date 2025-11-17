@@ -15,7 +15,6 @@ public class PopupDebug : Popup
     {
         base.BeforeShow();
         panelPlayerData.SetActive(false);
-        PopupController.Instance.Hide<PopupUI>();
     }
 
     public void OnClickAccept()
@@ -28,7 +27,7 @@ public class PopupDebug : Popup
         }
         if (!string.IsNullOrEmpty(setCoin.text))
         {
-            Data.PlayerData.CurrentMoney = int.Parse(setCoin.text);
+            Data.PlayerData.CurrentGold = int.Parse(setCoin.text);
         }
 
         setCoin.text = string.Empty;

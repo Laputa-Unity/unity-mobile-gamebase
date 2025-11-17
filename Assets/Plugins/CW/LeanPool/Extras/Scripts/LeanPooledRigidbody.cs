@@ -16,7 +16,7 @@ namespace Lean.Pool
 		{
 			var rigidbody = GetComponent<Rigidbody>();
 
-			rigidbody.velocity        = Vector3.zero;
+			rigidbody.linearVelocity        = Vector3.zero;
 			rigidbody.angularVelocity = Vector3.zero;
 		}
 	}

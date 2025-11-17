@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using CustomTween;
+using Spine.Unity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +14,8 @@ public class BlockUI : MonoBehaviour
     [SerializeField] private Image blockImg;
     [SerializeField] private Image fetchImg;
     [SerializeField] private Image frameImg;
-    [SerializeField] private Image handImg;
+    [SerializeField] private GameObject handTutorialGo;
+    [SerializeField] private SkeletonGraphic handTutorialSpine;
     [SerializeField] private Camera uiCamera;
     [SerializeField] private Image topLeftCornerImg;
     [SerializeField] private Image topRightCornerImg;
@@ -22,6 +25,8 @@ public class BlockUI : MonoBehaviour
     private BlockUIType _blockUIType;
     private Material _blockMaterial;
     private float _rectangleOffSet = 15f;
+
+    private List<Tween> cacheTweens = new List<Tween>();
     
     private void Awake()
     {
@@ -29,10 +34,18 @@ public class BlockUI : MonoBehaviour
         blockImg.material = _blockMaterial;   
     }
 
+    private void OnDisable()
+    {
+        foreach (var cacheTween in cacheTweens)
+        {
+            cacheTween.Stop();
+        }
+    }
+
     public void SetTargetUI(bool isActive, TargetUIType targetUIType = TargetUIType.Frame, RectTransform targetTransform = null, float timeDelay = 0)
     {
         frameImg.gameObject.SetActive(false);
-        handImg.gameObject.SetActive(false);
+        handTutorialGo.SetActive(false);
         if (!isActive || targetTransform == null)
         {
             SetRectangle(null); 
@@ -44,19 +57,19 @@ public class BlockUI : MonoBehaviour
             fetchImg.gameObject.SetActive(false);
             frameImg.gameObject.SetActive((targetUIType == TargetUIType.Frame ||
                                            targetUIType == TargetUIType.FrameAndHand));
-            handImg.gameObject.SetActive((targetUIType == TargetUIType.Hand ||
-                                          targetUIType == TargetUIType.FrameAndHand));
+            handTutorialGo.SetActive((targetUIType == TargetUIType.Hand ||
+                                      targetUIType == TargetUIType.FrameAndHand));
             switch (targetUIType)
             {
                 case TargetUIType.Frame:
                     frameImg.transform.position = targetTransform.position;
                     break;
                 case TargetUIType.Hand:
-                    handImg.transform.position = targetTransform.position;
+                    handTutorialGo.transform.position = targetTransform.position;
                     break;
                 case TargetUIType.FrameAndHand:
                     frameImg.transform.position = targetTransform.position;
-                    handImg.transform.position = targetTransform.position;
+                    handTutorialGo.transform.position = targetTransform.position;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(targetUIType), targetUIType, null);
@@ -117,16 +130,16 @@ public class BlockUI : MonoBehaviour
         botRightCornerImg.transform.position = corners[3];
         botLeftCornerImg.transform.position = corners[0];
         
-        Tween.Position(topLeftCornerImg.rectTransform, topLeftOffSet, corners[1],.4f,  Ease.Linear);
-        Tween.Position(topRightCornerImg.rectTransform, topRightOffset, corners[2],.4f,  Ease.Linear);
-        Tween.Position(botRightCornerImg.rectTransform, bottomRightOffset, corners[3],.4f,  Ease.Linear);
-        Tween.Position(botLeftCornerImg.rectTransform, bottomLeftOffset, corners[0],.4f,  Ease.Linear);
+        cacheTweens.Add(Tween.Position(topLeftCornerImg.rectTransform, topLeftOffSet, corners[1],.4f,  Ease.Linear));
+        cacheTweens.Add(Tween.Position(topRightCornerImg.rectTransform, topRightOffset, corners[2],.4f,  Ease.Linear));
+        cacheTweens.Add(Tween.Position(botRightCornerImg.rectTransform, bottomRightOffset, corners[3],.4f,  Ease.Linear));
+        cacheTweens.Add(Tween.Position(botLeftCornerImg.rectTransform, bottomLeftOffset, corners[0],.4f,  Ease.Linear));
     }
     
     public void SetBlockUIState(bool isActive, BlockUIType blockUIType = BlockUIType.Black, bool useFetching = false, float timeDelay = 0,  Action onComplete = null)
     {
         frameImg.gameObject.SetActive(false);
-        handImg.gameObject.SetActive(false);
+        handTutorialGo.SetActive(false);
         fetchImg.gameObject.SetActive(useFetching);
         if (isActive)
         {

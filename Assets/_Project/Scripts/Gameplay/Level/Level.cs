@@ -25,7 +25,7 @@ public class Level : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            Data.PlayerData.CurrentLevelIndex = Utility.GetNumberInAString(gameObject.name);
+            Data.PlayerData.CurrentLevelIndex = Utility.GetNumberInAString(gameObject.name, "1");
             GameManager.Instance.ReplayGame();
         }
         else
@@ -34,7 +34,7 @@ public class Level : MonoBehaviour
             string encryptedLoadData = File.ReadAllText(path);
             string decryptedData = EncryptionHelper.Decrypt(encryptedLoadData);
             PlayerData playerData = JsonConvert.DeserializeObject<PlayerData>(decryptedData);
-            playerData.CurrentLevelIndex = Utility.GetNumberInAString(gameObject.name);
+            playerData.CurrentLevelIndex = Utility.GetNumberInAString(gameObject.name, "1");
             var jsonSettings = new JsonSerializerSettings
                 { ContractResolver = new CamelCasePropertyNamesContractResolver() };
             string jsonData = JsonConvert.SerializeObject(playerData, Formatting.Indented, jsonSettings);

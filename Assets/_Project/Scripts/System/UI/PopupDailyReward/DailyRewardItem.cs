@@ -109,8 +109,8 @@ public class DailyRewardItem : MonoBehaviour
         switch (_dailyRewardData.DailyRewardType)
         {
             case DailyRewardType.Money:
-                MoneyHandler.Instance.SetFrom(transform.position);
-                Data.PlayerData.CurrentMoney += _coinValue * (isClaimX5 ? 5 : 1);
+                //GoldHandler.Instance.SetFrom(transform.position);
+                //Data.PlayerData.CurrentMoney += _coinValue * (isClaimX5 ? 5 : 1);
                 break;
             case DailyRewardType.Skin:
                 //shopItemData.IsUnlocked = true;

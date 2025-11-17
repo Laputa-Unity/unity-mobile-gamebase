@@ -1,0 +1,7 @@
+Hand.png
+size:139,139
+filter:Linear,Linear
+pma:true
+scale:0.5
+HandUnclick
+bounds:2,2,135,135

@@ -56,16 +56,16 @@ public class CommandPanelItem : ConsolePanelItem
         }
     }
 
-    private void ExecuteCommand(string str)
+    private async void ExecuteCommand(string str)
     {
         try
         {
             switch (str)
             {
-                case "time_stop":
+                case "ts":
                     Time.timeScale = 0;
                     break;
-                case "time_resume":
+                case "tr":
                     Time.timeScale = 1;
                     break;
                 default:
@@ -90,21 +90,17 @@ public class CommandPanelItem : ConsolePanelItem
         {
             switch (str)
             {
-                case "level":
-                {
-                    if (param <= 0)
-                    {
-                        throw new Exception();
-                    }
-                    Data.PlayerData.CurrentLevelIndex = param;
-                    GameManager.Instance.PlayCurrentLevel();
+                case "gold":
+                    Data.PlayerData.CurrentGold += param;
                     break;
-                }
-                case "coin":
-                    Data.PlayerData.CurrentMoney += param;
+                case "diamond":
+                    Data.PlayerData.CurrentDiamond += param;
                     break;
-                case "timescale":
-                    Time.timeScale = param;
+                case "et":
+                    GameController.IsTesting = true;
+                    break;
+                case "dt":
+                    GameController.IsTesting = false;
                     break;
                 default:
                     resultText.text = "Command not found";

@@ -7,7 +7,6 @@ using UnityEngine;
 public static class Utility
 {
     public static string DateTimeFormat = "yyyy-MM-ddTHH:mm:ssZ";
-
     public static void Clear(this Transform transform)
     {
         var children = transform.childCount;
@@ -43,18 +42,10 @@ public static class Utility
         return null;
     }
 
-    public static int GetNumberInAString(string str)
+    public static int GetNumberInAString(string input, string keyword)
     {
-        try
-        {
-            var getNumb = Regex.Match(str, @"\d+").Value;
-            return Int32.Parse(getNumb);
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-            return -1;
-        }
+        var match = Regex.Match(input, $@"{keyword}\s*(\d+)", RegexOptions.IgnoreCase);
+        return match.Success ? int.Parse(match.Groups[1].Value) : 0;
     }
     
     public static void SetLayerRecursively(GameObject obj, int layer)

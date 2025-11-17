@@ -2,7 +2,7 @@ fileFormatVersion: 2
 guid: 3351374e9b19d7a4cbdb139022a09c5f
 AudioImporter:
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 8
   defaultSettings:
     serializedVersion: 2
     loadType: 0
@@ -13,7 +13,7 @@ AudioImporter:
     conversionMode: 0
     preloadAudioData: 1
   platformSettingOverrides:
-    7:
+    Android:
       serializedVersion: 2
       loadType: 0
       sampleRateSetting: 0

@@ -1,0 +1,9 @@
+hand_tut.png
+size:296,296
+filter:Linear,Linear
+pma:true
+Layer 2
+bounds:2,2,105,126
+rotate:90
+Layer 3
+bounds:2,109,184,184

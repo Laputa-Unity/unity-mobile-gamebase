@@ -18,7 +18,6 @@ public class PopupWin : Popup
     protected override void BeforeShow()
     {
         base.BeforeShow();
-        PopupController.Instance.Show<PopupUI>();
         Setup();
         
         _sequence = Sequence.Create().ChainDelay(2f).ChainCallback(() => { btnTapToContinue.SetActive(true); });
@@ -31,12 +30,6 @@ public class PopupWin : Popup
         bonusArrowHandler.MoveObject.ResumeMoving();
     }
 
-    protected override void BeforeHide()
-    {
-        base.BeforeHide();
-        PopupController.Instance.Hide<PopupUI>();
-    }
-
     public void OnClickAdsReward()
     {
         GetRewardAds();
@@ -44,7 +37,7 @@ public class PopupWin : Popup
     
     public void GetRewardAds()
     {
-        Data.PlayerData.CurrentMoney += _totalMoney * bonusArrowHandler.currentAreaItem.MultiBonus;
+        Data.PlayerData.CurrentGold += _totalMoney * bonusArrowHandler.currentAreaItem.MultiBonus;
         bonusArrowHandler.MoveObject.StopMoving();
         btnRewardAds.SetActive(false);
         btnTapToContinue.SetActive(false);
@@ -55,7 +48,7 @@ public class PopupWin : Popup
 
     public void OnClickContinue()
     {
-        Data.PlayerData.CurrentMoney += _totalMoney;
+        Data.PlayerData.CurrentGold += _totalMoney;
         btnRewardAds.SetActive(false);
         btnTapToContinue.SetActive(false);
 

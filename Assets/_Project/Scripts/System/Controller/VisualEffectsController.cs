@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class VisualEffectsController : SingletonDontDestroy<VisualEffectsController>
 {
-      [SerializeField] private VisualEffectConfig vfxConfig;
+    [SerializeField] private VisualEffectConfig vfxConfig;
     
     public void SpawnEffect(EffectName effectName, Vector3 position, Transform parent)
     {
@@ -89,6 +89,8 @@ public class VisualEffectData
 
 public enum EffectName
 {
-    SparkCoin,
-    NukeExplosion,
+    SparkleGold,
+    SparkleDiamond,
+    SparkleEnergy,
+    SparkleFeature,
 }

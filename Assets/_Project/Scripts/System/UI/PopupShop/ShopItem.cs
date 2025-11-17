@@ -24,7 +24,7 @@ public class ShopItem : Popup
     public void Refresh()
     {
         var isSelected = playerData.CurrentSkin == _itemData.identity;
-        var enableToBuy = playerData.CurrentMoney >= _itemData.price;
+        var enableToBuy = playerData.CurrentGold >= _itemData.price;
 
         icon.sprite = _itemData.shopIcon;
         if (playerData.OwnedSkins.Contains(_itemData.identity))
@@ -59,7 +59,7 @@ public class ShopItem : Popup
     {
         SoundController.Instance.PlayFX(SoundName.ClickButton);
         SoundController.Instance.PlayFX(SoundName.PurchaseCompleted);
-        playerData.CurrentMoney -= _itemData.price;
+        playerData.CurrentGold -= _itemData.price;
         playerData.OwnedSkins.Add(_itemData.identity);
         playerData.CurrentSkin = _itemData.identity;
         Observer.BuySkin?.Invoke();
