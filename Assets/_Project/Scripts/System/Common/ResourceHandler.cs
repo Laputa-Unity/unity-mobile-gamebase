@@ -45,13 +45,20 @@ public abstract class ResourceHandler : MonoBehaviour
     protected virtual void OnEnable()
     {
         SubscribeEvents();
+        Observer.SpawnResourcesChanged += SpawnResourcesChanged;
     }
 
     protected virtual void OnDisable()
     {
         UnsubscribeEvents();
+        Observer.SpawnResourcesChanged -= SpawnResourcesChanged;
     }
 
+    private void SpawnResourcesChanged(Vector3 position)
+    {
+        from = position;
+    }
+    
     protected virtual void Start()
     {
         ResetCache();
@@ -116,9 +123,10 @@ public abstract class ResourceHandler : MonoBehaviour
             r.transform.localScale = Vector3.one * scale;
             visibleResources.Add(r);
 
+            float zCanvas = canvas.planeDistance;
             Vector3 startPos = from ?? Vector3.zero;
-            startPos.z = 0;
-            r.transform.localPosition = startPos;
+            startPos.z = zCanvas;
+            r.transform.position = startPos;
             r.SetTrailOrderInLayer(canvas.sortingOrder);
             r.SetTrailState(false);
 
@@ -158,6 +166,4 @@ public abstract class ResourceHandler : MonoBehaviour
     {
         return MoveTo(target.transform.position, obj, durationTarget, easeTarget);
     }
-
-    public void SetFrom(Vector3 p) => from = p;
 }

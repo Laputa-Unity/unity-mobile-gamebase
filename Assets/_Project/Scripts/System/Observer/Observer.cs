@@ -10,6 +10,7 @@ public static partial class Observer
     public static Action GoldChangedDone;
     public static Action<int> DiamondChanged;
     public static Action DiamondChangedDone;
+    public static Action<Vector3> SpawnResourcesChanged;
     public static Action CurrentChapterChanged;
     public static Action<string, Vector3> Notify;
 }

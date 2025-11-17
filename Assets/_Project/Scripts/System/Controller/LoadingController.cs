@@ -19,13 +19,7 @@ public class LoadingController : MonoBehaviour
     {
         if (Data.PlayerData.IsFirstPlaying)
         {
-            timeLoading = 10;
-            SoundController.Instance.PlayBackground(SoundName.CaribeanThemeSong);
-        }
-        else
-        {
             SoundController.Instance.PlayBackground(SoundName.Background);
-
         }
         
         _sceneOperation = SceneManager.LoadSceneAsync("GameplayScene");

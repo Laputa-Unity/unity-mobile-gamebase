@@ -6,12 +6,14 @@ using UnityEngine;
 public partial class PlayerData
 {
     [SerializeField] private bool isFirstPlaying = true;
-    [SerializeField] private int currentLevelIndex;
+    [SerializeField] private int currentLevelIndex = _minLevel;
     [SerializeField] private int currentEnergy;
     [SerializeField] private int currentGold;
     [SerializeField] private int currentDiamond;
     [SerializeField] private GameReward savingReward;
     [SerializeField] private string refillEnergyPoint = DateTime.UtcNow.ToString(Utility.DateTimeFormat, CultureInfo.InvariantCulture);
+    
+    private const int _minLevel = 1;
     
     public bool IsFirstPlaying
     {
@@ -22,7 +24,7 @@ public partial class PlayerData
     public int CurrentLevelIndex
     {
         get => currentLevelIndex;
-        set => currentLevelIndex = value;
+        set => currentLevelIndex = Mathf.Max(_minLevel,value);
     }
 
     public int CurrentEnergy
