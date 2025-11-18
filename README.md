@@ -6,10 +6,10 @@
 
 👋 **Hi there, I'm HoangVanThu**. This repository help you to build games on mobile devices.
 - Project is a sample gamebase for mobile game using **singleton design pattern**, you can get used to it very easily and build a complete game quickly. Besides, the utilities of the **custom packages** will help you a lot in searching, displaying and programming.
-- However, I do not recommend using it for large game projects. Anyway it is a bad pattern, you can see or read about it everywhere on the internet.
+- However, I do not recommend using it for large game projects. Anyway **singleton design pattern** is a bad pattern, you can see or read about it everywhere on the internet.
 
 ## The Goals of the Project
-- [x] `Coin System`: add animations when player coin increase.
+- [x] `Resources System`: 
 - [x] `Gameplay`: simple gameplay with ui ingame, win and lose.
 - [x] `Setting`: setting for the game.
 - [x] `Shop`: shop to buy skins.
@@ -34,7 +34,6 @@
 ## Installation
 - Version: **Unity  6000.2.10f1**
 - Type select: **Android**, **IOS**
-![image](https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/fa61651e-daa6-4b0c-bd9c-e866ca94125e)
 
 ## Folder Structure
 ```bash
