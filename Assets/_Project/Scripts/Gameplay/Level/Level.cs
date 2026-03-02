@@ -10,8 +10,6 @@ using Newtonsoft.Json.Serialization;
 
 public class Level : MonoBehaviour
 {
-    [SerializeField] private Environment environment;
-    [SerializeField] private Board board;
     private Camera Camera => GetComponentInChildren<Camera>(true);
 
     private bool _isFingerDown;
