@@ -9,6 +9,7 @@ using Lean.Touch;
 
 public class PopupController : SingletonDontDestroy<PopupController>
 {
+    [Header("Attachments")]
     [SerializeField] private Camera uiCamera;
     [SerializeField] private Transform canvasTransform;
     [SerializeField] private Camera uiCamera2;

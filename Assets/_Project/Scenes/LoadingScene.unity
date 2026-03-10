@@ -1530,6 +1530,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1797787785}
   - component: {fileID: 1797787784}
+  - component: {fileID: 1797787786}
   m_Layer: 0
   m_Name: PopupController
   m_TagString: Untagged
@@ -1577,6 +1578,22 @@ Transform:
   - {fileID: 1894207704}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1797787786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1797787783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49abb04da35217f4fb37352a77a6372a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PopupCreator
+  popupConfig: {fileID: 11400000, guid: c45c30f794c42b745b31ed68ceaa4b50, type: 2}
+  popupPrefab: {fileID: 7370416450938019894, guid: 25244cd5536620044b912f1253e7dd4d, type: 3}
+  popupSavingDirectory: Assets/_Project/Prefabs/Popup
+  scriptSavingDirectory: Assets/_Project/Scripts/System/UI
 --- !u!1 &1875187657
 GameObject:
   m_ObjectHideFlags: 0
