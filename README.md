@@ -28,7 +28,6 @@
 - [ ] `Laputa Thirdparty`: window to install third party like firebase, ads
 - [ ] `Localization`: localization system
 - [ ] `Rank`: online ranking
-- [ ] `Inventory`: player inventory
 - [ ] `Push Notification`: mobile notification
 
 ## Installation
