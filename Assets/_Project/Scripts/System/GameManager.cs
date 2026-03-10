@@ -35,7 +35,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
     {
         PrepareLevel();
         
-        SoundController.Instance.PlayBackground(SoundName.Background);
+        SoundController.Instance.PlayBackground(SoundName.HomeBackgroundMusic);
         PopupController.Instance.HideAll();
         PopupController.Instance.Show<PopupBackground>();
         PopupController.Instance.Show<PopupHome>();
@@ -70,7 +70,7 @@ public class GameManager : SingletonDontDestroy<GameManager>
         gameState = GameState.PlayingGame;
         Observer.StartLevel?.Invoke(levelController.currentLevel);
         
-        SoundController.Instance.PlayBackground(SoundName.BackgroundIngame);
+        SoundController.Instance.PlayBackground(SoundName.InGameBackgroundMusic);
         PopupController.Instance.HideAll();
         PopupController.Instance.Show<PopupInGame>();
         

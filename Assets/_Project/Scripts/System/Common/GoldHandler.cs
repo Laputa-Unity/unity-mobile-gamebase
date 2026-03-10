@@ -36,7 +36,7 @@ public class GoldHandler : ResourceHandler
     
     protected override void OnCollectedEffect(GameObject target)
     {
-        VisualEffectsController.Instance.SpawnEffect(
+        VFXController.Instance.SpawnEffect(
             EffectName.SparkleGold,
             Vector3.zero,
             target.transform,

@@ -5,7 +5,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 
-public class VisualEffectsController : SingletonDontDestroy<VisualEffectsController>
+public class VFXController : SingletonDontDestroy<VFXController>
 {
     [SerializeField] private VisualEffectConfig vfxConfig;
     

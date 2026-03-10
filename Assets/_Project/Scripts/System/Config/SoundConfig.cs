@@ -5,10 +5,11 @@ using CustomInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[CreateAssetMenu(fileName ="SoundConfig",menuName = "ScriptableObject/SoundConfig")]
+[CreateAssetMenu(fileName = "SoundConfig", menuName = "ScriptableObject/SoundConfig")]
 public class SoundConfig : ScriptableObject
 {
-    [TableList(Draggable = true, HideAddButton = false, HideRemoveButton = false, AlwaysExpanded = false)] public List<SoundData> soundData;
+    [TableList(Draggable = true, HideAddButton = false, HideRemoveButton = false, AlwaysExpanded = false)]
+    public List<SoundData> soundData;
 
     public SoundData GetSoundDataByType(SoundName soundName)
     {
@@ -63,16 +64,12 @@ public class SoundData
 
         return null;
     }
-}   
+}
 
 public enum SoundName
 {
-    Background,
-    Music,
+    HomeBackgroundMusic,
+    InGameBackgroundMusic,
     ClickButton,
     PurchaseCompleted,
-    PurchaseFailed,
-    CollectCoin,
-    NukeExplosion,
-SpawnCoin,
-CaribeanThemeSong, BackgroundIngame, SpinWheel, }
+}

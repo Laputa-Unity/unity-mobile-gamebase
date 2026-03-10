@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4237318868721676039}
   - component: {fileID: 317948898505653426}
   m_Layer: 0
-  m_Name: EffectsController
+  m_Name: VFXController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

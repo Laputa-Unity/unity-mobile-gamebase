@@ -6,22 +6,15 @@ using UnityEngine.UI;
 
 public class LoadingController : MonoBehaviour
 {
-    [Header("Attributes")] [SerializeField]
-    private float timeLoading = 5f;
-
-    [Header("Components")] [SerializeField]
-    private Image progressBar;
-
+    [Header("Attributes")] 
+    [SerializeField] private float timeLoading = 5f;
+    [Header("Components")] 
+    [SerializeField] private Image progressBar;
     [SerializeField] private TextMeshProUGUI loadingText;
     private AsyncOperation _sceneOperation;
     
     void Start()
     {
-        if (Data.PlayerData.IsFirstPlaying)
-        {
-            SoundController.Instance.PlayBackground(SoundName.Background);
-        }
-        
         _sceneOperation = SceneManager.LoadSceneAsync("GameplayScene");
         _sceneOperation.allowSceneActivation = false;
 

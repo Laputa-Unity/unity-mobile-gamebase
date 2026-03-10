@@ -36,7 +36,7 @@ public class DiamondHandler : ResourceHandler
     
     protected override void OnCollectedEffect(GameObject target)
     {
-        VisualEffectsController.Instance.SpawnEffect(
+        VFXController.Instance.SpawnEffect(
             EffectName.SparkleDiamond,
             Vector3.zero,
             target.transform,
