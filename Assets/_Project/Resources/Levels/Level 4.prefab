@@ -68,11 +68,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3540985671340874639, guid: 1f2121c0375fc8046b88f3b41299c9b3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3540985671340874639, guid: 1f2121c0375fc8046b88f3b41299c9b3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.33
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3540985671340874639, guid: 1f2121c0375fc8046b88f3b41299c9b3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -196,11 +196,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3540985671340874639, guid: 1f2121c0375fc8046b88f3b41299c9b3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.5
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 3540985671340874639, guid: 1f2121c0375fc8046b88f3b41299c9b3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.33
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3540985671340874639, guid: 1f2121c0375fc8046b88f3b41299c9b3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -299,18 +299,6 @@ PrefabInstance:
     - target: {fileID: 7227541224908394097, guid: 198e8426f6f82214d8cc801e6c2ff2f5, type: 3}
       propertyPath: m_Name
       value: Environment
-      objectReference: {fileID: 0}
-    - target: {fileID: 7499739607520748209, guid: 198e8426f6f82214d8cc801e6c2ff2f5, type: 3}
-      propertyPath: m_Color.b
-      value: 0.34090912
-      objectReference: {fileID: 0}
-    - target: {fileID: 7499739607520748209, guid: 198e8426f6f82214d8cc801e6c2ff2f5, type: 3}
-      propertyPath: m_Color.g
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7499739607520748209, guid: 198e8426f6f82214d8cc801e6c2ff2f5, type: 3}
-      propertyPath: m_Color.r
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4223180500391711005, guid: 198e8426f6f82214d8cc801e6c2ff2f5, type: 3}
