@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PopupWin : Popup
 {
+    [SerializeField] private CustomButton btnContinue;
+    
     private int _totalMoney = 100;
     private Sequence _sequence;
 
@@ -14,12 +16,13 @@ public class PopupWin : Popup
 
     public void Setup()
     {
-        
+        btnContinue.gameObject.SetActive(true);
     }
 
     public void OnClickContinue()
     {
         Data.PlayerData.CurrentGold += _totalMoney;
+        btnContinue.gameObject.SetActive(false);
         Tween.Delay( 2f,() =>
         {
             GameManager.Instance.PlayCurrentLevel();

@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,14 +11,20 @@ using Newtonsoft.Json.Serialization;
 
 public class Level : MonoBehaviour
 {
-    private Camera Camera => GetComponentInChildren<Camera>(true);
+    [Header("Layer")] [SerializeField] private LayerMask targetLayer;
+    [SerializeField] private LayerMask holeLayer;
 
+    private Camera _mainCamera;
     private bool _isFingerDown;
-    private bool _isFingerDrag;
-    private float _screenWidth;
+    private Pill _currentDragPill;
+
+    private void Awake()
+    {
+        _mainCamera = Camera.main;
+        Debug.Log(_mainCamera);
+    }
 
 #if UNITY_EDITOR
-    
     [Button("Play This Level")]
     public void PlayThisLevel()
     {
@@ -33,64 +40,90 @@ public class Level : MonoBehaviour
             string decryptedData = EncryptionHelper.Decrypt(encryptedLoadData);
             PlayerData playerData = JsonConvert.DeserializeObject<PlayerData>(decryptedData);
             playerData.CurrentLevelIndex = Utility.GetNumberInAString(gameObject.name, "1");
+
             var jsonSettings = new JsonSerializerSettings
-                { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
+
             string jsonData = JsonConvert.SerializeObject(playerData, Formatting.Indented, jsonSettings);
             string encryptedSaveData = EncryptionHelper.Encrypt(jsonData);
             File.WriteAllText(path, encryptedSaveData);
+
             EditorApplication.isPlaying = true;
         }
     }
 #endif
 
-    void OnEnable()
+    private void OnEnable()
     {
         Lean.Touch.LeanTouch.OnFingerDown += HandleFingerDown;
         Lean.Touch.LeanTouch.OnFingerUp += HandleFingerUp;
         Lean.Touch.LeanTouch.OnFingerUpdate += HandleFingerUpdate;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         Lean.Touch.LeanTouch.OnFingerDown -= HandleFingerDown;
         Lean.Touch.LeanTouch.OnFingerUp -= HandleFingerUp;
         Lean.Touch.LeanTouch.OnFingerUpdate -= HandleFingerUpdate;
     }
 
-    void HandleFingerDown(Lean.Touch.LeanFinger finger)
+    private void HandleFingerDown(Lean.Touch.LeanFinger finger)
     {
         if (!finger.IsOverGui)
         {
             _isFingerDown = true;
-
-            //Get Object raycast hit
-            var ray = finger.GetRay(Camera);
-            var hit = default(RaycastHit);
-
-            if (Physics.Raycast(ray, out hit, float.PositiveInfinity))
-            {
-                //ADDED LAYER SELECTION
-                Debug.Log(hit.collider.gameObject);
-            }
+            var ray = _mainCamera.ScreenPointToRay(finger.ScreenPosition);
+            RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity, targetLayer);
+            _currentDragPill = hit.collider ? hit.collider.GetComponentInChildren<Pill>() : null;
         }
     }
 
-    void HandleFingerUp(Lean.Touch.LeanFinger finger)
+    private void HandleFingerUpdate(Lean.Touch.LeanFinger finger)
+    {
+        if (!_isFingerDown || _currentDragPill == null) return;
+
+        HandleFingerInput(finger);
+    }
+
+    private void HandleFingerUp(Lean.Touch.LeanFinger finger)
     {
         _isFingerDown = false;
-    }
 
-    void HandleFingerUpdate(Lean.Touch.LeanFinger finger)
-    {
-        if (_isFingerDown)
+        if (_currentDragPill != null)
         {
-            _isFingerDrag = true;
-            HandleFingerInput(finger);
+            CheckDropOnHole();
+            _currentDragPill = null;
         }
     }
 
-    void HandleFingerInput(Lean.Touch.LeanFinger finger)
+    private void HandleFingerInput(Lean.Touch.LeanFinger finger)
     {
-      
+        Vector3 worldPos = _mainCamera.ScreenToWorldPoint(finger.ScreenPosition);
+        worldPos.z = _currentDragPill.transform.position.z;
+        _currentDragPill.transform.position = worldPos;
+    }
+
+    private void CheckDropOnHole()
+    {
+        Vector2 pillPos = _currentDragPill.transform.position;
+
+        Collider2D holeCollider = Physics2D.OverlapPoint(pillPos, holeLayer);
+        if (holeCollider == null)
+            return;
+
+        Hole hole = holeCollider.GetComponentInChildren<Hole>();
+        if (hole == null)
+            return;
+
+        if (_currentDragPill.PillType == PillType.Red)
+        {
+            GameManager.Instance.OnWinGame(0);
+        }
+        else if (_currentDragPill.PillType == PillType.Blue)
+        {
+            GameManager.Instance.OnLoseGame(0);
+        }
     }
 }
