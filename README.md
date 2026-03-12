@@ -10,9 +10,9 @@
 - However, I do not recommend using it for large game projects. Anyway **singleton design pattern** is a bad pattern, you can see or read about it everywhere on the internet.
 
 ## The Goals of the Project
-- [x] `Resources System`: 
+- [x] `Resources System`: flexible ui, smooth animation resources obtain.
 - [x] `Gameplay`: simple gameplay with ui ingame, win and lose.
-- [x] `Setting`: setting for the game.
+- [x] `Setting`: music background, sound fx, vibration.
 - [x] `Shop`: shop to buy skins.
 - [x] `Daily Reward`: daily reward feature.
 - [x] `Lucky Spin`: daily spin feature.
@@ -53,6 +53,8 @@
 │   │   ├── CustomInspector
 │   │   ├── CustomReference
 │   │   ├── CustomTween
+│   │   ├── CustomHierarchy
+│   │   ├── CustomBuildReport
 │   ├── ~LevelEditor `(This project only)`
 └── ...
 ```
@@ -62,7 +64,7 @@
 
 ## Third Party
 - Lean Packages (LeanTouch, LeanPool)
-- TextMeshPro
+
 ## Support
 - If you like this topic, you can give this repository a star ⭐
 - I would greatly appreciate it if you could support me with a cup of coffee
