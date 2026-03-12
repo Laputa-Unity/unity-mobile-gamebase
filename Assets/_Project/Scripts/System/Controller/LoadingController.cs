@@ -9,7 +9,7 @@ public class LoadingController : MonoBehaviour
     [Header("Attributes")] 
     [SerializeField] private float timeLoading = 5f;
     [Header("Components")] 
-    [SerializeField] private Image progressBar;
+    [SerializeField] private Slider slider;
     [SerializeField] private TextMeshProUGUI loadingText;
     private AsyncOperation _sceneOperation;
     
@@ -18,12 +18,15 @@ public class LoadingController : MonoBehaviour
         _sceneOperation = SceneManager.LoadSceneAsync("GameplayScene");
         _sceneOperation.allowSceneActivation = false;
 
-        progressBar.fillAmount = 0;
-        Tween.UIFillAmount(progressBar, 1, timeLoading)
-            .OnUpdate(loadingText,
-                (loadingText, tween) => { loadingText.text = $"Loading {(int) (progressBar.fillAmount * 100)}%"; })
-            .OnComplete(() => { _sceneOperation.allowSceneActivation = true; });
+        slider.value = 0;
+        Tween.UISliderValue(slider, 100, timeLoading).OnComplete(() =>
+        {
+            _sceneOperation.allowSceneActivation = true;
+        });
     }
-    
-    
+
+    public void OnSliderValueChanged()
+    {
+        loadingText.text = $"Loading {(int) (slider.value)}%";
+    }
 }
