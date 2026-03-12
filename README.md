@@ -1,7 +1,7 @@
 # Mobile Game Base - Core Singleton Architecture (Android & Ios)
 
 <div align="center">
-<img src="https://github.com/user-attachments/assets/bb86d0e5-8869-4815-8158-bce630052c27">
+<img width="540" height="960" src="https://github.com/user-attachments/assets/bb86d0e5-8869-4815-8158-bce630052c27">
 </div>
 
 👋 **Hi there, I'm HoangVanThu**. This repository help you to build games on mobile devices.
