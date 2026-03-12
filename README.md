@@ -1,7 +1,7 @@
 # Mobile Game Base - Core Singleton Architecture (Android & Ios)
 
 <div align="center">
-<img src="https://github.com/Laputa-Unity/unity-mobile-gamebase/assets/52252046/ba7c8ff2-3419-4bc4-b9dc-8ea009a8732b">
+<img src="https://github.com/user-attachments/assets/bb86d0e5-8869-4815-8158-bce630052c27">
 </div>
 
 👋 **Hi there, I'm HoangVanThu**. This repository help you to build games on mobile devices.
