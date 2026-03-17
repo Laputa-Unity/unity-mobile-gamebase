@@ -147,6 +147,15 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.ides": {
+      "version": "https://github.com/dunward/com.unity.ides.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.test-framework": "1.1.9"
+      },
+      "hash": "6d02147fb5181de0b39db25efb599b16d8d67ef5"
+    },
     "com.unity.inputsystem": {
       "version": "1.18.0",
       "depth": 0,
