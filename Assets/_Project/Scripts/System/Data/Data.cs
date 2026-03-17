@@ -54,9 +54,9 @@ public static class Data
     public static async Task UpdateData(string jsonContent)
     {
         Debug.Log(Application.persistentDataPath);
-        await File.WriteAllTextAsync(SavePath, jsonContent);
-        string jsonData = await File.ReadAllTextAsync(SavePath);
-        PlayerData = JsonUtility.FromJson<PlayerData>(jsonData);
+        string encryptedData = EncryptionHelper.Encrypt(jsonContent);
+        await File.WriteAllTextAsync(SavePath, encryptedData);
+        PlayerData = JsonConvert.DeserializeObject<PlayerData>(jsonContent);
         Debug.Log("<color=green>Update player data succeed </color>");
     }
 }
